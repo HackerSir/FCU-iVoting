@@ -111,6 +111,7 @@ class MemberController extends Controller
     //註冊
     public function getRegister()
     {
+        //註冊允許使用之信箱類型
         $allowedEmails = Config::get('config.allowed_emails');
         $allowedEmailsArray = array(null => '--請下拉選擇--');
 
