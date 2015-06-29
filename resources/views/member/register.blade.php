@@ -20,9 +20,9 @@
                             @endif
                         </label>
 
-                        <div class="form-inline">
-                            {!! Form::text('email', null, ['id' => 'email', 'placeholder' => '請輸入信箱', 'class' => 'form-control', 'required']) !!}
-                            @
+                        <div class="input-group">
+                            {!! Form::text('email', null, ['id' => 'email', 'placeholder' => '請輸入學號', 'class' => 'form-control', 'required']) !!}
+                            <div class="input-group-addon">@</div>
                             {!! Form::select('email_domain', $allowedEmailsArray, null, ['class' => 'form-control', 'required']) !!}
                         </div>
                         @if($errors->has('email'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
