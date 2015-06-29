@@ -15,24 +15,24 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th width="40"></th>
-                                <th>群組</th>
                                 <th>信箱</th>
+                                <th>NID</th>
+                                <th>群組</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($userList as $userItem)
                                 <tr>
-                                    <td>{!! HTML::image($userItem->gravatar(40), null, ['class' => 'img-circle']) !!}</td>
-                                    <td><a href="{{ URL::route('member.profile',$userItem->id) }}">{{ $userItem->nid }}</a></td>
-                                    <td>{{ $userItem->group->title }}</td>
-                                    <td>{{ $userItem->email }}
+                                    <td>
+                                        <a href="{{ URL::route('member.profile',$userItem->id) }}">{{ $userItem->email }}</a>
                                         @if($userItem->isConfirmed())
                                             <span class="label label-success">已驗證</span>
                                         @else
                                             <span class="label label-danger">未驗證</span>
                                         @endif
                                     </td>
+                                    <td>{{ $userItem->nid }}</td>
+                                    <td>{{ $userItem->group->title }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
