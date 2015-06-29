@@ -111,14 +111,29 @@ class MemberController extends Controller
     //註冊
     public function getRegister()
     {
-        return view('member.register');
+        //註冊允許使用之信箱類型
+        $allowedEmails = Config::get('config.allowed_emails');
+        $allowedEmailsArray = array(null => '--請下拉選擇--');
+
+        foreach ($allowedEmails as $allowedEmail) {
+            $allowedEmailsArray[$allowedEmail] = $allowedEmail;
+        }
+        if (Config::get('app.debug')) {
+            $allowedEmailsDebug = Config::get('config.allowed_emails_debug');
+            foreach ($allowedEmailsDebug as $allowedEmail) {
+                $allowedEmailsArray[$allowedEmail] = $allowedEmail;
+            }
+        }
+
+        return view('member.register')->with('allowedEmailsArray', $allowedEmailsArray);
     }
 
     public function postRegister(Request $request)
     {
         $validator = Validator::make($request->all(),
             array(
-                'email' => 'required|email|unique:users',
+                'email' => 'required',
+                'email_domain' => 'required',
                 'password' => 'required|min:6',
                 'password_again' => 'required|same:password',
             )
@@ -129,7 +144,25 @@ class MemberController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
-            $email = $request->get('email');
+            //註冊允許使用之信箱類型
+            $allowedEmails = Config::get('config.allowed_emails');
+            if (Config::get('app.debug')) {
+                $allowedEmailsDebug = Config::get('config.allowed_emails_debug');
+                $allowedEmails = array_merge($allowedEmails, $allowedEmailsDebug);
+            }
+            $email_domain = $request->get('email_domain');
+            if (!in_array($email_domain, $allowedEmails)) {
+                return Redirect::route('member.register')
+                    ->with('warning', '不被允許的信箱類型。')
+                    ->withInput();
+            }
+            $email = $request->get('email') . '@' . $email_domain;
+            if (User::where('email', '=', $email)->count() > 0) {
+                return Redirect::route('member.register')
+                    ->with('warning', '該信箱已被註冊。')
+                    ->withInput();
+            }
+
             $password = $request->get('password');
             //驗證碼
             $code = str_random(60);

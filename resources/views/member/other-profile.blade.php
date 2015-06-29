@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('title')
-    {{ $showUser->email }} - 個人資料
+    {{ $showUser->getNickname() }} - 個人資料
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{ $showUser->email }} - 個人資料</div>
+                    <div class="panel-heading">{{ $showUser->getNickname() }} - 個人資料</div>
                     {{-- Panel body --}}
                     <div class="panel-body">
                         <div class="row">
