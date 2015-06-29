@@ -39,7 +39,7 @@
                                             <span class="label label-danger">{{ $errors->first('group') }}</span>@endif
                                         @else
                                             {!! Form::select('group',$groupList, $showUser->group->name, ['class' => 'form-control', 'disabled']) !!}
-                                            <span class="label label-primary">禁止解除自己的幹部職務</span>
+                                            <span class="label label-primary">禁止解除自己的工作人員職務</span>
                                         @endif
                                     </div>
                                 </div>
