@@ -20,9 +20,12 @@
                                         <span class="label label-danger">{{ $errors->first('email') }}</span>
                                     @endif
                                 </label>
-                                {!! Form::email('email', null, ['id' => 'email', 'placeholder' => '請輸入信箱', 'class' => 'form-control', 'required']) !!}
+                                <div class="form-inline">
+                                    {!! Form::text('email', null, ['id' => 'email', 'placeholder' => '請輸入信箱', 'class' => 'form-control', 'required']) !!}
+                                    @
+                                    {!! Form::select('email_domain', $allowedEmailsArray, null, ['class' => 'form-control', 'required']) !!}
+                                </div>
                                 @if($errors->has('email'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
-                                {!! Form::select('email_domain', $allowedEmailsArray, null, ['class' => 'form-control', 'required']) !!}
                             </div>
                             <div class="form-group has-feedback{{ ($errors->has('password'))?' has-error':'' }}">
                                 <label class="control-label" for="password">密碼
