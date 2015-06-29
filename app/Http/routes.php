@@ -11,6 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//入口頁面首頁
+Route::get('/', [
+    'as' => 'home',
+    'uses' => 'HomeController@index'
+]);
+
+//未定義路由
+Route::get('{all}', array(
+    'as' => 'not-found',
+    function () {
+        abort(404);
+    }
+))->where('all', '.*');
