@@ -48,7 +48,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function isStaff()
     {
-        if ($this->group->name == "staff") {
+        if ($this->isAdmin() || $this->group->name == "staff") {
+            return true;
+        }
+        return false;
+    }
+
+    public function isAdmin()
+    {
+        if ($this->group->name == "admin") {
             return true;
         }
         return false;

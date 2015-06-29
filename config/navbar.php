@@ -33,6 +33,12 @@ return array(
         )
     ),
 
+    //管理員
+    'admin' => array(
+        '管理員' => array(
+        )
+    ),
+
     //遊客
     'guest' => array(
         '登入' => 'member/login'
