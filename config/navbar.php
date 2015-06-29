@@ -14,12 +14,10 @@ return array(
      */
 
     //基本巡覽列
-    'navbar' => array(
-    ),
+    'navbar' => array(),
 
     //會員
     'member' => array(
-        '成員清單' => 'member',
         '%user%' => array(
             '個人資料' => 'member/profile',
             '修改密碼' => 'member/change-password',
@@ -30,13 +28,13 @@ return array(
     //工作人員
     'staff' => array(
         '工作人員' => array(
+            '成員清單' => 'member'
         )
     ),
 
     //管理員
     'admin' => array(
-        '管理員' => array(
-        )
+        '管理員' => array()
     ),
 
     //遊客

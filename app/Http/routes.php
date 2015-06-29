@@ -17,6 +17,29 @@ Route::get('/', [
     'uses' => 'HomeController@index'
 ]);
 
+Route::controller('member', 'MemberController', array(
+    'getIndex' => 'member.list',
+    'getLogin' => 'member.login',
+    'postLogin' => 'member.login',
+    'getRegister' => 'member.register',
+    'postRegister' => 'member.register',
+    'getConfirm' => 'member.confirm',
+    'getResend' => 'member.resend',
+    'postResend' => 'member.resend',
+    'getForgotPassword' => 'member.forgot-password',
+    'postForgotPassword' => 'member.forgot-password',
+    'getResetPassword' => 'member.reset-password',
+    'postResetPassword' => 'member.reset-password',
+    'getChangePassword' => 'member.change-password',
+    'postChangePassword' => 'member.change-password',
+    'getProfile' => 'member.profile',
+    'getEditProfile' => 'member.edit-profile',
+    'postEditProfile' => 'member.edit-profile',
+    'getEditOtherProfile' => 'member.edit-other-profile',
+    'postEditOtherProfile' => 'member.edit-other-profile',
+    'getLogout' => 'member.logout'
+));
+
 //未定義路由
 Route::get('{all}', array(
     'as' => 'not-found',
