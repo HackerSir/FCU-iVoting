@@ -14,7 +14,9 @@ return array(
      */
 
     //基本巡覽列
-    'navbar' => array(),
+    'navbar' => array(
+        '投票系統' => 'vote-event',
+    ),
 
     //會員
     'member' => array(

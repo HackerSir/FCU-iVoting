@@ -40,6 +40,24 @@ Route::controller('member', 'MemberController', array(
     'getLogout' => 'member.logout'
 ));
 
+//投票系統
+Route::post('vote-event/start/{vid}', [
+    'as' => 'vote-event.start',
+    'uses' => 'VoteEventController@start'
+]);
+Route::post('vote-event/end/{vid}', [
+    'as' => 'vote-event.end',
+    'uses' => 'VoteEventController@end'
+]);
+Route::resource('vote-event', 'VoteEventController');
+Route::resource('vote-selection', 'VoteSelectionController', ['except' => ['index', 'show']]);
+
+//Markdown API
+Route::any('markdown', [
+    'as' => 'markdown.preview',
+    'uses' => 'MarkdownApiController@markdownPreview'
+]);
+
 //未定義路由
 Route::get('{all}', array(
     'as' => 'not-found',

@@ -137,6 +137,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        AlfredoRamos\ParsedownExtra\ParsedownExtraServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -194,6 +195,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'HTML' => Collective\Html\HtmlFacade::class,
         'Form' => Collective\Html\FormFacade::class,
+        'Markdown' => AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra::class,
+        'Carbon' => Carbon\Carbon::class,
 
     ],
 

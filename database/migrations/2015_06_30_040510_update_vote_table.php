@@ -13,11 +13,11 @@ class UpdateVoteTable extends Migration
     public function up()
     {
         Schema::table('vote_selections', function ($table) {
-            $table->foreign('vote_event_id')->references('id')->on('groups')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('vote_event_id')->references('id')->on('vote_events')->onUpdate('cascade')->onDelete('cascade');
         });
         Schema::table('vote_ballots', function ($table) {
-            $table->foreign('user_id')->references('id')->on('groups')->onUpdate('cascade')->onDelete('set null');
-            $table->foreign('vote_selection_id')->references('id')->on('groups')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('vote_selection_id')->references('id')->on('vote_selections')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
