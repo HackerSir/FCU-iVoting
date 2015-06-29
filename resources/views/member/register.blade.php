@@ -22,6 +22,7 @@
                                 </label>
                                 {!! Form::email('email', null, ['id' => 'email', 'placeholder' => '請輸入信箱', 'class' => 'form-control', 'required']) !!}
                                 @if($errors->has('email'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
+                                {!! Form::select('email_domain', $allowedEmailsArray, null, ['class' => 'form-control']) !!}
                             </div>
                             <div class="form-group has-feedback{{ ($errors->has('password'))?' has-error':'' }}">
                                 <label class="control-label" for="password">密碼

@@ -111,7 +111,20 @@ class MemberController extends Controller
     //註冊
     public function getRegister()
     {
-        return view('member.register');
+        $allowedEmails = Config::get('config.allowed_emails');
+        $allowedEmailsArray = array(null => '--請下拉選擇--');
+
+        foreach ($allowedEmails as $allowedEmail) {
+            $allowedEmailsArray[$allowedEmail] = $allowedEmail;
+        }
+        if(Config::get('app.debug')){
+            $allowedEmailsDebug = Config::get('config.allowed_emails_debug');
+            foreach ($allowedEmailsDebug as $allowedEmail) {
+                $allowedEmailsArray[$allowedEmail] = $allowedEmail;
+            }
+        }
+
+        return view('member.register')->with('allowedEmailsArray', $allowedEmailsArray);
     }
 
     public function postRegister(Request $request)
