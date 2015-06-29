@@ -24,7 +24,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['email', 'password', 'confirm_code', 'confirm_at', 'register_ip', 'register_at', 'lastlogin_ip', 'lastlogin_at'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -32,4 +32,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    public function group()
+    {
+        return $this->belongsTo('App\Group');
+    }
+
+    public function isConfirmed()
+    {
+        if (!empty($this->confirm_at)) {
+            return true;
+        }
+        return false;
+    }
 }
