@@ -65,9 +65,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function getNickname()
     {
         if (!empty($this->nid)) {
-            return $this->nid;
+            $nickname = $this->nid;
+        } else {
+            $nickname = explode("@", $this->email)[0];
         }
-        $nickname = explode("@", $this->email)[0];
         return $nickname;
     }
 }
