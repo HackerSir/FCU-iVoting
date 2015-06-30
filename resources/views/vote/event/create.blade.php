@@ -44,6 +44,14 @@
                                         <span class="label label-danger">{{ $errors->first('close_time') }}</span>@endif
                                     </div>
                                 </div>
+                                <div class="form-group has-feedback{{ ($errors->has('max_selected'))?' has-error':'' }}">
+                                    <label class="control-label col-md-2" for="max_selected">最大數量</label>
+                                    <div class="col-md-9">
+                                        {!! Form::number('max_selected', null, ['id' => 'max_selected', 'placeholder' => '每人最多可選擇之數量，預設為1', 'class' => 'form-control', 'min' => 1]) !!}
+                                        @if($errors->has('max_selected'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                        <span class="label label-danger">{{ $errors->first('max_selected') }}</span>@endif
+                                    </div>
+                                </div>
                                 <div class="form-group has-feedback{{ ($errors->has('info'))?' has-error':'' }}">
                                     <label class="control-label col-md-2" for="info">內容簡介</label>
                                     <div class="col-md-9" role="tabpanel">

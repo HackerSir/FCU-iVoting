@@ -55,6 +55,11 @@
                                         <td>結束時間：</td>
                                         <td>{{ $voteEvent->close_time }}</td>
                                     </tr>
+                                    <tr>
+                                        <td>最大數量：</td>
+                                        <td>設定：{{ $voteEvent->max_selected }}<br />
+                                        實際：{{ $voteEvent->getMaxSelected() }}</td>
+                                    </tr>
                                 </table>
                                 <hr />
                                 <div class="text-left">

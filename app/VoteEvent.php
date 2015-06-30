@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class VoteEvent extends Model
 {
     protected $table = 'vote_events';
-    protected $fillable = ['open_time', 'close_time', 'subject', 'info'];
+    protected $fillable = ['open_time', 'close_time', 'subject', 'info', 'max_selected'];
 
     public function voteSelections()
     {
@@ -45,5 +45,17 @@ class VoteEvent extends Model
     public function isInProgress()
     {
         return $this->isStarted() && !$this->isEnded();
+    }
+
+    public function getMaxSelected()
+    {
+        if ($this->max_selected < 1) {
+            $max_selected = 1;
+        } else if ($this->max_selected > $this->voteSelections->count()) {
+            $max_selected = $this->voteSelections->count();
+        } else {
+            $max_selected = $this->max_selected;
+        }
+        return $max_selected;
     }
 }

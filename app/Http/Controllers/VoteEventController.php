@@ -60,7 +60,8 @@ class VoteEventController extends Controller
                 'subject' => 'required|max:100',
                 'open_time' => 'date',
                 'close_time' => 'date',
-                'info' => 'max:65535'
+                'info' => 'max:65535',
+                'max_selected' => 'integer|min:1'
             )
         );
         if ($validator->fails()) {
@@ -85,6 +86,7 @@ class VoteEventController extends Controller
                 'open_time' => $open_time,
                 'close_time' => $close_time,
                 'info' => $request->get('info'),
+                'max_selected' => $request->get('max_selected'),
             ));
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
@@ -151,7 +153,8 @@ class VoteEventController extends Controller
                 'subject' => 'required|max:100',
                 'open_time' => 'date',
                 'close_time' => 'date',
-                'info' => 'max:65535'
+                'info' => 'max:65535',
+                'max_selected' => 'integer|min:1'
             )
         );
         if ($validator->fails()) {
@@ -181,6 +184,7 @@ class VoteEventController extends Controller
             }
             $voteEvent->close_time = $close_time;
             $voteEvent->info = $request->get('info');
+            $voteEvent->max_selected = $request->get('max_selected');
             $voteEvent->save();
             return Redirect::route('vote-event.show', $id)
                 ->with('global', '投票活動已更新');
