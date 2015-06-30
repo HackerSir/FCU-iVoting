@@ -81,12 +81,13 @@ class VoteEventController extends Controller
                     }
                 }
             }
+            $max_selected = ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1;
             $voteEvent = VoteEvent::create(array(
                 'subject' => $request->get('subject'),
                 'open_time' => $open_time,
                 'close_time' => $close_time,
                 'info' => $request->get('info'),
-                'max_selected' => $request->get('max_selected'),
+                'max_selected' => $max_selected,
             ));
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
@@ -184,7 +185,7 @@ class VoteEventController extends Controller
             }
             $voteEvent->close_time = $close_time;
             $voteEvent->info = $request->get('info');
-            $voteEvent->max_selected = $request->get('max_selected');
+            $voteEvent->max_selected = ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1;
             $voteEvent->save();
             return Redirect::route('vote-event.show', $id)
                 ->with('global', '投票活動已更新');
