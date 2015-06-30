@@ -404,7 +404,7 @@ class MemberController extends Controller
         } else {
             $showUser = User::find($uid);
             if ($showUser) {
-                if ($user->isStaff() || $showUser->isStaff() || $user == $showUser) {
+                if ($user->isStaff() || $user == $showUser) {
                     return view('member.other-profile')->with('user', $user)->with('showUser', $showUser);
                 } else {
                     return Redirect::route('member.list')
