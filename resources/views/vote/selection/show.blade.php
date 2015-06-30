@@ -21,6 +21,10 @@
                                             {!! HTML::linkRoute('vote-event.show', $voteSelection->voteEvent->subject, $voteSelection->voteEvent->id, null) !!}
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td class="col-md-2">投票選項：</td>
+                                        <td>{{ $voteSelection->data }}</td>
+                                    </tr>
                                 </table>
                                 <hr />
                                 <div>
@@ -56,6 +60,13 @@
                                 </div>
                                 <div>
                                     <br />
+                                    @if(Auth::check() && Auth::user()->isStaff() && !$voteSelection->voteEvent->isStarted())
+                                        {!! link_to_route('vote-selection.edit', '編輯', $voteSelection->id, ['class' => 'btn btn-default']) !!}
+                                        {!! Form::open(['route' => ['vote-selection.destroy', $voteSelection->id], 'style' => 'display: inline', 'method' => 'DELETE',
+                                        'onSubmit' => "return confirm('確定要刪除此投票選項嗎？');"]) !!}
+                                        {!! Form::submit('刪除', ['class' => 'btn btn-danger']) !!}
+                                        {!! Form::close() !!}
+                                    @endif
                                     {!! HTML::linkRoute('vote-event.show', '返回投票活動', $voteSelection->voteEvent->id, ['class' => 'btn btn-default']) !!}
                                 </div>
                             </div>
