@@ -57,8 +57,11 @@
                                     </tr>
                                     <tr>
                                         <td>最大數量：</td>
-                                        <td>設定：{{ $voteEvent->max_selected }}<br />
-                                        實際：{{ $voteEvent->getMaxSelected() }}</td>
+                                        <td>{{ $voteEvent->getMaxSelected() }}
+                                            @if(Auth::check() && Auth::user()->isStaff())
+                                                <br />（設定值：{{ $voteEvent->max_selected }}）
+                                            @endif
+                                        </td>
                                     </tr>
                                 </table>
                                 <hr />
@@ -78,14 +81,8 @@
                                             {!! Form::submit('刪除', ['class' => 'btn btn-danger']) !!}
                                             {!! Form::close() !!}
                                         @endif
-                                        @if($voteEvent->isInProgress())
-                                            {!! HTML::linkRoute('vote-event.show', '進入投票頁面', ['id' => $voteEvent->id], ['class' => 'btn btn-primary']) !!}
-                                        @endif
                                     @else
                                         {!! HTML::linkRoute('vote-event.index', '返回投票活動列表', [], ['class' => 'btn btn-default']) !!}
-                                        @if(Auth::user()->group->name == 'vote' && $voteEvent->isInProgress())
-                                            {!! HTML::linkRoute('vote-event.show', '進入投票頁面', ['id' => $voteEvent->id], ['class' => 'btn btn-primary']) !!}
-                                        @endif
                                     @endif
                                 </div>
                             </div>
@@ -128,12 +125,10 @@
                                                         </td>
                                                     @endif
                                                     <td>
-                                                        @if($voteSelectionItem->card != null)
-                                                            {{ $voteSelectionItem->card->getName() }}
-                                                            <a href="{{ URL::route('card.show', $voteSelectionItem->card->id) }}" title="卡片資料"><i class="glyphicon glyphicon-credit-card"></i></a>
-                                                        @else
-                                                            {{ $voteSelectionItem->data }}
+                                                        @if(Auth::check() && $voteSelectionItem->hasVoted(Auth::user()))
+                                                            <span title="我的選擇">✔</span>
                                                         @endif
+                                                        {!! HTML::linkRoute('vote-selection.show', $voteSelectionItem->data,$voteSelectionItem->id, null) !!}
                                                     </td>
                                                     @if(Auth::check() && Auth::user()->isStaff() && !$voteEvent->isStarted())
                                                         <td class="text-right">

@@ -50,7 +50,11 @@ Route::post('vote-event/end/{vid}', [
     'uses' => 'VoteEventController@end'
 ]);
 Route::resource('vote-event', 'VoteEventController');
-Route::resource('vote-selection', 'VoteSelectionController', ['except' => ['index', 'show']]);
+Route::post('vote-selection/vote/{id}', [
+    'as' => 'vote-selection.vote',
+    'uses' => 'VoteSelectionController@vote'
+]);
+Route::resource('vote-selection', 'VoteSelectionController', ['except' => ['index']]);
 
 //Markdown API
 Route::any('markdown', [

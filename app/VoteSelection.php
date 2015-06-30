@@ -43,4 +43,10 @@ class VoteSelection extends Model
         return $selfCount == $maxCount;
     }
 
+    public function hasVoted($user)
+    {
+        $count = $this->voteBallots()->where('user_id', '=', $user->id)->count();
+        return $count > 0;
+    }
+
 }

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\VoteBallot;
 use App\VoteEvent;
 use App\VoteSelection;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -17,7 +19,13 @@ class VoteSelectionController extends Controller
     public function __construct()
     {
         //限工作人員
-        $this->middleware('staff');
+        $this->middleware('staff', [
+            'except' => [
+                'index',
+                'show',
+                'vote'
+            ]
+        ]);
     }
 
     /**
@@ -83,6 +91,22 @@ class VoteSelectionController extends Controller
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('global', '投票選項已建立');
         }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        $voteSelection = VoteSelection::find($id);
+        if ($voteSelection) {
+            return view('vote.selection.show')->with('voteSelection', $voteSelection);
+        }
+        return Redirect::route('vote-event.index')
+            ->with('warning', '投票選項不存在');
     }
 
     /**
@@ -162,5 +186,34 @@ class VoteSelectionController extends Controller
         $voteSelection->delete();
         return Redirect::route('vote-event.show', $voteEvent->id)
             ->with('global', '投票選項已刪除');
+    }
+
+    public function vote($id)
+    {
+        $voteSelection = VoteSelection::find($id);
+        if (!$voteSelection) {
+            return Redirect::route('vote-event.index')
+                ->with('warning', '投票選項不存在');
+        }
+        if (!$voteSelection->voteEvent->isInProgress()) {
+            return Redirect::route('vote-selection.show', $voteSelection->id)
+                ->with('warning', '非投票期間');
+        }
+        //檢查用戶狀態
+        if ($voteSelection->hasVoted(Auth::user())) {
+            return Redirect::route('vote-selection.show', $voteSelection->id)
+                ->with('warning', '已投過此項目');
+        }
+        if ($voteSelection->voteEvent->getMaxSelected() <= $voteSelection->voteEvent->getSelected(Auth::user())) {
+            return Redirect::route('vote-selection.show', $voteSelection->id)
+                ->with('warning', '無法再投更多項目');
+        }
+        //新增投票資料
+        $voteBallots = VoteBallot::create(array(
+            'user_id' => Auth::user()->id,
+            'vote_selection_id' => $voteSelection->id
+        ));
+        return Redirect::route('vote-selection.show', $voteSelection->id)
+            ->with('global', '投票完成');
     }
 }

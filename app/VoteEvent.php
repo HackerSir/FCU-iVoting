@@ -58,4 +58,16 @@ class VoteEvent extends Model
         }
         return $max_selected;
     }
+
+    public function getSelected($user)
+    {
+        $voteSelections = $this->voteSelections;
+        $count = 0;
+        foreach ($voteSelections as $voteSelection) {
+            if ($voteSelection->hasVoted($user)) {
+                $count++;
+            }
+        }
+        return $count;
+    }
 }
