@@ -402,17 +402,18 @@ class MemberController extends Controller
         if (empty($uid)) {
             return view('member.profile')->with('user', $user);
         } else {
-            $showUser = User::find($uid);
-            if ($showUser) {
-                if ($user->isStaff() || $user == $showUser) {
+            //只有工作人員或資料主人可以查看
+            if ($user->isStaff() || $user->id == $uid) {
+                $showUser = User::find($uid);
+                if ($showUser) {
                     return view('member.other-profile')->with('user', $user)->with('showUser', $showUser);
                 } else {
-                    return Redirect::route('member.list')
-                        ->with('warning', '無權訪問該成員資料。');
+                    return Redirect::route('home')
+                        ->with('warning', '該成員不存在。');
                 }
             } else {
-                return Redirect::route('member.list')
-                    ->with('warning', '該成員不存在。');
+                return Redirect::route('home')
+                    ->with('warning', '無權查看他人資料。');
             }
         }
     }
