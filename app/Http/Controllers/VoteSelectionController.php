@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use stdClass;
 
 class VoteSelectionController extends Controller
 {
@@ -76,7 +77,7 @@ class VoteSelectionController extends Controller
         }
         $validator = Validator::make($request->all(),
             array(
-                'data' => 'required|max:65535'
+                'title' => 'required|max:65535'
             )
         );
         if ($validator->fails()) {
@@ -84,9 +85,14 @@ class VoteSelectionController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
+            //封裝JSON
+            $obj = new stdClass();
+            $obj->title = $request->get('title');
+            $json = json_encode($obj);
+
             $voteSelection = VoteSelection::create(array(
                 'vote_event_id' => $voteEvent->id,
-                'data' => $request->get('data')
+                'data' => $json
             ));
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('global', '投票選項已建立');
@@ -149,7 +155,7 @@ class VoteSelectionController extends Controller
         }
         $validator = Validator::make($request->all(),
             array(
-                'data' => 'required|max:65535'
+                'title' => 'required|max:65535'
             )
         );
         if ($validator->fails()) {
@@ -157,7 +163,12 @@ class VoteSelectionController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
-            $voteSelection->data = $request->get('data');
+            //封裝JSON
+            $obj = new stdClass();
+            $obj->title = $request->get('title');
+            $json = json_encode($obj);
+
+            $voteSelection->data = $json;
             $voteSelection->save();
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('global', '投票選項已更新');

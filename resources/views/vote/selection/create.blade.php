@@ -20,12 +20,12 @@
                                         {!! HTML::linkRoute('vote-event.show', $voteEvent->subject, $voteEvent->id, null) !!}
                                     </div>
                                 </div>
-                                <div class="form-group has-feedback{{ ($errors->has('data'))?' has-error':'' }}">
-                                    <label class="control-label col-md-3" for="data">選項內容</label>
+                                <div class="form-group has-feedback{{ ($errors->has('title'))?' has-error':'' }}">
+                                    <label class="control-label col-md-3" for="title">選項內容</label>
                                     <div class="col-md-9">
-                                        {!! Form::text('data', null, ['id' => 'data', 'placeholder' => '請輸入選項內容', 'class' => 'form-control']) !!}
-                                        @if($errors->has('data'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                                        <span class="label label-danger">{{ $errors->first('data') }}</span>@endif
+                                        {!! Form::text('title', null, ['id' => 'title', 'placeholder' => '請輸入選項內容', 'class' => 'form-control']) !!}
+                                        @if($errors->has('title'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                        <span class="label label-danger">{{ $errors->first('title') }}</span>@endif
                                     </div>
                                 </div>
                                 <div class="form-group">

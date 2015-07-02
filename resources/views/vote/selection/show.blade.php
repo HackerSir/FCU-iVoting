@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('title')
-    {{ $voteSelection->data }} - 投票選項
+    {{ $voteSelection->getTitle() }} - 投票選項
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{ $voteSelection->data }} - 投票選項</div>
+                    <div class="panel-heading">{{ $voteSelection->getTitle() }} - 投票選項</div>
                     {{-- Panel body --}}
                     <div class="panel-body">
                         <div class="row">
@@ -23,8 +23,16 @@
                                     </tr>
                                     <tr>
                                         <td class="col-md-2">投票選項：</td>
-                                        <td>{{ $voteSelection->data }}</td>
+                                        <td>{{ $voteSelection->getTitle() }}</td>
                                     </tr>
+                                    @if(Auth::check() && Auth::user()->isStaff())
+                                    <tr>
+                                        <td class="col-md-2">原始資料：</td>
+                                        <td>
+                                            <pre class="text-left">{{ json_encode(json_decode($voteSelection->data), JSON_PRETTY_PRINT) }}</pre>
+                                        </td>
+                                    </tr>
+                                    @endif
                                 </table>
                                 <hr />
                                 <div>

@@ -19,6 +19,17 @@ class VoteSelection extends Model
         return $this->hasMany('App\VoteBallot');
     }
 
+    public function getTitle()
+    {
+        if (JSON::isJson($this->data)) {
+            $json = json_decode($this->data);
+            if (!empty($json->title)) {
+                return $json->title;
+            }
+        }
+        return $this->data;
+    }
+
     public function getCount()
     {
         $selfCount = $this->voteBallots()

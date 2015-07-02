@@ -128,7 +128,7 @@
                                                         @if(Auth::check() && $voteSelectionItem->hasVoted(Auth::user()))
                                                             <span title="我的選擇">✔</span>
                                                         @endif
-                                                        {!! HTML::linkRoute('vote-selection.show', $voteSelectionItem->data,$voteSelectionItem->id, null) !!}
+                                                        {!! HTML::linkRoute('vote-selection.show', $voteSelectionItem->getTitle(),$voteSelectionItem->id, null) !!}
                                                     </td>
                                                     @if(Auth::check() && Auth::user()->isStaff() && !$voteEvent->isStarted())
                                                         <td class="text-right">
