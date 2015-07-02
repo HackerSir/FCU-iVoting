@@ -21,13 +21,26 @@ class VoteSelection extends Model
 
     public function getTitle()
     {
-        if (JSON::isJson($this->data)) {
-            $json = json_decode($this->data);
-            if (!empty($json->title)) {
-                return $json->title;
-            }
+        if (!JSON::isJson($this->data)) {
+            return $this->data;
         }
-        return $this->data;
+        $json = json_decode($this->data);
+        if (empty($json->title)) {
+            return $this->data;
+        }
+        return $json->title;
+    }
+
+    public function getImageLinks()
+    {
+        if (!JSON::isJson($this->data)) {
+            return null;
+        }
+        $json = json_decode($this->data);
+        if (empty($json->image)) {
+            return null;
+        }
+        return implode(PHP_EOL, $json->image);
     }
 
     public function getCount()

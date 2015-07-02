@@ -77,7 +77,8 @@ class VoteSelectionController extends Controller
         }
         $validator = Validator::make($request->all(),
             array(
-                'title' => 'required|max:65535'
+                'title' => 'required|max:65535',
+                'image' => 'max:65535'
             )
         );
         if ($validator->fails()) {
@@ -88,6 +89,7 @@ class VoteSelectionController extends Controller
             //封裝JSON
             $obj = new stdClass();
             $obj->title = $request->get('title');
+            $obj->image = explode(PHP_EOL, $request->get('image'));
             $json = json_encode($obj);
 
             $voteSelection = VoteSelection::create(array(
@@ -155,7 +157,8 @@ class VoteSelectionController extends Controller
         }
         $validator = Validator::make($request->all(),
             array(
-                'title' => 'required|max:65535'
+                'title' => 'required|max:65535',
+                'image' => 'max:65535'
             )
         );
         if ($validator->fails()) {
@@ -166,6 +169,7 @@ class VoteSelectionController extends Controller
             //封裝JSON
             $obj = new stdClass();
             $obj->title = $request->get('title');
+            $obj->image = explode(PHP_EOL, $request->get('image'));
             $json = json_encode($obj);
 
             $voteSelection->data = $json;
