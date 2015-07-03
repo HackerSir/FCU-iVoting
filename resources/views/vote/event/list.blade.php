@@ -40,7 +40,8 @@
                             <thead>
                             <tr>
                                 <th class="col-md-1">狀態</th>
-                                <th class="col-md-5">投票主題</th>
+                                <th class="col-md-4">投票主題</th>
+                                <th class="col-md-1"></th>
                                 <th class="col-md-3">開始時間</th>
                                 <th class="col-md-3">結束時間</th>
                             </tr>
@@ -57,7 +58,13 @@
                                             未開始
                                         @endif
                                     </td>
+                                    {{-- TODO: 改連到投票活動頁面，就是可以看很多選項的那頁  --}}
                                     <td>{!! HTML::linkRoute('vote-event.show', $voteEventItem->subject, $voteEventItem->id, null) !!}</td>
+                                    <td>
+                                        @if(Auth::check() && Auth::user()->isStaff())
+                                            <a href="{{ URL::route('vote-event.show', $voteEventItem->id, null) }}" class="pull-right"><span class="glyphicon glyphicon-cog" aria-hidden="true" /></a>
+                                        @endif
+                                    </td>
                                     <td>{{ $voteEventItem->open_time }}</td>
                                     <td>{{ $voteEventItem->close_time }}</td>
                                 </tr>
