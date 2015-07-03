@@ -417,44 +417,44 @@ class MemberController extends Controller
             }
         }
     }
-/*
-    //修改資料
-    public function getEditProfile()
-    {
-        $user = Auth::user();
-        return view('member.edit-profile')->with('user', $user);
-    }
-
-    public function postEditProfile(Request $request)
-    {
-        $validator = Validator::make($request->all(),
-            array(
-                'nid' => array(
-                    'size:8',
-                    'unique:users,nid,' . Auth::user()->id,
-                    'regex:/^([depm]([0-9]){7})|(t[0-9]{5})$/i'
-                ),
-            )
-        );
-
-        if ($validator->fails()) {
-            return Redirect::route('member.edit-profile')
-                ->withErrors($validator)
-                ->withInput();
-        } else {
+    /*
+        //修改資料
+        public function getEditProfile()
+        {
             $user = Auth::user();
-            if (empty($user->nid)) {
-                $user->nid = strtoupper($request->get('nid'));
-            }
-            if ($user->save()) {
-                return Redirect::route('member.profile')
-                    ->with('global', '個人資料修改完成。');
-            }
+            return view('member.edit-profile')->with('user', $user);
         }
-        return Redirect::route('member.edit-profile')
-            ->with('warning', '個人資料無法修改。');
-    }
 
+        public function postEditProfile(Request $request)
+        {
+            $validator = Validator::make($request->all(),
+                array(
+                    'nid' => array(
+                        'size:8',
+                        'unique:users,nid,' . Auth::user()->id,
+                        'regex:/^([depm]([0-9]){7})|(t[0-9]{5})$/i'
+                    ),
+                )
+            );
+
+            if ($validator->fails()) {
+                return Redirect::route('member.edit-profile')
+                    ->withErrors($validator)
+                    ->withInput();
+            } else {
+                $user = Auth::user();
+                if (empty($user->nid)) {
+                    $user->nid = strtoupper($request->get('nid'));
+                }
+                if ($user->save()) {
+                    return Redirect::route('member.profile')
+                        ->with('global', '個人資料修改完成。');
+                }
+            }
+            return Redirect::route('member.edit-profile')
+                ->with('warning', '個人資料無法修改。');
+        }
+    */
     //修改他人資料
     public function getEditOtherProfile($uid)
     {
@@ -511,7 +511,7 @@ class MemberController extends Controller
         return Redirect::route('member.edit-other-profile', $uid)
             ->with('warning', '資料無法修改。');
     }
-*/
+
     //登出
     public function getLogout()
     {

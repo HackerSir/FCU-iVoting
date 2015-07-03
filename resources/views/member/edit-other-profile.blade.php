@@ -21,15 +21,6 @@
                                         <span class="label label-primary">信箱作為帳號使用，故無法修改</span>
                                     </div>
                                 </div>
-                                <div class="form-group has-feedback{{ ($errors->has('nid'))?' has-error':'' }}">
-                                    <label class="control-label col-md-2" for="nid">NID</label>
-                                    <div class="col-md-9">
-                                        {!! Form::text('nid', $showUser->nid, ['id' => 'nid', 'placeholder' => '請輸入NID', 'class' => 'form-control']) !!}
-                                        @if($errors->has('nid'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                                        <span class="label label-danger">{{ $errors->first('nid') }}</span><br />@endif
-                                        <span class="label label-primary">若清空此欄位，該用戶將可再次設定NID</span>
-                                    </div>
-                                </div>
                                 <div class="form-group has-feedback{{ ($errors->has('group'))?' has-error':'' }}">
                                     <label class="control-label col-md-2" for="group">用戶組</label>
                                     <div class="col-md-9">
