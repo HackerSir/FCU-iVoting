@@ -2,6 +2,7 @@
 
 use App\Announcement;
 use App\Course;
+use App\Setting;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Redirect;
@@ -35,6 +36,16 @@ class HomeController extends Controller
      * @return Response
      */
     public function index()
+    {
+        //檢查是否設定自動跳轉網址
+        $autoRedirect = Setting::get('auto-redirect');
+        if (filter_var($autoRedirect, FILTER_VALIDATE_URL)) {
+            return Redirect::to($autoRedirect);
+        }
+        return $this->home();
+    }
+
+    public function home()
     {
         return view('home');
     }
