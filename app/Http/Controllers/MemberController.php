@@ -417,7 +417,7 @@ class MemberController extends Controller
             }
         }
     }
-
+/*
     //修改資料
     public function getEditProfile()
     {
@@ -511,7 +511,7 @@ class MemberController extends Controller
         return Redirect::route('member.edit-other-profile', $uid)
             ->with('warning', '資料無法修改。');
     }
-
+*/
     //登出
     public function getLogout()
     {

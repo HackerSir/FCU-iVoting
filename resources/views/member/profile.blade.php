@@ -27,12 +27,6 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>NID：</td>
-                                        <td>
-                                            {{ $user->nid }}
-                                        </td>
-                                    </tr>
-                                    <tr>
                                         <td>用戶組：</td>
                                         <td>{{ $user->group->title }}</td>
                                     </tr>
@@ -46,7 +40,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            {!! HTML::linkRoute('member.edit-profile', '編輯個人資料', null, ['class' => 'btn btn-primary']) !!}
+                                            {{--{!! HTML::linkRoute('member.edit-profile', '編輯個人資料', null, ['class' => 'btn btn-primary']) !!}--}}
                                             {!! HTML::linkRoute('member.profile', '預覽個人資料', $user->id, ['class' => 'btn btn-default']) !!}
                                         </td>
                                     </tr>

@@ -37,12 +37,6 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>NID：</td>
-                                            <td>
-                                                {{ $showUser->nid }}
-                                            </td>
-                                        </tr>
-                                        <tr>
                                             <td>註冊時間：</td>
                                             <td>{{ $showUser->register_at }}</td>
                                         </tr>
@@ -58,9 +52,9 @@
                                             <td>最後登入IP：</td>
                                             <td>{{ $showUser->lastlogin_ip }}</td>
                                         </tr>
-                                        <tr>
+                                        {{--<tr>
                                             <td colspan="2">{!! HTML::linkRoute('member.edit-other-profile', '編輯資料', $showUser->id, ['class' => 'btn btn-primary']) !!}</td>
-                                        </tr>
+                                        </tr>--}}
                                     @endif
                                 </table>
                             </div>
