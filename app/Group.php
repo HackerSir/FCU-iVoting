@@ -1,12 +1,9 @@
 <?php namespace App;
 
-use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Auth\Passwords\CanResetPassword;
 
 class Group extends Model
 {
-    use Authenticatable, CanResetPassword;
     /**
      * The database table used by the model.
      *
