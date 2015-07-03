@@ -81,6 +81,21 @@
                                             {!! Form::submit('刪除', ['class' => 'btn btn-danger']) !!}
                                             {!! Form::close() !!}
                                         @endif
+                                        @if(Auth::user()->isAdmin())
+                                            @if(Request::url() != $autoRedirectSetting->data)
+                                                {!! Form::open(['route' => ['setting.update', $autoRedirectSetting->id], 'style' => 'display: inline' ,'class' => 'form-horizontal', 'method' => 'PUT',
+                                                'onSubmit' => "return confirm('確定要將此活動設為預設頁面嗎？');"]) !!}
+                                                {!! Form::hidden('data', Request::url()) !!}
+                                                {!! Form::submit('設為預設', ['class' => 'btn btn-danger', 'title' => '設為進入網站時預設導向之頁面']) !!}
+                                                {!! Form::close() !!}
+                                            @else
+                                                {!! Form::open(['route' => ['setting.update', $autoRedirectSetting->id], 'style' => 'display: inline' ,'class' => 'form-horizontal', 'method' => 'PUT',
+                                                'onSubmit' => "return confirm('確定不在將此活動作為預設頁面嗎？');"]) !!}
+                                                {!! Form::hidden('data', "") !!}
+                                                {!! Form::submit('取消預設', ['class' => 'btn btn-default', 'title' => '取消網站預設導向頁面之設定']) !!}
+                                                {!! Form::close() !!}
+                                            @endif
+                                        @endif
                                     @else
                                         {!! HTML::linkRoute('vote-event.index', '返回投票活動列表', [], ['class' => 'btn btn-default']) !!}
                                     @endif

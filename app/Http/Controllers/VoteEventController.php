@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Setting;
 use App\VoteEvent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -102,10 +103,10 @@ class VoteEventController extends Controller
      */
     public function show($id)
     {
-        $user = Auth::user();
         $voteEvent = VoteEvent::find($id);
+        $autoRedirectSetting = Setting::find('auto-redirect');
         if ($voteEvent) {
-            return view('vote.event.show')->with('user', $user)->with('voteEvent', $voteEvent);
+            return view('vote.event.show')->with('voteEvent', $voteEvent)->with('autoRedirectSetting', $autoRedirectSetting);
         }
         return Redirect::route('vote-event.index')
             ->with('warning', '投票活動不存在');
