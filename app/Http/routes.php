@@ -56,6 +56,9 @@ Route::post('vote-selection/vote/{id}', [
 ]);
 Route::resource('vote-selection', 'VoteSelectionController', ['except' => ['index']]);
 
+//網站設定
+Route::resource('setting', 'SettingController', ['except' => ['create', 'store', 'destroy']]);
+
 //Markdown API
 Route::any('markdown', [
     'as' => 'markdown.preview',

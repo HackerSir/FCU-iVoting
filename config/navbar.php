@@ -36,7 +36,9 @@ return array(
 
     //管理員
     'admin' => array(
-        '管理員' => array()
+        '管理員' => array(
+            '網站設定' => 'setting'
+        )
     ),
 
     //遊客
