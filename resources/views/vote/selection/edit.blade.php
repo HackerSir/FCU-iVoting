@@ -59,6 +59,7 @@
 
 @section('javascript')
     $("#image_upload").fileinput({
+        'language': 'tw',
         'uploadUrl': '{{ URL::route('upload.image') }}',
         'deleteUrl': '{{ URL::route('upload.delete-image') }}',
         'multiple': true,
