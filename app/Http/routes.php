@@ -65,6 +65,12 @@ Route::any('markdown', [
     'uses' => 'MarkdownApiController@markdownPreview'
 ]);
 
+//上傳
+Route::controller('upload', 'UploadController', [
+    'postImage' => 'upload.image',
+    'deleteImage' => 'upload.delete-image'
+]);
+
 //未定義路由
 Route::get('{all}', array(
     'as' => 'not-found',

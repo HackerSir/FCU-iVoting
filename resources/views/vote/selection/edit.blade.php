@@ -31,9 +31,14 @@
                                 <div class="form-group has-feedback{{ ($errors->has('image'))?' has-error':'' }}">
                                     <label class="control-label col-md-3" for="image">圖片網址</label>
                                     <div class="col-md-9">
-                                        {!! Form::textarea('image',  $voteSelection->getImageLinks(), ['id' => 'image', 'placeholder' => '請輸入圖片連結，每行一個網址', 'class' => 'form-control', 'rows' => 5]) !!}
+                                        {!! Form::textarea('image',  $voteSelection->getImageLinkstext(), ['id' => 'image', 'placeholder' => '請輸入圖片連結，每行一個網址', 'class' => 'form-control', 'rows' => 5]) !!}
                                         @if($errors->has('image'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                                         <span class="label label-danger">{{ $errors->first('image') }}</span>@endif
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                    {!! Form::file('image_upload[]', ['id' => 'image_upload', 'class' => 'form-control', 'accept' => 'image/*', 'multiple']) !!}
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -50,4 +55,44 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('javascript')
+    $("#image_upload").fileinput({
+        'uploadUrl': '{{ URL::route('upload.image') }}',
+        'deleteUrl': '{{ URL::route('upload.delete-image') }}',
+        'multiple': true,
+        'append': false,
+        'uploadExtraData': {
+            '_token': '{{ Session::token() }}'
+        },
+        'deleteExtraData': {
+            '_token': '{{ Session::token() }}'
+        },
+        initialPreview: [
+            @foreach($voteSelection->getImageLinks() as $image)
+                "<img src='{{ $image }}' class='file-preview-image' title='{{ substr($image, strrpos($image, '/') + 1) }}'>",
+            @endforeach
+        ],
+        initialPreviewConfig: [
+            @foreach($voteSelection->getImageLinks() as $key => $image)
+                {
+                    caption: '{{ substr($image, strrpos($image, '/') + 1) }}',
+                    url: '{{ URL::route('upload.delete-image') }}',
+                    key: '{{ $image }}',
+                },
+            @endforeach
+        ],
+        overwriteInitial: false
+    });
+    $('#image_upload').on('fileuploaded', function(event, data, previewId, index) {
+        var form = data.form, files = data.files, extra = data.extra,
+        response = data.response, reader = data.reader;
+        console.log('Uploaded: ' + response.url);
+        $('textarea#image').val($.trim($('textarea#image').val() + '\n' + response.url));
+    });
+    $('#image_upload').on('filedeleted', function(event, key) {
+        console.log('Deleted: ' + key);
+        $('textarea#image').val($.trim($('textarea#image').val().replace(key, '').replace('\n\n', '\n')));
+    });
 @endsection

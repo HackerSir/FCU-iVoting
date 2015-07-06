@@ -31,6 +31,11 @@ class VoteSelection extends Model
         return $json->title;
     }
 
+    public function getImageLinksText()
+    {
+        return implode(PHP_EOL, $this->getImageLinks());
+    }
+
     public function getImageLinks()
     {
         if (!JSON::isJson($this->data)) {
@@ -40,7 +45,7 @@ class VoteSelection extends Model
         if (empty($json->image)) {
             return null;
         }
-        return implode(PHP_EOL, $json->image);
+        return $json->image;
     }
 
     public function getCount()

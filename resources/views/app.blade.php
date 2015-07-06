@@ -9,6 +9,7 @@
 
         {!! HTML::style('css/app.css'); !!}
         {!! HTML::style('//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/united/bootstrap.css'); !!}
+        {!! HTML::style('css/fileinput.min.css'); !!}
         {!! HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'); !!}
         {!! HTML::style('//cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.5.9/jquery.fullPage.min.css'); !!}
         {!! HTML::style('css/bootstrap-social.css'); !!}
@@ -45,6 +46,7 @@
 
         <!-- Scripts -->
         {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'); !!}
+        {!! HTML::script('js/fileinput.min.js'); !!}
         {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js'); !!}
         {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js'); !!}
         {!! HTML::script('js/moment_zh-tw.js'); !!}
