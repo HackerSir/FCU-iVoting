@@ -41,7 +41,7 @@
         msgImageHeightSmall: '圖像檔案"{name}"的高度必須至少為{size}像素.',
         msgImageWidthLarge: '圖像檔案"{name}"的寬度不能超過{size}像素.',
         msgImageHeightLarge: '圖像檔案"{name}"的高度不能超過{size}像素.',
-        dropZoneTitle: '拖曳檔案到這裡 &hellip;',
+        dropZoneTitle: '拖曳圖片到這裡 &hellip;',
         slugCallback: function(text) {
             return text ? text.split(/(\\|\/)/g).pop().replace(/[^\w\u4e00-\u9fa5\-.\\\/ ]+/g, '') : '';
         }
