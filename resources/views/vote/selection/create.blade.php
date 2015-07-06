@@ -70,7 +70,10 @@
         'deleteExtraData': {
             '_token': '{{ Session::token() }}'
         },
-        overwriteInitial: false
+        'overwriteInitial': false,
+        'previewSettings': {
+            image: {width: "200px", height: "auto"},
+        }
     });
     $('#image_upload').on('fileuploaded', function(event, data, previewId, index) {
         var form = data.form, files = data.files, extra = data.extra,

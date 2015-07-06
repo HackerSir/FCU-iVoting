@@ -72,7 +72,7 @@
         },
         initialPreview: [
             @foreach($voteSelection->getImageLinks() as $image)
-                "<img src='{{ $image }}' class='file-preview-image' title='{{ substr($image, strrpos($image, '/') + 1) }}'>",
+                "<img src='{{ $image }}' class='file-preview-image' title='{{ substr($image, strrpos($image, '/') + 1) }}' style='max-width:200px;max-height:200px;width:auto;height:auto;'>",
             @endforeach
         ],
         initialPreviewConfig: [
@@ -84,7 +84,10 @@
                 },
             @endforeach
         ],
-        overwriteInitial: false
+        'overwriteInitial': false,
+        'previewSettings': {
+            image: {width: "200px", height: "auto"},
+        }
     });
     $('#image_upload').on('fileuploaded', function(event, data, previewId, index) {
         var form = data.form, files = data.files, extra = data.extra,
