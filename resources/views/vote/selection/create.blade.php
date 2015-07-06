@@ -83,6 +83,6 @@
     });
     $('#image_upload').on('filedeleted', function(event, key) {
         console.log('Deleted: ' + key);
-        $('textarea#image').val($.trim($('textarea#image').val().replace(key, '').replace('\n\n', '\n')));
+        $('textarea#image').val($.trim($('textarea#image').val().replace(key, '').replace(/\n+/g, '\n')));
     });
 @endsection
