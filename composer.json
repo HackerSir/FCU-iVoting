@@ -12,7 +12,8 @@
         "laravel/framework": "5.1.*",
         "laravelcollective/html": "~5.0",
         "alfredo-ramos/parsedown-extra-laravel": "~0.2",
-        "nesbot/carbon": "~1.14"
+        "nesbot/carbon": "~1.14",
+        "guzzlehttp/guzzle": "~6.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

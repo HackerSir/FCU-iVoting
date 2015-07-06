@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                    {!! Form::file('image_upload[]', ['id' => 'image_upload', 'class' => 'form-control', 'accept' => 'image/*', 'multiple']) !!}
+                                    {!! Form::file('image_upload', ['id' => 'image_upload', 'class' => 'form-control', 'accept' => 'image/*', 'multiple']) !!}
                                     </div>
                                 </div>
                                 <div class="form-group">

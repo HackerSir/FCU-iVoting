@@ -37,6 +37,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <div class="col-md-12">
+                                        {!! Form::file('image_upload', ['id' => 'image_upload', 'class' => 'form-control', 'accept' => 'image/*', 'multiple']) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <div class="col-md-9 col-md-offset-3">
                                         {!! Form::hidden('vid', $voteEvent->id) !!}
                                         {!! Form::submit('新增投票選項', ['class' => 'btn btn-primary']) !!}
@@ -50,4 +55,30 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('javascript')
+    $("#image_upload").fileinput({
+        'uploadUrl': '{{ URL::route('upload.image') }}',
+        'deleteUrl': '{{ URL::route('upload.delete-image') }}',
+        'multiple': true,
+        'append': false,
+        'uploadExtraData': {
+            '_token': '{{ Session::token() }}'
+        },
+        'deleteExtraData': {
+            '_token': '{{ Session::token() }}'
+        },
+        overwriteInitial: false
+    });
+    $('#image_upload').on('fileuploaded', function(event, data, previewId, index) {
+        var form = data.form, files = data.files, extra = data.extra,
+        response = data.response, reader = data.reader;
+        console.log('Uploaded: ' + response.url);
+        $('textarea#image').val($.trim($('textarea#image').val() + '\n' + response.url));
+    });
+    $('#image_upload').on('filedeleted', function(event, key) {
+        console.log('Deleted: ' + key);
+        $('textarea#image').val($.trim($('textarea#image').val().replace(key, '').replace('\n\n', '\n')));
+    });
 @endsection

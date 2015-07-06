@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
 
 class UploadController extends Controller
@@ -15,10 +17,34 @@ class UploadController extends Controller
         if (!$request->ajax()) {
             return "error";
         }
-        //dd($request->file('image_upload'));
-        //TODO upload to imgur
-        $image = "http://" . str_random(6);
-
+        //上傳至Imgur
+        //取得檔案
+        $file = $request->file('image_upload');
+        $file = File::get($file->getPathname());
+        //檢查client id
+        $client_id = env('IMGUR_CLIENT_ID', '');
+        if (empty($client_id)) {
+            $result = [
+                'error' => '請設定Imgur Client ID',
+            ];
+            return json_encode($result);
+        }
+        //發送請求
+        $client = new Client();
+        $response = $client->post('https://api.imgur.com/3/image', [
+            'timeout' => 30,
+            'headers' => [
+                'Authorization' => 'Client-ID ' . $client_id
+            ],
+            'form_params' => [
+                'image' => base64_encode($file)
+            ],
+            'verify' => false
+        ]);
+        $jsonResponse = json_decode($response->getBody());
+        //取得連結
+        $image = $jsonResponse->data->link;
+        //回傳詳細資訊
         $result = [
             'success' => 'success',
             'url' => $image,
