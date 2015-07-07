@@ -7,7 +7,18 @@
 @section('content')
     <div class="container">
         <div class="jumbotron">
-            <h1>{{ $voteEvent->subject }}</h1>
+            <h1>
+                {{ $voteEvent->subject }}
+                <span class="label label-success" style="font-size: 70%; margin-left: 10px; position: relative; top: -5px;">
+                    @if($voteEvent->isEnded())
+                        已結束
+                    @elseif($voteEvent->isInProgress())
+                        進行中
+                    @else
+                        未開始
+                    @endif
+                </span>
+            </h1>
 
             <p>{!! Markdown::parse(htmlspecialchars($voteEvent->info)) !!}</p>
 
