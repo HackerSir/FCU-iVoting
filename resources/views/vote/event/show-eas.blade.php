@@ -114,7 +114,17 @@
                                 <div class="thumbnail">
                                     {!! HTML::image($voteSelectionItem->getImageLinksText(), '', ['class' => 'img-rounded']) !!}
                                     <div class="caption">
-                                        <h3>{!! HTML::linkRoute('vote-selection.show', $voteSelectionItem->getTitle(),$voteSelectionItem->id, null) !!}</h3>
+                                        <h3>
+                                            @if($voteSelectionItem->isMax())
+                                                <span title="最高票" class="glyphicon glyphicon-king" aria-hidden="true" style="color: blue;"></span>
+                                                <span class="sr-only">最高票</span>
+                                            @endif
+                                            {!! HTML::linkRoute('vote-selection.show', $voteSelectionItem->getTitle(),$voteSelectionItem->id, null) !!}
+                                            @if(Auth::check() && $voteSelectionItem->hasVoted(Auth::user()))
+                                                <span title="我的選擇" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                                <span class="sr-only">我的選擇</span>
+                                            @endif
+                                        </h3>
 
                                         @if($voteEvent->isEnded())
                                             <p class="lead text-right">{{ $voteSelectionItem->getCount() }}&nbsp;票</p>
