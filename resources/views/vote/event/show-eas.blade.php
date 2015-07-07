@@ -90,5 +90,50 @@
                 <li>採相對多數決(也就是最高票獲選)</li>
             </ul>
         </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">投票選項</h3>
+            </div>
+            <div class="panel-body">
+                @if(Auth::check() && Auth::user()->isStaff() && !$voteEvent->isStarted())
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">控制面板</h3>
+                        </div>
+                        <div class="panel-body">
+                            {!! HTML::linkRoute('vote-selection.create', '新增投票選項', ['vid' => $voteEvent->id], ['class' => 'btn btn-success pull-right']) !!}
+                        </div>
+                    </div>
+                @endif
+
+                <div class="row">
+                    @if(count($voteEvent->voteSelections))
+                        @foreach($voteEvent->voteSelections as $voteSelectionItem)
+                            <div class="col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    {!! HTML::image($voteSelectionItem->getImageLinksText(), '', ['class' => 'img-rounded']) !!}
+                                    <div class="caption">
+                                        <h3>{!! HTML::linkRoute('vote-selection.show', $voteSelectionItem->getTitle(),$voteSelectionItem->id, null) !!}</h3>
+
+                                        @if($voteEvent->isEnded())
+                                            <p class="lead text-right">{{ $voteSelectionItem->getCount() }}&nbsp;票</p>
+                                        @endif
+
+                                        @if(Auth::check() && Auth::user()->isStaff() && !$voteEvent->isStarted())
+                                            {!! link_to_route('vote-selection.edit', '編輯', $voteSelectionItem->id, ['class' => 'btn btn-default']) !!}
+                                            {!! Form::open(['route' => ['vote-selection.destroy', $voteSelectionItem->id], 'style' => 'display: inline', 'method' => 'DELETE',
+                                            'onSubmit' => "return confirm('確定要刪除此投票選項嗎？');"]) !!}
+                                            {!! Form::submit('刪除', ['class' => 'btn btn-danger']) !!}
+                                            {!! Form::close() !!}
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
