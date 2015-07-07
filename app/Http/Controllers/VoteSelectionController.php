@@ -19,6 +19,12 @@ class VoteSelectionController extends Controller
 {
     public function __construct()
     {
+        //Email必須驗證
+        $this->middleware('email', [
+            'only' => [
+                'vote'
+            ]
+        ]);
         //限工作人員
         $this->middleware('staff', [
             'except' => [

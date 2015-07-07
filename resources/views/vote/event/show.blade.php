@@ -56,7 +56,7 @@
                                         <td>{{ $voteEvent->close_time }}</td>
                                     </tr>
                                     <tr>
-                                        <td>最大數量：</td>
+                                        <td>最多可選幾項：</td>
                                         <td>{{ $voteEvent->getMaxSelected() }}
                                             @if(Auth::check() && Auth::user()->isStaff())
                                                 <br />（設定值：{{ $voteEvent->max_selected }}）

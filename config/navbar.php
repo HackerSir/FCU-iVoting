@@ -29,14 +29,13 @@ return array(
 
     //工作人員
     'staff' => array(
-        '工作人員' => array(
-            '成員清單' => 'member'
-        )
+        '工作人員' => array()
     ),
 
     //管理員
     'admin' => array(
         '管理員' => array(
+            '成員清單' => 'member',
             '網站設定' => 'setting'
         )
     ),

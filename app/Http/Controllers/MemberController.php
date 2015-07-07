@@ -49,7 +49,7 @@ class MemberController extends Controller
             ]
         ]);*/
         //限工作人員
-        $this->middleware('staff', [
+        $this->middleware('admin', [
             'only' => [
                 'getIndex',
                 'getEditOtherProfile',
