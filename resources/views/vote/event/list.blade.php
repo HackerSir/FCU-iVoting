@@ -60,8 +60,8 @@
                                     </td>
                                     <td>{!! HTML::linkRoute('vote-event.show', $voteEventItem->subject, $voteEventItem->id, null) !!}</td>
                                     <td>
-                                        @if(Auth::check() && Auth::user()->isStaff())
-                                            <a href="{{ URL::route('vote-event.edit', $voteEventItem->id) }}" class="pull-right"><span class="glyphicon glyphicon-cog" aria-hidden="true" /></a>
+                                        @if(Auth::check() && Auth::user()->isStaff() && !$voteEventItem->isEnded())
+                                            <a href="{{ URL::route('vote-event.edit', $voteEventItem->id) }}" class="pull-right" title="編輯投票活動"><span class="glyphicon glyphicon-cog" aria-hidden="true" /></a>
                                         @endif
                                     </td>
                                     <td>{{ $voteEventItem->open_time }}</td>
