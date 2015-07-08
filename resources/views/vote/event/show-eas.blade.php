@@ -97,10 +97,7 @@
             </div>
             <div class="panel-body">
                 @if(Auth::check() && Auth::user()->isStaff() && !$voteEvent->isStarted())
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">控制面板</h3>
-                        </div>
+                    <div class="panel" style="background-color: #f2dede;">
                         <div class="panel-body">
                             {!! HTML::linkRoute('vote-selection.create', '新增投票選項', ['vid' => $voteEvent->id], ['class' => 'btn btn-success pull-right']) !!}
                         </div>
