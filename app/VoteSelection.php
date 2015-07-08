@@ -39,11 +39,11 @@ class VoteSelection extends Model
     public function getImageLinks()
     {
         if (!JSON::isJson($this->data)) {
-            return null;
+            return [];
         }
         $json = json_decode($this->data);
         if (empty($json->image)) {
-            return null;
+            return [];
         }
         return $json->image;
     }
