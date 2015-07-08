@@ -183,10 +183,10 @@ class VoteEventController extends Controller
             $voteEvent->subject = $request->get('subject');
             if (!$voteEvent->isStarted()) {
                 $voteEvent->open_time = $open_time;
+                $voteEvent->max_selected = ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1;
             }
             $voteEvent->close_time = $close_time;
             $voteEvent->info = $request->get('info');
-            $voteEvent->max_selected = ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1;
             $voteEvent->save();
             return Redirect::route('vote-event.show', $id)
                 ->with('global', '投票活動已更新');

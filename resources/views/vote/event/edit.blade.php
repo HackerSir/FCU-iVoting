@@ -51,9 +51,13 @@
                                 <div class="form-group has-feedback{{ ($errors->has('max_selected'))?' has-error':'' }}">
                                     <label class="control-label col-md-2" for="max_selected">最多可選幾項</label>
                                     <div class="col-md-9">
-                                        {!! Form::number('max_selected', $voteEvent->max_selected, ['id' => 'max_selected', 'placeholder' => '每人最多可選擇之數量，預設為1', 'class' => 'form-control', 'min' => 1]) !!}
-                                        @if($errors->has('max_selected'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                                        <span class="label label-danger">{{ $errors->first('max_selected') }}</span>@endif
+                                        @if(!$voteEvent->isStarted())
+                                            {!! Form::number('max_selected', $voteEvent->max_selected, ['id' => 'max_selected', 'placeholder' => '每人最多可選擇之數量，預設為1', 'class' => 'form-control', 'min' => 1]) !!}
+                                            @if($errors->has('max_selected'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                            <span class="label label-danger">{{ $errors->first('max_selected') }}</span>@endif
+                                        @else
+                                            {{ $voteEvent->max_selected }}
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group has-feedback{{ ($errors->has('info'))?' has-error':'' }}">
