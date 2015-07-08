@@ -33,7 +33,7 @@ class VoteSelection extends Model
 
     public function getImageLinksText()
     {
-        return implode(PHP_EOL, $this->getImageLinks());
+        return ($this->getImageLinks()) ? implode(PHP_EOL, $this->getImageLinks()) : null;
     }
 
     public function getImageLinks()
