@@ -36,7 +36,13 @@
                                 </table>
                                 <hr />
                                 <div>
-                                    @if(Auth::check())
+                                    @if(!Auth::check())
+                                        <div title="登入以完成投票" style="display: inline-block">
+                                            <span class="btn btn-default btn-lg" disabled>按此投票</span>
+                                        </div>
+                                    @elseif(!Auth::user()->isConfirmed())
+                                        {!! HTML::linkRoute('member.resend', '按此投票', [], ['title' => '投票前請先完成信箱驗證', 'class' => 'btn btn-default btn-lg']) !!}
+                                    @else
                                         @if($voteSelection->voteEvent->isInProgress())
                                             此活動最多可選{{ $voteSelection->voteEvent->getMaxSelected() }}項，您已選擇{{ $voteSelection->voteEvent->getSelected(Auth::user()) }}項<br />
                                             @if($voteSelection->voteEvent->getMaxSelected() > $voteSelection->voteEvent->getSelected(Auth::user()))
@@ -60,10 +66,6 @@
                                                 <span class="btn btn-default btn-lg" disabled>按此投票</span>
                                             </div>
                                         @endif
-                                    @else
-                                        <div title="登入以完成投票" style="display: inline-block">
-                                            <span class="btn btn-default btn-lg" disabled>按此投票</span>
-                                        </div>
                                     @endif
                                 </div>
                                 <div>
