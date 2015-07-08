@@ -11,7 +11,6 @@
         {!! HTML::style('//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/united/bootstrap.css'); !!}
         {!! HTML::style('css/fileinput.min.css'); !!}
         {!! HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'); !!}
-        {!! HTML::style('//cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.5.9/jquery.fullPage.min.css'); !!}
         {!! HTML::style('css/bootstrap-social.css'); !!}
         {!! HTML::style('css/animate.css'); !!}
         {!! HTML::style('css/stylesheet.css'); !!}
