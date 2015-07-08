@@ -112,7 +112,11 @@
                         @foreach($voteEvent->voteSelections as $voteSelectionItem)
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
-                                    {!! HTML::image($voteSelectionItem->getImageLinksText(), '', ['class' => 'img-rounded']) !!}
+                                    @if(count($voteSelectionItem->getImageLinks()) > 0)
+                                        {!! HTML::image($voteSelectionItem->getImageLinks()[0], '', ['class' => 'img-rounded', 'style' => 'max-width:200px;max-height:200px;width:auto;height:auto;']) !!}
+                                    @else
+                                        {!! HTML::image('http://fakeimg.pl/200x200/?text=No+Image', '', ['class' => 'img-rounded', 'style' => 'max-width:200px;max-height:200px;width:auto;height:auto;']) !!}
+                                    @endif
                                     <div class="caption">
                                         <h3>
                                             @if($voteSelectionItem->isMax())
