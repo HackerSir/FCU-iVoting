@@ -120,7 +120,7 @@
                                     </div>
                                     <div class="caption">
                                         <h3>
-                                            @if($voteSelectionItem->isMax())
+                                            @if($voteEvent->isEnded() && $voteSelectionItem->isMax())
                                                 <span title="最高票" class="glyphicon glyphicon-king" aria-hidden="true" style="color: blue;"></span>
                                                 <span class="sr-only">最高票</span>
                                             @endif
