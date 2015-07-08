@@ -110,9 +110,9 @@
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
                                     @if(count($voteSelectionItem->getImageLinks()) > 0)
-                                        {!! HTML::image($voteSelectionItem->getImageLinks()[0], '', ['class' => 'img-rounded', 'style' => 'max-width:200px;max-height:200px;width:auto;height:auto;']) !!}
+                                        {!! HTML::image($voteSelectionItem->getImageLinks()[0], '', ['class' => 'img-rounded', 'style' => 'max-width:100%;max-height:300px;width:auto;height:auto;']) !!}
                                     @else
-                                        {!! HTML::image('http://fakeimg.pl/200x200/?text=No+Image', '', ['class' => 'img-rounded', 'style' => 'max-width:200px;max-height:200px;width:auto;height:auto;']) !!}
+                                        {!! HTML::image('http://fakeimg.pl/300x300/?text=No+Image', '', ['class' => 'img-rounded', 'style' => 'max-width:100%;max-height:300px;width:auto;height:auto;']) !!}
                                     @endif
                                     <div class="caption">
                                         <h3>
