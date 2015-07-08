@@ -110,9 +110,11 @@
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
                                     @if(count($voteSelectionItem->getImageLinks()) > 0)
-                                        {!! HTML::image($voteSelectionItem->getImageLinks()[0], '', ['class' => 'img-rounded', 'style' => 'max-width:100%;max-height:300px;width:auto;height:auto;']) !!}
+                                        {{--{!! HTML::image($voteSelectionItem->getImageLinks()[0], '', ['class' => 'img-rounded', 'style' => 'max-width:100%;max-height:300px;width:auto;height:auto;']) !!}--}}
+                                        <img src="{{ $voteSelectionItem->getImageLinks()[0] }}" class="img-rounded" style="max-width:100%;max-height:300px;width:auto;height:auto;" title="點此看更多圖" data-toggle="modal" data-target="#imageModal" data-title="{{ $voteSelectionItem->getTitle() }}" data-images="{{ implode(';',$voteSelectionItem->getImageLinks()) }}" />
                                     @else
-                                        {!! HTML::image('http://fakeimg.pl/300x300/?text=No+Image', '', ['class' => 'img-rounded', 'style' => 'max-width:100%;max-height:300px;width:auto;height:auto;']) !!}
+                                        {{--{!! HTML::image('http://fakeimg.pl/300x300/?text=No+Image', '', ['class' => 'img-rounded', 'style' => 'max-width:100%;max-height:300px;width:auto;height:auto;']) !!}--}}
+                                        <img src="http://fakeimg.pl/300x300/?text=No+Image" class="img-rounded" style="max-width:100%;max-height:300px;width:auto;height:auto;" />
                                     @endif
                                     <div class="caption">
                                         <h3>
@@ -147,4 +149,75 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade bs-example-modal-lg" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="carousel-image" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            {{--<li data-target="#carousel" data-slide-to="0" class="active"></li>--}}
+                            {{--<li data-target="#carousel" data-slide-to="1"></li>--}}
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            {{--<div class="item active">--}}
+                                {{--<img src="..." />--}}
+                            {{--</div>--}}
+                            {{--<div class="item">--}}
+                                {{--<img src="..." />--}}
+                            {{--</div>--}}
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-image" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-image" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
+
+@section('script')
+
+    <script type="text/javascript">
+        $('#imageModal').on('show.bs.modal', function (event) {
+            var clickTarget = $(event.relatedTarget);// Button that triggered the modal
+
+            // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var recipient = clickTarget.data('title');
+            var images = clickTarget.data('images').split(';');
+
+            var modal = $(this);
+            modal.find('.modal-title').text(recipient);
+
+            var div_ol = modal.find('#carousel-image > .carousel-indicators');
+            var div_image = modal.find('#carousel-image > .carousel-inner');
+            div_ol.empty();
+            div_image.empty();
+            $.each(images, function(index, value) {
+                div_ol.append('<li data-target="#carousel-image" data-slide-to="' + index +  '"></li>');
+                div_image.append('<div class="item"><img src="'+ value +'" /></div>');
+            });
+            div_ol.children().first().addClass('active');
+            div_image.children().first().addClass('active');
+        });
+    </script>
+
 @endsection
