@@ -106,7 +106,7 @@ class VoteEventController extends Controller
         $voteEvent = VoteEvent::find($id);
         $autoRedirectSetting = Setting::find('auto-redirect');
         if ($voteEvent) {
-            return view('vote.event.show')->with('voteEvent', $voteEvent)->with('autoRedirectSetting', $autoRedirectSetting);
+            return view('vote.event.show-eas')->with('voteEvent', $voteEvent)->with('autoRedirectSetting', $autoRedirectSetting);
         }
         return Redirect::route('vote-event.index')
             ->with('warning', '投票活動不存在');
