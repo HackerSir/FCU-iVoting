@@ -16,7 +16,6 @@
                             <thead>
                             <tr>
                                 <th>信箱</th>
-                                <th>NID</th>
                                 <th>群組</th>
                             </tr>
                             </thead>
@@ -31,7 +30,6 @@
                                             <span class="label label-danger">未驗證</span>
                                         @endif
                                     </td>
-                                    <td>{{ $userItem->nid }}</td>
                                     <td>{{ $userItem->group->title }}</td>
                                 </tr>
                             @endforeach
