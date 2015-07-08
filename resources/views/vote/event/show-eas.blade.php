@@ -74,7 +74,7 @@
 
             <p>{!! Markdown::parse(htmlspecialchars($voteEvent->info)) !!}</p>
 
-            <p>活動期間：{{ $voteEvent->open_time }} &nbsp; ~ &nbsp; {{ $voteEvent->close_time }}</p>
+            <p>活動期間：{{ $voteEvent->getHumanTimeString() }}</p>
 
             {!! HTML::linkRoute('vote-event.index', '返回投票活動列表', [], ['class' => 'btn btn-default pull-right']) !!}
         </div>
