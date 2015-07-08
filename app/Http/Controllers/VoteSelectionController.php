@@ -95,7 +95,8 @@ class VoteSelectionController extends Controller
             //封裝JSON
             $obj = new stdClass();
             $obj->title = $request->get('title');
-            $obj->image = explode(PHP_EOL, $request->get('image'));
+            //$obj->image = explode(PHP_EOL, $request->get('image'));
+            $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), NULL, PREG_SPLIT_NO_EMPTY);
             $json = json_encode($obj);
 
             $voteSelection = VoteSelection::create(array(
@@ -175,7 +176,8 @@ class VoteSelectionController extends Controller
             //封裝JSON
             $obj = new stdClass();
             $obj->title = $request->get('title');
-            $obj->image = explode(PHP_EOL, $request->get('image'));
+            //$obj->image = explode(PHP_EOL, $request->get('image'));
+            $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), NULL, PREG_SPLIT_NO_EMPTY);
             $json = json_encode($obj);
 
             $voteSelection->data = $json;
