@@ -109,6 +109,7 @@
                         @foreach($voteEvent->voteSelections as $voteSelectionItem)
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
+                                    <div class="text-center" style="height: 300px;">
                                     @if(count($voteSelectionItem->getImageLinks()) > 0)
                                         {{--{!! HTML::image($voteSelectionItem->getImageLinks()[0], '', ['class' => 'img-rounded', 'style' => 'max-width:100%;max-height:300px;width:auto;height:auto;']) !!}--}}
                                         <img src="{{ $voteSelectionItem->getImageLinks()[0] }}" class="img-rounded" style="max-width:100%;max-height:300px;width:auto;height:auto;" title="點此看更多圖" data-toggle="modal" data-target="#imageModal" data-title="{{ $voteSelectionItem->getTitle() }}" data-images="{{ implode(';',$voteSelectionItem->getImageLinks()) }}" />
@@ -116,6 +117,7 @@
                                         {{--{!! HTML::image('http://fakeimg.pl/300x300/?text=No+Image', '', ['class' => 'img-rounded', 'style' => 'max-width:100%;max-height:300px;width:auto;height:auto;']) !!}--}}
                                         <img src="http://fakeimg.pl/300x300/?text=No+Image" class="img-rounded" style="max-width:100%;max-height:300px;width:auto;height:auto;" />
                                     @endif
+                                    </div>
                                     <div class="caption">
                                         <h3>
                                             @if($voteSelectionItem->isMax())
