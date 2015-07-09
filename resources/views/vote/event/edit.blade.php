@@ -31,7 +31,7 @@
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                         @else
-                                            {{ $voteEvent->open_time }}
+                                            {!! Form::text('open_time',$voteEvent->open_time, ['id' => 'open_time', 'placeholder' => 'YYYY/MM/DD HH:mm:ss', 'class' => 'form-control', 'readonly']) !!}
                                         @endif
                                         @if($errors->has('open_time'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                                         <span class="label label-danger">{{ $errors->first('open_time') }}</span>@endif
@@ -56,7 +56,7 @@
                                             @if($errors->has('max_selected'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                                             <span class="label label-danger">{{ $errors->first('max_selected') }}</span>@endif
                                         @else
-                                            {{ $voteEvent->max_selected }}
+                                            {!! Form::number('max_selected', $voteEvent->max_selected, ['id' => 'max_selected', 'placeholder' => '每人最多可選擇之數量，預設為1', 'class' => 'form-control', 'min' => 1, 'readonly']) !!}
                                         @endif
                                     </div>
                                 </div>
