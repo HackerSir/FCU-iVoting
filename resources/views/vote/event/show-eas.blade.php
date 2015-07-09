@@ -222,6 +222,16 @@
             });
             div_ol.children().first().addClass('active');
             div_image.children().first().addClass('active');
+
+            if (images.length == 1) {
+                modal.find('.left.carousel-control').hide();
+                modal.find('.right.carousel-control').hide();
+            }
+            else {
+                modal.find('.left.carousel-control').show();
+                modal.find('.right.carousel-control').show();
+            }
+
         });
         $('#imageModal').on('hide.bs.modal', function (event) {
             $('html').css('overflow-y', 'scroll');
