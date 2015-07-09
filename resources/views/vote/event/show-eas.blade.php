@@ -234,6 +234,7 @@
 
         });
         $('#imageModal').on('hide.bs.modal', function (event) {
+            $('body').removeAttr('style');
             $('html').css('overflow-y', 'scroll');
         });
     </script>
