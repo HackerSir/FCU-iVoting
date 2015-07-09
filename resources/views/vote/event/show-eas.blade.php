@@ -198,6 +198,9 @@
 
     <script type="text/javascript">
         $('#imageModal').on('show.bs.modal', function (event) {
+            $('body').width($('body').width());
+            $('html').css('overflow-y', 'hidden');
+
             var clickTarget = $(event.relatedTarget);// Button that triggered the modal
 
             // Extract info from data-* attributes
@@ -219,6 +222,9 @@
             });
             div_ol.children().first().addClass('active');
             div_image.children().first().addClass('active');
+        });
+        $('#imageModal').on('hide.bs.modal', function (event) {
+            $('html').css('overflow-y', 'scroll');
         });
     </script>
 
