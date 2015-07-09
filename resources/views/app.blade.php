@@ -49,6 +49,7 @@
         {!! HTML::script('js/fileinput.min.js'); !!}
         {!! HTML::script('js/fileinput_locale_tw.js'); !!}
         {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js'); !!}
+        {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/holder/2.8.0/holder.min.js'); !!}
         {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js'); !!}
         {!! HTML::script('js/moment_zh-tw.js'); !!}
         {!! HTML::script('js/bootstrap-datetimepicker.js'); !!}
