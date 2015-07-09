@@ -161,15 +161,17 @@
                     <div id="carousel-image" class="carousel slide" data-ride="carousel">
                         <!-- Indicators -->
                         <ol class="carousel-indicators">
-                            {{--<li data-target="#carousel" data-slide-to="0" class="active"></li>--}}
+                            {{-- 請保留這個，避免 bootstrap 初始化時炸掉 --}}
+                            <li data-target="#carousel" data-slide-to="0" class="active"></li>
                             {{--<li data-target="#carousel" data-slide-to="1"></li>--}}
                         </ol>
 
                         <!-- Wrapper for slides -->
                         <div class="carousel-inner" role="listbox">
-                            {{--<div class="item active">--}}
-                                {{--<img src="..." />--}}
-                            {{--</div>--}}
+                            {{-- 請保留這個，避免 bootstrap 初始化時炸掉 --}}
+                            <div class="item active">
+                                <img src="" />
+                            </div>
                             {{--<div class="item">--}}
                                 {{--<img src="..." />--}}
                             {{--</div>--}}
