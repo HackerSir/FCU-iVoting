@@ -18,7 +18,7 @@ class Imgur
     static public function thumbnail($url, $suffix = null)
     {
         if (is_null(self::getImgurID($url))) {
-            return null;
+            return $url;
         }
         if (!is_null($suffix) && !in_array($suffix, ['s', 'b', 't', 'm', 'l', 'h'])) {
             return null;
