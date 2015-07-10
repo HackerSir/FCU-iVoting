@@ -19,6 +19,7 @@
         {!! HTML::style('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css'); !!}
         {!! HTML::style('css/select2-bootstrap.min.css'); !!}
         {!! HTML::style('css/callout.css'); !!}
+        {!! HTML::style('css/sticky-footer-navbar.css'); !!}
         <style type="text/css">
             @yield('css')
         </style>
@@ -43,6 +44,12 @@
             {{-- content --}}
             @yield('content')
         </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p class="text-muted">FCU HackerSir</p>
+            </div>
+        </footer>
 
         <!-- Scripts -->
         {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'); !!}
