@@ -135,7 +135,7 @@
                                         @if($voteEvent->isInProgress())
                                             @if(!Auth::check())
                                                 <div title="登入以完成投票" style="display: inline-block">
-                                                    <span class="btn btn-default btn-lg" disabled>按此投票</span>
+                                                    <span class="btn btn-default btn-lg disabled">按此投票</span>
                                                 </div>
                                             @elseif(!Auth::user()->isConfirmed())
                                                 {!! HTML::linkRoute('member.resend', '按此投票', [], ['title' => '投票前請先完成信箱驗證', 'class' => 'btn btn-default btn-lg']) !!}
@@ -144,11 +144,11 @@
                                                     @if(!$voteSelectionItem->hasVoted(Auth::user()))
                                                         {!! Form::open(['route' => ['vote-selection.vote', $voteSelectionItem->id], 'style' => 'display: inline', 'method' => 'POST',
                                                         'onSubmit' => "return confirm('確定要投票給此項目嗎？');"]) !!}
-                                                        {!! Form::submit('按此投票', ['class' => 'btn btn-primary btn-lg']) !!}
+                                                        {!! Form::submit('按此投票', ['class' => 'btn btn-success btn-lg']) !!}
                                                         {!! Form::close() !!}
                                                     @else($voteSelectionItem->hasVoted(Auth::user()))
                                                         <div title="您已經投過此項目" style="display: inline-block">
-                                                            <span class="btn btn-default btn-lg" disabled>按此投票</span>
+                                                            <span class="btn btn-success btn-lg disabled">按此投票</span>
                                                         </div>
                                                     @endif
                                                 @else
