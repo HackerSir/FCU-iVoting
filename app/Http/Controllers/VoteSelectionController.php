@@ -109,22 +109,6 @@ class VoteSelectionController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        $voteSelection = VoteSelection::find($id);
-        if ($voteSelection) {
-            return view('vote.selection.show')->with('voteSelection', $voteSelection);
-        }
-        return Redirect::route('vote-event.index')
-            ->with('warning', '投票選項不存在');
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id
@@ -219,16 +203,16 @@ class VoteSelectionController extends Controller
                 ->with('warning', '投票選項不存在');
         }
         if (!$voteSelection->voteEvent->isInProgress()) {
-            return Redirect::route('vote-selection.show', $voteSelection->id)
+            return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('warning', '非投票期間');
         }
         //檢查用戶狀態
         if ($voteSelection->hasVoted(Auth::user())) {
-            return Redirect::route('vote-selection.show', $voteSelection->id)
+            return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('warning', '已投過此項目');
         }
         if ($voteSelection->voteEvent->getMaxSelected() <= $voteSelection->voteEvent->getSelected(Auth::user())) {
-            return Redirect::route('vote-selection.show', $voteSelection->id)
+            return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('warning', '無法再投更多項目');
         }
         //新增投票資料
@@ -236,7 +220,7 @@ class VoteSelectionController extends Controller
             'user_id' => Auth::user()->id,
             'vote_selection_id' => $voteSelection->id
         ));
-        return Redirect::route('vote-selection.show', $voteSelection->id)
+        return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
             ->with('global', '投票完成');
     }
 }

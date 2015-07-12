@@ -86,6 +86,9 @@
                     @if(Auth::check() && Auth::user()->isStaff())
                         （設定值：{{ $voteEvent->max_selected }}）
                     @endif
+                    @if(Auth::check() && $voteEvent->isStarted())
+                        ，您已選擇{{ $voteEvent->getSelected(Auth::user()) }}項
+                    @endif
                 </li>
                 <li>採相對多數決(也就是最高票獲選)</li>
             </ul>
@@ -122,13 +125,39 @@
                                                 <span title="最高票" class="glyphicon glyphicon-king" aria-hidden="true" style="color: blue;"></span>
                                                 <span class="sr-only">最高票</span>
                                             @endif
-                                            {!! HTML::linkRoute('vote-selection.show', $voteSelectionItem->getTitle(),$voteSelectionItem->id, null) !!}
+                                            {{ $voteSelectionItem->getTitle() }}
                                             @if(Auth::check() && $voteSelectionItem->hasVoted(Auth::user()))
                                                 <span title="我的選擇" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                                 <span class="sr-only">我的選擇</span>
                                             @endif
                                         </h3>
 
+                                        @if($voteEvent->isInProgress())
+                                            @if(!Auth::check())
+                                                <div title="登入以完成投票" style="display: inline-block">
+                                                    <span class="btn btn-default btn-lg" disabled>按此投票</span>
+                                                </div>
+                                            @elseif(!Auth::user()->isConfirmed())
+                                                {!! HTML::linkRoute('member.resend', '按此投票', [], ['title' => '投票前請先完成信箱驗證', 'class' => 'btn btn-default btn-lg']) !!}
+                                            @else
+                                                @if($voteEvent->getMaxSelected() > $voteEvent->getSelected(Auth::user()))
+                                                    @if(!$voteSelectionItem->hasVoted(Auth::user()))
+                                                        {!! Form::open(['route' => ['vote-selection.vote', $voteSelectionItem->id], 'style' => 'display: inline', 'method' => 'POST',
+                                                        'onSubmit' => "return confirm('確定要投票給此項目嗎？');"]) !!}
+                                                        {!! Form::submit('按此投票', ['class' => 'btn btn-primary btn-lg']) !!}
+                                                        {!! Form::close() !!}
+                                                    @else($voteSelectionItem->hasVoted(Auth::user()))
+                                                        <div title="您已經投過此項目" style="display: inline-block">
+                                                            <span class="btn btn-default btn-lg" disabled>按此投票</span>
+                                                        </div>
+                                                    @endif
+                                                @else
+                                                    <div title="您已經完成投票" style="display: inline-block">
+                                                        <span class="btn btn-default btn-lg" disabled>按此投票</span>
+                                                    </div>
+                                                @endif
+                                            @endif
+                                        @endif
                                         @if($voteEvent->isEnded())
                                             <p class="lead text-right">{{ $voteSelectionItem->getCount() }}&nbsp;票</p>
                                         @endif

@@ -54,7 +54,7 @@ Route::post('vote-selection/vote/{id}', [
     'as' => 'vote-selection.vote',
     'uses' => 'VoteSelectionController@vote'
 ]);
-Route::resource('vote-selection', 'VoteSelectionController', ['except' => ['index']]);
+Route::resource('vote-selection', 'VoteSelectionController', ['except' => ['index', 'show']]);
 
 //網站設定
 Route::resource('setting', 'SettingController', ['except' => ['create', 'store', 'destroy']]);
