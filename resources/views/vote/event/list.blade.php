@@ -21,7 +21,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container container-mobile">
         <div class="row">
             <div class="col-md-12 col-md-offset-0">
                 <div class="panel panel-default">
@@ -60,8 +60,8 @@
                                             <a href="{{ URL::route('vote-event.edit', $voteEventItem->id) }}" class="pull-right" title="編輯投票活動"><span class="glyphicon glyphicon-cog" aria-hidden="true" /></a>
                                         @endif
                                     </td>
-                                    <td style="min-height: 37px;">{{ $voteEventItem->open_time }}</td>
-                                    <td style="min-height: 37px;">{{ $voteEventItem->close_time }}</td>
+                                    <td>{{ $voteEventItem->open_time }}</td>
+                                    <td>{{ $voteEventItem->close_time }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

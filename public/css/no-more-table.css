@@ -1,6 +1,10 @@
 /* 當表格太窄時，會切換顯示模式，改成兩行，左邊是標題，右邊是內容 */
 @media
 only screen and (max-width: 479px) {
+    .container-mobile {
+        padding:0;
+        margin:0;
+    }
 
     /* Force table to not be like tables anymore */
     .noMoreTable table, thead, tbody, th, td, tr.classData {
@@ -31,6 +35,7 @@ only screen and (max-width: 479px) {
         padding-left: 40% !important;
         white-space: normal;
         text-align: left;
+        min-height: 37px;
     }
 
     .noMoreTable td:before {
