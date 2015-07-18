@@ -16,6 +16,10 @@ only screen and (max-width: 479px) {
         border: 1px solid #ccc;
     }
 
+    .noMoreTable tr.classData td.hidePhone {
+        display: none;
+    }
+
     .noMoreTable tr:not(.classData) {
         display: none;
     }

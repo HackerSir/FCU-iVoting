@@ -19,8 +19,8 @@
             */
             .noMoreTable td:nth-of-type(1):before { content: "狀態"; }
             .noMoreTable td:nth-of-type(2):before { content: "投票主題"; }
-            .noMoreTable td:nth-of-type(3):before { content: "開始時間"; }
-            .noMoreTable td:nth-of-type(4):before { content: "結束時間"; }
+            .noMoreTable td:nth-of-type(4):before { content: "開始時間"; }
+            .noMoreTable td:nth-of-type(5):before { content: "結束時間"; }
         }
     </style>
 @endsection
@@ -35,6 +35,7 @@
                     <div class="panel-body">
                         @if(Auth::check() && Auth::user()->isStaff())
                             {!! HTML::linkRoute('vote-event.create', '新增投票活動', [], ['class' => 'btn btn-primary pull-right']) !!}
+                            <div class="clearfix"></div>
                         @endif
                         <table class="table table-hover noMoreTable" style="margin-top: 5px">
                             <thead>
@@ -59,13 +60,13 @@
                                         @endif
                                     </td>
                                     <td>{!! HTML::linkRoute('vote-event.show', $voteEventItem->subject, $voteEventItem->id, null) !!}</td>
-                                    <td>
+                                    <td class="hidePhone">
                                         @if(Auth::check() && Auth::user()->isStaff() && !$voteEventItem->isEnded())
                                             <a href="{{ URL::route('vote-event.edit', $voteEventItem->id) }}" class="pull-right" title="編輯投票活動"><span class="glyphicon glyphicon-cog" aria-hidden="true" /></a>
                                         @endif
                                     </td>
-                                    <td>{{ $voteEventItem->open_time }}</td>
-                                    <td>{{ $voteEventItem->close_time }}</td>
+                                    <td style="min-height: 37px;">{{ $voteEventItem->open_time }}</td>
+                                    <td style="min-height: 37px;">{{ $voteEventItem->close_time }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
