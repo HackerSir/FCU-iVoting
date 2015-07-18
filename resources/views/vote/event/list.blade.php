@@ -9,11 +9,6 @@
     <style type="text/css">
         @media
         only screen and (max-width: 479px) {
-            .container {
-                padding:0;
-                margin:0;
-            }
-
             /*
             Label the data
             */
