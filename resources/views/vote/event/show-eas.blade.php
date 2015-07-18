@@ -77,6 +77,7 @@
             <p>活動期間：{{ $voteEvent->getHumanTimeString() }}</p>
 
             {!! HTML::linkRoute('vote-event.index', '返回投票活動列表', [], ['class' => 'btn btn-default pull-right']) !!}
+            <div class="clearfix"></div>
         </div>
 
         <div class="bs-callout bs-callout-warning">
