@@ -91,7 +91,7 @@
                         ，您已選擇{{ $voteEvent->getSelected(Auth::user()) }}項
                     @endif
                 </li>
-                <li>採相對多數決(也就是最高票獲選)</li>
+                <li>選出一名，採相對多數決(也就是最高票獲選)</li>
             </ul>
         </div>
 
