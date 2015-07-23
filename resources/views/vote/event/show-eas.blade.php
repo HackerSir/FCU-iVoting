@@ -73,7 +73,8 @@
         @endif
 
         <div class="jumbotron">
-            <h1>
+            {{-- h1 style comment: 加一些行高，標籤換行時才不會黏在標題下方 --}}
+            <h1 style="line-height: 1.3;">
                 {{ $voteEvent->subject }}
                 <span class="label label-success" style="font-size: 70%; margin-left: 10px; position: relative; top: -5px;">
                     @if($voteEvent->isEnded())
