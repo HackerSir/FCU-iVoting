@@ -47,7 +47,7 @@
 
         <footer class="footer">
             <div class="container">
-                <p class="text-muted"><a href="https://hackersir.info" target="_blank">FCU HackerSir</a></p>
+                <p class="text-muted">Powered by <a href="https://hackersir.info" target="_blank">FCU HackerSir</a></p>
             </div>
         </footer>
 
