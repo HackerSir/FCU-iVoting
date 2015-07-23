@@ -95,7 +95,7 @@ class VoteEventController extends Controller
                 'close_time' => $close_time,
                 'info' => $request->get('info'),
                 'max_selected' => $max_selected,
-                'organizer_id' => $request->get('organizer')
+                'organizer_id' => ($request->has('organizer')) ? $request->get('organizer') : null
             ));
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
@@ -196,7 +196,7 @@ class VoteEventController extends Controller
             if (!$voteEvent->isStarted()) {
                 $voteEvent->open_time = $open_time;
                 $voteEvent->max_selected = ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1;
-                $voteEvent->organizer_id = $request->get('organizer');
+                $voteEvent->organizer_id = ($request->has('organizer')) ? $request->get('organizer') : null;
             }
             $voteEvent->close_time = $close_time;
             $voteEvent->info = $request->get('info');
