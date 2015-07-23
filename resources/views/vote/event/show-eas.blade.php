@@ -4,6 +4,20 @@
     {{ $voteEvent->subject }} - 投票活動
 @endsection
 
+@section('css')
+    <style type="text/css">
+        div.more-image-fake-shadow {
+            background: lightgrey;
+            position: absolute;
+            width: 94%;
+            margin-left: 3%;
+            height: 14px;
+            top: -7px;
+            z-index: -1;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container">
         @if(Auth::check() && Auth::user()->isStaff())
@@ -114,11 +128,16 @@
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
                                     <div class="vertical-center" style="height: 300px;">
-                                    @if(count($voteSelectionItem->getImageLinks()) > 0)
-                                        <img src="{{ App\Imgur::thumbnail($voteSelectionItem->getImageLinks()[0], 'm') }}" class="img-rounded" style="max-width:100%;max-height:300px;width:auto;height:auto; cursor: pointer;" title="點此看更多圖" data-toggle="modal" data-target="#imageModal" data-title="{{ $voteSelectionItem->getTitle() }}" data-images="{{ implode(';',$voteSelectionItem->getImageLinks()) }}" />
-                                    @else
-                                        <img data-src="holder.js/300x300?text=沒有圖片&size=45" class="img-rounded" style="max-width:100%;max-height:300px;width:auto;height:auto;" />
-                                    @endif
+                                        <div style="position: relative; z-index: 0;">
+                                            @if(count($voteSelectionItem->getImageLinks()) > 0)
+                                                @if(count($voteSelectionItem->getImageLinks()) > 1)
+                                                    <div class="more-image-fake-shadow img-rounded"></div>
+                                                @endif
+                                                <img src="{{ App\Imgur::thumbnail($voteSelectionItem->getImageLinks()[0], 'm') }}" class="img-rounded" style="max-width:100%;max-height:300px;width:auto;height:auto; cursor: pointer;" title="點此看更多圖" data-toggle="modal" data-target="#imageModal" data-title="{{ $voteSelectionItem->getTitle() }}" data-images="{{ implode(';',$voteSelectionItem->getImageLinks()) }}"/>
+                                            @else
+                                                <img data-src="holder.js/300x300?text=沒有圖片&size=45" class="img-rounded" style="max-width:100%;max-height:300px;width:auto;height:auto;"/>
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="caption">
                                         <h3 style="height: 29px">
@@ -127,6 +146,9 @@
                                                 <span class="sr-only">最高票</span>
                                             @endif
                                             {{ $voteSelectionItem->getTitle() }}
+                                            @if(count($voteSelectionItem->getImageLinks()) > 0)
+                                                <small>({{ count($voteSelectionItem->getImageLinks()) }}張照片)</small>
+                                            @endif
                                             @if(Auth::check() && $voteSelectionItem->hasVoted(Auth::user()))
                                                 <span title="我的選擇" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                                 <span class="sr-only">我的選擇</span>
