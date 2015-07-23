@@ -141,7 +141,7 @@
                                         </div>
                                     </div>
                                     <div class="caption">
-                                        <h3 style="height: 29px">
+                                        <h3 style="min-height: 29px">
                                             @if($voteEvent->isEnded() && $voteSelectionItem->isMax())
                                                 <span title="最高票" class="glyphicon glyphicon-king" aria-hidden="true" style="color: blue;"></span>
                                                 <span class="sr-only">最高票</span>
