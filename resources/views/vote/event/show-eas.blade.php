@@ -148,7 +148,8 @@
                                             @endif
                                             {{ $voteSelectionItem->getTitle() }}
                                             @if(count($voteSelectionItem->getImageLinks()) > 0)
-                                                <small>({{ count($voteSelectionItem->getImageLinks()) }}張照片)</small>
+                                                {{-- 防止字被換行切到 --}}
+                                                <small style="display: inline-block;">({{ count($voteSelectionItem->getImageLinks()) }}張照片)</small>
                                             @endif
                                             @if(Auth::check() && $voteSelectionItem->hasVoted(Auth::user()))
                                                 <span title="我的選擇" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
