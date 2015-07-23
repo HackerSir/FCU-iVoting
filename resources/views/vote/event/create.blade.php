@@ -7,7 +7,7 @@
 @section('content')
     <div class="container" style="min-height: 600px">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">新增投票活動</div>
                     {{-- Panel body --}}
@@ -50,6 +50,14 @@
                                         {!! Form::number('max_selected', null, ['id' => 'max_selected', 'placeholder' => '每人最多可選擇之數量，預設為1', 'class' => 'form-control', 'min' => 1]) !!}
                                         @if($errors->has('max_selected'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                                         <span class="label label-danger">{{ $errors->first('max_selected') }}</span>@endif
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback{{ ($errors->has('organizer'))?' has-error':'' }}">
+                                    <label class="control-label col-md-2" for="organizer">主辦單位</label>
+                                    <div class="col-md-9">
+                                        {!! Form::select('organizer', $organizerArray, null, ['class' => 'form-control']) !!}
+                                        @if($errors->has('organizer'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                        <span class="label label-danger">{{ $errors->first('organizer') }}</span>@endif
                                     </div>
                                 </div>
                                 <div class="form-group has-feedback{{ ($errors->has('info'))?' has-error':'' }}">

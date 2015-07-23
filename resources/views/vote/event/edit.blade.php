@@ -52,7 +52,6 @@
                     </div>
                     <div class="form-group has-feedback{{ ($errors->has('max_selected'))?' has-error':'' }}">
                         <label class="control-label col-md-2" for="max_selected">最多可選幾項</label>
-
                         <div class="col-md-9">
                             @if(!$voteEvent->isStarted())
                                 {!! Form::number('max_selected', $voteEvent->max_selected, ['id' => 'max_selected', 'placeholder' => '每人最多可選擇之數量，預設為1', 'class' => 'form-control', 'min' => 1]) !!}
@@ -60,6 +59,18 @@
                                 <span class="label label-danger">{{ $errors->first('max_selected') }}</span>@endif
                             @else
                                 {!! Form::number('max_selected', $voteEvent->max_selected, ['id' => 'max_selected', 'placeholder' => '每人最多可選擇之數量，預設為1', 'class' => 'form-control', 'min' => 1, 'readonly']) !!}
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback{{ ($errors->has('organizer'))?' has-error':'' }}">
+                        <label class="control-label col-md-2" for="organizer">主辦單位</label>
+                        <div class="col-md-9">
+                            @if(!$voteEvent->isStarted())
+                                {!! Form::select('organizer', $organizerArray, $voteEvent->organizer_id, ['class' => 'form-control']) !!}
+                                @if($errors->has('organizer'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                <span class="label label-danger">{{ $errors->first('organizer') }}</span>@endif
+                            @else
+                                {!! Form::select('organizer', $organizerArray, $voteEvent->organizer_id, ['class' => 'form-control', 'disabled']) !!}
                             @endif
                         </div>
                     </div>

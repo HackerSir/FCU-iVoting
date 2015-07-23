@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Organizer;
 use App\Setting;
 use App\VoteEvent;
 use Carbon\Carbon;
@@ -45,7 +46,12 @@ class VoteEventController extends Controller
      */
     public function create()
     {
-        return view('vote.event.create');
+        $organizerList = Organizer::all();
+        $organizerArray = [null => '-- 請下拉選擇主辦單位 --'];
+        foreach ($organizerList as $organizer) {
+            $organizerArray[$organizer->id] = $organizer->name;
+        }
+        return view('vote.event.create')->with('organizerArray', $organizerArray);
     }
 
     /**
@@ -89,6 +95,7 @@ class VoteEventController extends Controller
                 'close_time' => $close_time,
                 'info' => $request->get('info'),
                 'max_selected' => $max_selected,
+                'organizer_id' => $request->get('organizer')
             ));
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
@@ -129,7 +136,12 @@ class VoteEventController extends Controller
             return Redirect::route('vote-event.show', $id)
                 ->with('warning', '無法編輯已結束之投票活動');
         }
-        return view('vote.event.edit')->with('voteEvent', $voteEvent);
+        $organizerList = Organizer::all();
+        $organizerArray = [null => '-- 請下拉選擇主辦單位 --'];
+        foreach ($organizerList as $organizer) {
+            $organizerArray[$organizer->id] = $organizer->name;
+        }
+        return view('vote.event.edit')->with('voteEvent', $voteEvent)->with('organizerArray', $organizerArray);
     }
 
     /**
@@ -184,6 +196,7 @@ class VoteEventController extends Controller
             if (!$voteEvent->isStarted()) {
                 $voteEvent->open_time = $open_time;
                 $voteEvent->max_selected = ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1;
+                $voteEvent->organizer_id = $request->get('organizer');
             }
             $voteEvent->close_time = $close_time;
             $voteEvent->info = $request->get('info');

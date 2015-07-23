@@ -90,6 +90,7 @@
             <p>{!! Markdown::parse(htmlspecialchars($voteEvent->info)) !!}</p>
 
             <p>活動期間：{{ $voteEvent->getHumanTimeString() }}</p>
+            <p>@if($voteEvent->organizer)主辦單位：{{ $voteEvent->organizer->name }}@endif</p>
 
             {!! HTML::linkRoute('vote-event.index', '返回投票活動列表', [], ['class' => 'btn btn-default pull-right']) !!}
             <div class="clearfix"></div>
