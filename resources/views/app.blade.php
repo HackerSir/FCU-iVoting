@@ -7,7 +7,6 @@
         {{--<meta property="og:image" content="http://hackersir.info/pic/Header.jpg">--}}
         <title>@if (trim($__env->yieldContent('title'))) @yield('title') - @endif{{ Config::get('config.sitename') }}</title>
 
-        {!! HTML::style('css/app.css'); !!}
         {!! HTML::style('//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/united/bootstrap.css'); !!}
         {!! HTML::style('css/fileinput.min.css'); !!}
         {!! HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'); !!}
