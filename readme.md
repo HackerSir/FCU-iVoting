@@ -2,7 +2,7 @@
 投票網站
 
 ## 網址
-暫無
+[http://ivoting.ifcu.today/](http://ivoting.ifcu.today/)
 
 ## 基礎架構
 - PHP
