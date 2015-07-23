@@ -20,9 +20,8 @@
         {!! HTML::style('css/select2-bootstrap.min.css'); !!}
         {!! HTML::style('css/callout.css'); !!}
         {!! HTML::style('css/sticky-footer-navbar.css'); !!}
-        <style type="text/css">
-            @yield('css')
-        </style>
+
+        @yield('css')
 
         @yield('head')
 
