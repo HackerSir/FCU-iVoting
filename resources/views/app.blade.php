@@ -39,6 +39,9 @@
     <body>
         {{-- navbar--}}
         @include('common.navbar')
+
+        @yield('main-jumbotron')
+
         <div class="container-fluid">
             {{-- content --}}
             @yield('content')
