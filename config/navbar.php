@@ -36,6 +36,7 @@ return array(
     'admin' => array(
         '管理員' => array(
             '成員清單' => 'member',
+            '主辦單位清單' => 'organizer',
             '網站設定' => 'setting'
         )
     ),
