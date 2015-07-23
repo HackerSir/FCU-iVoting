@@ -36,7 +36,7 @@
                             </tbody>
                         </table>
                         <div class="text-center">
-                            {!! str_replace('/?', '?', $userList->render()); !!}
+                            {!! str_replace('/?', '?', $userList->render()) !!}
                         </div>
                     </div>
                 </div>

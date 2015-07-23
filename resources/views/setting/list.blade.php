@@ -5,7 +5,7 @@
 @endsection
 
 @section('head')
-    {!! HTML::style('css/no-more-table.css'); !!}
+    {!! HTML::style('css/no-more-table.css') !!}
     <style type="text/css">
         @media
         only screen and (max-width: 479px) {
