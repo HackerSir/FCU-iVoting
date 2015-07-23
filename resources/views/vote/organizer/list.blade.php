@@ -29,6 +29,9 @@
                                     <td>{!! HTML::linkRoute('organizer.show', $organizer->name, $organizer->id, null) !!}</td>
                                     <td class="hidePhone">
                                         <a href="{{ URL::route('organizer.edit', $organizer->id) }}" class="pull-right" title="編輯主辦單位"><span class="glyphicon glyphicon-cog" aria-hidden="true" /></a>
+                                        @if(count($organizer->voteEvents))
+                                            <span class="badge pull-right" title="共舉辦 {{ count($organizer->voteEvents) }} 場活動">{{ count($organizer->voteEvents) }}</span>
+                                        @endif
                                     </td>
                                     <td>
                                         @if(!empty($organizer->url))
