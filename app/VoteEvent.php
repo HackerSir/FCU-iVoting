@@ -8,11 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class VoteEvent extends Model
 {
     protected $table = 'vote_events';
-    protected $fillable = ['open_time', 'close_time', 'subject', 'info', 'max_selected'];
+    protected $fillable = ['open_time', 'close_time', 'subject', 'info', 'max_selected', 'organizer_id'];
 
     public function voteSelections()
     {
         return $this->hasMany('App\VoteSelection');
+    }
+
+    public function organizer()
+    {
+        return $this->belongsTo('App\Organizer');
     }
 
     public function isStarted()
