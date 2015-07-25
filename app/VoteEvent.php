@@ -64,15 +64,11 @@ class VoteEvent extends Model
         return $max_selected;
     }
 
+    //特定用戶在此活動選擇之選項數量
     public function getSelected($user)
     {
-        $voteSelections = $this->voteSelections;
-        $count = 0;
-        foreach ($voteSelections as $voteSelection) {
-            if ($voteSelection->hasVoted($user)) {
-                $count++;
-            }
-        }
+        $voteSelectionIdList = $this->voteSelections->lists('id')->toArray();
+        $count = $user->voteBallots()->whereIn('vote_selection_id', $voteSelectionIdList)->count();
         return $count;
     }
 
