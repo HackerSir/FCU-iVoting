@@ -15,6 +15,21 @@
             top: -7px;
             z-index: -1;
         }
+
+        {{-- 複寫 Carousel 底下的點點樣式 --}}
+        .carousel-indicators li {
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-width: 1px;
+            border-color: black;
+        }
+
+        .carousel-indicators .active {
+            background-color: #2e6da4;
+            width: 24px;
+            height: 24px;
+        }
     </style>
 @endsection
 
