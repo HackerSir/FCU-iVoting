@@ -211,7 +211,7 @@ class VoteSelectionController extends Controller
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('warning', '已投過此項目');
         }
-        if ($voteSelection->voteEvent->getMaxSelected() <= $voteSelection->voteEvent->getSelected(Auth::user())) {
+        if ($voteSelection->voteEvent->getMaxSelected() <= $voteSelection->voteEvent->getSelectedCount(Auth::user())) {
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('warning', '無法再投更多項目');
         }
