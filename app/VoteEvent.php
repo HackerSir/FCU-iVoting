@@ -65,7 +65,7 @@ class VoteEvent extends Model
     }
 
     //特定用戶在此活動選擇之選項數量
-    public function getSelected($user)
+    public function getSelectedCount($user)
     {
         $voteSelectionIdList = $this->voteSelections->lists('id')->toArray();
         $count = $user->voteBallots()->whereIn('vote_selection_id', $voteSelectionIdList)->count();
