@@ -135,7 +135,7 @@
                                                 @if(count($voteSelectionItem->getImageLinks()) > 1)
                                                     <div class="more-image-fake-shadow img-rounded"></div>
                                                 @endif
-                                                <img src="{{ App\Imgur::thumbnail($voteSelectionItem->getImageLinks()[0], 'm') }}" class="img-rounded" style="max-width:100%;max-height:300px;width:auto;height:auto; cursor: pointer;" title="點此看更多圖" data-toggle="modal" data-target="#imageModal" data-title="{{ $voteSelectionItem->getTitle() }}" data-images="{{ implode(';',$voteSelectionItem->getImageLinks()) }}"/>
+                                                <img src="{{ App\Imgur::thumbnail($voteSelectionItem->getImageLinks()[0], 'm') }}" class="img-rounded" style="max-width:100%;max-height:300px;width:auto;height:auto; cursor: pointer;" data-toggle="modal" data-target="#imageModal" data-title="{{ $voteSelectionItem->getTitle() }}" data-images="{{ implode(';',$voteSelectionItem->getImageLinks()) }}"/>
                                             @else
                                                 <img data-src="holder.js/300x300?text=沒有圖片&size=45" class="img-rounded" style="max-width:100%;max-height:300px;width:auto;height:auto;"/>
                                             @endif
