@@ -26,3 +26,25 @@
         </div>
     </div>
 @endsection
+
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 class="text-center">如何投票</h1>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="thumbnail"><h2 class="text-center">1. 登入網站</h2></div>
+            </div>
+            <div class="col-sm-4">
+                <div class="thumbnail"><h2 class="text-center">2. 瀏覽投票活動</h2></div>
+            </div>
+            <div class="col-sm-4">
+                <div class="thumbnail"><h2 class="text-center">3. 按下投票按鈕</h2></div>
+            </div>
+        </div>
+    </div>
+@endsection
