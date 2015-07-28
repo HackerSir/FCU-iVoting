@@ -44,7 +44,7 @@
                             </thead>
                             <tbody>
                             @foreach($voteEventList as $voteEventItem)
-                                @if(Auth::check() && Auth::user()->isStaff() && !$voteEventItem->isVisible())
+                                @if(Auth::check() && Auth::user()->isStaff() && !($voteEventItem->isStarted() || $voteEventItem->visible))
                                     <tr class="classData danger">
                                 @else
                                     <tr class="classData">
