@@ -88,4 +88,8 @@ class VoteEvent extends Model
         }
         return $string;
     }
+
+    public function isVisible() {
+        return $this->isStarted() || $this->visible;
+    }
 }

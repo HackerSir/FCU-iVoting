@@ -35,7 +35,15 @@ class VoteEventController extends Controller
      */
     public function index()
     {
-        $voteEventList = VoteEvent::orderBy('id', 'desc')->paginate(20);
+        if (Auth::check() && Auth::user()->isStaff()) {
+            $voteEventList = VoteEvent::orderBy('id', 'desc')->paginate(20);
+        }
+        else {
+            $voteEventList = VoteEvent::orderBy('id', 'desc')->where(function ($query) {
+                $query->where('visible', true)
+                      ->orWhere('open_time', '<=', Carbon::now());
+            })->paginate(20);
+        }
         return view('vote.event.list')->with('voteEventList', $voteEventList);
     }
 
@@ -113,7 +121,13 @@ class VoteEventController extends Controller
         $voteEvent = VoteEvent::find($id);
         $autoRedirectSetting = Setting::find('auto-redirect');
         if ($voteEvent) {
-            return view('vote.event.show-eas')->with('voteEvent', $voteEvent)->with('autoRedirectSetting', $autoRedirectSetting);
+            if ((Auth::check() && Auth::user()->isStaff()) || $voteEvent->isVisible()) {
+                return view('vote.event.show-eas')->with('voteEvent', $voteEvent)->with('autoRedirectSetting', $autoRedirectSetting);
+            }
+            else {
+                return Redirect::route('vote-event.index')
+                    ->with('warning', '投票活動尚未開放');
+            }
         }
         return Redirect::route('vote-event.index')
             ->with('warning', '投票活動不存在');

@@ -44,7 +44,11 @@
                             </thead>
                             <tbody>
                             @foreach($voteEventList as $voteEventItem)
-                                <tr class="classData">
+                                @if(Auth::check() && Auth::user()->isStaff() && !$voteEventItem->isVisible())
+                                    <tr class="classData danger">
+                                @else
+                                    <tr class="classData">
+                                @endif
                                     <td>
                                         @if($voteEventItem->isEnded())
                                             已結束
