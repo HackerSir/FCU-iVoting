@@ -129,7 +129,7 @@
                         @foreach($voteEvent->voteSelections as $voteSelectionItem)
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
-                                    <div class="vertical-center" style="height: 300px;">
+                                    <div class="vertical-center" style="height: 300px; padding-top: 10px">
                                         <div style="position: relative; z-index: 0;">
                                             @if(count($voteSelectionItem->getImageLinks()) > 0)
                                                 @if(count($voteSelectionItem->getImageLinks()) > 1)
