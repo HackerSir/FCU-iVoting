@@ -60,9 +60,14 @@
                                     </td>
                                     <td>{!! HTML::linkRoute('vote-event.show', $voteEventItem->subject, $voteEventItem->id, null) !!}</td>
                                     <td class="hidePhone">
-                                        @if(Auth::check() && Auth::user()->isStaff() && !$voteEventItem->isEnded())
-                                            <a href="{{ URL::route('vote-event.edit', $voteEventItem->id) }}" class="pull-right" title="編輯投票活動"><span class="glyphicon glyphicon-cog" aria-hidden="true" /></a>
-                                        @endif
+                                        <div class="pull-right">
+                                            @if(!$voteEventItem->visible)
+                                                <span class="glyphicon glyphicon-eye-close" aria-hidden="true" title="活動開始前是不顯示的"></span>
+                                            @endif
+                                            @if(Auth::check() && Auth::user()->isStaff() && !$voteEventItem->isEnded())
+                                                <a href="{{ URL::route('vote-event.edit', $voteEventItem->id) }}" title="編輯投票活動"><span class="glyphicon glyphicon-cog" aria-hidden="true"/></a>
+                                            @endif
+                                        </div>
                                     </td>
                                     <td>{{ $voteEventItem->open_time }}</td>
                                     <td>{{ $voteEventItem->close_time }}</td>
