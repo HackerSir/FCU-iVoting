@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class VoteEvent extends Model
 {
     protected $table = 'vote_events';
-    protected $fillable = ['open_time', 'close_time', 'subject', 'info', 'max_selected', 'organizer_id'];
+    protected $fillable = ['open_time', 'close_time', 'subject', 'info', 'max_selected', 'organizer_id', 'visible'];
 
     public function voteSelections()
     {
