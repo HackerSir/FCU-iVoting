@@ -19,8 +19,8 @@ class HideVoteEventTest extends TestCase
     public function setUp() {
         parent::setUp();
 
-        $this->defaultUser = factory('App\User')->create();
-        $this->staffUser = factory('App\User', 'staff')->create();
+        $this->defaultUser = factory('App\User')->make();
+        $this->staffUser = factory('App\User', 'staff')->make();
     }
 
     /**
