@@ -104,7 +104,7 @@ class VoteEventController extends Controller
                 'info' => $request->get('info'),
                 'max_selected' => $max_selected,
                 'organizer_id' => ($request->has('organizer')) ? $request->get('organizer') : null,
-                'visible' => ($request->has('hideVoteEvent')) ? $request->get('hideVoteEvent') != 'yes' : true ,
+                'visible' => ($request->has('hideVoteEvent')) ? $request->get('hideVoteEvent') : true ,
             ));
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
@@ -122,7 +122,7 @@ class VoteEventController extends Controller
         $voteEvent = VoteEvent::find($id);
         $autoRedirectSetting = Setting::find('auto-redirect');
         if ($voteEvent) {
-            if ((Auth::check() && Auth::user()->isStaff()) || $voteEvent->isVisible()) {
+            if ((Auth::check() && Auth::user()->isStaff()) || ($voteEvent->isStarted() || $voteEvent->visible)) {
                 return view('vote.event.show-eas')->with('voteEvent', $voteEvent)->with('autoRedirectSetting', $autoRedirectSetting);
             }
             else {
@@ -212,7 +212,7 @@ class VoteEventController extends Controller
                 $voteEvent->open_time = $open_time;
                 $voteEvent->max_selected = ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1;
                 $voteEvent->organizer_id = ($request->has('organizer')) ? $request->get('organizer') : null;
-                $voteEvent->visible = ($request->has('hideVoteEvent')) ? $request->get('hideVoteEvent') != 'yes' : true;
+                $voteEvent->visible = ($request->has('hideVoteEvent')) ? $request->get('hideVoteEvent') : true;
             }
             $voteEvent->close_time = $close_time;
             $voteEvent->info = $request->get('info');
