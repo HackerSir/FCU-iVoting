@@ -44,7 +44,11 @@
                             </thead>
                             <tbody>
                             @foreach($voteEventList as $voteEventItem)
-                                <tr class="classData">
+                                @if(Auth::check() && Auth::user()->isStaff() && !$voteEventItem->isVisible())
+                                    <tr class="classData danger">
+                                @else
+                                    <tr class="classData">
+                                @endif
                                     <td>
                                         @if($voteEventItem->isEnded())
                                             已結束
@@ -56,9 +60,16 @@
                                     </td>
                                     <td>{!! HTML::linkRoute('vote-event.show', $voteEventItem->subject, $voteEventItem->id, null) !!}</td>
                                     <td class="hidePhone">
-                                        @if(Auth::check() && Auth::user()->isStaff() && !$voteEventItem->isEnded())
-                                            <a href="{{ URL::route('vote-event.edit', $voteEventItem->id) }}" class="pull-right" title="編輯投票活動"><span class="glyphicon glyphicon-cog" aria-hidden="true" ></span></a>
-                                        @endif
+                                        <div class="pull-right">
+                                            @if (Auth::check() && Auth::user()->isStaff())
+                                                @if(!$voteEventItem->show)
+                                                    <span class="glyphicon glyphicon-eye-close" aria-hidden="true" title="活動開始前是不顯示的"></span>
+                                                @endif
+                                                @if(!$voteEventItem->isEnded())
+                                                    <a href="{{ URL::route('vote-event.edit', $voteEventItem->id) }}" title="編輯投票活動"><span class="glyphicon glyphicon-cog" aria-hidden="true" ></span></a>
+                                                @endif
+                                            @endif
+                                        </div>
                                     </td>
                                     <td>{{ $voteEventItem->open_time }}</td>
                                     <td>{{ $voteEventItem->close_time }}</td>

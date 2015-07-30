@@ -74,6 +74,25 @@
                             @endif
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="settings">選項</label>
+
+                        <div class="col-md-9">
+                            @if($voteEvent->isStarted())
+                                <div class="checkbox disabled">
+                                    <label>
+                                        {!! Form::checkbox('hideVoteEvent', 'yes', !$voteEvent->show, ['disabled']) !!} 在開始前隱藏投票活動
+                                    </label>
+                                </div>
+                            @else
+                                <div class="checkbox">
+                                    <label>
+                                        {!! Form::checkbox('hideVoteEvent', 'yes', !$voteEvent->show) !!} 在開始前隱藏投票活動
+                                    </label>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                     <div class="form-group has-feedback{{ ($errors->has('info'))?' has-error':'' }}">
                         <label class="control-label col-md-2" for="info">內容簡介</label>
 

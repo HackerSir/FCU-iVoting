@@ -64,6 +64,17 @@
                             <span class="label label-danger">{{ $errors->first('organizer') }}</span>@endif
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="settings">選項</label>
+
+                        <div class="col-md-9">
+                            <div class="checkbox">
+                                <label>
+                                    {!! Form::checkbox('hideVoteEvent', 'true') !!} 在開始前隱藏投票活動
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group has-feedback{{ ($errors->has('info'))?' has-error':'' }}">
                         <label class="control-label col-md-2" for="info">內容簡介</label>
 
