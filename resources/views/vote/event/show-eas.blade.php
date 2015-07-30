@@ -15,6 +15,21 @@
             top: -7px;
             z-index: -1;
         }
+
+        {{-- 複寫 Carousel 底下的點點樣式 --}}
+        .carousel-indicators li {
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-width: 1px;
+            border-color: black;
+        }
+
+        .carousel-indicators .active {
+            background-color: #2e6da4;
+            width: 24px;
+            height: 24px;
+        }
     </style>
 @endsection
 
@@ -205,7 +220,7 @@
         </div>
     </div>
 
-    <div class="modal fade bs-example-modal-lg" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -256,6 +271,8 @@
             $('body').width($('body').width());
             $('html').css('overflow-y', 'hidden');
 
+            var maxHeight = $(window).height() * 0.75 + 'px';
+
             var clickTarget = $(event.relatedTarget);// Button that triggered the modal
 
             // Extract info from data-* attributes
@@ -269,11 +286,14 @@
 
             var div_ol = modal.find('#carousel-image > .carousel-indicators');
             var div_image = modal.find('#carousel-image > .carousel-inner');
+
+            div_image.css('height', maxHeight);
+
             div_ol.empty();
             div_image.empty();
             $.each(images, function(index, value) {
                 div_ol.append('<li data-target="#carousel-image" data-slide-to="' + index +  '"></li>');
-                div_image.append('<div class="item"><img src="'+ value +'" /></div>');
+                div_image.append('<div style="height: ' + maxHeight + ';" class="item"><div style="height: ' + maxHeight + '; display: flex; flex-direction: column; justify-content: center;"><img class="img-responsive center-block" style="max-height: ' + maxHeight + ';" src="'+ value +'" /></div></div>');
             });
             div_ol.children().first().addClass('active');
             div_image.children().first().addClass('active');

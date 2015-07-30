@@ -70,10 +70,6 @@ body {
     border-radius: 6px 0 6px 6px;
 }
 
-.carousel-inner > .item > img {
-    margin: 0 auto;
-}
-
 .vertical-center {
     min-height: 100%;
     display: flex;
