@@ -26,7 +26,7 @@ class HideVoteEventTest extends TestCase
     /**
      * 1. 新增活動測試：
      *    新增兩個活動，其中一個有勾選 "在開始前隱藏投票活動" 選項
-     *    被勾選的活動的 visible 應該為 False
+     *    被勾選的活動的 show 應該為 False
      *
      * @return void
      */
@@ -34,7 +34,7 @@ class HideVoteEventTest extends TestCase
         $voteEvent_hide_info = array(
             'subject' => str_random(20),
             'open_time' => Carbon::now(),
-            'visible' => false,
+            'show' => false,
         );
 
         $this->createVoteEvent($voteEvent_hide_info);
@@ -43,7 +43,7 @@ class HideVoteEventTest extends TestCase
         $voteEvent_noHide_info = array(
             'subject' => str_random(20),
             'open_time' => Carbon::now(),
-            'visible' => true,
+            'show' => true,
         );
 
         $this->createVoteEvent($voteEvent_noHide_info);
@@ -61,7 +61,7 @@ class HideVoteEventTest extends TestCase
             $this->type($info['open_time'] ,'open_time');
         }
 
-        if (!$info['visible']) {
+        if (!$info['show']) {
             $this->check('hideVoteEvent');
         }
 
@@ -93,30 +93,30 @@ class HideVoteEventTest extends TestCase
             'a' => array(
                 'subject' => str_random(20),
                 'open_time' => Carbon::now()->addDay(),
-                'visible' => false,
+                'show' => false,
             ),
             'b' => array(
                 'subject' => str_random(20),
                 'open_time' => Carbon::now()->addDay(),
-                'visible' => true,
+                'show' => true,
             ),
             'c' => array(
                 'subject' => str_random(20),
                 'open_time' => Carbon::now()->subDay(),
-                'visible' => false,
+                'show' => false,
             ),
             'd' => array(
                 'subject' => str_random(20),
                 'open_time' => Carbon::now()->subDay(),
-                'visible' => true,
+                'show' => true,
             ),
             'e' => array(
                 'subject' => str_random(20),
-                'visible' => false,
+                'show' => false,
             ),
             'f' => array(
                 'subject' => str_random(20),
-                'visible' => true,
+                'show' => true,
             ),
         );
 
@@ -181,22 +181,22 @@ class HideVoteEventTest extends TestCase
             'a' => array(
                 'subject' => str_random(20),
                 'open_time' => Carbon::now()->addDay(),
-                'visible' => false,
+                'show' => false,
             ),
             'b' => array(
                 'subject' => str_random(20),
                 'open_time' => Carbon::now()->addDay(),
-                'visible' => true,
+                'show' => true,
             ),
             'c' => array(
                 'subject' => str_random(20),
                 'open_time' => Carbon::now()->subDay(),
-                'visible' => false,
+                'show' => false,
             ),
             'd' => array(
                 'subject' => str_random(20),
                 'open_time' => Carbon::now()->subDay(),
-                'visible' => true,
+                'show' => true,
             ),
         );
 
@@ -209,15 +209,15 @@ class HideVoteEventTest extends TestCase
             if (Carbon::now() < $value['open_time']) {
                 //活動未開始
                 $this->assertEquals(
-                    ! $value['visible'],
-                    boolval(DB::table('vote_events')->where('subject', $value['subject'])->value('visible'))
+                    ! $value['show'],
+                    boolval(DB::table('vote_events')->where('subject', $value['subject'])->value('show'))
                 );
             }
             else {
                 //活動進行中
                 $this->assertEquals(
-                    $value['visible'],
-                    boolval(DB::table('vote_events')->where('subject', $value['subject'])->value('visible'))
+                    $value['show'],
+                    boolval(DB::table('vote_events')->where('subject', $value['subject'])->value('show'))
                 );
             }
         }
@@ -231,7 +231,7 @@ class HideVoteEventTest extends TestCase
 
         $form = $this->crawler->filter('form')->form();
 
-        if ($info['visible']) {
+        if ($info['show']) {
             $form['hideVoteEvent']->tick();
         }
         else {

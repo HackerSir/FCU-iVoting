@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class VoteEvent extends Model
 {
     protected $table = 'vote_events';
-    protected $fillable = ['open_time', 'close_time', 'subject', 'info', 'max_selected', 'organizer_id', 'visible'];
+    protected $fillable = ['open_time', 'close_time', 'subject', 'info', 'max_selected', 'organizer_id', 'show'];
 
     public function voteSelections()
     {
@@ -87,5 +87,11 @@ class VoteEvent extends Model
             }
         }
         return $string;
+    }
+
+    public function isVisible()
+    {
+        return $this->isStarted() || $this->show;
+
     }
 }

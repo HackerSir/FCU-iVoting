@@ -81,13 +81,13 @@
                             @if($voteEvent->isStarted())
                                 <div class="checkbox disabled">
                                     <label>
-                                        {!! Form::checkbox('hideVoteEvent', 'yes', !$voteEvent->visible, ['disabled']) !!} 在開始前隱藏投票活動
+                                        {!! Form::checkbox('hideVoteEvent', 'yes', !$voteEvent->show, ['disabled']) !!} 在開始前隱藏投票活動
                                     </label>
                                 </div>
                             @else
                                 <div class="checkbox">
                                     <label>
-                                        {!! Form::checkbox('hideVoteEvent', 'yes', !$voteEvent->visible) !!} 在開始前隱藏投票活動
+                                        {!! Form::checkbox('hideVoteEvent', 'yes', !$voteEvent->show) !!} 在開始前隱藏投票活動
                                     </label>
                                 </div>
                             @endif

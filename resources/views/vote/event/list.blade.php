@@ -44,7 +44,7 @@
                             </thead>
                             <tbody>
                             @foreach($voteEventList as $voteEventItem)
-                                @if(Auth::check() && Auth::user()->isStaff() && !($voteEventItem->isStarted() || $voteEventItem->visible))
+                                @if(Auth::check() && Auth::user()->isStaff() && !$voteEventItem->isVisible())
                                     <tr class="classData danger">
                                 @else
                                     <tr class="classData">
@@ -62,7 +62,7 @@
                                     <td class="hidePhone">
                                         <div class="pull-right">
                                             @if (Auth::check() && Auth::user()->isStaff())
-                                                @if(!$voteEventItem->visible)
+                                                @if(!$voteEventItem->show)
                                                     <span class="glyphicon glyphicon-eye-close" aria-hidden="true" title="活動開始前是不顯示的"></span>
                                                 @endif
                                                 @if(!$voteEventItem->isEnded())
