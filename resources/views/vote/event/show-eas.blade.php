@@ -107,6 +107,9 @@
             <p>活動期間：{{ $voteEvent->getHumanTimeString() }}</p>
             <p>@if($voteEvent->organizer)主辦單位：{{ $voteEvent->organizer->name }}@endif</p>
 
+            @include('common.share-button-bar', ['title' => $voteEvent->subject, 'url' => URL::current()])
+            <br />
+            <br />
             {!! HTML::linkRoute('vote-event.index', '返回投票活動列表', [], ['class' => 'btn btn-default pull-right']) !!}
             <div class="clearfix"></div>
         </div>
