@@ -66,7 +66,7 @@
                                                     <span class="glyphicon glyphicon-eye-close" aria-hidden="true" title="活動開始前是不顯示的"></span>
                                                 @endif
                                                 @if(!$voteEventItem->isEnded())
-                                                    <a href="{{ URL::route('vote-event.edit', $voteEventItem->id) }}" title="編輯投票活動"><span class="glyphicon glyphicon-cog" aria-hidden="true"/></a>
+                                                    <a href="{{ URL::route('vote-event.edit', $voteEventItem->id) }}" title="編輯投票活動"><span class="glyphicon glyphicon-cog" aria-hidden="true" ></span></a>
                                                 @endif
                                             @endif
                                         </div>
