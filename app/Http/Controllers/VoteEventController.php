@@ -37,11 +37,10 @@ class VoteEventController extends Controller
     {
         if (Auth::check() && Auth::user()->isStaff()) {
             $voteEventList = VoteEvent::orderBy('id', 'desc')->paginate(20);
-        }
-        else {
+        } else {
             $voteEventList = VoteEvent::orderBy('id', 'desc')->where(function ($query) {
                 $query->where('show', true)
-                      ->orWhere('open_time', '<=', Carbon::now());
+                    ->orWhere('open_time', '<=', Carbon::now());
             })->paginate(20);
         }
         return view('vote.event.list')->with('voteEventList', $voteEventList);
@@ -104,7 +103,7 @@ class VoteEventController extends Controller
                 'info' => $request->get('info'),
                 'max_selected' => $max_selected,
                 'organizer_id' => ($request->has('organizer')) ? $request->get('organizer') : null,
-                'show' => ($request->has('hideVoteEvent')) ? $request->get('hideVoteEvent') : true ,
+                'show' => ($request->has('hideVoteEvent')) ? $request->get('hideVoteEvent') : true,
             ));
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
@@ -122,10 +121,9 @@ class VoteEventController extends Controller
         $voteEvent = VoteEvent::find($id);
         $autoRedirectSetting = Setting::find('auto-redirect');
         if ($voteEvent) {
-            if ((Auth::check() && Auth::user()->isStaff()) || ($voteEvent->isStarted() || $voteEvent->show)) {
+            if ((Auth::check() && Auth::user()->isStaff()) || $voteEvent->isVisible()) {
                 return view('vote.event.show-eas')->with('voteEvent', $voteEvent)->with('autoRedirectSetting', $autoRedirectSetting);
-            }
-            else {
+            } else {
                 return Redirect::route('vote-event.index')
                     ->with('warning', '投票活動尚未開放');
             }
