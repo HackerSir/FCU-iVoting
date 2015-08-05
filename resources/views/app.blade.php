@@ -4,7 +4,12 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        {{--<meta property="og:image" content="http://hackersir.info/pic/Header.jpg">--}}
+
+        <meta property="og:title" content="iVoting 逢甲票選系統">
+        <meta property="og:url" content="{{ url('/') }}">
+        <meta property="og:image" content="{{ asset('pic/logo.png') }}">
+        <meta property="og:description" content="一個由學生社團做的票選系統，快來參加各種票選活動吧！！！">
+
         <title>@if (trim($__env->yieldContent('title'))) @yield('title') - @endif{{ Config::get('config.sitename') }}</title>
 
         {!! HTML::style('//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/united/bootstrap.css') !!}
