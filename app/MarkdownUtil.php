@@ -15,7 +15,7 @@ class MarkdownUtil
             $line = preg_replace('/\s*($)/', '  $1', $line);
             $result .= $line . PHP_EOL;
         }
-        $result = Markdown::parse($result);
+        $result = Markdown::parse(htmlspecialchars($result));
         return $result;
     }
 }
