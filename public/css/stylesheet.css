@@ -6,8 +6,8 @@ body {
     /* navbar */
     padding-top: 70px;
     padding-right: 0 !important;
-    background: #eeeeee url("../pic/logo.png") no-repeat fixed right 50px;
-    background-size: auto 75%;
+    background: #eeeeee url("../pic/squirrel.jpg") no-repeat fixed center center;
+    background-size: cover;
 }
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
