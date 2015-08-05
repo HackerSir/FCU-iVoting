@@ -2,10 +2,10 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\MarkdownAPI;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra as Markdown;
 
 class MarkdownApiController extends Controller
 {
@@ -30,6 +30,6 @@ class MarkdownApiController extends Controller
         if (empty($data)) {
             return Response::make(" ");
         }
-        return Response::make(Markdown::parse(htmlspecialchars($data)));
+        return Response::make(MarkdownAPI::translate($data));
     }
 }
