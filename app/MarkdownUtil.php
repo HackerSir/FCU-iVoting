@@ -4,7 +4,7 @@ namespace App;
 
 use AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra as Markdown;
 
-class MarkdownAPI
+class MarkdownUtil
 {
     static public function translate($string)
     {

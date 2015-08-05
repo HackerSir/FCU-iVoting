@@ -102,7 +102,7 @@
                 </span>
             </h1>
 
-            <p>{!! App\MarkdownAPI::translate($voteEvent->info) !!}</p>
+            <p>{!! App\MarkdownUtil::translate($voteEvent->info) !!}</p>
 
             <p>活動期間：{{ $voteEvent->getHumanTimeString() }}</p>
             <p>@if($voteEvent->organizer)主辦單位：{{ $voteEvent->organizer->name }}@endif</p>
