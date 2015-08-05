@@ -8,6 +8,13 @@ class MarkdownAPI
 {
     static public function translate($string)
     {
-        return nl2br(Markdown::parse(htmlspecialchars($string)));
+        return self::autoNewline(Markdown::parse(htmlspecialchars($string)));
+    }
+
+    static private function autoNewline($string)
+    {
+        $string = preg_replace('/<br \/>/', PHP_EOL, $string);
+        $string = nl2br($string);
+        return $string;
     }
 }
