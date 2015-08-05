@@ -5,10 +5,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <meta property="og:title" content="iVoting 逢甲票選系統">
+        <meta property="og:title" content="@if (trim($__env->yieldContent('title'))) @yield('title') - @endif{{ Config::get('config.sitename') }}">
         <meta property="og:url" content="{{ url('/') }}">
         <meta property="og:image" content="{{ asset('pic/logo.png') }}">
-        <meta property="og:description" content="一個由學生社團做的票選系統，快來參加各種票選活動吧！！！">
+        <meta property="og:description" content="iVoting 逢甲票選系統 - 一個由學生社團做的票選系統，快來參加各種票選活動吧！！！">
 
         <title>@if (trim($__env->yieldContent('title'))) @yield('title') - @endif{{ Config::get('config.sitename') }}</title>
 
