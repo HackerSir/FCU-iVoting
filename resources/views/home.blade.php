@@ -9,7 +9,7 @@
 @endsection
 
 @section('main-jumbotron')
-    <div class="jumbotron" style="padding-top: 64px;">
+    <div style="padding-top: 64px;">
         <div class="container">
             <h1>逢甲票選系統</h1>
 
