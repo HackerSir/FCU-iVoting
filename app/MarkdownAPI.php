@@ -8,6 +8,6 @@ class MarkdownAPI
 {
     static public function translate($string)
     {
-        return Markdown::parse(nl2br(htmlspecialchars($string)));
+        return nl2br(Markdown::parse(htmlspecialchars($string)));
     }
 }
