@@ -96,7 +96,7 @@
                     <div class="form-group has-feedback{{ ($errors->has('info'))?' has-error':'' }}">
                         <label class="control-label col-md-2" for="info">內容簡介</label>
 
-                        <div class="col-md-9" role="tabpanel">
+                        <div class="col-md-10" role="tabpanel">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li role="presentation" class="active"><a href="#edit" aria-controls="edit" role="tab" data-toggle="tab" id="tab_edit">編輯</a></li>
                                 <li role="presentation"><a href="#preview" aria-controls="preview" role="tab" data-toggle="tab" id="tab_preview">預覽</a></li>
