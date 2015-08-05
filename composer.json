@@ -15,7 +15,8 @@
         "nesbot/carbon": "~1.14",
         "guzzlehttp/guzzle": "~6.0",
         "barryvdh/laravel-ide-helper": "^2.0",
-        "doctrine/dbal": "~2.3"
+        "doctrine/dbal": "~2.3",
+        "rap2hpoutre/laravel-log-viewer": "^0.4.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

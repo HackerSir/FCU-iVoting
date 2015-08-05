@@ -37,7 +37,8 @@ return array(
         '管理員' => array(
             '成員清單' => 'member',
             '主辦單位清單' => 'organizer',
-            '網站設定' => 'setting'
+            '網站設定' => 'setting',
+            '記錄檢視器' => 'log'
         )
     ),
 

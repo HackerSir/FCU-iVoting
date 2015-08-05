@@ -72,6 +72,13 @@ Route::controller('upload', 'UploadController', [
     'deleteImage' => 'upload.delete-image'
 ]);
 
+//Log Viewer
+Route::get('log', [
+    'as' => 'log',
+    'uses' => '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index',
+    'middleware' => 'admin'
+]);
+
 //未定義路由
 Route::get('{all}', array(
     'as' => 'not-found',
