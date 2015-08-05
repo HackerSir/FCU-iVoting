@@ -107,6 +107,9 @@
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="edit">
                                     {!! Form::textarea('info', $voteEvent->info, ['id' => 'info', 'placeholder' => '請輸入內容簡介', 'class' => 'form-control']) !!}
+                                    <small>
+                                        <b>提示：</b>內容簡介支援{!! link_to('http://markdown.tw/', 'Markdown', ['target' => '_blank']) !!}語法
+                                    </small>
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="preview">
                                     Loading...
