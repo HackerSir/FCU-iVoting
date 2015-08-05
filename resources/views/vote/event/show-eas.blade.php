@@ -116,7 +116,7 @@
             <div class="clearfix"></div>
         </div>
 
-        <div class="bs-callout bs-callout-warning">
+        <div class="bs-callout bs-callout-warning" style="background: white">
             <h4>投票規則</h4>
             <ul>
                 <li>每人最多可以投&nbsp;{{ $voteEvent->getMaxSelected() }}&nbsp;票
