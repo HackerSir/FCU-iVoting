@@ -42,6 +42,12 @@
                                 {!! Form::file('image_upload', ['id' => 'image_upload', 'class' => 'form-control', 'accept' => 'image/*', 'multiple']) !!}
                             </div>
                         </div>
+                        <small>
+                            <b>注意</b>：<br />
+                            選擇圖片後，請按下「上傳」並等待上傳完成，網址將會自動填入上方欄位。<br />
+                            圖片上傳平台為{!! link_to('http://imgur.com/', 'Imgur', ['target' => '_blank']) !!}，
+                            上傳之圖片不得違反該站{!! link_to('http://imgur.com/tos', '服務條款', ['target' => '_blank', 'title' => 'Terms of Service - Imgur']) !!}。
+                        </small>
                         <hr/>
                         <div class="form-group">
                             <div class="col-md-4 col-md-offset-4">
