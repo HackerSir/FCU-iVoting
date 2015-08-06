@@ -34,7 +34,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container container-background">
         @if(Auth::check() && Auth::user()->isStaff())
             <div class="panel panel-danger">
                 <div class="panel-heading">

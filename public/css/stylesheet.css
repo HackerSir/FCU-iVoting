@@ -10,6 +10,17 @@ body {
     background-size: cover;
 }
 
+.container-background {
+    background: rgba(250, 250, 250, 0.8);
+    border-radius: 6px;
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+
+.jumbotron {
+    background-color: #f8f8f8;
+}
+
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
     vertical-align: middle;
 }
