@@ -3,7 +3,7 @@
 return [
     'local' => [
         'type' => 'Local',
-        'root' => storage_path('app') . '/backup/',
+        'root' => storage_path('app') . DIRECTORY_SEPARATOR . 'backup',
     ],
     's3' => [
         'type' => 'AwsS3',
