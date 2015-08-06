@@ -32,7 +32,7 @@
         }
 
         @media
-        only screen and (max-width: 479px) {
+        only screen and (max-width: 768px) {
             .jumbotron {
                 padding-left: 10px !important;
                 padding-right: 10px !important;
