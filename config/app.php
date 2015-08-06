@@ -139,6 +139,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         AlfredoRamos\ParsedownExtra\ParsedownExtraServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        BackupManager\Laravel\Laravel5ServiceProvider::class,
 
         /*
          * Application Service Providers...
