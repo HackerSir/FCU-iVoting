@@ -30,6 +30,14 @@
             width: 24px;
             height: 24px;
         }
+
+        @media
+        only screen and (max-width: 479px) {
+            .jumbotron {
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+            }
+        }
     </style>
 @endsection
 
@@ -87,7 +95,7 @@
             </div>
         @endif
 
-        <div class="jumbotron" style="padding-left: 5px; padding-right: 5px;">
+        <div class="jumbotron">
             {{-- h1 style comment: 加一些行高，標籤換行時才不會黏在標題下方 --}}
             <h1 style="line-height: 1.3;">
                 {{ $voteEvent->subject }}
