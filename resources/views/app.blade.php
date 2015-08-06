@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <meta property="og:title" content="@if (trim($__env->yieldContent('title'))) @yield('title') - @endif{{ Config::get('config.sitename') }}">
-        <meta property="og:url" content="{{ url('/') }}">
+        <meta property="og:url" content="{{ URL::current() }}">
         <meta property="og:image" content="{{ asset('pic/logo.jpg') }}">
         <meta property="og:description" content="iVoting 逢甲票選系統 - 一個由學生社團做的票選系統，快來參加各種票選活動吧！！！">
 
