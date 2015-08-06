@@ -87,7 +87,7 @@
             </div>
         @endif
 
-        <div class="jumbotron">
+        <div class="jumbotron" style="padding-left: 5px; padding-right: 5px;">
             {{-- h1 style comment: 加一些行高，標籤換行時才不會黏在標題下方 --}}
             <h1 style="line-height: 1.3;">
                 {{ $voteEvent->subject }}
