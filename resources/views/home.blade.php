@@ -42,7 +42,8 @@
             </div>
             <div class="col-sm-4">
                 <div class="text-center">
-                    <span class="glyphicon glyphicon-check text-info" style="font-size: 150px;"></span>
+                    {{-- padding-right: 15px; 是要讓圖案往右移一些，用手機看起來會好點 --}}
+                    <span class="glyphicon glyphicon-check text-info" style="font-size: 150px; padding-left: 15px;"></span>
                 </div>
                 <h2 class="text-center">投下神聖的一票</h2>
             </div>
