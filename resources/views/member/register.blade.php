@@ -21,7 +21,7 @@
                         </label>
 
                         <div class="input-group">
-                            {!! Form::text('email_name', null, ['id' => 'email_name', 'placeholder' => '請輸入學號', 'class' => 'form-control', 'required']) !!}
+                            {!! Form::text('email_name', null, ['id' => 'email_name', 'placeholder' => 'd0000000', 'class' => 'form-control', 'required']) !!}
                             <div class="input-group-addon">@</div>
                             {!! Form::select('email_domain', $allowedEmailsArray, null, ['class' => 'form-control', 'required']) !!}
                         </div>
