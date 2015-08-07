@@ -31,6 +31,13 @@
             height: 24px;
         }
 
+        .label-adjust {
+            font-size: 70%;
+            margin-left: 10px;
+            position: relative;
+            top: -5px;
+        }
+
         @media
         only screen and (max-width: 768px) {
             .jumbotron {
@@ -99,15 +106,13 @@
             {{-- h1 style comment: 加一些行高，標籤換行時才不會黏在標題下方 --}}
             <h1 style="line-height: 1.3;">
                 {{ $voteEvent->subject }}
-                <span class="label label-success" style="font-size: 70%; margin-left: 10px; position: relative; top: -5px;">
-                    @if($voteEvent->isEnded())
-                        已結束
-                    @elseif($voteEvent->isInProgress())
-                        進行中
-                    @else
-                        未開始
-                    @endif
-                </span>
+                @if($voteEvent->isEnded())
+                    <span class="label label-warning label-adjust">已結束</span>
+                @elseif($voteEvent->isInProgress())
+                    <span class="label label-success label-adjust">進行中</span>
+                @else
+                    <span class="label label-default label-adjust">未開始</span>
+                @endif
             </h1>
 
             <p>{!! App\MarkdownUtil::translate($voteEvent->info) !!}</p>
