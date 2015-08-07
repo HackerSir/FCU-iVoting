@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-sm-8 jumbotron">
-                    <h1>逢甲票選系統</h1>
+                    <h1>{{ Config::get('config.sitename') }}</h1>
 
                     <p>一個由學生社團做的票選系統，快來參加各種票選活動吧！！！</p>
 

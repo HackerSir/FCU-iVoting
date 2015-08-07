@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-md-12 col-md-offset-0">
                 <div class="panel panel-default">
-                    <div class="panel-heading">投票活動清單</div>
+                    <div class="panel-heading">票選活動清單</div>
                     {{-- Panel body --}}
                     <div class="panel-body">
                         @if(Auth::check() && Auth::user()->isStaff())
