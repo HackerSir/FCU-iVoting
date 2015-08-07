@@ -13,19 +13,19 @@
                     <fieldset>
                         <legend>註冊</legend>
                     </fieldset>
-                    <div class="form-group has-feedback{{ ($errors->has('email'))?' has-error':'' }}">
-                        <label class="control-label" for="email">信箱
-                            @if($errors->has('email'))
-                                <span class="label label-danger">{{ $errors->first('email') }}</span>
+                    <div class="form-group has-feedback{{ ($errors->has('email_name'))?' has-error':'' }}">
+                        <label class="control-label" for="email_name">信箱
+                            @if($errors->has('email_name'))
+                                <span class="label label-danger">{{ $errors->first('email_name') }}</span>
                             @endif
                         </label>
 
                         <div class="input-group">
-                            {!! Form::text('email', null, ['id' => 'email', 'placeholder' => '請輸入學號', 'class' => 'form-control', 'required']) !!}
+                            {!! Form::text('email_name', null, ['id' => 'email_name', 'placeholder' => '請輸入學號', 'class' => 'form-control', 'required']) !!}
                             <div class="input-group-addon">@</div>
                             {!! Form::select('email_domain', $allowedEmailsArray, null, ['class' => 'form-control', 'required']) !!}
                         </div>
-                        @if($errors->has('email'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
+                        @if($errors->has('email_name'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
                     </div>
                     <div class="form-group has-feedback{{ ($errors->has('password'))?' has-error':'' }}">
                         <label class="control-label" for="password">密碼

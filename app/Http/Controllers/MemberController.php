@@ -132,7 +132,7 @@ class MemberController extends Controller
     {
         $validator = Validator::make($request->all(),
             array(
-                'email' => 'required',
+                'email_name' => 'required',
                 'email_domain' => 'required',
                 'password' => 'required|min:6',
                 'password_again' => 'required|same:password',
@@ -150,13 +150,28 @@ class MemberController extends Controller
                 $allowedEmailsDebug = Config::get('config.allowed_emails_debug');
                 $allowedEmails = array_merge($allowedEmails, $allowedEmailsDebug);
             }
-            $email_domain = $request->get('email_domain');
+            //取得信箱
+            $email_name = $request->get('email_name');
+            if (!str_contains($email_name, '@')) {
+                //若信箱名稱沒有@，則以下拉選單選擇的域名為準
+                $email_domain = $request->get('email_domain');
+                $email = $email_name . '@' . $email_domain;
+            } else {
+                //若信箱名稱含有@，則以信箱名稱作為完整信箱
+                $email_domain = preg_split("/@/", $email_name, 2)[1];
+                $email = $email_name;
+            }
+            //檢查Email格式
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return Redirect::route('member.register')
+                    ->with('warning', '信箱格式有誤。')
+                    ->withInput();
+            }
             if (!in_array($email_domain, $allowedEmails)) {
                 return Redirect::route('member.register')
                     ->with('warning', '不被允許的信箱類型。')
                     ->withInput();
             }
-            $email = $request->get('email') . '@' . $email_domain;
             if (User::where('email', '=', $email)->count() > 0) {
                 return Redirect::route('member.register')
                     ->with('warning', '該信箱已被註冊。')
