@@ -1,15 +1,7 @@
 @extends('app')
 
-@section('css')
-    <style type="text/css">
-        body {
-            padding-top: 50px !important;
-        }
-    </style>
-@endsection
-
 @section('main-jumbotron')
-    <div style="padding-top: 64px;">
+    <div class="container-fluid">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-sm-8 jumbotron">
