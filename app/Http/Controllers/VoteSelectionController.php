@@ -220,6 +220,15 @@ class VoteSelectionController extends Controller
             'user_id' => Auth::user()->id,
             'vote_selection_id' => $voteSelection->id
         ));
+        //發現投太多票時，移除最後一票
+        if ($voteSelection->voteEvent->getMaxSelected() < $voteSelection->voteEvent->getSelectedCount(Auth::user())) {
+            $voteSelectionIdList = $voteSelection->voteEvent->voteSelections->lists('id')->toArray();
+            while ($voteSelection->voteEvent->getMaxSelected() < $voteSelection->voteEvent->getSelectedCount(Auth::user())) {
+                $voteBallot = VoteBallot::where('user_id', '=', Auth::user()->id)->whereIn('vote_selection_id', $voteSelectionIdList)->orderBy('created_at', 'desc')->first();
+                $voteBallot->delete();
+            }
+        }
+
         return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
             ->with('global', '投票完成');
     }
