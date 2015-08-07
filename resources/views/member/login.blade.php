@@ -32,8 +32,11 @@
                         @if($errors->has('password'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
                     </div>
                     <div class="form-group">
-                        {!! Form::checkbox('remember', 'remember', null, ['id' => 'remember']) !!}
-                        {!! Form::label('remember', '記住我') !!}
+                        <div class="checkbox">
+                            <label>
+                                {!! Form::checkbox('remember', 'remember', null, ['id' => 'remember']) !!} <strong>記住我</strong>
+                            </label>
+                        </div>
                     </div>
                     {!! Form::submit('登入', ['class' => 'btn btn-success']) !!}
                     <a href="{{ URL::route('member.register') }}" class="btn btn-default">註冊</a>

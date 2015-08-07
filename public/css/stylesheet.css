@@ -102,3 +102,7 @@ only screen and (max-width: 479px) {
 hr {
     border-color: black;
 }
+
+input[type='checkbox'] {
+    cursor: pointer;
+}
