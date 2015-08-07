@@ -28,7 +28,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container container-background">
         <div class="row">
             <div class="col-sm-12">
                 <h1 class="text-center">如何投票</h1>
@@ -37,13 +37,22 @@
         </div>
         <div class="row">
             <div class="col-sm-4">
-                <div class="thumbnail"><h2 class="text-center">1. 登入網站</h2></div>
+                <div class="text-center">
+                    <span class="glyphicon glyphicon-log-in text-info" style="font-size: 150px;"></span>
+                </div>
+                <h2 class="text-center">登入票選網站</h2>
             </div>
             <div class="col-sm-4">
-                <div class="thumbnail"><h2 class="text-center">2. 瀏覽投票活動</h2></div>
+                <div class="text-center">
+                    <span class="glyphicon glyphicon-list-alt text-info" style="font-size: 150px;"></span>
+                </div>
+                <h2 class="text-center">瀏覽投票活動</h2>
             </div>
             <div class="col-sm-4">
-                <div class="thumbnail"><h2 class="text-center">3. 按下投票按鈕</h2></div>
+                <div class="text-center">
+                    <span class="glyphicon glyphicon-check text-info" style="font-size: 150px;"></span>
+                </div>
+                <h2 class="text-center">投下神聖的一票</h2>
             </div>
         </div>
     </div>
