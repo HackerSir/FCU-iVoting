@@ -124,7 +124,7 @@
             <p>活動期間：{{ $voteEvent->getHumanTimeString() }}</p>
             <p>@if($voteEvent->organizer)主辦單位：{{ $voteEvent->organizer->name }}@endif</p>
 
-            {!! HTML::linkRoute('vote-event.index', '返回投票活動列表', [], ['class' => 'btn btn-default pull-right']) !!}
+            <a href="{{ URL::route('vote-event.index') }}" class="btn btn-primary pull-right" role="button"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回列表</a>
             <div class="clearfix"></div>
         </div>
 
