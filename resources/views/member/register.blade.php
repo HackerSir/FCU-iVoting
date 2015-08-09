@@ -46,7 +46,7 @@
                         @if($errors->has('password_again'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
                     </div>
                     {!! Form::submit('註冊', ['class' => 'btn btn-primary']) !!}
-                    <a href="{{ URL::route('member.login') }}">登入</a>
+                    <a href="{{ URL::route('member.login') }}", class="btn btn-default">返回登入頁</a>
                     {!! Form::close() !!}
                 </div>
             </div>
