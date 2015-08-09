@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-md-12 col-md-offset-0">
                 <div class="panel panel-default">
-                    <div class="panel-heading">投票活動清單</div>
+                    <div class="panel-heading">票選活動清單</div>
                     {{-- Panel body --}}
                     <div class="panel-body">
                         @if(Auth::check() && Auth::user()->isStaff())
@@ -51,11 +51,11 @@
                                 @endif
                                     <td>
                                         @if($voteEventItem->isEnded())
-                                            已結束
+                                            <span class="label label-warning">已結束</span>
                                         @elseif($voteEventItem->isInProgress())
-                                            進行中
+                                            <span class="label label-success">進行中</span>
                                         @else
-                                            未開始
+                                            <span class="label label-default">未開始</span>
                                         @endif
                                     </td>
                                     <td>{!! HTML::linkRoute('vote-event.show', $voteEventItem->subject, $voteEventItem->id, null) !!}</td>

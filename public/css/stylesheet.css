@@ -98,3 +98,7 @@ only screen and (max-width: 479px) {
         padding-right: 5px;
     }
 }
+
+input[type='checkbox'] {
+    cursor: pointer;
+}

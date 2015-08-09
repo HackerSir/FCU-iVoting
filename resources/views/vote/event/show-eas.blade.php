@@ -31,6 +31,13 @@
             height: 24px;
         }
 
+        .label-adjust {
+            font-size: 70%;
+            margin-left: 10px;
+            position: relative;
+            top: -5px;
+        }
+
         @media
         only screen and (max-width: 768px) {
             .jumbotron {
@@ -96,18 +103,20 @@
         @endif
 
         <div class="jumbotron">
+            @if($voteEvent->isVisible())
+                @include('common.share-button-bar', ['title' => $voteEvent->subject . ' - 投票活動 - ' . Config::get('config.sitename'), 'url' => URL::current()])
+            @endif
+            <div class="clearfix"></div>
             {{-- h1 style comment: 加一些行高，標籤換行時才不會黏在標題下方 --}}
             <h1 style="line-height: 1.3;">
                 {{ $voteEvent->subject }}
-                <span class="label label-success" style="font-size: 70%; margin-left: 10px; position: relative; top: -5px;">
-                    @if($voteEvent->isEnded())
-                        已結束
-                    @elseif($voteEvent->isInProgress())
-                        進行中
-                    @else
-                        未開始
-                    @endif
-                </span>
+                @if($voteEvent->isEnded())
+                    <span class="label label-warning label-adjust">已結束</span>
+                @elseif($voteEvent->isInProgress())
+                    <span class="label label-success label-adjust">進行中</span>
+                @else
+                    <span class="label label-default label-adjust">未開始</span>
+                @endif
             </h1>
 
             <p>{!! App\MarkdownUtil::translate($voteEvent->info) !!}</p>
@@ -134,19 +143,14 @@
             @endif
 
 
-            @if($voteEvent->isVisible())
-                @include('common.share-button-bar', ['title' => $voteEvent->subject . ' - 投票活動 - ' . Config::get('config.sitename'), 'url' => URL::current()])
-            @endif
-            <br />
-            <br />
-            {!! HTML::linkRoute('vote-event.index', '返回投票活動列表', [], ['class' => 'btn btn-default pull-right']) !!}
+            <a href="{{ URL::route('vote-event.index') }}" class="btn btn-primary pull-right" role="button"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回列表</a>
             <div class="clearfix"></div>
         </div>
 
         <div class="bs-callout bs-callout-warning" style="background: white">
             <h4>投票規則</h4>
-            <ul>
-                <li>每人最多可以投&nbsp;{{ $voteEvent->getMaxSelected() }}&nbsp;票
+            <ul style="font-size: 16px">
+                <li>每人最多可以投&nbsp;<strong class="text-info" style="font-size: 25px;">{{ $voteEvent->getMaxSelected() }}</strong>&nbsp;票
                     @if(Auth::check() && Auth::user()->isStaff())
                         （設定值：{{ $voteEvent->max_selected }}）
                     @endif

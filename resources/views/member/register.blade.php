@@ -21,7 +21,7 @@
                         </label>
 
                         <div class="input-group">
-                            {!! Form::text('email_name', null, ['id' => 'email_name', 'placeholder' => '請輸入學號', 'class' => 'form-control', 'required']) !!}
+                            {!! Form::text('email_name', null, ['id' => 'email_name', 'placeholder' => '學號, EX: d0000000', 'class' => 'form-control', 'required']) !!}
                             <div class="input-group-addon">@</div>
                             {!! Form::select('email_domain', $allowedEmailsArray, null, ['class' => 'form-control', 'required']) !!}
                         </div>
@@ -46,11 +46,10 @@
                         @if($errors->has('password_again'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
                     </div>
                     {!! Form::submit('註冊', ['class' => 'btn btn-primary']) !!}
-                    <a href="{{ URL::route('member.login') }}">登入</a>
+                    <a href="{{ URL::route('member.login') }}", class="btn btn-default">返回登入頁</a>
                     {!! Form::close() !!}
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

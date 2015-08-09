@@ -52,7 +52,7 @@
         <footer class="footer">
             <div class="container">
                 <p class="text-muted">
-                    Powered by <a href="https://hackersir.info" target="_blank">FCU HackerSir</a>
+                    Powered by <a href="https://hackersir.info" target="_blank">逢甲大學黑客社</a>
                 </p>
             </div>
         </footer>
