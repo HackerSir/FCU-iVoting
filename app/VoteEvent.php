@@ -124,7 +124,7 @@ class VoteEvent extends Model
         //取得條件的json
         $condition = json_decode($this->vote_condition);
         //此活動無條件限制
-        if (empty($condition)) {
+        if (empty((array)$condition)) {
             return true;
         }
 
@@ -149,7 +149,7 @@ class VoteEvent extends Model
         //取得條件的json
         $condition = json_decode($this->vote_condition);
         //此活動無條件限制
-        if (empty($condition)) {
+        if (empty((array)$condition)) {
             return true;
         }
         //根據不同類型的條件進行檢查
@@ -181,6 +181,9 @@ class VoteEvent extends Model
         $result = [];
         //根據定義的條件清單，逐一判斷每個條件，並列出文字結果
         foreach (static::$validConditionList as $validCondition => $message) {
+            if (empty($this->getConditionValue($validCondition))) {
+                continue;
+            }
             $message = str_replace('{value}', $this->getConditionValue($validCondition), $message);
             if ($user && $withResult) {
                 if ($this->checkCondition($user, $validCondition)) {
