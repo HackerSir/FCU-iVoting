@@ -28,18 +28,22 @@
         </div>
         <br />
         <div class="row">
-            <div class="col-sm-4">
-                <div class="text-center">
-                    <span class="glyphicon glyphicon-log-in text-info" style="font-size: 150px;"></span>
+            <a href="{{ URL::route('member.login') }}" style="color: black;">
+                <div class="col-sm-4">
+                    <div class="text-center">
+                        <span class="glyphicon glyphicon-log-in text-info" style="font-size: 150px;"></span>
+                    </div>
+                    <h2 class="text-center">登入票選網站</h2>
                 </div>
-                <h2 class="text-center">登入票選網站</h2>
-            </div>
-            <div class="col-sm-4">
-                <div class="text-center">
-                    <span class="glyphicon glyphicon-list-alt text-info" style="font-size: 150px;"></span>
+            </a>
+            <a href="{{ URL::route('vote-event.index') }}" style="color: black;">
+                <div class="col-sm-4">
+                    <div class="text-center">
+                        <span class="glyphicon glyphicon-list-alt text-info" style="font-size: 150px;"></span>
+                    </div>
+                    <h2 class="text-center">瀏覽投票活動</h2>
                 </div>
-                <h2 class="text-center">瀏覽投票活動</h2>
-            </div>
+            </a>
             <div class="col-sm-4">
                 <div class="text-center">
                     {{-- padding-right: 15px; 是要讓圖案往右移一些，用手機看起來會好點 --}}
