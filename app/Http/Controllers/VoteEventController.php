@@ -99,7 +99,7 @@ class VoteEventController extends Controller
             $max_selected = ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1;
             //投票條件
             $condition = new \stdClass();
-            $condition->prefix = str_replace(' ', '', $request->get('prefix'));
+            $condition->prefix = ($request->has('prefix')) ? str_replace(' ', '', $request->get('prefix')) : null;
 
             $voteEvent = VoteEvent::create(array(
                 'subject' => $request->get('subject'),
@@ -109,7 +109,7 @@ class VoteEventController extends Controller
                 'max_selected' => $max_selected,
                 'organizer_id' => ($request->has('organizer')) ? $request->get('organizer') : null,
                 'show' => !$request->get('hideVoteEvent', false),
-                'vote_condition' => json_encode($condition)
+                'vote_condition' => (!empty($condition)) ? json_encode((object)array_filter((array)$condition)) : null
             ));
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
@@ -222,8 +222,8 @@ class VoteEventController extends Controller
             $voteEvent->info = $request->get('info');
             //投票條件
             $condition = new \stdClass();
-            $condition->prefix = str_replace(' ', '', $request->get('prefix'));
-            $voteEvent->vote_condition = json_encode($condition);
+            $condition->prefix = ($request->has('prefix')) ? str_replace(' ', '', $request->get('prefix')) : null;
+            $voteEvent->vote_condition = (!empty($condition)) ? json_encode((object)array_filter((array)$condition)) : null;
 
             $voteEvent->save();
             return Redirect::route('vote-event.show', $id)
