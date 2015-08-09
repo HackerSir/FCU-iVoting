@@ -113,7 +113,26 @@
             <p>{!! App\MarkdownUtil::translate($voteEvent->info) !!}</p>
 
             <p>活動期間：{{ $voteEvent->getHumanTimeString() }}</p>
-            <p>@if($voteEvent->organizer)主辦單位：{{ $voteEvent->organizer->name }}@endif</p>
+            @if($voteEvent->organizer)
+                <p>主辦單位：</p>
+                <div class="media">
+                    @if($voteEvent->organizer->url)
+                        <a href="{{ $voteEvent->organizer->url }}" target="_blank">
+                    @endif
+                            <div class="media-left media-middle">
+                                @if($voteEvent->organizer->logo_url)
+                                    <img class="media-object" style="max-height: 75px;" src="{{ $voteEvent->organizer->logo_url }}">
+                                @endif
+                            </div>
+                            <div class="media-body" style="vertical-align: middle;">
+                                <h4 class="media-heading">{{ $voteEvent->organizer->name }}</h4>
+                            </div>
+                     @if($voteEvent->organizer->url)
+                        </a>
+                    @endif
+                </div>
+            @endif
+
 
             @if($voteEvent->isVisible())
                 @include('common.share-button-bar', ['title' => $voteEvent->subject . ' - 投票活動 - ' . Config::get('config.sitename'), 'url' => URL::current()])
