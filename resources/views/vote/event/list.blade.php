@@ -51,11 +51,11 @@
                                 @endif
                                     <td>
                                         @if($voteEventItem->isEnded())
-                                            <span class="label label-warning label-adjust">已結束</span>
+                                            <span class="label label-warning">已結束</span>
                                         @elseif($voteEventItem->isInProgress())
-                                            <span class="label label-success label-adjust">進行中</span>
+                                            <span class="label label-success">進行中</span>
                                         @else
-                                            <span class="label label-default label-adjust">未開始</span>
+                                            <span class="label label-default">未開始</span>
                                         @endif
                                     </td>
                                     <td>{!! HTML::linkRoute('vote-event.show', $voteEventItem->subject, $voteEventItem->id, null) !!}</td>
