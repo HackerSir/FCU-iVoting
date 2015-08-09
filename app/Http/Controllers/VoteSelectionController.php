@@ -207,6 +207,11 @@ class VoteSelectionController extends Controller
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('warning', '非投票期間');
         }
+        //檢查投票資格
+        if (!$voteSelection->voteEvent->canVote(Auth::user())) {
+            return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
+                ->with('warning', '不符合投票資格');
+        }
         //檢查用戶狀態
         if ($voteSelection->hasVoted(Auth::user())) {
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)

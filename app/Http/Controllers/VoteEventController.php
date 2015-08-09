@@ -97,6 +97,10 @@ class VoteEventController extends Controller
                 }
             }
             $max_selected = ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1;
+            //投票條件
+            $condition = new \stdClass();
+            $condition->prefix = str_replace(' ', '', $request->get('prefix'));
+
             $voteEvent = VoteEvent::create(array(
                 'subject' => $request->get('subject'),
                 'open_time' => $open_time,
@@ -105,6 +109,7 @@ class VoteEventController extends Controller
                 'max_selected' => $max_selected,
                 'organizer_id' => ($request->has('organizer')) ? $request->get('organizer') : null,
                 'show' => !$request->get('hideVoteEvent', false),
+                'vote_condition' => json_encode($condition)
             ));
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
@@ -215,6 +220,11 @@ class VoteEventController extends Controller
             }
             $voteEvent->close_time = $close_time;
             $voteEvent->info = $request->get('info');
+            //投票條件
+            $condition = new \stdClass();
+            $condition->prefix = str_replace(' ', '', $request->get('prefix'));
+            $voteEvent->vote_condition = json_encode($condition);
+
             $voteEvent->save();
             return Redirect::route('vote-event.show', $id)
                 ->with('global', '投票活動已更新');

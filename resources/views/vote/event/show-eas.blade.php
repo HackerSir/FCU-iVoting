@@ -159,6 +159,14 @@
                     @endif
                 </li>
                 <li>選出一名，採相對多數決(也就是最高票獲選)</li>
+                @if(!empty($voteEvent->vote_condition))
+                    <li>投票資格限制</li>
+                    <ul>
+                        @foreach($voteEvent->getConditionList(Auth::user()) as $result)
+                            <li>{!! $result !!}</li>
+                        @endforeach
+                    </ul>
+                @endif
             </ul>
         </div>
 
@@ -217,7 +225,11 @@
                                             @elseif(!Auth::user()->isConfirmed())
                                                 {!! HTML::linkRoute('member.resend', '按此投票', [], ['title' => '投票前請先完成信箱驗證', 'class' => 'btn btn-default btn-lg']) !!}
                                             @else
-                                                @if($voteEvent->getMaxSelected() > $voteEvent->getSelectedCount(Auth::user()))
+                                                @if(!$voteEvent->canVote(Auth::user()))
+                                                    <div title="不符合投票資格" style="display: inline-block">
+                                                        <span class="btn btn-default btn-lg disabled">按此投票</span>
+                                                    </div>
+                                                @elseif($voteEvent->getMaxSelected() > $voteEvent->getSelectedCount(Auth::user()))
                                                     @if(!$voteSelectionItem->hasVoted(Auth::user()))
                                                         {!! Form::open(['route' => ['vote-selection.vote', $voteSelectionItem->id], 'style' => 'display: inline', 'method' => 'POST',
                                                         'onSubmit' => "return confirm('確定要投票給此項目嗎？');"]) !!}
