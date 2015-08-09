@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\URL;
 
 class UploadController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function postImage(Request $request)
     {
         //只接受Ajax請求

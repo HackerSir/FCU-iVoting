@@ -19,6 +19,7 @@ class VoteEventController extends Controller
 
     public function __construct()
     {
+        parent::__construct();
         //限工作人員
         $this->middleware('staff', [
             'except' => [

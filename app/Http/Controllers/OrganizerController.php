@@ -14,6 +14,7 @@ class OrganizerController extends Controller
 {
     public function __construct()
     {
+        parent::__construct();
         //限管理員
         $this->middleware('admin');
     }
