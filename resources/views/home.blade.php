@@ -24,9 +24,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <h1 class="text-center">如何投票</h1>
-                <hr>
             </div>
         </div>
+        <br />
         <div class="row">
             <div class="col-sm-4">
                 <div class="text-center">
