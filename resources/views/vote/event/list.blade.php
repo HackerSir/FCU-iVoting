@@ -71,8 +71,8 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <td>{{ $voteEventItem->open_time }}</td>
-                                    <td>{{ $voteEventItem->close_time }}</td>
+                                    <td><span title="{{ (new Carbon($voteEventItem->open_time))->diffForHumans() }}">{{ $voteEventItem->open_time }}</span></td>
+                                    <td><span title="{{ (new Carbon($voteEventItem->close_time))->diffForHumans() }}">{{ $voteEventItem->close_time }}</span></td>
                                 </tr>
                             @endforeach
                             </tbody>

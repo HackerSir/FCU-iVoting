@@ -121,7 +121,7 @@
 
             <p>{!! App\MarkdownUtil::translate($voteEvent->info) !!}</p>
 
-            <p>活動期間：{{ $voteEvent->getHumanTimeString() }}</p>
+            <p>活動期間：{!! $voteEvent->getHumanTimeString() !!}</p>
             @if($voteEvent->organizer)
                 <p>主辦單位：</p>
                 <div class="media">
