@@ -184,9 +184,9 @@ class VoteEvent extends Model
             $message = str_replace('{value}', $this->getConditionValue($validCondition), $message);
             if ($user && $withResult) {
                 if ($this->checkCondition($user, $validCondition)) {
-                    $result[] = '<span style="color: green">✔</span> ' . $message;
+                    $result[] = '<span style="color: green" title="符合條件">✔</span> ' . $message;
                 } else {
-                    $result[] = '<span style="color: red">✘</span> <b>' . $message . '</b>';
+                    $result[] = '<span style="color: red" title="不符合條件">✘</span> <b>' . $message . '</b>';
                 }
             } else {
                 $result[] = $message;
