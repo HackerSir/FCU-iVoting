@@ -8,7 +8,7 @@
         <meta property="og:title" content="@if (trim($__env->yieldContent('title'))) @yield('title') - @endif{{ Config::get('config.sitename') }}">
         <meta property="og:url" content="{{ URL::current() }}">
         <meta property="og:image" content="{{ asset('pic/logo.jpg') }}">
-        <meta property="og:description" content="iVoting 逢甲票選系統 - 一個由學生社團做的票選系統，快來參加各種票選活動吧！！！">
+        <meta property="og:description" content="逢甲票選系統(iVoting) - 一個由學生社團做的票選系統，快來參加各種票選活動吧！！！">
 
         <title>@if (trim($__env->yieldContent('title'))) @yield('title') - @endif{{ Config::get('config.sitename') }}</title>
 
