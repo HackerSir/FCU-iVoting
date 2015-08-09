@@ -52,9 +52,6 @@
         <footer class="footer">
             <div class="container">
                 <p class="text-muted">
-                    @if(Request::is('vote-event/*') && isset($voteEvent->organizer->name))
-                        主辦單位：{{ $voteEvent->organizer->name }} /
-                    @endif
                     Powered by <a href="https://hackersir.info" target="_blank">逢甲大學黑客社</a>
                 </p>
             </div>
