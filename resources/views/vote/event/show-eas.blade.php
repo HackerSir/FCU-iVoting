@@ -57,7 +57,7 @@
                 </div>
                 <div class="panel-body">
                     @if(!$voteEvent->isEnded())
-                        {!! HTML::linkRoute('vote-event.edit', '編輯投票活動', $voteEvent->id, ['class' => 'btn btn-info']) !!}
+                        <a href="{{ URL::route('vote-event.edit', ['voteEvent' => $voteEvent]) }}" class="btn btn-info"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>編輯投票活動</a>
                     @endif
                     @if(!$voteEvent->isStarted())
                         {!! Form::open(['route' => ['vote-event.destroy', $voteEvent->id], 'style' => 'display: inline', 'method' => 'DELETE',
