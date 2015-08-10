@@ -309,11 +309,9 @@
             </div>
         </div>
     </div>
-
 @endsection
 
-@section('script')
-
+@section('javascript')
     <script type="text/javascript">
         $('#imageModal').on('show.bs.modal', function (event) {
             $('body').width($('body').width());
@@ -361,5 +359,4 @@
             $('html').css('overflow-y', 'scroll');
         });
     </script>
-
 @endsection

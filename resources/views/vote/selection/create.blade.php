@@ -65,31 +65,33 @@
 @endsection
 
 @section('javascript')
-    $("#image_upload").fileinput({
-        'language': 'tw',
-        'uploadUrl': '{{ URL::route('upload.image') }}',
-        'deleteUrl': '{{ URL::route('upload.delete-image') }}',
-        'multiple': true,
-        'append': false,
-        'uploadExtraData': {
-            '_token': '{{ Session::token() }}'
-        },
-        'deleteExtraData': {
-            '_token': '{{ Session::token() }}'
-        },
-        'overwriteInitial': false,
-        'previewSettings': {
-            image: {width: "200px", height: "auto"},
-        }
-    });
-    $('#image_upload').on('fileuploaded', function(event, data, previewId, index) {
-        var form = data.form, files = data.files, extra = data.extra,
-        response = data.response, reader = data.reader;
-        console.log('Uploaded: ' + response.url);
-        $('textarea#image').val($.trim($('textarea#image').val() + '\n' + response.url));
-    });
-    $('#image_upload').on('filedeleted', function(event, key) {
-        console.log('Deleted: ' + key);
-        $('textarea#image').val($.trim($('textarea#image').val().replace(key, '').replace(/\n+/g, '\n')));
-    });
+    <script type="text/javascript">
+        $("#image_upload").fileinput({
+            'language': 'tw',
+            'uploadUrl': '{{ URL::route('upload.image') }}',
+            'deleteUrl': '{{ URL::route('upload.delete-image') }}',
+            'multiple': true,
+            'append': false,
+            'uploadExtraData': {
+                '_token': '{{ Session::token() }}'
+            },
+            'deleteExtraData': {
+                '_token': '{{ Session::token() }}'
+            },
+            'overwriteInitial': false,
+            'previewSettings': {
+                image: {width: "200px", height: "auto"},
+            }
+        });
+        $('#image_upload').on('fileuploaded', function (event, data, previewId, index) {
+            var form = data.form, files = data.files, extra = data.extra,
+                response = data.response, reader = data.reader;
+            console.log('Uploaded: ' + response.url);
+            $('textarea#image').val($.trim($('textarea#image').val() + '\n' + response.url));
+        });
+        $('#image_upload').on('filedeleted', function (event, key) {
+            console.log('Deleted: ' + key);
+            $('textarea#image').val($.trim($('textarea#image').val().replace(key, '').replace(/\n+/g, '\n')));
+        });
+    </script>
 @endsection

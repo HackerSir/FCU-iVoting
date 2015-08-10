@@ -71,7 +71,7 @@
         @if(App::environment('production'))
             {!! HTML::script('js/analyticstracking.js') !!}
         @endif
-        @yield('script')
+
         <script type="text/javascript">
             @if(Session::has('global'))
                 /* Global message */
@@ -130,8 +130,8 @@
                     stem: false
                 });
             });
-
-            @yield('javascript')
         </script>
+
+        @yield('javascript')
     </body>
 </html>
