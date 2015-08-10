@@ -25,8 +25,6 @@
         {!! HTML::style('css/callout.css') !!}
         {!! HTML::style('css/sticky-footer-navbar.css') !!}
 
-        @yield('css')
-
         <!-- Fonts -->
         {!! HTML::style('//fonts.googleapis.com/css?family=Roboto:400,300') !!}
 
@@ -37,6 +35,7 @@
             {!! HTML::script('https://oss.maxcdn.com/respond/1.4.2/respond.min.js') !!}
         <![endif]-->
 
+        @yield('css')
     </head>
     <body>
         {{-- navbar--}}
