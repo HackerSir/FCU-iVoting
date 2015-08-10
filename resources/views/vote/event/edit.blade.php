@@ -91,20 +91,16 @@
                                     </label>
                                 </div>
                             @endif
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2" for="prefix">限制學號開頭</label>
 
-                        <div class="col-md-9">
-                            <div class='input-group'>
+                            <div>
+                                <label class="control-label" for="prefix" style="margin-bottom: 5px;">限制學號開頭
+                                    <span class="glyphicon glyphicon-question-sign" title="請直接輸入學號開頭，如：d04；<br />若想同時允許多種學號，請用逗號分隔，如：d01,d02。"></span>
+                                </label>
+                                
                                 {!! Form::text('prefix', $voteEvent->getConditionValue('prefix'), ['id' => 'prefix', 'placeholder' => '只有特定學號開頭可投票，留白為不限制', 'class' => 'form-control']) !!}
-                                <span class="input-group-addon" title="請直接輸入學號開頭，如：d04；<br />若想同時允許多種學號，請用逗號分隔，如：d01,d02。">
-                                    <span class="glyphicon glyphicon-question-sign"></span>
-                                </span>
+                                @if($errors->has('prefix'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                <span class="label label-danger">{{ $errors->first('prefix') }}</span>@endif
                             </div>
-                            @if($errors->has('prefix'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                            <span class="label label-danger">{{ $errors->first('prefix') }}</span>@endif
                         </div>
                     </div>
                     <div class="form-group has-feedback{{ ($errors->has('info'))?' has-error':'' }}">
