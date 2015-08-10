@@ -160,7 +160,7 @@
                 </li>
                 <li>選出一名，採相對多數決(也就是最高票獲選)</li>
                 @if(!empty(json_decode($voteEvent->vote_condition, true)))
-                    <li>投票資格限制</li>
+                    <li>投票資格限制：</li>
                     <ul>
                         @foreach($voteEvent->getConditionList(Auth::user()) as $result)
                             <li>{!! $result !!}</li>
@@ -178,7 +178,7 @@
                 @if(Auth::check() && Auth::user()->isStaff() && !$voteEvent->isStarted())
                     <div class="panel" style="background-color: #f2dede;">
                         <div class="panel-body">
-                            {!! HTML::linkRoute('vote-selection.create', '新增投票選項', ['vid' => $voteEvent->id], ['class' => 'btn btn-success pull-right']) !!}
+                            {!! HTML::linkRoute('vote-selection.create', '新增票選選項', ['vid' => $voteEvent->id], ['class' => 'btn btn-success pull-right']) !!}
                         </div>
                     </div>
                 @endif
