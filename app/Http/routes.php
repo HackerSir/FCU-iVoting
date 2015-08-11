@@ -79,6 +79,18 @@ Route::get('log', [
     'middleware' => 'admin'
 ]);
 
+Route::get('policies/privacy', [
+    'as' => 'policies.privacy',
+    function() {
+        return response()->view('policies');
+}]);
+
+Route::get('policies/terms', [
+    'as' => 'policies.terms',
+    function() {
+        return response()->view('policies');
+}]);
+
 //未定義路由
 Route::get('{all}', array(
     'as' => 'not-found',
