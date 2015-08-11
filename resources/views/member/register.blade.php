@@ -45,6 +45,7 @@
                         {!! Form::password('password_again', ['id' => 'password_again', 'placeholder' => '請再輸入一次密碼', 'class' => 'form-control', 'required']) !!}
                         @if($errors->has('password_again'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
                     </div>
+                    <p class="help-block">當你點選註冊時，代表你同意本站的<a href="{{ URL::route('policies.privacy') }}" target="_blank">《隱私權政策》<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>&nbsp;與<a href="{{ URL::route('policies.terms') }}" target="_blank">《服務條款》<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>
                     {!! Form::submit('註冊', ['class' => 'btn btn-primary']) !!}
                     <a href="{{ URL::route('member.login') }}", class="btn btn-default">返回登入頁</a>
                     {!! Form::close() !!}
