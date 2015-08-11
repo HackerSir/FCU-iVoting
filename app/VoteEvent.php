@@ -81,19 +81,22 @@ class VoteEvent extends Model
     {
         $string = "";
         if ($this->open_time && $this->close_time) {
-            $string = $this->open_time . " ~ " . $this->close_time;
-            $string = '<span title="' . (new Carbon($this->open_time))->diffForHumans() . '">' . $this->open_time . "</span>  ~ "
-                . '<span title="' . (new Carbon($this->close_time))->diffForHumans() . '">' . $this->close_time . '</span>';
+            $string = $this->getTimeSpanTag($this->open_time) . " ~ " . $this->getTimeSpanTag($this->close_time);
         } else {
             if ($this->open_time) {
-                $string = '<span title="' . (new Carbon($this->open_time))->diffForHumans() . '">' . $this->open_time . '</span> 起';
+                $string = $this->getTimeSpanTag($this->open_time) . ' 起';
             } else if ($this->close_time) {
-                $string = '到 <span title="' . (new Carbon($this->close_time))->diffForHumans() . '">' . $this->close_time . '</span> 為止';
+                $string = '到 ' . $this->getTimeSpanTag($this->close_time) . ' 為止';
             } else {
                 $string = "尚未決定";
             }
         }
         return $string;
+    }
+
+    public function getTimeSpanTag($time) {
+        //style="display: inline-block; 是防止字換行
+        return '<span title="' . (new Carbon($time))->diffForHumans() . '"  style="display: inline-block;">' . $time . '</span>';
     }
 
     public function isVisible()
