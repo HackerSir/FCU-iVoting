@@ -40,7 +40,7 @@
 
         img.vote-selection {
             max-width: 100%;
-            max-height: 300px;
+            max-height: 200px;
             width: auto;
             height: auto;
         }
@@ -195,9 +195,9 @@
                 <div class="row" id="selections">
                     @if(count($voteEvent->voteSelections))
                         @foreach($voteEvent->voteSelections as $voteSelectionItem)
-                            <div class="col-sm-6 col-md-4" selection_id="{{ $voteSelectionItem->id }}">
+                            <div class="col-sm-6 col-md-3" selection_id="{{ $voteSelectionItem->id }}">
                                 <div class="thumbnail selectionBox">
-                                    <div class="vertical-center" style="height: 300px; padding-top: 10px">
+                                    <div class="vertical-center" style="height: 210px; padding-top: 10px">
                                         <div style="position: relative; z-index: 0;">
                                             @if(count($voteSelectionItem->getImageLinks()) > 0)
                                                 @if(count($voteSelectionItem->getImageLinks()) > 1)
@@ -205,7 +205,7 @@
                                                 @endif
                                                 <img src="{{ App\Imgur::thumbnail($voteSelectionItem->getImageLinks()[0], 'm') }}" class="img-rounded vote-selection" style="cursor: pointer;" data-toggle="modal" data-target="#imageModal" data-title="{{ $voteSelectionItem->getTitle() }}" data-images="{{ implode(';',$voteSelectionItem->getImageLinks()) }}"/>
                                             @else
-                                                <img data-src="holder.js/300x300?text=沒有圖片&size=45" class="img-rounded vote-selection"/>
+                                                <img data-src="holder.js/200x200?text=沒有圖片&size=30" class="img-rounded vote-selection"/>
                                             @endif
                                         </div>
                                     </div>
