@@ -180,7 +180,7 @@
                         <div class="panel-body">
                             {!! HTML::linkRoute('vote-selection.create', '新增票選選項', ['vid' => $voteEvent->id], ['class' => 'btn btn-success pull-right']) !!}
                             <button class="btn btn-default" id="sortButton"><i class="fa fa-arrows"></i>重新排序</button>
-                            <span class="fa" id="sortStatus"></span>
+                            <span class="fa" id="sortStatus"></span><span id="sortStatusMessage"></span>
                         </div>
                     </div>
                 @endif
@@ -365,6 +365,7 @@
                 var sortButton = $('#sortButton');
                 var selections = $('#selections');
                 var status = $('#sortStatus');
+                var statusMessage = $('#sortStatusMessage');
                 {{--  切換按鈕狀態 --}}
                 sortButton.toggleClass('active');
                 sortButton.children("i").toggleClass('fa-spin');
@@ -373,10 +374,10 @@
                     selections.sortable();
                     selections.sortable("enable");
                     status.removeClass();
-                    status.html("直接拖曳排序，完成後再次點擊按鈕即可儲存");
+                    statusMessage.html("直接拖曳排序，完成後再次點擊按鈕即可儲存");
                 } else {
                     selections.sortable("disable");
-                    status.html("");
+                    statusMessage.html("儲存中");
                     status.addClass("fa fa-refresh fa-spin");
                     {{-- 統計順序 --}}
                     var idList = [];
@@ -403,16 +404,16 @@
                             status.removeClass();
                             if (data == "success") {
                                 status.addClass("fa fa-check");
-                                status.html("<span style=\"color:green\">已儲存</span>");
+                                statusMessage.html("<span style=\"color:green\">已儲存</span>");
                             } else {
                                 status.addClass("fa fa-times");
-                                status.html("<span style=\"color:red\">發生錯誤：" + data + "</span>");
+                                statusMessage.html("<span style=\"color:red\">發生錯誤：" + data + "</span>");
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
                             status.removeClass();
                             status.addClass("fa fa-times");
-                            status.html("<span style=\"color:red\">發生錯誤：" + xhr.status + " " + thrownError + "</span>");
+                            statusMessage.html("<span style=\"color:red\">發生錯誤：" + xhr.status + " " + thrownError + "</span>");
                         }
                     });
                 }
