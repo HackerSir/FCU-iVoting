@@ -136,7 +136,7 @@
                             <div class="media-body" style="vertical-align: middle;">
                                 <h4 class="media-heading">{{ $voteEvent->organizer->name }}</h4>
                             </div>
-                     @if($voteEvent->organizer->url)
+                    @if($voteEvent->organizer->url)
                         </a>
                     @endif
                 </div>
@@ -179,14 +179,16 @@
                     <div class="panel" style="background-color: #f2dede;">
                         <div class="panel-body">
                             {!! HTML::linkRoute('vote-selection.create', '新增票選選項', ['vid' => $voteEvent->id], ['class' => 'btn btn-success pull-right']) !!}
+                            <button class="btn btn-default" id="sortButton"><i class="fa fa-arrows"></i>重新排序</button>
+                            <span class="fa" id="sortStatus"></span>
                         </div>
                     </div>
                 @endif
 
-                <div class="row">
+                <div class="row" id="selections">
                     @if(count($voteEvent->voteSelections))
                         @foreach($voteEvent->voteSelections as $voteSelectionItem)
-                            <div class="col-sm-6 col-md-4">
+                            <div class="col-sm-6 col-md-4" selection_id="{{ $voteSelectionItem->id }}">
                                 <div class="thumbnail">
                                     <div class="vertical-center" style="height: 300px; padding-top: 10px">
                                         <div style="position: relative; z-index: 0;">
@@ -358,5 +360,63 @@
             $('body').removeAttr('style');
             $('html').css('overflow-y', 'scroll');
         });
+        @if(Auth::check() && Auth::user()->isStaff() && !$voteEvent->isStarted())
+            $('#sortButton').click(function (event) {
+                var sortButton = $('#sortButton');
+                var selections = $('#selections');
+                var status = $('#sortStatus');
+                {{--  切換按鈕狀態 --}}
+                sortButton.toggleClass('active');
+                sortButton.children("i").toggleClass('fa-spin');
+                {{--  改變排序狀態 --}}
+                if (sortButton.hasClass('active')) {
+                    selections.sortable();
+                    selections.sortable("enable");
+                    status.removeClass();
+                    status.html("直接拖曳排序，完成後再次點擊按鈕即可儲存");
+                } else {
+                    selections.sortable("disable");
+                    status.html("");
+                    status.addClass("fa fa-refresh fa-spin");
+                    {{-- 統計順序 --}}
+                    var idList = [];
+                    selections.children("div").each(function () {
+                        this_id = $(this).attr("selection_id");
+                        idList.push(this_id);
+                    });
+                    {{-- 處理順序 --}}
+                    console.log(idList);
+
+                    var URLs = "{{ URL::route('vote-event.sort') }}";
+
+                    $.ajax({
+                        url: URLs,
+                        data: {idList: idList},
+                        headers: {
+                            'X-CSRF-Token': "{{ Session::token() }}",
+                            "Accept": "application/json"
+                        },
+                        type: "POST",
+                        dataType: "text",
+
+                        success: function (data){
+                            status.removeClass();
+                            if (data) {
+                                status.addClass("fa fa-check");
+                            } else {
+                                status.addClass("fa fa-times");
+                                alert("error");
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            status.removeClass();
+                            status.addClass("fa fa-times");
+                            alert(xhr.status);
+                            alert(thrownError);
+                        }
+                    });
+                }
+            });
+        @endif
     </script>
 @endsection

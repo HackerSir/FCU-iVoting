@@ -301,4 +301,16 @@ class VoteEventController extends Controller
         return Redirect::route('vote-event.show', $id)
             ->with('global', '投票活動已結束');
     }
+
+    //排序選項
+    public function sort($id, Request $request)
+    {
+        //只接受Ajax請求
+        if (!$request->ajax()) {
+            return "error";
+        }
+        //取得排序後的id清單
+        $idList = $request->get('idList');
+        return 'success';
+    }
 }
