@@ -314,6 +314,10 @@ class VoteEventController extends Controller
         if (!$voteEvent) {
             return '投票活動不存在';
         }
+        //若無選項，直接回傳成功
+        if ($voteEvent->voteSelections->count() == 0) {
+            return 'success';
+        }
         //取得排序後的id清單
         $idList = $request->get('idList');
         foreach ($idList as $order => $id) {
