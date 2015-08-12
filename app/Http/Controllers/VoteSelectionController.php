@@ -99,10 +99,11 @@ class VoteSelectionController extends Controller
             //$obj->image = explode(PHP_EOL, $request->get('image'));
             $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), NULL, PREG_SPLIT_NO_EMPTY);
             $json = json_encode($obj);
-
+            $order = ($voteEvent->voteSelections->count() > 0) ? $voteEvent->voteSelections->max('order') : 0;
             $voteSelection = VoteSelection::create(array(
                 'vote_event_id' => $voteEvent->id,
-                'data' => $json
+                'data' => $json,
+                'order' => $order
             ));
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('global', '投票選項已建立');
