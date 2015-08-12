@@ -189,7 +189,7 @@
                     @if(count($voteEvent->voteSelections))
                         @foreach($voteEvent->voteSelections as $voteSelectionItem)
                             <div class="col-sm-6 col-md-4" selection_id="{{ $voteSelectionItem->id }}">
-                                <div class="thumbnail">
+                                <div class="thumbnail selectionBox">
                                     <div class="vertical-center" style="height: 300px; padding-top: 10px">
                                         <div style="position: relative; z-index: 0;">
                                             @if(count($voteSelectionItem->getImageLinks()) > 0)
@@ -364,6 +364,7 @@
             $('#sortButton').click(function (event) {
                 var sortButton = $('#sortButton');
                 var selections = $('#selections');
+                var selectionBox = $('.selectionBox');
                 var status = $('#sortStatus');
                 var statusMessage = $('#sortStatusMessage');
                 {{--  切換按鈕狀態 --}}
@@ -375,10 +376,12 @@
                     selections.sortable("enable");
                     status.removeClass();
                     statusMessage.html("直接拖曳排序，完成後再次點擊按鈕即可儲存");
+                    selectionBox.css("cursor", "move");
                 } else {
                     selections.sortable("disable");
                     statusMessage.html("儲存中");
                     status.addClass("fa fa-refresh fa-spin");
+                    selectionBox.removeAttr("style");
                     {{-- 統計順序 --}}
                     var idList = [];
                     selections.children("div").each(function () {
