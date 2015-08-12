@@ -54,8 +54,8 @@
                     Powered by <a href="https://hackersir.info" target="_blank">逢甲大學黑客社</a>
                 </p>
                 <ol class="breadcrumb" style="padding-top: 0; margin-bottom: 0px;">
-                    <li><a href="{{ URL::route('policies.privacy') }}">隱私權</a></li>
-                    <li><a href="{{ URL::route('policies.terms') }}">服務條款</a></li>
+                    <li><a href="{{ URL::route('policies', 'privacy') }}">隱私權</a></li>
+                    <li><a href="{{ URL::route('policies', 'terms') }}">服務條款</a></li>
                     <li><a href="mailto:逢甲票選系統<ifcu.today@gmail.com>" target="_blank">聯絡我們</a></li>
                 </ol>
             </div>

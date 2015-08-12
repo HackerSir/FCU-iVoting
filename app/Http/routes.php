@@ -79,17 +79,16 @@ Route::get('log', [
     'middleware' => 'admin'
 ]);
 
-Route::get('policies/privacy', [
-    'as' => 'policies.privacy',
-    function() {
-        return response()->view('policies');
-}]);
-
-Route::get('policies/terms', [
-    'as' => 'policies.terms',
-    function() {
-        return response()->view('policies');
-}]);
+$policiesTabs = ['privacy', 'terms'];
+Route::get('policies/{tab}', [
+        'as' => 'policies',
+        function ($tab) use ($policiesTabs) {
+            if (!in_array($tab, $policiesTabs)) {
+                return redirect()->route('policies', $policiesTabs[0]);
+            }
+            return response()->view('policies');
+        }]
+);
 
 //未定義路由
 Route::get('{all}', array(
