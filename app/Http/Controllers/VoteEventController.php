@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Organizer;
 use App\Setting;
 use App\VoteEvent;
+use App\VoteSelection;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -307,10 +308,19 @@ class VoteEventController extends Controller
     {
         //只接受Ajax請求
         if (!$request->ajax()) {
-            return "error";
+            return 'error';
+        }
+        $voteEvent = VoteEvent::find($id);
+        if (!$voteEvent) {
+            return '投票活動不存在';
         }
         //取得排序後的id清單
         $idList = $request->get('idList');
+        foreach ($idList as $order => $id) {
+            $selection = VoteSelection::find($id);
+            $selection->order = $order;
+            $selection->save();
+        }
         return 'success';
     }
 }

@@ -17,7 +17,7 @@ class VoteEvent extends Model
 
     public function voteSelections()
     {
-        return $this->hasMany('App\VoteSelection');
+        return $this->hasMany('App\VoteSelection')->orderBy('order')->orderBy('id');
     }
 
     public function organizer()
@@ -94,7 +94,8 @@ class VoteEvent extends Model
         return $string;
     }
 
-    public function getTimeSpanTag($time) {
+    public function getTimeSpanTag($time)
+    {
         //style="display: inline-block; 是防止字換行
         return '<span title="' . (new Carbon($time))->diffForHumans() . '"  style="display: inline-block;">' . $time . '</span>';
     }

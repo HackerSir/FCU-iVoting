@@ -387,7 +387,7 @@
                     {{-- 處理順序 --}}
                     console.log(idList);
 
-                    var URLs = "{{ URL::route('vote-event.sort') }}";
+                    var URLs = "{{ URL::route('vote-event.sort', $voteEvent->id) }}";
 
                     $.ajax({
                         url: URLs,
@@ -401,7 +401,7 @@
 
                         success: function (data){
                             status.removeClass();
-                            if (data) {
+                            if (data == "success") {
                                 status.addClass("fa fa-check");
                             } else {
                                 status.addClass("fa fa-times");
