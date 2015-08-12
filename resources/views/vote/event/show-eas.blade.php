@@ -403,16 +403,16 @@
                             status.removeClass();
                             if (data == "success") {
                                 status.addClass("fa fa-check");
+                                status.html("<span style=\"color:green\">已儲存</span>");
                             } else {
                                 status.addClass("fa fa-times");
-                                alert("error");
+                                status.html("<span style=\"color:red\">發生錯誤：" + data + "</span>");
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
                             status.removeClass();
                             status.addClass("fa fa-times");
-                            alert(xhr.status);
-                            alert(thrownError);
+                            status.html("<span style=\"color:red\">發生錯誤：" + xhr.status + " " + thrownError + "</span>");
                         }
                     });
                 }
