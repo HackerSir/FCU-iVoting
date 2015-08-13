@@ -3,6 +3,7 @@
 use App\Group;
 use App\User;
 use Carbon\Carbon;
+use GrahamCampbell\Throttle\Facades\Throttle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -86,6 +87,17 @@ class MemberController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
+            //檢查登入冷卻，防止惡意登入
+            $throttle = Throttle::get($request, 5, 10);
+            //檢查登入次數
+            if (!$throttle->check()) {
+                return Redirect::route('member.login')
+                    ->with('warning', '嘗試登入過於頻繁，請等待10分鐘')
+                    ->withInput();
+            }
+            //增加次數
+            $throttle->hit();
+
             $remember = ($request->has('remember')) ? true : false;
             $auth = Auth::attempt([
                 'email' => $request->get('email'),
