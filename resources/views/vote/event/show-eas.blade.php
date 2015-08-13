@@ -347,8 +347,12 @@
 
 @section('javascript')
     <script type="text/javascript">
-        $( document ).ready( function() {
+        {{-- 等待DOM載入完成 --}}
+        $(document).ready(function () {
             refreshSelectionsShowOrder();
+        });
+        {{-- 等待所有資源載入完成 --}}
+        $(window).load(function() {
             consistencySelectionsHeight();
         });
 
@@ -486,25 +490,25 @@
 
         {{-- 更新選項的顯示編號 --}}
         function refreshSelectionsShowOrder() {
-            $.each($("#selections #selectionOrder"), function( index, element ) {
-                $( this ).text(index + 1);
+            $.each($("#selections #selectionOrder"), function (index, element) {
+                $(this).text(index + 1);
             });
         }
 
         {{-- 讓所有選項的高度一樣 --}}
         function consistencySelectionsHeight() {
             {{-- 找出最高的高度 --}}
-            var selections = $('#selections > div');
+            var selections = $('#selections .thumbnail');
             var maxHeight = -1;
-            $.each(selections, function() {
-                var height = $( this).height();
+            $.each(selections, function () {
+                var height = $(this).outerHeight(); {{-- outerHeight() 包含 padding, border --}}
                 if (height > maxHeight) {
                     maxHeight = height;
                 }
             });
             {{-- 設定所有選項最小高度 --}}
-            $.each(selections, function() {
-                $( this ).children('div').css('minHeight', maxHeight);
+            $.each(selections, function () {
+                $(this).css('minHeight', maxHeight);
             });
         }
     </script>
