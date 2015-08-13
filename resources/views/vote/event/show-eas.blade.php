@@ -349,6 +349,7 @@
     <script type="text/javascript">
         $( document ).ready( function() {
             refreshSelectionsShowOrder();
+            consistencySelectionsHeight();
         });
 
         $('#imageModal').on('show.bs.modal', function (event) {
@@ -453,6 +454,7 @@
                             status.removeClass();
                             if (data == "success") {
                                 refreshSelectionsShowOrder();
+                                consistencySelectionsHeight();
 
                                 status.addClass("fa fa-check");
                                 statusMessage.html("<span style=\"color:green\">已儲存</span>");
@@ -471,9 +473,27 @@
             });
         @endif
 
+        {{-- 更新選項的顯示編號 --}}
         function refreshSelectionsShowOrder() {
             $.each($("#selections #selectionOrder"), function( index, element ) {
                 $( this ).text(index + 1);
+            });
+        }
+
+        {{-- 讓所有選項的高度一樣 --}}
+        function consistencySelectionsHeight() {
+            {{-- 找出最高的高度 --}}
+            var selections = $('#selections > div');
+            var maxHeight = -1;
+            $.each(selections, function() {
+                var height = $( this).height();
+                if (height > maxHeight) {
+                    maxHeight = height;
+                }
+            });
+            {{-- 設定所有選項最小高度 --}}
+            $.each(selections, function() {
+                $( this ).children('div').css('minHeight', maxHeight);
             });
         }
     </script>
