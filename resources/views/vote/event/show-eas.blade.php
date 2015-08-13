@@ -239,7 +239,7 @@
                                                 <span title="最高票" class="glyphicon glyphicon-king" aria-hidden="true" style="color: blue;"></span>
                                                 <span class="sr-only">最高票</span>
                                             @endif
-                                            <span id="selectionOrder" class="numberCircle"></span>
+                                            <span id="selectionOrder" class="numberCircle">{{ $voteSelectionItem->order+1 }}</span>
                                             {{ $voteSelectionItem->getTitle() }}
                                             @if(count($voteSelectionItem->getImageLinks()) > 0)
                                                 {{-- 防止字被換行切到 --}}
