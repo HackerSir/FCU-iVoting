@@ -410,6 +410,9 @@
                 {{--  改變排序狀態 --}}
                 if (sortButton.hasClass('active')) {
                     selections.sortable({
+                        tolerance: 'pointer',
+                        opacity: 0.5,
+                        containment: "parent",
                         placeholder: {
                             element: function(currentItem) {
                                 selectionHeight = selections.children("div:first").height();
