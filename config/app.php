@@ -140,6 +140,7 @@ return [
         AlfredoRamos\ParsedownExtra\ParsedownExtraServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         BackupManager\Laravel\Laravel5ServiceProvider::class,
+        GrahamCampbell\Throttle\ThrottleServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -201,6 +202,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Markdown' => AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra::class,
         'Carbon' => Carbon\Carbon::class,
+        'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
 
     ],
 
