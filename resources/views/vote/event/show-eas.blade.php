@@ -379,7 +379,18 @@
                 sortButton.children("i").toggleClass('fa-spin');
                 {{--  改變排序狀態 --}}
                 if (sortButton.hasClass('active')) {
-                    selections.sortable();
+                    selections.sortable({
+                        placeholder: {
+                            element: function(currentItem) {
+                                selectionHeight = selections.children("div:first").height();
+                                selectionInnerHeight = selections.children("div:first").children("div:first").height();
+                                return $("<div class=\"col-sm-6 col-md-3\" style=\"height: "+selectionHeight+"px;\"><div class=\"thumbnail\" style=\"background: #eeeeee; height: "+selectionInnerHeight+"px;\"></div></div>")[0];
+                            },
+                            update: function(container, p) {
+                                return;
+                            }
+                        }
+                    });
                     selections.sortable("enable");
                     status.removeClass();
                     statusMessage.html("直接拖曳排序，完成後再次點擊按鈕即可儲存");
