@@ -83,6 +83,10 @@
                                 @if($errors->has('prefix'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                                 <span class="label label-danger">{{ $errors->first('prefix') }}</span>@endif
                             </div>
+                            <div>
+                                <label class="control-label" for="show_result" style="margin-bottom: 5px;">顯示投票結果</label>
+                                {!! Form::select('show_result', ['always' => '總是顯示', 'after-vote' => '投票後可見（遊客無法看見結果）', 'after-event' => '活動結束後顯示'], 'after-event', ['id' => 'show_result', 'class' => 'form-control']) !!}
+                            </div>
                         </div>
                     </div>
                     <div class="form-group has-feedback{{ ($errors->has('info'))?' has-error':'' }}">

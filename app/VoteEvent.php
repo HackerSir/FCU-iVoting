@@ -222,4 +222,18 @@ class VoteEvent extends Model
         //錯誤情況，直接不顯示
         return false;
     }
+
+    public function getResultVisibleHintText()
+    {
+        $showResult = $this->show_result;
+        if ($showResult == 'always') {
+            return '總是顯示';
+        } elseif ($showResult == 'after-vote') {
+            return '投票後可見（遊客無法看見結果）';
+        } elseif ($showResult == 'after-event') {
+            return '活動結束後顯示';
+        }
+        //錯誤情況，直接不顯示
+        return null;
+    }
 }

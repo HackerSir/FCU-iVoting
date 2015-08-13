@@ -174,6 +174,7 @@
                         @endforeach
                     </ul>
                 @endif
+                <li>顯示投票結果：{{ $voteEvent->getResultVisibleHintText() }}</li>
             </ul>
         </div>
 
@@ -211,7 +212,7 @@
                                     </div>
                                     <div class="caption">
                                         <h3 style="min-height: 29px">
-                                            @if($voteEvent->isEnded() && $voteSelectionItem->isMax())
+                                            @if($voteEvent->isResultVisible() && $voteSelectionItem->isMax())
                                                 <span title="最高票" class="glyphicon glyphicon-king" aria-hidden="true" style="color: blue;"></span>
                                                 <span class="sr-only">最高票</span>
                                             @endif
@@ -256,7 +257,7 @@
                                                 @endif
                                             @endif
                                         @endif
-                                        @if($voteEvent->isEnded())
+                                        @if($voteEvent->isResultVisible())
                                             <p class="lead text-right">{{ $voteSelectionItem->getCount() }}&nbsp;票</p>
                                         @endif
 

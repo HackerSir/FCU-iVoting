@@ -110,7 +110,8 @@ class VoteEventController extends Controller
                 'max_selected' => $max_selected,
                 'organizer_id' => ($request->has('organizer')) ? $request->get('organizer') : null,
                 'show' => !$request->get('hideVoteEvent', false),
-                'vote_condition' => (!empty($condition)) ? json_encode((object)array_filter((array)$condition)) : null
+                'vote_condition' => (!empty($condition)) ? json_encode((object)array_filter((array)$condition)) : null,
+                'show_result' => $request->get('show_result')
             ));
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
@@ -225,6 +226,8 @@ class VoteEventController extends Controller
             $condition = new \stdClass();
             $condition->prefix = ($request->has('prefix')) ? str_replace(' ', '', $request->get('prefix')) : null;
             $voteEvent->vote_condition = (!empty($condition)) ? json_encode((object)array_filter((array)$condition)) : null;
+
+            $voteEvent->show_result = $request->get('show_result');
 
             $voteEvent->save();
             return Redirect::route('vote-event.show', $id)
