@@ -4,11 +4,12 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class VoteEvent extends Model
 {
     protected $table = 'vote_events';
-    protected $fillable = ['open_time', 'close_time', 'subject', 'info', 'max_selected', 'organizer_id', 'show', 'vote_condition'];
+    protected $fillable = ['open_time', 'close_time', 'subject', 'info', 'max_selected', 'organizer_id', 'show', 'vote_condition', 'show_result'];
 
     //有效的活動條件，以及說明文字（{value}會自動替換為條件的值）
     static protected $validConditionList = [
@@ -70,8 +71,11 @@ class VoteEvent extends Model
     }
 
     //特定用戶在此活動選擇之選項數量
-    public function getSelectedCount($user)
+    public function getSelectedCount(User $user = null)
     {
+        if ($user == null) {
+            return 0;
+        }
         $voteSelectionIdList = $this->voteSelections->lists('id')->toArray();
         $count = $user->voteBallots()->whereIn('vote_selection_id', $voteSelectionIdList)->count();
         return $count;
@@ -200,5 +204,22 @@ class VoteEvent extends Model
             }
         }
         return $result;
+    }
+
+    public function isResultVisible()
+    {
+        $showResult = $this->show_result;
+        if ($showResult == 'always') {
+            //總是顯示
+            return true;
+        } elseif ($showResult == 'after-vote') {
+            //投票後可見（遊客則無法看見結果）
+            return ($this->getMaxSelected() <= $this->getSelectedCount(Auth::user()));
+        } elseif ($showResult == 'after-event') {
+            //活動結束後顯示
+            return $this->isEnded();
+        }
+        //錯誤情況，直接不顯示
+        return false;
     }
 }
