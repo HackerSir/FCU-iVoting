@@ -251,6 +251,10 @@
                                             @endif
                                         </h3>
 
+                                        @if($voteEvent->isResultVisible())
+                                            <p class="lead text-right">{{ $voteSelectionItem->getCount() }}&nbsp;票</p>
+                                        @endif
+
                                         @if($voteEvent->isInProgress())
                                             @if(!Auth::check())
                                                 <div title="登入以完成投票" style="display: inline-block">
@@ -280,9 +284,6 @@
                                                     </div>
                                                 @endif
                                             @endif
-                                        @endif
-                                        @if($voteEvent->isResultVisible())
-                                            <p class="lead text-right">{{ $voteSelectionItem->getCount() }}&nbsp;票</p>
                                         @endif
 
                                         @if(Auth::check() && Auth::user()->isStaff() && !$voteEvent->isStarted())
