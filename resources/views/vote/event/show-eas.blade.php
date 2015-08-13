@@ -45,6 +45,29 @@
             height: auto;
         }
 
+        .numberCircle {
+            border-radius: 50%;
+            /*behavior: url(PIE.htc);*/ /* remove if you don't care about IE8 */
+
+            font-weight: bold;
+            /*line-height: 1.6em;*/
+            /*margin-right: 15px;*/
+            /*text-align: center;*/
+            /*width: 1.6em;*/
+
+            width: 30px;
+            height: 30px;
+            /*padding: 4px;*/
+
+            background: #fff;
+            border: 2px solid #666;
+            /*color: #666;*/
+            text-align: center;
+            /*font-size: 20px;*/
+            display: inline-block;
+            /*position: relative;*/
+        }
+
         @media
         only screen and (max-width: 768px) {
             .jumbotron {
@@ -211,11 +234,12 @@
                                         </div>
                                     </div>
                                     <div class="caption">
-                                        <h3 style="min-height: 29px">
+                                        <h3 style="min-height: 31px">
                                             @if($voteEvent->isResultVisible() && $voteSelectionItem->isMax())
                                                 <span title="最高票" class="glyphicon glyphicon-king" aria-hidden="true" style="color: blue;"></span>
                                                 <span class="sr-only">最高票</span>
                                             @endif
+                                            <span id="selectionOrder" class="numberCircle"></span>
                                             {{ $voteSelectionItem->getTitle() }}
                                             @if(count($voteSelectionItem->getImageLinks()) > 0)
                                                 {{-- 防止字被換行切到 --}}
@@ -323,6 +347,10 @@
 
 @section('javascript')
     <script type="text/javascript">
+        $( document ).ready( function() {
+            refreshSelectionsShowOrder();
+        });
+
         $('#imageModal').on('show.bs.modal', function (event) {
             $('body').width($('body').width());
             $('html').css('overflow-y', 'hidden');
@@ -424,6 +452,8 @@
                         success: function (data){
                             status.removeClass();
                             if (data == "success") {
+                                refreshSelectionsShowOrder();
+
                                 status.addClass("fa fa-check");
                                 statusMessage.html("<span style=\"color:green\">已儲存</span>");
                             } else {
@@ -440,5 +470,11 @@
                 }
             });
         @endif
+
+        function refreshSelectionsShowOrder() {
+            $.each($("#selections #selectionOrder"), function( index, element ) {
+                $( this ).text(index + 1);
+            });
+        }
     </script>
 @endsection
