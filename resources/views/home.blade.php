@@ -28,14 +28,18 @@
         </div>
         <br />
         <div class="row">
-            <a href="{{ URL::route('member.login') }}" style="color: black;">
+            @if(Auth::guest())
+                <a href="{{ URL::route('member.login') }}" style="color: black;">
+            @endif
                 <div class="col-sm-4">
                     <div class="text-center">
                         <span class="glyphicon glyphicon-log-in text-info" style="font-size: 150px;"></span>
                     </div>
                     <h2 class="text-center">登入票選網站</h2>
                 </div>
-            </a>
+            @if(Auth::guest())
+                </a>
+            @endif
             <a href="{{ URL::route('vote-event.index') }}" style="color: black;">
                 <div class="col-sm-4">
                     <div class="text-center">
