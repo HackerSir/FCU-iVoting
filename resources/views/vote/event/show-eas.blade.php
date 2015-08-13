@@ -218,7 +218,7 @@
 
                 <div class="row" id="selections">
                     @if(count($voteEvent->voteSelections))
-                        @foreach($voteEvent->voteSelections as $voteSelectionItem)
+                        @foreach($voteEvent->voteSelections as $selectionOrder => $voteSelectionItem)
                             <div class="col-sm-6 col-md-3" selection_id="{{ $voteSelectionItem->id }}">
                                 <div class="thumbnail selectionBox">
                                     <div class="vertical-center" style="height: 210px; padding-top: 10px">
@@ -239,7 +239,7 @@
                                                 <span title="最高票" class="glyphicon glyphicon-king" aria-hidden="true" style="color: blue;"></span>
                                                 <span class="sr-only">最高票</span>
                                             @endif
-                                            <span id="selectionOrder" class="numberCircle">{{ $voteSelectionItem->order+1 }}</span>
+                                            <span id="selectionOrder" class="numberCircle">{{ $selectionOrder+1 }}</span>
                                             {{ $voteSelectionItem->getTitle() }}
                                             @if(count($voteSelectionItem->getImageLinks()) > 0)
                                                 {{-- 防止字被換行切到 --}}
