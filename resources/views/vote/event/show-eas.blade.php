@@ -422,6 +422,14 @@
                             update: function(container, p) {
                                 return;
                             }
+                        },
+                        create:function(){
+                            var resize=function(){
+                                $(this).css("height","auto");
+                                $(this).height($(this).height());
+                            };
+                            $(this).height($(this).height());
+                            $(this).find('img').load(resize).error(resize);
                         }
                     });
                     selections.sortable("enable");
