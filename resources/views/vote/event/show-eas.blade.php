@@ -407,7 +407,6 @@
                         idList.push(this_id);
                     });
                     {{-- 處理順序 --}}
-                    console.log(idList);
 
                     var URLs = "{{ URL::route('vote-event.sort', $voteEvent->id) }}";
 
