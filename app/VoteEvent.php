@@ -213,8 +213,8 @@ class VoteEvent extends Model
             //總是顯示
             return true;
         } elseif ($showResult == 'after-vote') {
-            //投票後可見（遊客則無法看見結果）
-            return ($this->getMaxSelected() <= $this->getSelectedCount(Auth::user()));
+            //完成投票者可看見結果（活動結束後對所有人顯示）
+            return ($this->isEnded() || $this->getMaxSelected() <= $this->getSelectedCount(Auth::user()));
         } elseif ($showResult == 'after-event') {
             //活動結束後顯示
             return $this->isEnded();
@@ -229,7 +229,7 @@ class VoteEvent extends Model
         if ($showResult == 'always') {
             return '總是顯示';
         } elseif ($showResult == 'after-vote') {
-            return '投票後可見（遊客無法看見結果）';
+            return '完成投票者可看見結果（活動結束後對所有人顯示）';
         } elseif ($showResult == 'after-event') {
             return '活動結束後顯示';
         }
