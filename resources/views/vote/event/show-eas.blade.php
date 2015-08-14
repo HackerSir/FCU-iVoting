@@ -45,27 +45,17 @@
             height: auto;
         }
 
+        {{-- 改寫下列提供的CSS --}}
+        {{-- http://stackoverflow.com/questions/4861224/how-to-use-css-to-surround-a-number-with-a-circle --}}
         .numberCircle {
             border-radius: 50%;
-            /*behavior: url(PIE.htc);*/ /* remove if you don't care about IE8 */
-
             font-weight: bold;
-            /*line-height: 1.6em;*/
-            /*margin-right: 15px;*/
-            /*text-align: center;*/
-            /*width: 1.6em;*/
-
             width: 30px;
             height: 30px;
-            /*padding: 4px;*/
-
             background: #fff;
             border: 2px solid #666;
-            /*color: #666;*/
             text-align: center;
-            /*font-size: 20px;*/
             display: inline-block;
-            /*position: relative;*/
         }
 
         @media
