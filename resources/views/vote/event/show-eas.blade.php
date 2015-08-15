@@ -235,7 +235,7 @@
                                                 {{-- 防止字被換行切到 --}}
                                                 <small style="display: inline-block;">({{ count($voteSelectionItem->getImageLinks()) }}張照片)</small>
                                             @endif
-                                            @if(Auth::check() && $voteSelectionItem->hasVoted(Auth::user()))
+                                            @if($voteSelectionItem->hasVoted(Auth::user()))
                                                 <span title="我的選擇" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                                 <span class="sr-only">我的選擇</span>
                                             @endif
