@@ -82,20 +82,36 @@ class MemberController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
+        //檢查登入冷卻，防止惡意登入
+        $throttle = Throttle::get($request, 5, 10);
+//        dd($throttle->clear());
+        //密碼錯誤三次後，追加reCaptcha
+        $validator->sometimes('g-recaptcha-response', 'required', function ($input) use ($throttle) {
+            return $throttle->count() >= 3;
+        });
 
         if ($validator->fails()) {
             return Redirect::route('member.login')
                 ->withErrors($validator)
                 ->withInput();
         } else {
-            //檢查登入冷卻，防止惡意登入
-            $throttle = Throttle::get($request, 5, 10);
             //檢查登入次數
             if (!$throttle->check()) {
                 return Redirect::route('member.login')
                     ->with('warning', '嘗試登入過於頻繁，請等待10分鐘')
                     ->withInput();
             }
+
+            //密碼錯誤三次後，追加檢查reCaptcha
+            if ($throttle->count() >= 3) {
+                $result = $this->tryPassGoogleReCAPTCHA($request);
+                if ($result->success !== false) {
+                    return Redirect::route('member.login')
+                        ->with('warning', '沒有通過 reCAPTCHA 驗證，請再試一次。')
+                        ->withInput();
+                }
+            }
+
             //增加次數
             $throttle->hit();
 
