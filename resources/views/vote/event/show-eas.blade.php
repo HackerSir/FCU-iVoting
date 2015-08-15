@@ -210,7 +210,7 @@
                     @if(count($voteEvent->voteSelections))
                         @foreach($voteEvent->voteSelections as $selectionOrder => $voteSelectionItem)
                             <div class="col-sm-6 col-md-3" selection_id="{{ $voteSelectionItem->id }}">
-                                <div class="thumbnail selectionBox">
+                                <div class="thumbnail selectionBox"@if($voteSelectionItem->hasVoted(Auth::user())) style="background: #C1FFE4"@endif>
                                     <div class="vertical-center" style="height: 210px; padding-top: 10px">
                                         <div style="position: relative; z-index: 0;">
                                             @if(count($voteSelectionItem->getImageLinks()) > 0)
@@ -234,10 +234,6 @@
                                             @if(count($voteSelectionItem->getImageLinks()) > 0)
                                                 {{-- 防止字被換行切到 --}}
                                                 <small style="display: inline-block;">({{ count($voteSelectionItem->getImageLinks()) }}張照片)</small>
-                                            @endif
-                                            @if($voteSelectionItem->hasVoted(Auth::user()))
-                                                <span title="我的選擇" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                                <span class="sr-only">我的選擇</span>
                                             @endif
                                         </h3>
 
