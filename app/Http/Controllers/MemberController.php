@@ -228,9 +228,11 @@ class MemberController extends Controller
             ->with('warning', '註冊時發生錯誤。');
     }
 
-    protected function tryPassGoogleReCAPTCHA(Request $request) {
+    protected function tryPassGoogleReCAPTCHA(Request $request)
+    {
         $client = new Client([
-            'timeout'  => 10.0,
+            'timeout' => 10.0,
+            'verify' => false
         ]);
 
         $response = $client->post('https://www.google.com/recaptcha/api/siteverify',
