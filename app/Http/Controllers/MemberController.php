@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
@@ -76,6 +77,10 @@ class MemberController extends Controller
         return view('member.login');
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function postLogin(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -129,9 +134,19 @@ class MemberController extends Controller
                 $user->save();
                 //移除重新設定密碼的驗證碼
                 DB::table('password_resets')->where('email', '=', $user->email)->delete();
+                //記錄
+                Log::info('[LoginSucceeded] 登入成功：' . $request->get('email'), [
+                    'email' => $request->get('email'),
+                    'ip' => $request->getClientIp()
+                ]);
                 //重導向至登入前頁面
                 return Redirect::intended('/');
             } else {
+                //紀錄
+                Log::info('[LoginFailed] 登入失敗：' . $request->get('email'), [
+                    'email' => $request->get('email'),
+                    'ip' => $request->getClientIp()
+                ]);
                 return Redirect::route('member.login')
                     ->with('warning', '帳號或密碼錯誤');
             }
@@ -236,6 +251,11 @@ class MemberController extends Controller
                 Mail::send('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
                     $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
                 });
+                //記錄
+                Log::info('[RegisterSucceeded] 註冊成功：' . $email, [
+                    'email' => $email,
+                    'ip' => $request->getClientIp()
+                ]);
                 return Redirect::route('home')
                     ->with('global', '註冊完成，請至信箱收取驗證信件並啟用帳號。');
             }
