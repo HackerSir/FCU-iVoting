@@ -211,6 +211,9 @@
                         @foreach($voteEvent->voteSelections as $selectionOrder => $voteSelectionItem)
                             <div class="col-sm-6 col-md-3" selection_id="{{ $voteSelectionItem->id }}">
                                 <div class="thumbnail selectionBox"@if($voteSelectionItem->hasVoted(Auth::user())) style="background: #C1FFE4"@endif>
+                                    @if($voteEvent->isResultVisible() && $voteSelectionItem->isMax())
+                                        <div class="ribbon"><span>最高票</span></div>
+                                    @endif
                                     <div class="vertical-center" style="height: 210px; padding-top: 10px">
                                         <div style="position: relative; z-index: 0;">
                                             @if(count($voteSelectionItem->getImageLinks()) > 0)
@@ -225,10 +228,6 @@
                                     </div>
                                     <div class="caption">
                                         <h3 style="min-height: 31px">
-                                            @if($voteEvent->isResultVisible() && $voteSelectionItem->isMax())
-                                                <span title="最高票" class="glyphicon glyphicon-king" aria-hidden="true" style="color: blue;"></span>
-                                                <span class="sr-only">最高票</span>
-                                            @endif
                                             <span id="selectionOrder" class="numberCircle">{{ $selectionOrder+1 }}</span>
                                             {{ $voteSelectionItem->getTitle() }}
                                             @if(count($voteSelectionItem->getImageLinks()) > 0)
