@@ -49,8 +49,14 @@
                         {!! Form::password('password_again', ['id' => 'password_again', 'placeholder' => '請再輸入一次密碼', 'class' => 'form-control', 'required']) !!}
                         @if($errors->has('password_again'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
                     </div>
-                    <div class="form-group has-feedback">
+                    <div class="form-group has-feedback{{ ($errors->has('g-recaptcha-response'))?' has-error':'' }}">
+                        <label class="control-label" for="password_again">驗證
+                            @if($errors->has('g-recaptcha-response'))
+                                <span class="label label-danger">{{ $errors->first('g-recaptcha-response') }}</span>
+                            @endif
+                        </label>
                         <div class="g-recaptcha" data-sitekey="{{ env('Data_Sitekey') }}"></div>
+                        @if($errors->has('g-recaptcha-response'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
                     </div>
                     {!! Form::submit('註冊', ['class' => 'btn btn-primary']) !!}
                     <a href="{{ URL::route('member.login') }}", class="btn btn-default">返回登入頁</a>

@@ -162,7 +162,7 @@ class MemberController extends Controller
             $result = $this->tryPassGoogleReCAPTCHA($request);
             if ($result->success !== false) {
                 return Redirect::route('member.register')
-                    ->with('error', '沒有通過 reCAPTCHA 驗證，請在試一次。')
+                    ->with('warning', '沒有通過 reCAPTCHA 驗證，請再試一次。')
                     ->withInput();
             }
 
