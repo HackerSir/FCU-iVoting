@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
+use GuzzleHttp\Client;
 
 class MemberController extends Controller
 {
@@ -149,6 +150,7 @@ class MemberController extends Controller
                 'email_domain' => 'required',
                 'password' => 'required|min:6',
                 'password_again' => 'required|same:password',
+                'g-recaptcha-response' => 'required',
             )
         );
 
@@ -157,6 +159,13 @@ class MemberController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
+            $result = $this->tryPassGoogleReCAPTCHA($request);
+            if ($result->success !== false) {
+                return Redirect::route('member.register')
+                    ->with('error', '沒有通過 reCAPTCHA 驗證，請在試一次。')
+                    ->withInput();
+            }
+
             //註冊允許使用之信箱類型
             $allowedEmails = Config::get('config.allowed_emails');
             if (Config::get('app.debug')) {
@@ -217,6 +226,22 @@ class MemberController extends Controller
         }
         return Redirect::route('member.register')
             ->with('warning', '註冊時發生錯誤。');
+    }
+
+    protected function tryPassGoogleReCAPTCHA(Request $request) {
+        $client = new Client([
+            'timeout'  => 10.0,
+        ]);
+
+        $response = $client->post('https://www.google.com/recaptcha/api/siteverify',
+            [
+                'secret' => env('Secret_Key'),
+                'response' => $request->get('g-recaptcha-response'),
+                'remoteip' => $request->getClientIp(),
+            ]
+        );
+
+        return json_decode($response->getBody());
     }
 
     //驗證信箱
