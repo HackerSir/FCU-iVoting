@@ -50,7 +50,7 @@
                             @endif
                         </label>
                         <div class="g-recaptcha" data-sitekey="{{ env('Data_Sitekey') }}"></div>
-                        （密碼錯誤多次，請完成驗證。繼續錯誤將暫時無法登入）
+                        （登入失敗多次，請完成驗證。繼續錯誤將暫時無法登入）
                         @if($errors->has('g-recaptcha-response'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
                     </div>
                     @endif
