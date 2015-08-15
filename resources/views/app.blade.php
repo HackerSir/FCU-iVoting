@@ -36,6 +36,8 @@
         <![endif]-->
 
         @yield('css')
+
+        @yield('head-javascript')
     </head>
     <body>
         {{-- navbar--}}
