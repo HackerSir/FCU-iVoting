@@ -239,7 +239,7 @@
                                         </h3>
 
                                         @if($voteEvent->isResultVisible())
-                                            <p class="lead text-right">{{ $voteSelectionItem->getCount() }}&nbsp;票</p>
+                                            <p class="lead text-right">{{ number_format($voteSelectionItem->getCount()) }}&nbsp;票</p>
                                         @endif
 
                                         @if($voteEvent->isInProgress())
