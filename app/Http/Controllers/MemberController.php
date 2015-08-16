@@ -266,10 +266,18 @@ class MemberController extends Controller
 
     protected function tryPassGoogleReCAPTCHA(Request $request)
     {
-        $client = new Client([
-            'timeout' => 10.0,
-            'verify' => false
-        ]);
+        $client = null;
+        if (env('APP_ENV') === 'production') {
+            $client = new Client([
+                'timeout' => 10.0,
+            ]);
+        }
+        else {
+            $client = new Client([
+                'timeout' => 10.0,
+                'verify' => false,
+            ]);
+        }
 
         $response = $client->post('https://www.google.com/recaptcha/api/siteverify',
             [
