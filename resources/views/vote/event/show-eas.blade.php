@@ -177,7 +177,7 @@
                         （設定值：{{ $voteEvent->max_selected }}）
                     @endif
                     @if(Auth::check() && $voteEvent->isStarted())
-                        ，您已選擇{{ $voteEvent->getSelectedCount(Auth::user()) }}項
+                        ，您已經投了&nbsp;<strong class="text-info" style="font-size: 25px;">{{ $voteEvent->getSelectedCount(Auth::user()) }}</strong>&nbsp;票
                     @endif
                 </li>
                 <li>選出一名，採相對多數決(也就是最高票獲選)</li>
