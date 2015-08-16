@@ -44,10 +44,8 @@
 
         @yield('main-jumbotron')
 
-        <div class="container-fluid">
-            {{-- content --}}
-            @yield('content')
-        </div>
+        {{-- content --}}
+        @yield('content')
 
         <footer class="footer">
             <div class="container">
