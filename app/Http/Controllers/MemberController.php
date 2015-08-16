@@ -105,7 +105,7 @@ class MemberController extends Controller
             if (!$throttle->check()) {
                 return Redirect::route('member.login')
                     ->with('warning', '嘗試登入過於頻繁，請等待10分鐘。')
-                    ->with('delay', 10 * 60 * 1000)
+                    ->with('delay', 10 * 60)
                     ->withInput();
             }
 

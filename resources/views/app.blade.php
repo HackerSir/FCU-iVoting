@@ -112,7 +112,7 @@
                         align: 'center'
                     },
                     offset: 70,
-                    delay: parseInt('{{ Session::get('delay', 0) }}', 10),
+                    delay: parseInt('{{ Session::get('delay', 0) }}', 10) * 1000,
                     timer: 500,
                     mouse_over: 'pause',
                     animate: {
