@@ -344,7 +344,8 @@
             consistencySelectionsHeight();
         });
 
-        $('#imageModal').on('show.bs.modal', function (event) {
+        $imageModal = $('#imageModal');
+        $imageModal.on('show.bs.modal', function (event) {
             $('body').width($('body').width());
             $('html').css('overflow-y', 'hidden');
 
@@ -385,10 +386,11 @@
             }
 
         });
-        $('#imageModal').on('hide.bs.modal', function (event) {
+        $imageModal.on('hide.bs.modal', function (event) {
             $('body').removeAttr('style');
             $('html').css('overflow-y', 'scroll');
         });
+
         @if(Auth::check() && Auth::user()->isStaff() && !$voteEvent->isStarted())
             $('#sortButton').click(function (event) {
                 var sortButton = $('#sortButton');
