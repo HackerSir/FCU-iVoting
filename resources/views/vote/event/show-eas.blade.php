@@ -54,10 +54,11 @@
             font-weight: bold;
             width: 30px;
             height: 30px;
-            background: #fff;
-            border: 2px solid #666;
+            border: 2px solid #bf3e11;
             text-align: center;
             display: inline-block;
+            background-color: #bf3e11;
+            color: #fff;
         }
 
         @media
