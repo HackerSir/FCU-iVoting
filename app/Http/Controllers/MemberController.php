@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App;
 use App\Group;
 use App\User;
 use Carbon\Carbon;
@@ -268,7 +269,7 @@ class MemberController extends Controller
     protected function tryPassGoogleReCAPTCHA(Request $request)
     {
         $client = null;
-        if (env('APP_ENV') === 'production') {
+        if (App::environment('production')) {
             $client = new Client([
                 'timeout' => 10.0,
             ]);
