@@ -76,6 +76,8 @@
             {!! HTML::script('js/analyticstracking.js') !!}
         @endif
 
+        @yield('javascript')
+
         <script type="text/javascript">
             @if(Session::has('global'))
                 /* Global message */
@@ -135,7 +137,5 @@
                 });
             });
         </script>
-
-        @yield('javascript')
     </body>
 </html>
