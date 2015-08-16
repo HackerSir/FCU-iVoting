@@ -302,7 +302,7 @@
                         <!-- Indicators -->
                         <ol class="carousel-indicators">
                             {{-- 請保留這個，避免 bootstrap 初始化時炸掉 --}}
-                            <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#carousel-image" data-slide-to="0" class="active"></li>
                             {{--<li data-target="#carousel" data-slide-to="1"></li>--}}
                         </ol>
 
