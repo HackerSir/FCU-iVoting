@@ -5,6 +5,8 @@
 @endsection
 
 @section('css')
+    {!! HTML::style('css/callout.css') !!}
+    {!! HTML::style('css/ribbon.css') !!}
     <style type="text/css">
         div.more-image-fake-shadow {
             background: lightgrey;
