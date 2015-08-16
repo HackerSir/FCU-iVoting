@@ -42,10 +42,11 @@
                                     <span class="label label-danger">{{ $errors->first('g-recaptcha-response') }}</span>
                                 @endif
                             </label>
-                            <span class="help-block">（登入失敗多次，請完成驗證。繼續錯誤將暫時無法登入）</span>
+                            <span class="help-block"><p class="text-warning">登入失敗多次，請完成驗證。</p></span>
 
                             <div class="g-recaptcha" data-sitekey="{{ env('Data_Sitekey') }}"></div>
                         </div>
+                        <span class="help-block"><p class="text-danger">Tip: 登入失敗太多次會有處罰時間。</p></span>
                     @endif
                     <div class="form-group">
                         <div class="checkbox">
