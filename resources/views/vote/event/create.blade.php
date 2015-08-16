@@ -85,7 +85,7 @@
                             </div>
                             <div>
                                 <label class="control-label" for="show_result" style="margin-bottom: 5px;">顯示投票結果</label>
-                                {!! Form::select('show_result', ['always' => '總是顯示', 'after-vote' => '完成投票者可看見結果（活動結束後對所有人顯示）', 'after-event' => '活動結束後顯示'], 'after-event', ['id' => 'show_result', 'class' => 'form-control']) !!}
+                                {!! Form::select('show_result', ['always' => '隨時可以查看票選結果', 'after-vote' => '完成投票者可看見結果（活動結束後對所有人顯示）', 'after-event' => '投票結果將在活動結束後顯示'], 'after-event', ['id' => 'show_result', 'class' => 'form-control']) !!}
                             </div>
                         </div>
                     </div>

@@ -101,7 +101,7 @@ class VoteEvent extends Model
     public function getTimeSpanTag($time)
     {
         //style="display: inline-block; 是防止字換行
-        return '<span title="' . (new Carbon($time))->diffForHumans() . '"  style="display: inline-block;">' . $time . '</span>';
+        return '<strong title="' . (new Carbon($time))->diffForHumans() . '"  style="display: inline-block;">' . $time . '</strong>';
     }
 
     public function isVisible()
@@ -227,11 +227,11 @@ class VoteEvent extends Model
     {
         $showResult = $this->show_result;
         if ($showResult == 'always') {
-            return '總是顯示';
+            return '隨時可以查看票選結果';
         } elseif ($showResult == 'after-vote') {
             return '完成投票者可看見結果（活動結束後對所有人顯示）';
         } elseif ($showResult == 'after-event') {
-            return '活動結束後顯示';
+            return '投票結果將在活動結束後顯示';
         }
         //錯誤情況，直接不顯示
         return null;

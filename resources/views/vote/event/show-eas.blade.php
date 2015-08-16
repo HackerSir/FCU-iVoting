@@ -142,29 +142,39 @@
                 @endif
             </h1>
 
-            <p>{!! App\MarkdownUtil::translate($voteEvent->info) !!}</p>
+            <blockquote>
+                <p>{!! App\MarkdownUtil::translate($voteEvent->info) !!}</p>
+            </blockquote>
 
-            <p>活動期間：{!! $voteEvent->getHumanTimeString() !!}</p>
+            <ul style="font-size: 21px; padding-left: 25px;">
+                <li>活動期間：{!! $voteEvent->getHumanTimeString() !!}</li>
+
+                <li>{{ $voteEvent->getResultVisibleHintText() }}</li>
+            </ul>
+
             @if($voteEvent->organizer)
                 <p>主辦單位：</p>
-                <div class="media">
-                    @if($voteEvent->organizer->url)
-                        <a href="{{ $voteEvent->organizer->url }}" target="_blank">
-                    @endif
-                            <div class="media-left media-middle">
-                                @if($voteEvent->organizer->logo_url)
-                                    <img class="media-object" style="max-height: 75px;" src="{{ $voteEvent->organizer->logo_url }}">
-                                @endif
-                            </div>
-                            <div class="media-body" style="vertical-align: middle;">
-                                <h4 class="media-heading">{{ $voteEvent->organizer->name }}</h4>
-                            </div>
-                    @if($voteEvent->organizer->url)
-                        </a>
-                    @endif
+                <div class="row" style="margin: 0;">
+                    <div class="well col-sm-6 col-md-4" style="padding: 10px;">
+                        <div class="media">
+                            @if($voteEvent->organizer->url)
+                                <a href="{{ $voteEvent->organizer->url }}" target="_blank">
+                            @endif
+                                    <div class="media-left media-middle">
+                                        @if($voteEvent->organizer->logo_url)
+                                            <img class="media-object" style="max-height: 75px;" src="{{ $voteEvent->organizer->logo_url }}">
+                                        @endif
+                                    </div>
+                                    <div class="media-body" style="vertical-align: middle;">
+                                        <h4 class="media-heading">{{ $voteEvent->organizer->name }}</h4>
+                                    </div>
+                            @if($voteEvent->organizer->url)
+                                </a>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             @endif
-
 
             <a href="{{ URL::route('vote-event.index') }}" class="btn btn-primary pull-right" role="button"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回列表</a>
             <div class="clearfix"></div>
@@ -190,7 +200,6 @@
                         @endforeach
                     </ul>
                 @endif
-                <li>顯示投票結果：{{ $voteEvent->getResultVisibleHintText() }}</li>
             </ul>
         </div>
 
