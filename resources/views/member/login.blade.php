@@ -35,6 +35,18 @@
                         {!! Form::password('password', ['id' => 'password', 'placeholder' => '請輸入密碼', 'class' => 'form-control', 'required']) !!}
                         @if($errors->has('password'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
                     </div>
+                    @if(Throttle::get(URL::getRequest())->count() >= 3)
+                        <div class="form-group has-feedback{{ ($errors->has('g-recaptcha-response'))?' has-error':'' }}">
+                            <label class="control-label" for="password_again">驗證
+                                @if($errors->has('g-recaptcha-response'))
+                                    <span class="label label-danger">{{ $errors->first('g-recaptcha-response') }}</span>
+                                @endif
+                            </label>
+                            <span class="help-block">（登入失敗多次，請完成驗證。繼續錯誤將暫時無法登入）</span>
+
+                            <div class="g-recaptcha" data-sitekey="{{ env('Data_Sitekey') }}"></div>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <div class="checkbox">
                             <label>
@@ -42,18 +54,6 @@
                             </label>
                         </div>
                     </div>
-                    @if(Throttle::get(URL::getRequest())->count()>=3)
-                    <div class="form-group has-feedback{{ ($errors->has('g-recaptcha-response'))?' has-error':'' }}">
-                        <label class="control-label" for="password_again">驗證
-                            @if($errors->has('g-recaptcha-response'))
-                                <span class="label label-danger">{{ $errors->first('g-recaptcha-response') }}</span>
-                            @endif
-                        </label>
-                        <div class="g-recaptcha" data-sitekey="{{ env('Data_Sitekey') }}"></div>
-                        （登入失敗多次，請完成驗證。繼續錯誤將暫時無法登入）
-                        @if($errors->has('g-recaptcha-response'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
-                    </div>
-                    @endif
                     {!! Form::submit('登入', ['class' => 'btn btn-success']) !!}
                     <a href="{{ URL::route('member.register') }}" class="btn btn-default">註冊</a>
                 {!! Form::close() !!}
