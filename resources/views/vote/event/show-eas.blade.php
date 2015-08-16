@@ -202,7 +202,7 @@
                     <div class="panel" style="background-color: #f2dede;">
                         <div class="panel-body">
                             {!! HTML::linkRoute('vote-selection.create', '新增票選選項', ['vid' => $voteEvent->id], ['class' => 'btn btn-success pull-right']) !!}
-                            <button class="btn btn-default" id="sortButton"><i class="fa fa-arrows"></i>重新排序</button>
+                            <button class="btn btn-default" id="sortButton" type="button"><i class="fa fa-arrows"></i>重新排序</button>
                             <span class="fa" id="sortStatus"></span><span id="sortStatusMessage"></span>
                         </div>
                     </div>
