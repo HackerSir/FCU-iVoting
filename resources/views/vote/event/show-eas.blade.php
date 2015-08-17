@@ -369,30 +369,30 @@
             var recipient = clickTarget.data('title');
             var images = clickTarget.data('images').split(';');
 
-            var modal = $(this);
-            modal.find('.modal-title').text(recipient);
+            var $modal = $(this);
+            $modal.find('.modal-title').text(recipient);
 
-            var div_ol = modal.find('#carousel-image > .carousel-indicators');
-            var div_image = modal.find('#carousel-image > .carousel-inner');
+            var $div_ol = $modal.find('#carousel-image > .carousel-indicators');
+            var $div_image = $modal.find('#carousel-image > .carousel-inner');
 
-            div_image.css('height', maxHeight);
+            $div_image.css('height', maxHeight);
 
-            div_ol.empty();
-            div_image.empty();
+            $div_ol.empty();
+            $div_image.empty();
             $.each(images, function(index, value) {
-                div_ol.append('<li data-target="#carousel-image" data-slide-to="' + index +  '"></li>');
-                div_image.append('<div style="height: ' + maxHeight + ';" class="item"><div style="height: ' + maxHeight + '; display: flex; flex-direction: column; justify-content: center;"><img class="img-responsive center-block" style="max-height: ' + maxHeight + ';" src="'+ value +'" /></div></div>');
+                $div_ol.append('<li data-target="#carousel-image" data-slide-to="' + index +  '"></li>');
+                $div_image.append('<div style="height: ' + maxHeight + ';" class="item"><div style="height: ' + maxHeight + '; display: flex; flex-direction: column; justify-content: center;"><img class="img-responsive center-block" style="max-height: ' + maxHeight + ';" src="'+ value +'" /></div></div>');
             });
-            div_ol.children().first().addClass('active');
-            div_image.children().first().addClass('active');
+            $div_ol.children().first().addClass('active');
+            $div_image.children().first().addClass('active');
 
             if (images.length == 1) {
-                modal.find('.left.carousel-control').hide();
-                modal.find('.right.carousel-control').hide();
+                $modal.find('.left.carousel-control').hide();
+                $modal.find('.right.carousel-control').hide();
             }
             else {
-                modal.find('.left.carousel-control').show();
-                modal.find('.right.carousel-control').show();
+                $modal.find('.left.carousel-control').show();
+                $modal.find('.right.carousel-control').show();
             }
 
         });
