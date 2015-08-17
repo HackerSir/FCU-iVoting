@@ -1,6 +1,7 @@
 <?php
 
 use App\Role;
+use App\User;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -49,5 +50,17 @@ class RemoveGroupsTable extends Migration
             $table->integer('group_id')->nullable()->unsigned()->default($defaultGroup->id);
             $table->foreign('group_id')->references('id')->on('groups')->onUpdate('cascade')->onDelete('set null');
         });
+
+        $userList = User::all();
+        foreach ($userList as $user) {
+            $role_user = DB::table('role_user')->where('user_id', $user->id)->first();
+            if (!$role_user) {
+                continue;
+            }
+            $role = DB::table('roles')->find($role_user->role_id);
+            $group = DB::table('groups')->where('name', '=', $role->name)->first();
+            $user->group_id = $group->id;
+            $user->save();
+        }
     }
 }

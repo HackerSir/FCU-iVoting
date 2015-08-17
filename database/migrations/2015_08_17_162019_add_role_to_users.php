@@ -21,7 +21,8 @@ class AddRoleToUsers extends Migration
             if ($user->group_id == $defaultGroup->id) {
                 continue;
             }
-            $role = Role::where('name', $user->group->name)->first();
+            $group = DB::table('groups')->find($user->group_id);
+            $role = Role::where('name', $group->name)->first();
             $user->attachRole($role);
         }
     }
