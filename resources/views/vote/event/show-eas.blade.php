@@ -356,7 +356,9 @@
 
         var $imageModal = $('#imageModal');
         $imageModal.on('show.bs.modal', function (event) {
-            $('body').width($('body').width());
+            var $body = $('body');
+
+            $body.width($body.width());
             $('html').css('overflow-y', 'hidden');
 
             var maxHeight = $(window).height() * 0.75 + 'px';
@@ -396,9 +398,10 @@
                     'justify-content': 'center'
                 });
 
+                var src = ($body.width() >= 768) ? value : getImgurThumbnail(value);
                 var $img = $('<img>', {
-                    "src": value,
-                    "class": "img-responsive center-block"
+                        "src": src,
+                        "class": "img-responsive center-block"
                 }).css('max-height', maxHeight);
 
                 $div_image.append($div1.append($div2.append($img)));
@@ -530,6 +533,17 @@
             $.each(selections, function () {
                 $(this).css('minHeight', maxHeight);
             });
+        }
+
+        function getImgurImageId(url) {
+            var reg = /^https?:\/\/[iw\.]*imgur\.[^\/]*\/(?:gallery\/)?([^\?\s\.]*).*$/im;
+            return reg.exec(url)[1];
+        }
+
+        function getImgurThumbnail(url) {
+            var extensionReg = /[^\\\\]*\.(\w+)$/;
+            var extension = extensionReg.exec(url)[1];
+            return "https://i.imgur.com/" + getImgurImageId(url) + ((extension != "gif") ? "l." : ".") + extension;
         }
     </script>
 @endsection
