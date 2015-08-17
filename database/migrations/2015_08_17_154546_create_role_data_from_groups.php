@@ -1,6 +1,5 @@
 <?php
 
-use App\Group;
 use App\Role;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -14,7 +13,7 @@ class CreateRoleDataFromGroups extends Migration
      */
     public function up()
     {
-        $groupList = Group::all();
+        $groupList = DB::table('groups')->get();
         foreach ($groupList as $group) {
             //不處理預設群組
             if ($group->name == 'default') {

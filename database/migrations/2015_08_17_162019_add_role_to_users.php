@@ -15,9 +15,10 @@ class AddRoleToUsers extends Migration
     public function up()
     {
         $userList = User::all();
+        $defaultGroup = DB::table('groups')->where('name', 'default')->first();
         foreach ($userList as $user) {
             //不處理預設群組
-            if ($user->group->name == 'default') {
+            if ($user->group_id == $defaultGroup->id) {
                 continue;
             }
             $role = Role::where('name', $user->group->name)->first();
