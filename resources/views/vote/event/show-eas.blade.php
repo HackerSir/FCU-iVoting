@@ -380,8 +380,28 @@
             $div_ol.empty();
             $div_image.empty();
             $.each(images, function(index, value) {
-                $div_ol.append('<li data-target="#carousel-image" data-slide-to="' + index +  '"></li>');
-                $div_image.append('<div style="height: ' + maxHeight + ';" class="item"><div style="height: ' + maxHeight + '; display: flex; flex-direction: column; justify-content: center;"><img class="img-responsive center-block" style="max-height: ' + maxHeight + ';" src="'+ value +'" /></div></div>');
+                $div_ol.append($('<li>', {
+                    "data-target": "#carousel-image",
+                    "data-slide-to": index
+                }));
+
+                var $div1 = $('<div>', {
+                    "class": "item"
+                }).css('height', maxHeight);
+
+                var $div2 = $('<div>').css({
+                    'height': maxHeight,
+                    'display': 'flex',
+                    'flex-direction': 'column',
+                    'justify-content': 'center'
+                });
+
+                var $img = $('<img>', {
+                    "src": value,
+                    "class": "img-responsive center-block"
+                }).css('max-height', maxHeight);
+
+                $div_image.append($div1.append($div2.append($img)));
             });
             $div_ol.children().first().addClass('active');
             $div_image.children().first().addClass('active');
