@@ -234,7 +234,7 @@
                 <div class="row" id="selections">
                     @if(count($voteEvent->voteSelections))
                         @foreach($voteEvent->voteSelections as $selectionOrder => $voteSelectionItem)
-                            <div class="col-sm-6 col-md-3" selection_id="{{ $voteSelectionItem->id }}">
+                            <div class="col-sm-4 col-md-3" selection_id="{{ $voteSelectionItem->id }}">
                                 <div class="thumbnail selectionBox"@if($voteSelectionItem->hasVoted(Auth::user())) style="background: #C1FFE4"@endif>
                                     @if($voteEvent->isResultVisible() && $voteSelectionItem->isMax())
                                         <div class="ribbon"><span>最高票</span></div>
@@ -293,7 +293,7 @@
                                                     @endif
                                                 @else
                                                     <div title="您已經完成投票" style="display: inline-block">
-                                                        <span class="btn btn-default btn-lg" disabled>按此投票</span>
+                                                        <span class="btn btn-default btn-lg disabled">按此投票</span>
                                                     </div>
                                                 @endif
                                             @endif
