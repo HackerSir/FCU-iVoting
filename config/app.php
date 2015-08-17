@@ -141,6 +141,7 @@ return [
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         BackupManager\Laravel\Laravel5ServiceProvider::class,
         GrahamCampbell\Throttle\ThrottleServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -203,6 +204,7 @@ return [
         'Markdown' => AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra::class,
         'Carbon' => Carbon\Carbon::class,
         'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
+        'Entrust' => Zizaco\Entrust\EntrustFacade::class,
 
     ],
 
