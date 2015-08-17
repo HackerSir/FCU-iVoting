@@ -28,7 +28,11 @@
                                     </tr>
                                     <tr>
                                         <td>用戶組：</td>
-                                        <td>{{ $user->group->title }}</td>
+                                        <td>
+                                            @foreach($user->roles as $role)
+                                                {{ $role->display_name }}<br />
+                                            @endforeach
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>註冊：</td>

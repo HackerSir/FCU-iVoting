@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App;
-use App\Group;
+use App\Role;
 use App\User;
 use Carbon\Carbon;
 use GrahamCampbell\Throttle\Facades\Throttle;
@@ -244,9 +244,6 @@ class MemberController extends Controller
                 'register_ip' => $request->getClientIp(),
                 'register_at' => Carbon::now()->toDateTimeString()
             ));
-            //預設群組
-            $group = Group::where('name', '=', 'default')->first();
-            $user = $group->users()->save($user);
 
             if ($user) {
                 //發送驗證信件
@@ -273,8 +270,7 @@ class MemberController extends Controller
             $client = new Client([
                 'timeout' => 10.0,
             ]);
-        }
-        else {
+        } else {
             $client = new Client([
                 'timeout' => 10.0,
                 'verify' => false,
@@ -559,14 +555,10 @@ class MemberController extends Controller
     //修改他人資料
     public function getEditOtherProfile($uid)
     {
-        $user = Auth::user();
         $showUser = User::find($uid);
         if ($showUser) {
-            $groups = Group::all();
-            foreach ($groups as $group) {
-                $groupList[$group->name] = $group->title;
-            }
-            return view('member.edit-other-profile')->with('user', $user)->with('showUser', $showUser)->with('groupList', $groupList);
+            $roleList = Role::all();
+            return view('member.edit-other-profile')->with('showUser', $showUser)->with('roleList', $roleList);
         } else {
             return Redirect::route('member.list')
                 ->with('warning', '該成員不存在。');
@@ -598,12 +590,22 @@ class MemberController extends Controller
                 ->withInput();
         } else {
             $showUser->nid = strtoupper($request->get('nid'));
-            if ($showUser->id != $user->id) {
-                $groupName = $request->get('group');
-                $group = Group::where('name', '=', $groupName)->first();
-                $showUser = $group->users()->save($showUser);
+            //管理員禁止去除自己的管理員職務
+            $keepAdmin = false;
+            if ($showUser->id == Auth::user()->id) {
+                $keepAdmin = true;
             }
-
+            //移除原有權限
+            $showUser->detachRoles($showUser->roles);
+            //重新添加該有的權限
+            if ($request->has('role')) {
+                $showUser->attachRoles($request->get('role'));
+            }
+            if ($keepAdmin) {
+                $admin = Role::where('name', '=', 'admin')->first();
+                $showUser->attachRole($admin);
+            }
+            //儲存資料
             if ($showUser->save()) {
                 return Redirect::route('member.profile', $uid)
                     ->with('global', '資料修改完成。');

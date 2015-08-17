@@ -35,11 +35,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'remember_token'];
 
-    public function group()
-    {
-        return $this->belongsTo('App\Group');
-    }
-
     public function isConfirmed()
     {
         if (!empty($this->confirm_at)) {

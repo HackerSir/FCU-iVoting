@@ -21,19 +21,23 @@
                                         <span class="label label-primary">信箱作為帳號使用，故無法修改</span>
                                     </div>
                                 </div>
-                                <div class="form-group has-feedback{{ ($errors->has('group'))?' has-error':'' }}">
-                                    <label class="control-label col-md-2" for="group">用戶組</label>
-                                    <div class="col-md-9">
-                                        @if($showUser->id != $user->id)
-                                            {!! Form::select('group',$groupList, $showUser->group->name, ['class' => 'form-control']) !!}
-                                            @if($errors->has('group'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                                            <span class="label label-danger">{{ $errors->first('group') }}</span>@endif
-                                        @else
-                                            {!! Form::select('group',$groupList, $showUser->group->name, ['class' => 'form-control', 'disabled']) !!}
-                                            <span class="label label-primary">禁止解除自己的工作人員職務</span>
-                                        @endif
-                                    </div>
+                            <div class="form-group has-feedback{{ ($errors->has('role'))?' has-error':'' }}">
+                                <label class="control-label col-md-2" for="role">用戶組</label>
+                                <div class="col-md-9">
+                                    @foreach($roleList as $role)
+                                        <div class="checkbox">
+                                            <label>
+                                                @if($showUser->id == Auth::user()->id && $role->name == 'admin')
+                                                    {!! Form::checkbox('role[]', $role->id, $showUser->hasRole($role->name), ['disabled']) !!} {{ $role->display_name }}
+                                                    <span class="label label-primary">禁止解除自己的管理員職務</span>
+                                                @else
+                                                    {!! Form::checkbox('role[]', $role->id, $showUser->hasRole($role->name)) !!} {{ $role->display_name }}
+                                                @endif
+                                            </label>
+                                        </div>
+                                    @endforeach
                                 </div>
+                            </div>
                                 <div class="form-group">
                                     <div class="col-md-9 col-md-offset-2">
                                         {!! Form::submit('修改資料', ['class' => 'btn btn-primary']) !!}
