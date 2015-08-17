@@ -22,7 +22,7 @@ class VoteEventController extends Controller
     {
         parent::__construct();
         //限工作人員
-        $this->middleware('staff', [
+        $this->middleware('role:staff', [
             'except' => [
                 'index',
                 'show'

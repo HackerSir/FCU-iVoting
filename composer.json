@@ -18,7 +18,8 @@
         "doctrine/dbal": "~2.3",
         "rap2hpoutre/laravel-log-viewer": "^0.4.0",
         "backup-manager/laravel": "^1.0",
-        "graham-campbell/throttle": "^4.1"
+        "graham-campbell/throttle": "^4.1",
+        "zizaco/entrust": "dev-laravel-5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

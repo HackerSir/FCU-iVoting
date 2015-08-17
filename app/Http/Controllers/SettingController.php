@@ -16,7 +16,7 @@ class SettingController extends Controller
     {
         parent::__construct();
         //限管理員
-        $this->middleware('admin');
+        $this->middleware('role:admin');
     }
 
     /**

@@ -80,7 +80,7 @@ Route::controller('upload', 'UploadController', [
 Route::get('log', [
     'as' => 'log',
     'uses' => '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index',
-    'middleware' => 'admin'
+    'middleware' => 'role:admin'
 ]);
 
 //未定義路由

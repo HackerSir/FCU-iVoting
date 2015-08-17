@@ -28,7 +28,11 @@
                                     </tr>
                                     <tr>
                                         <td>用戶組：</td>
-                                        <td>{{ $showUser->group->title }}</td>
+                                        <td>
+                                            @foreach($showUser->roles as $role)
+                                                {{ $role->display_name }}<br />
+                                            @endforeach
+                                        </td>
                                     </tr>
                                     @if($user->isStaff())
                                         <tr>

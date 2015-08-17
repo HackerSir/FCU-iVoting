@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
+    use EntrustUserTrait;
 
     /**
      * The database table used by the model.
@@ -33,11 +35,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'remember_token'];
 
-    public function group()
-    {
-        return $this->belongsTo('App\Group');
-    }
-
     public function isConfirmed()
     {
         if (!empty($this->confirm_at)) {
@@ -48,7 +45,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function isStaff()
     {
-        if ($this->isAdmin() || $this->group->name == "staff") {
+        if ($this->isAdmin() || $this->hasRole('staff')) {
             return true;
         }
         return false;
@@ -56,7 +53,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function isAdmin()
     {
-        if ($this->group->name == "admin") {
+        if ($this->hasRole('admin')) {
             return true;
         }
         return false;
