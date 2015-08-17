@@ -61,6 +61,19 @@
             color: #fff;
         }
 
+        {{-- 標記使用者投下的勾勾樣式 --}}
+        .voted {
+            position: absolute;
+            z-index: 5;
+            right: 20px;
+            pointer-events: none;
+        }
+
+        .voted span {
+            font-size: 40px;
+            color: #511c39;
+        }
+
         @media
         only screen and (max-width: 768px) {
             .jumbotron {
@@ -225,6 +238,9 @@
                                 <div class="thumbnail selectionBox"@if($voteSelectionItem->hasVoted(Auth::user())) style="background: #C1FFE4"@endif>
                                     @if($voteEvent->isResultVisible() && $voteSelectionItem->isMax())
                                         <div class="ribbon"><span>最高票</span></div>
+                                    @endif
+                                    @if($voteSelectionItem->hasVoted(Auth::user()))
+                                        <div class="voted"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></div>
                                     @endif
                                     <div class="vertical-center" style="height: 210px; padding-top: 10px">
                                         <div style="position: relative; z-index: 0;">
