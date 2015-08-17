@@ -257,7 +257,7 @@ class MemberController extends Controller
                     });
                 }
                 catch (Exception $e) {
-                    Log::info('[RegisterFailed] 註冊失敗：無法寄出認證信' . $email, [
+                    Log::info('[RegisterFailed] 註冊失敗：無法寄出認證信給' . $email, [
                         'email' => $email,
                         'ip' => $request->getClientIp()
                     ]);
