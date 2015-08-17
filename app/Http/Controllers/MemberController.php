@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use GuzzleHttp\Client;
+use Exception;
 
 class MemberController extends Controller
 {
