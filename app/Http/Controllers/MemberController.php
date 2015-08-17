@@ -250,9 +250,20 @@ class MemberController extends Controller
 
             if ($user) {
                 //發送驗證信件
-                Mail::send('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
-                    $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
-                });
+                try {
+                    Mail::send('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
+                        $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
+                    });
+                }
+                catch (Exception $e) {
+                    Log::info('[RegisterFailed] 註冊失敗：無法寄出認證信' . $email, [
+                        'email' => $email,
+                        'ip' => $request->getClientIp()
+                    ]);
+                    return Redirect::route('member.register')
+                        ->with('warning', '無法寄出認證信，請檢查信箱是否填寫錯誤，或是稍後在嘗試。')
+                        ->withInput();
+                }
                 //記錄
                 Log::info('[RegisterSucceeded] 註冊成功：' . $email, [
                     'email' => $email,
