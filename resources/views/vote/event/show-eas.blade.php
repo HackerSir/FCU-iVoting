@@ -354,7 +354,7 @@
             consistencySelectionsHeight();
         });
 
-        $imageModal = $('#imageModal');
+        var $imageModal = $('#imageModal');
         $imageModal.on('show.bs.modal', function (event) {
             $('body').width($('body').width());
             $('html').css('overflow-y', 'hidden');
