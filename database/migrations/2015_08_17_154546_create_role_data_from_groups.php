@@ -16,6 +16,10 @@ class CreateRoleDataFromGroups extends Migration
     {
         $groupList = Group::all();
         foreach ($groupList as $group) {
+            //不處理預設群組
+            if ($group->name == 'default') {
+                continue;
+            }
             $role = New Role();
             $role->name = $group->name;
             $role->display_name = $group->title;
