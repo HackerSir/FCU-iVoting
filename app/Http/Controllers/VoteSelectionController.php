@@ -27,7 +27,7 @@ class VoteSelectionController extends Controller
             ]
         ]);
         //限工作人員
-        $this->middleware('staff', [
+        $this->middleware('role:staff', [
             'except' => [
                 'index',
                 'show',
