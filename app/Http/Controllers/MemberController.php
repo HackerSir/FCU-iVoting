@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use GuzzleHttp\Client;
@@ -76,6 +77,7 @@ class MemberController extends Controller
     //登入
     public function getLogin()
     {
+        $this->markPreviousURL();
         return view('member.login');
     }
 
@@ -143,7 +145,11 @@ class MemberController extends Controller
                     'ip' => $request->getClientIp()
                 ]);
                 //重導向至登入前頁面
-                return Redirect::intended('/');
+                if (Session::has('previous-url')) {
+                    return Redirect::to(Session::get('previous-url'))->with('global', '已順利登入');
+                } else {
+                    return Redirect::intended('/')->with('global', '已順利登入');
+                }
             } else {
                 //紀錄
                 Log::info('[LoginFailed] 登入失敗：' . $request->get('email') . PHP_EOL, [
@@ -252,8 +258,7 @@ class MemberController extends Controller
                     Mail::send('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
                         $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
                     });
-                }
-                catch (Exception $e) {
+                } catch (Exception $e) {
                     Log::info('[RegisterFailed] 註冊失敗：無法寄出認證信給' . $email . PHP_EOL, [
                         'email' => $email,
                         'ip' => $request->getClientIp()
@@ -637,4 +642,16 @@ class MemberController extends Controller
         return Redirect::route('home');
     }
 
+    //紀錄上一頁網址
+    public function markPreviousURL()
+    {
+        //上一頁的網址
+        $previousURL = URL::previous();
+        //忽略登入頁面與註冊頁面
+        if (str_is('*login*', $previousURL) || str_is('*register*', $previousURL)) {
+            return;
+        }
+        //紀錄上一頁的網址
+        Session::put('previous-url', $previousURL);
+    }
 }
