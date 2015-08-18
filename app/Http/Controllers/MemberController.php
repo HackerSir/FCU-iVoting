@@ -138,7 +138,7 @@ class MemberController extends Controller
                 //移除重新設定密碼的驗證碼
                 DB::table('password_resets')->where('email', '=', $user->email)->delete();
                 //記錄
-                Log::info('[LoginSucceeded] 登入成功：' . $request->get('email'), [
+                Log::info('[LoginSucceeded] 登入成功：' . $request->get('email') . PHP_EOL, [
                     'email' => $request->get('email'),
                     'ip' => $request->getClientIp()
                 ]);
@@ -146,7 +146,7 @@ class MemberController extends Controller
                 return Redirect::intended('/');
             } else {
                 //紀錄
-                Log::info('[LoginFailed] 登入失敗：' . $request->get('email'), [
+                Log::info('[LoginFailed] 登入失敗：' . $request->get('email') . PHP_EOL, [
                     'email' => $request->get('email'),
                     'ip' => $request->getClientIp()
                 ]);
@@ -254,7 +254,7 @@ class MemberController extends Controller
                     });
                 }
                 catch (Exception $e) {
-                    Log::info('[RegisterFailed] 註冊失敗：無法寄出認證信給' . $email, [
+                    Log::info('[RegisterFailed] 註冊失敗：無法寄出認證信給' . $email . PHP_EOL, [
                         'email' => $email,
                         'ip' => $request->getClientIp()
                     ]);
@@ -266,7 +266,7 @@ class MemberController extends Controller
                         ->withInput();
                 }
                 //記錄
-                Log::info('[RegisterSucceeded] 註冊成功：' . $email, [
+                Log::info('[RegisterSucceeded] 註冊成功：' . $email . PHP_EOL, [
                     'email' => $email,
                     'ip' => $request->getClientIp()
                 ]);
