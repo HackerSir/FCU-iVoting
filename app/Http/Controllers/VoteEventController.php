@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class VoteEventController extends Controller
 {
@@ -113,6 +114,10 @@ class VoteEventController extends Controller
                 'vote_condition' => (!empty($condition)) ? json_encode((object)array_filter((array)$condition)) : null,
                 'show_result' => $request->get('show_result')
             ));
+
+            //紀錄
+            Log::info('[VoteEventCreated] 活動建立：' . $voteEvent->subject, $voteEvent->toArray());
+
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
         }
