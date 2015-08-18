@@ -39,7 +39,7 @@
                         <div class="form-group has-feedback{{ ($errors->has('g-recaptcha-response'))?' has-error':'' }}">
                             <label class="control-label" for="password_again">驗證
                                 @if($errors->has('g-recaptcha-response'))
-                                    <span class="label label-danger">{{ $errors->first('g-recaptcha-response') }}</span>
+                                    <span class="label label-danger">您必須通過驗證</span>
                                 @endif
                             </label>
 
