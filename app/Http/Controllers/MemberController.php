@@ -275,7 +275,7 @@ class MemberController extends Controller
                     $user->delete();
 
                     return Redirect::route('member.register')
-                        ->with('warning', '無法寄出認證信，請檢查信箱是否填寫錯誤，或是稍後在嘗試。')
+                        ->with('warning', '無法寄出認證信，請檢查信箱是否填寫正確，或是稍後在嘗試。')
                         ->withInput();
                 }
                 //記錄
