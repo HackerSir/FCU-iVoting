@@ -267,7 +267,7 @@ class MemberController extends Controller
                     });
                 } catch (Exception $e) {
                     //Log
-                    LogHelper::info('[RegisterFailed] 註冊失敗：無法寄出認證信給' . $email, [
+                    LogHelper::info('[RegisterFailed] 註冊失敗：無法寄出認證信件給' . $email, [
                         'email' => $email,
                         'ip' => $request->getClientIp()
                     ]);
@@ -275,7 +275,7 @@ class MemberController extends Controller
                     $user->delete();
 
                     return Redirect::route('member.register')
-                        ->with('warning', '無法寄出認證信，請檢查信箱是否填寫正確，或是稍後在嘗試。')
+                        ->with('warning', '無法寄出認證信件，請檢查信箱是否填寫正確，或是稍後在嘗試。')
                         ->withInput();
                 }
                 //記錄
@@ -362,9 +362,22 @@ class MemberController extends Controller
 
         if ($user->save()) {
             //重新發送驗證信件
-            Mail::send('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
-                $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
-            });
+            try {
+                Mail::send('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
+                    $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
+                });
+            } catch (Exception $e) {
+                //Log
+                LogHelper::info('[SendEmailFailed] 無法重寄認證信件給' . $user->email, [
+                    'email' => $user->email,
+                    'ip' => $request->getClientIp()
+                ]);
+
+                return Redirect::route('member.resend')
+                    ->with('warning', '無法重寄認證信件，請稍後在嘗試。')
+                    ->withInput();
+            }
+
             return Redirect::route('home')
                 ->with('global', '已重新發送，請至信箱收取驗證信件並啟用帳號。');
         }
@@ -411,10 +424,23 @@ class MemberController extends Controller
                     ]);
                 }
                 if ($user->save()) {
-                    //發送信件
-                    Mail::send('emails.forgot', array('link' => URL::route('member.reset-password', $code)), function ($message) use ($user) {
-                        $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 重新設定密碼");
-                    });
+                    try {
+                        //發送信件
+                        Mail::send('emails.forgot', array('link' => URL::route('member.reset-password', $code)), function ($message) use ($user) {
+                            $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 重新設定密碼");
+                        });
+                    }
+                    catch (Exception $e) {
+                        //Log
+                        LogHelper::info('[SendEmailFailed] 註冊失敗：無法寄出密碼重設信件給' . $user->email, [
+                            'email' => $user->email,
+                            'ip' => $request->getClientIp()
+                        ]);
+
+                        return Redirect::route('member.forgot-password')
+                            ->with('warning', '無法寄出密碼重設信件，請稍後在嘗試。');
+                    }
+
                     return Redirect::route('home')
                         ->with('global', '更換密碼的連結已發送至信箱。');
                 }
