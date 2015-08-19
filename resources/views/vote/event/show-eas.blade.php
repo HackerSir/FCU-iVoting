@@ -5,7 +5,7 @@
 @endsection
 
 @section('og-description')
-    <meta property="og:description" content="{{ strip_tags(App\MarkdownUtil::translate($voteEvent->info)) }}">
+    <meta property="og:description" content="{{ strip_tags(App\Helper\MarkdownHelper::translate($voteEvent->info)) }}">
 @endsection
 
 @section('css')
@@ -160,7 +160,7 @@
             </h1>
 
             <blockquote>
-                <p>{!! App\MarkdownUtil::translate($voteEvent->info) !!}</p>
+                <p>{!! App\Helper\MarkdownHelper::translate($voteEvent->info) !!}</p>
             </blockquote>
 
             <ul style="font-size: 21px; padding-left: 25px;">
