@@ -1,9 +1,9 @@
 <?php
 
-namespace app;
+namespace App\Helper;
 
 
-class Imgur
+class ImgurHelper
 {
     static public function getImgurID($url)
     {
