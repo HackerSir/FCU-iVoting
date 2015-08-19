@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\LogHelper;
 use App\Organizer;
 use App\Setting;
 use App\VoteEvent;
@@ -202,6 +203,9 @@ class VoteEventController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
+            //複製一份，在Log時比較差異
+            $beforeEdit = $voteEvent->replicate();
+
             //檢查時間
             if (!$voteEvent->isStarted()) {
                 $open_time = ($request->has('open_time')) ? $request->get('open_time') : null;
@@ -235,6 +239,16 @@ class VoteEventController extends Controller
             $voteEvent->show_result = $request->get('show_result');
 
             $voteEvent->save();
+
+            $afterEdit = $voteEvent->replicate();
+
+            //Log
+            LogHelper::info(
+                '[VoteEventEdited] '. Auth::user()->email .' 編輯了活動(Id: ' . $voteEvent->id . ', Subject: ' . $voteEvent->subject . ')',
+                "編輯前", $beforeEdit,
+                "編輯後", $afterEdit
+            );
+
             return Redirect::route('vote-event.show', $id)
                 ->with('global', '投票活動已更新');
         }
