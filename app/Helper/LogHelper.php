@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Helper;
 
 use Illuminate\Support\Facades\Log;
 use Monolog\Logger as MonologLogger;

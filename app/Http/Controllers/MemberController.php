@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App;
-use App\LogHelper;
+use App\Helper\LogHelper;
 use App\Role;
 use App\User;
 use Carbon\Carbon;

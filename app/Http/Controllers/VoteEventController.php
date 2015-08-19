@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\LogHelper;
+use App\Helper\LogHelper;
 use App\Organizer;
 use App\Setting;
 use App\VoteEvent;
