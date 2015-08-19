@@ -4,6 +4,10 @@
     {{ $voteEvent->subject }} - 投票活動
 @endsection
 
+@section('og-description')
+    <meta property="og:description" content="{{ strip_tags(App\MarkdownUtil::translate($voteEvent->info)) }}">
+@endsection
+
 @section('css')
     {!! HTML::style('css/callout.css') !!}
     {!! HTML::style('css/ribbon.css') !!}

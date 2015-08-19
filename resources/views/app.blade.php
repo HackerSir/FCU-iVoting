@@ -8,8 +8,10 @@
         <meta property="og:title" content="@if (trim($__env->yieldContent('title'))) @yield('title') - @endif{{ Config::get('config.sitename') }}">
         <meta property="og:url" content="{{ URL::current() }}">
         <meta property="og:image" content="{{ asset('pic/logo.jpg') }}">
-        <meta property="og:description" content="逢甲票選系統(iVoting) - 一個由學生社團做的票選系統，快來參加各種票選活動吧！！！">
-
+        @section('og-description')
+            <meta property="og:description" content="逢甲票選系統(iVoting) - 一個由學生社團做的票選系統，快來參加各種票選活動吧！！！">
+        @show
+        
         <title>@if (trim($__env->yieldContent('title'))) @yield('title') - @endif{{ Config::get('config.sitename') }}</title>
 
         {!! HTML::style('//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/united/bootstrap.min.css') !!}
