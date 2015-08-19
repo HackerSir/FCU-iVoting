@@ -159,9 +159,11 @@
                 @endif
             </h1>
 
-            <blockquote>
-                <p>{!! App\Helper\MarkdownHelper::translate($voteEvent->info) !!}</p>
-            </blockquote>
+            @if($voteEvent->info)
+                <blockquote>
+                    <p>{!! App\Helper\MarkdownHelper::translate($voteEvent->info) !!}</p>
+                </blockquote>
+            @endif
 
             <ul style="font-size: 21px; padding-left: 25px;">
                 <li>活動期間：{!! $voteEvent->getHumanTimeString() !!}</li>
