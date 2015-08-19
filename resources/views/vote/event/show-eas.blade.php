@@ -225,6 +225,12 @@
                 <h3 class="panel-title">投票選項</h3>
             </div>
             <div class="panel-body">
+                <div id="userPanel" class="well well-sm">
+                    @if($voteEvent->isResultVisible())
+                        <button id="showResult" type="button" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-search" style="margin-right: 5px;" aria-hidden="true"></span>顯示結果</button>
+                    @endif
+                </div>
+
                 @if(Auth::check() && Auth::user()->isStaff() && !$voteEvent->isStarted())
                     <div class="panel" style="background-color: #f2dede;">
                         <div class="panel-body">
@@ -241,7 +247,7 @@
                             <div class="col-sm-4 col-md-3" selection_id="{{ $voteSelectionItem->id }}">
                                 <div class="thumbnail selectionBox"@if($voteSelectionItem->hasVoted(Auth::user())) style="background: #C1FFE4"@endif>
                                     @if($voteEvent->isResultVisible() && $voteSelectionItem->isMax())
-                                        <div class="ribbon"><span>最高票</span></div>
+                                        <div class="ribbon" data-result-hidden hidden><span>最高票</span></div>
                                     @endif
                                     @if($voteSelectionItem->hasVoted(Auth::user()))
                                         <div class="voted"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></div>
@@ -269,7 +275,7 @@
                                         </h3>
 
                                         @if($voteEvent->isResultVisible())
-                                            <p class="lead text-right">{{ number_format($voteSelectionItem->getCount()) }}&nbsp;票</p>
+                                            <p class="lead text-right" data-result-hidden hidden>{{ number_format($voteSelectionItem->getCount()) }}&nbsp;票</p>
                                         @endif
 
                                         @if($voteEvent->isInProgress())
@@ -368,6 +374,20 @@
         {{-- 等待DOM載入完成 --}}
         $(document).ready(function () {
             refreshSelectionsShowOrder();
+
+            @if($voteEvent->isResultVisible())
+                $('#showResult').click(function () {
+                    $('[data-result-hidden]').each(function () {
+                        $(this).toggle();
+                    });
+                });
+            @endif
+
+            {{-- 當 userPanel 沒有元素時，將它隱藏 --}}
+            $userPanel = $('#userPanel');
+            if ($userPanel.children().length == 0) {
+                $userPanel.hide();
+            }
         });
         {{-- 等待所有資源載入完成 --}}
         $(window).load(function() {
