@@ -210,7 +210,7 @@
                         ，您已經投了&nbsp;<strong class="text-info" style="font-size: 25px;">{{ $voteEvent->getSelectedCount(Auth::user()) }}</strong>&nbsp;票
                     @endif
                 </li>
-                <li>選出一名，採相對多數決(也就是最高票獲選)</li>
+                <li>選出一名，採相對多數決（也就是最高票獲選）</li>
                 @if(!empty(json_decode($voteEvent->vote_condition, true)))
                     <li>投票資格限制：</li>
                     <ul>
