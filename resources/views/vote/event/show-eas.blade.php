@@ -228,7 +228,7 @@
             </div>
             <div class="panel-body">
                 <div id="userPanel" class="well well-sm">
-                    @if($voteEvent->isResultVisible())
+                    @if($voteEvent->isHideResult())
                         <button id="showResult" type="button" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-search" style="margin-right: 5px;" aria-hidden="true"></span>顯示結果</button>
                     @endif
                 </div>
@@ -249,7 +249,7 @@
                             <div class="col-sm-4 col-md-3" selection_id="{{ $voteSelectionItem->id }}">
                                 <div class="thumbnail selectionBox"@if($voteSelectionItem->hasVoted(Auth::user())) style="background: #C1FFE4"@endif>
                                     @if($voteEvent->isResultVisible() && $voteSelectionItem->isMax())
-                                        <div class="ribbon" data-result-hidden hidden><span>最高票</span></div>
+                                        <div class="ribbon" data-result-hidden><span>最高票</span></div>
                                     @endif
                                     @if($voteSelectionItem->hasVoted(Auth::user()))
                                         <div class="voted"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></div>
@@ -277,7 +277,7 @@
                                         </h3>
 
                                         @if($voteEvent->isResultVisible())
-                                            <p class="lead text-right" data-result-hidden hidden>{{ number_format($voteSelectionItem->getCount()) }}&nbsp;票</p>
+                                            <p class="lead text-right" data-result-hidden>{{ number_format($voteSelectionItem->getCount()) }}&nbsp;票</p>
                                         @endif
 
                                         @if($voteEvent->isInProgress())
@@ -377,7 +377,11 @@
         $(document).ready(function () {
             refreshSelectionsShowOrder();
 
-            @if($voteEvent->isResultVisible())
+            @if($voteEvent->isHideResult())
+                $('[data-result-hidden]').each(function () {
+                    $(this).hide();
+                });
+
                 $('#showResult').click(function () {
                     $('[data-result-hidden]').each(function () {
                         $(this).toggle();

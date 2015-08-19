@@ -211,7 +211,7 @@ class VoteEvent extends Model
         $showResult = $this->show_result;
         if ($showResult == 'always') {
             //總是顯示
-            return true;
+            return $this->isStarted();
         } elseif ($showResult == 'after-vote') {
             //完成投票者可看見結果（活動結束後對所有人顯示）
             return ($this->isEnded() || $this->getMaxSelected() <= $this->getSelectedCount(Auth::user()));
@@ -221,6 +221,12 @@ class VoteEvent extends Model
         }
         //錯誤情況，直接不顯示
         return false;
+    }
+
+    //是否先幫使用者隱藏結果，給View使用
+    public function isHideResult() {
+        //可以顯示結果 and 活動進行中 and 總是顯示 and (未登入 or 登入但未完成投票)
+        return $this->isResultVisible() && $this->isStarted() && ($this->show_result == 'always') && ((Auth::user() == null) || !($this->getMaxSelected() <= $this->getSelectedCount(Auth::user())));
     }
 
     public function getResultVisibleHintText()
