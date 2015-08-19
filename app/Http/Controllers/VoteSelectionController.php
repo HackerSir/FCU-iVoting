@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\LogHelper;
 use App\VoteBallot;
 use App\VoteEvent;
 use App\VoteSelection;
@@ -105,6 +106,14 @@ class VoteSelectionController extends Controller
                 'data' => $json,
                 'order' => $order
             ));
+
+            //紀錄
+            LogHelper::info(
+                '[VoteSelectionCreated] ' .
+                Auth::user()->email .' 為 ' . $voteEvent->subject . ' 建立選項',
+                $voteSelection
+            );
+
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('global', '投票選項已建立');
         }
