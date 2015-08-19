@@ -168,6 +168,9 @@ class VoteSelectionController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
+            //複製一份，在Log時比較差異
+            $beforeEdit = $voteSelection->replicate();
+
             //封裝JSON
             $obj = new stdClass();
             $obj->title = $request->get('title');
@@ -177,6 +180,16 @@ class VoteSelectionController extends Controller
 
             $voteSelection->data = $json;
             $voteSelection->save();
+
+            $afterEdit = $voteSelection->replicate();
+
+            //Log
+            LogHelper::info(
+                '[VoteSelectionEdited] '. Auth::user()->email .' 編輯了選項(Id: ' . $voteSelection->id . ', Title: ' . $obj->title . ')',
+                "編輯前", $beforeEdit->attributesToArray(),
+                "編輯後", $afterEdit->attributesToArray()
+            );
+
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('global', '投票選項已更新');
         }
