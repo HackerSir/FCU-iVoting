@@ -117,7 +117,7 @@ class VoteEventController extends Controller
             ));
 
             //紀錄
-            Log::info('[VoteEventCreated] '. Auth::user()->email .' 建立了活動(Id: ' . $voteEvent->id . ', Subject: ' . $voteEvent->subject . ')' . PHP_EOL, $voteEvent->toArray());
+            LogHelper::info('[VoteEventCreated] '. Auth::user()->email .' 建立了活動(Id: ' . $voteEvent->id . ', Subject: ' . $voteEvent->subject . ')', $voteEvent);
 
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
