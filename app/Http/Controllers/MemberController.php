@@ -94,10 +94,13 @@ class MemberController extends Controller
         //檢查登入冷卻，防止惡意登入
         $throttle = Throttle::get($request, 5, 10);
 
-        //密碼錯誤三次後，追加reCaptcha
-        $validator->sometimes('g-recaptcha-response', 'required', function ($input) use ($throttle) {
-            return $throttle->count() >= 3;
-        });
+        //上線環境再檢查
+        if (App::environment('production')) {
+            //密碼錯誤三次後，追加reCaptcha
+            $validator->sometimes('g-recaptcha-response', 'required', function ($input) use ($throttle) {
+                return $throttle->count() >= 3;
+            });
+        }
 
         if ($validator->fails()) {
             return Redirect::route('member.login')
@@ -112,13 +115,16 @@ class MemberController extends Controller
                     ->withInput();
             }
 
-            //密碼錯誤三次後，追加檢查reCaptcha
-            if ($throttle->count() >= 3) {
-                $result = $this->tryPassGoogleReCAPTCHA($request);
-                if ($result->success !== false) {
-                    return Redirect::route('member.login')
-                        ->with('warning', '沒有通過 reCAPTCHA 驗證，請再試一次。')
-                        ->withInput();
+            //上線環境再檢查
+            if (App::environment('production')) {
+                //密碼錯誤三次後，追加檢查reCaptcha
+                if ($throttle->count() >= 3) {
+                    $result = $this->tryPassGoogleReCAPTCHA($request);
+                    if ($result->success !== false) {
+                        return Redirect::route('member.login')
+                            ->with('warning', '沒有通過 reCAPTCHA 驗證，請再試一次。')
+                            ->withInput();
+                    }
                 }
             }
 
