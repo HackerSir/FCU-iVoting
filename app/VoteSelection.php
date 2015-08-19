@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helper\JsonHelper;
 use Illuminate\Database\Eloquent\Model;
 
 class VoteSelection extends Model
@@ -21,7 +22,7 @@ class VoteSelection extends Model
 
     public function getTitle()
     {
-        if (!JSON::isJson($this->data)) {
+        if (!JsonHelper::isJson($this->data)) {
             return $this->data;
         }
         $json = json_decode($this->data);
@@ -38,7 +39,7 @@ class VoteSelection extends Model
 
     public function getImageLinks()
     {
-        if (!JSON::isJson($this->data)) {
+        if (!JsonHelper::isJson($this->data)) {
             return [];
         }
         $json = json_decode($this->data);

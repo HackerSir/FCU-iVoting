@@ -1,9 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Helper;
 
 
-class JSON
+class JsonHelper
 {
     static public function isJson($string)
     {
