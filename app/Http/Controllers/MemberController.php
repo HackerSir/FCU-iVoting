@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App;
+use App\LogHelper;
 use App\Role;
 use App\User;
 use Carbon\Carbon;
@@ -146,7 +147,7 @@ class MemberController extends Controller
                 //移除重新設定密碼的驗證碼
                 DB::table('password_resets')->where('email', '=', $user->email)->delete();
                 //記錄
-                Log::info('[LoginSucceeded] 登入成功：' . $request->get('email') . PHP_EOL, [
+                LogHelper::info('[LoginSucceeded] 登入成功：' . $request->get('email'), [
                     'email' => $request->get('email'),
                     'ip' => $request->getClientIp()
                 ]);
@@ -158,7 +159,7 @@ class MemberController extends Controller
                 }
             } else {
                 //紀錄
-                Log::info('[LoginFailed] 登入失敗：' . $request->get('email') . PHP_EOL, [
+                LogHelper::info('[LoginFailed] 登入失敗：' . $request->get('email'), [
                     'email' => $request->get('email'),
                     'ip' => $request->getClientIp()
                 ]);
@@ -265,7 +266,8 @@ class MemberController extends Controller
                         $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
                     });
                 } catch (Exception $e) {
-                    Log::info('[RegisterFailed] 註冊失敗：無法寄出認證信給' . $email . PHP_EOL, [
+                    //Log
+                    LogHelper::info('[RegisterFailed] 註冊失敗：無法寄出認證信給' . $email, [
                         'email' => $email,
                         'ip' => $request->getClientIp()
                     ]);
@@ -277,7 +279,7 @@ class MemberController extends Controller
                         ->withInput();
                 }
                 //記錄
-                Log::info('[RegisterSucceeded] 註冊成功：' . $email . PHP_EOL, [
+                LogHelper::info('[RegisterSucceeded] 註冊成功：' . $email, [
                     'email' => $email,
                     'ip' => $request->getClientIp()
                 ]);
