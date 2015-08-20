@@ -116,7 +116,7 @@ class VoteEventController extends Controller
             ));
 
             //紀錄
-            LogHelper::info('[VoteEventCreated] '. Auth::user()->email .' 建立了活動(Id: ' . $voteEvent->id . ', Subject: ' . $voteEvent->subject . ')', $voteEvent);
+            LogHelper::info('[VoteEventCreated] ' . Auth::user()->email . ' 建立了活動(Id: ' . $voteEvent->id . ', Subject: ' . $voteEvent->subject . ')', $voteEvent);
 
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
@@ -243,7 +243,7 @@ class VoteEventController extends Controller
 
             //Log
             LogHelper::info(
-                '[VoteEventEdited] '. Auth::user()->email .' 編輯了活動(Id: ' . $voteEvent->id . ', Subject: ' . $voteEvent->subject . ')',
+                '[VoteEventEdited] ' . Auth::user()->email . ' 編輯了活動(Id: ' . $voteEvent->id . ', Subject: ' . $voteEvent->subject . ')',
                 "編輯前", $beforeEdit,
                 "編輯後", $afterEdit
             );
@@ -339,12 +339,27 @@ class VoteEventController extends Controller
         if ($voteEvent->voteSelections->count() == 0) {
             return 'success';
         }
+        //取得原選項順序
+        $originalIdList = $voteEvent->voteSelections->lists('title', 'id')->toArray();
         //取得排序後的id清單
         $idList = $request->get('idList');
         foreach ($idList as $order => $id) {
             $selection = VoteSelection::find($id);
             $selection->order = $order;
             $selection->save();
+        }
+        //更新$voteEvent資料
+        $voteEvent = VoteEvent::find($voteEvent->id);
+        //取得新選項順序
+        $newIdList = $voteEvent->voteSelections->lists('title', 'id')->toArray();
+        //若不同則紀錄
+        if ($originalIdList !== $newIdList) {
+            //Log
+            LogHelper::info(
+                '[VoteSelectionOrderEdited] ' . Auth::user()->email . ' 編輯了選項排序(Id: ' . $voteEvent->id . ', Subject: ' . $voteEvent->subject . ')',
+                "編輯前", $originalIdList,
+                "編輯後", $newIdList
+            );
         }
         return 'success';
     }

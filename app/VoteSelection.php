@@ -20,6 +20,17 @@ class VoteSelection extends Model
         return $this->hasMany('App\VoteBallot');
     }
 
+    /** 與getTitle()相同，令「title」可以作為lists()時的欄位名稱
+     * 參考：http://www.neontsunami.com/posts/using-lists()-in-laravel-with-custom-attribute-accessors
+     */
+    public function getTitleAttribute()
+    {
+        return $this->getTitle();
+    }
+
+    /** FIXME 應全部改用上方getTitleAttribute()取代，直接寫成Eloquent的Accessors & Mutators，可用$voteSelection->title取值或賦值
+     * http://laravel.tw/docs/5.1/eloquent-mutators#accessors-and-mutators
+     */
     public function getTitle()
     {
         if (!JsonHelper::isJson($this->data)) {
