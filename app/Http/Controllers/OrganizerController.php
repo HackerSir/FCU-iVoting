@@ -172,7 +172,18 @@ class OrganizerController extends Controller
                 ->with('global', '主辦單位不存在');
 
         }
+
+        //複製一份，在Log時使用
+        $beforeDelete = $organizer->replicate();
+
         $organizer->delete();
+
+        //紀錄
+        LogHelper::info(
+            '[OrganizerDeleted] ' . Auth::user()->email . ' 刪除了主辦單位(Id: ' . $organizer->id . ')',
+            $beforeDelete
+        );
+
         return Redirect::route('organizer.index')
             ->with('global', '主辦單位已移除');
     }
