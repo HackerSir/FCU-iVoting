@@ -110,7 +110,7 @@ class VoteSelectionController extends Controller
             //紀錄
             LogHelper::info(
                 '[VoteSelectionCreated] ' .
-                Auth::user()->email .' 為 ' . $voteEvent->subject . ' 建立選項',
+                Auth::user()->email . ' 為 ' . $voteEvent->subject . ' 建立選項',
                 $voteSelection
             );
 
@@ -185,7 +185,7 @@ class VoteSelectionController extends Controller
 
             //Log
             LogHelper::info(
-                '[VoteSelectionEdited] '. Auth::user()->email .' 編輯了選項(Id: ' . $voteSelection->id . ', Title: ' . $obj->title . ')',
+                '[VoteSelectionEdited] ' . Auth::user()->email . ' 編輯了選項(Id: ' . $voteSelection->id . ', Title: ' . $obj->title . ')',
                 "編輯前", $beforeEdit->attributesToArray(),
                 "編輯後", $afterEdit->attributesToArray()
             );
@@ -254,6 +254,11 @@ class VoteSelectionController extends Controller
             $voteSelectionIdList = $voteSelection->voteEvent->voteSelections->lists('id')->toArray();
             while ($voteSelection->voteEvent->getMaxSelected() < $voteSelection->voteEvent->getSelectedCount(Auth::user())) {
                 $voteBallot = VoteBallot::where('user_id', '=', Auth::user()->id)->whereIn('vote_selection_id', $voteSelectionIdList)->orderBy('created_at', 'desc')->first();
+                //Log
+                LogHelper::info(
+                    '[VoteError] ' . Auth::user()->email . ' 投票時出現異常選票，已移除(Id: ' . $voteSelection->voteEvent->id . ', Subject: ' . $voteSelection->voteEvent->subject . ')',
+                    '選票資料', $voteBallot
+                );
                 $voteBallot->delete();
             }
         }
