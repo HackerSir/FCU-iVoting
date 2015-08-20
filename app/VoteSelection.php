@@ -30,7 +30,7 @@ class VoteSelection extends Model
             return $this->attributes['title'];
         }
         //以下為向下相容，自動更新舊資料
-        //否則嘗試從data解析標題
+        //若無標題屬性，嘗試從data解析標題
         if (JsonHelper::isJson($this->data)) {
             $json = json_decode($this->data);
             if (!empty($json->title)) {
