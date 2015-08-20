@@ -96,12 +96,12 @@ class VoteSelectionController extends Controller
         } else {
             //封裝JSON
             $obj = new stdClass();
-            $obj->title = $request->get('title');
             //$obj->image = explode(PHP_EOL, $request->get('image'));
             $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), NULL, PREG_SPLIT_NO_EMPTY);
             $json = json_encode($obj, JSON_UNESCAPED_UNICODE);
             $order = ($voteEvent->voteSelections->count() > 0) ? $voteEvent->voteSelections->max('order') + 1 : 0;
             $voteSelection = VoteSelection::create(array(
+                'title' => $request->get('title'),
                 'vote_event_id' => $voteEvent->id,
                 'data' => $json,
                 'order' => $order
@@ -171,9 +171,9 @@ class VoteSelectionController extends Controller
             //複製一份，在Log時比較差異
             $beforeEdit = $voteSelection->replicate();
 
+            $voteSelection->title = $request->get('title');
             //封裝JSON
             $obj = new stdClass();
-            $obj->title = $request->get('title');
             //$obj->image = explode(PHP_EOL, $request->get('image'));
             $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), NULL, PREG_SPLIT_NO_EMPTY);
             $json = json_encode($obj, JSON_UNESCAPED_UNICODE);
@@ -185,7 +185,7 @@ class VoteSelectionController extends Controller
 
             //Log
             LogHelper::info(
-                '[VoteSelectionEdited] ' . Auth::user()->email . ' 編輯了選項(Id: ' . $voteSelection->id . ', Title: ' . $obj->title . ')',
+                '[VoteSelectionEdited] ' . Auth::user()->email . ' 編輯了選項(Id: ' . $voteSelection->id . ', Title: ' . $voteSelection->title . ')',
                 "編輯前", $beforeEdit->attributesToArray(),
                 "編輯後", $afterEdit->attributesToArray()
             );

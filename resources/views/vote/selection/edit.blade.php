@@ -23,7 +23,7 @@
                             <label class="col-md-2 control-label" for="title">選項內容</label>
 
                             <div class="col-md-10">
-                                {!! Form::text('title', $voteSelection->getTitle(), ['id' => 'title', 'placeholder' => '請輸入選項內容', 'class' => 'form-control']) !!}
+                                {!! Form::text('title', $voteSelection->title, ['id' => 'title', 'placeholder' => '請輸入選項內容', 'class' => 'form-control']) !!}
                                 @if($errors->has('title'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                                 <span class="label label-danger">{{ $errors->first('title') }}</span>@endif
                             </div>

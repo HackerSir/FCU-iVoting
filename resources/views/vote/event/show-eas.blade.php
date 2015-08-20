@@ -260,7 +260,7 @@
                                                 @if(count($voteSelectionItem->getImageLinks()) > 1)
                                                     <div class="more-image-fake-shadow img-rounded"></div>
                                                 @endif
-                                                <img src="{{ App\Helper\ImgurHelper::thumbnail($voteSelectionItem->getImageLinks()[0], 'm') }}" class="img-rounded vote-selection" style="cursor: pointer;" data-toggle="modal" data-target="#imageModal" data-title="{{ $voteSelectionItem->getTitle() }}" data-images="{{ implode(';',$voteSelectionItem->getImageLinks()) }}"/>
+                                                <img src="{{ App\Helper\ImgurHelper::thumbnail($voteSelectionItem->getImageLinks()[0], 'm') }}" class="img-rounded vote-selection" style="cursor: pointer;" data-toggle="modal" data-target="#imageModal" data-title="{{ $voteSelectionItem->title }}" data-images="{{ implode(';',$voteSelectionItem->getImageLinks()) }}"/>
                                             @else
                                                 <img data-src="holder.js/200x200?text=沒有圖片&size=30" class="img-rounded vote-selection"/>
                                             @endif
@@ -269,7 +269,7 @@
                                     <div class="caption">
                                         <h3 style="min-height: 31px">
                                             <span id="selectionOrder" class="numberCircle">{{ $selectionOrder+1 }}</span>
-                                            {{ $voteSelectionItem->getTitle() }}
+                                            {{ $voteSelectionItem->title }}
                                             @if(count($voteSelectionItem->getImageLinks()) > 0)
                                                 {{-- 防止字被換行切到 --}}
                                                 <small style="display: inline-block;">({{ count($voteSelectionItem->getImageLinks()) }}張照片)</small>
