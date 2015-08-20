@@ -374,7 +374,7 @@ class MemberController extends Controller
                 ]);
 
                 return Redirect::route('member.resend')
-                    ->with('warning', '無法重寄認證信件，請稍後在嘗試。')
+                    ->with('warning', '無法重寄認證信件，請稍後再嘗試。')
                     ->withInput();
             }
 
@@ -429,8 +429,7 @@ class MemberController extends Controller
                         Mail::send('emails.forgot', array('link' => URL::route('member.reset-password', $code)), function ($message) use ($user) {
                             $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 重新設定密碼");
                         });
-                    }
-                    catch (Exception $e) {
+                    } catch (Exception $e) {
                         //Log
                         LogHelper::info('[SendEmailFailed] 註冊失敗：無法寄出密碼重設信件給' . $user->email, [
                             'email' => $user->email,
@@ -438,7 +437,7 @@ class MemberController extends Controller
                         ]);
 
                         return Redirect::route('member.forgot-password')
-                            ->with('warning', '無法寄出密碼重設信件，請稍後在嘗試。');
+                            ->with('warning', '無法寄出密碼重設信件，請稍後再嘗試。');
                     }
 
                     return Redirect::route('home')
