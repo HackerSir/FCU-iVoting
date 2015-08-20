@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\LogHelper;
 use App\Organizer;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -63,6 +65,13 @@ class OrganizerController extends Controller
                 'url' => $request->get('url'),
                 'logo_url' => $request->get('logo_url')
             ]);
+
+            //紀錄
+            LogHelper::info(
+                '[OrganizerCreated] ' . Auth::user()->email . ' 建立了主辦單位(Id: ' . $organizer->id . ')',
+                $organizer
+            );
+
             return Redirect::route('organizer.show', $organizer->id)
                 ->with('global', '主辦單位已建立');
         }
