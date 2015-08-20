@@ -136,10 +136,23 @@ class OrganizerController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
+            //複製一份，在Log時比較差異
+            $beforeEdit = $organizer->replicate();
+
             $organizer->name = $request->get('name');
             $organizer->url = $request->get('url');
             $organizer->logo_url = $request->get('logo_url');
             $organizer->save();
+
+            $afterEdit = $organizer->replicate();
+
+            //紀錄
+            LogHelper::info(
+                '[OrganizerEdited] ' . Auth::user()->email . ' 編輯了主辦單位(Id: ' . $organizer->id . ')',
+                "編輯前", $beforeEdit,
+                "編輯後", $afterEdit
+            );
+
             return Redirect::route('organizer.show', $id)
                 ->with('global', '主辦單位已更新');
         }
