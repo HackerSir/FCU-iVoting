@@ -42,19 +42,18 @@ class UpdateTitleOfVoteSelection extends Migration
     {
         $voteSelectionList = VoteSelection::all();
         foreach ($voteSelectionList as $voteSelection) {
+            if (!starts_with($voteSelection->data, '[') && !starts_with($voteSelection->data, '{')) {
+                continue;
+            }
             $json = json_decode($voteSelection->data);
             if (json_last_error() != JSON_ERROR_NONE) {
                 continue;
             }
             //將title存入data
-            try {
-                $json->title = $voteSelection->title;
-                $voteSelection->title = "";
-                $voteSelection->data = json_encode($json, JSON_UNESCAPED_UNICODE);
-                $voteSelection->save();
-            } catch (Exception $ignore) {
-                //避免data不是json物件而是字串
-            }
+            $json->title = $voteSelection->title;
+            $voteSelection->title = "";
+            $voteSelection->data = json_encode($json, JSON_UNESCAPED_UNICODE);
+            $voteSelection->save();
         }
     }
 }
