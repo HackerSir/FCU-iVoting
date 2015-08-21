@@ -214,6 +214,11 @@ class VoteSelectionController extends Controller
                 ->with('warning', '只能在投票活動開始前編輯選項');
         }
         $voteEvent = $voteSelection->voteEvent;
+        //Log
+        LogHelper::info(
+            '[VoteSelectionDeleted] ' . Auth::user()->email . ' 刪除了選項(Id: ' . $voteSelection->id . ', Title: ' . $voteSelection->title . ')',
+            $voteSelection->attributesToArray()
+        );
         //移除投票選項
         $voteSelection->delete();
         return Redirect::route('vote-event.show', $voteEvent->id)
