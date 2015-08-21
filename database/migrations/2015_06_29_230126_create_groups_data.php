@@ -1,6 +1,5 @@
 <?php
 
-use App\Group;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -13,9 +12,9 @@ class CreateGroupsData extends Migration
      */
     public function up()
     {
-        Group::create(array('name' => 'admin', 'title' => '管理員'));
-        Group::create(array('name' => 'staff', 'title' => '工作人員'));
-        Group::create(array('name' => 'default', 'title' => '預設'));
+        DB::table('groups')->insert(array('name' => 'admin', 'title' => '管理員'));
+        DB::table('groups')->insert(array('name' => 'staff', 'title' => '工作人員'));
+        DB::table('groups')->insert(array('name' => 'default', 'title' => '預設'));
     }
 
     /**
@@ -25,8 +24,8 @@ class CreateGroupsData extends Migration
      */
     public function down()
     {
-        Group::where('name', '=', 'admin')->delete();
-        Group::where('name', '=', 'staff')->delete();
-        Group::where('name', '=', 'default')->delete();
+        DB::table('groups')->where('name', '=', 'admin')->delete();
+        DB::table('groups')->where('name', '=', 'staff')->delete();
+        DB::table('groups')->where('name', '=', 'default')->delete();
     }
 }
