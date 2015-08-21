@@ -20,9 +20,11 @@ Thumbs.db
 # IntelliJ
 out/
 
-# github auto pull
-## Do not try it :)
-_github.php
-
 # laravel-ide-helper
 _ide_helper.php
+
+#Google Analytics
+/public/js/analyticstracking.js
+
+#Google Search Console
+/public/googlead5716365e61e11d.html
