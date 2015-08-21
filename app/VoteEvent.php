@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helper\JsonHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -113,7 +114,7 @@ class VoteEvent extends Model
     public function getConditionValue($key)
     {
         //取得條件的json
-        $condition = json_decode($this->vote_condition);
+        $condition = JsonHelper::decode($this->vote_condition);
         //有需要的值就回傳
         if (!empty($condition->$key)) {
             return $condition->$key;
@@ -130,7 +131,7 @@ class VoteEvent extends Model
             return false;
         }
         //取得條件的json
-        $condition = json_decode($this->vote_condition);
+        $condition = JsonHelper::decode($this->vote_condition);
         //此活動無條件限制
         if (empty((array)$condition)) {
             return true;
@@ -155,7 +156,7 @@ class VoteEvent extends Model
             return false;
         }
         //取得條件的json
-        $condition = json_decode($this->vote_condition);
+        $condition = JsonHelper::decode($this->vote_condition);
         //此活動無條件限制
         if (empty((array)$condition)) {
             return true;

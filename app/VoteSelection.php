@@ -30,7 +30,7 @@ class VoteSelection extends Model
         if (!JsonHelper::isJson($this->data)) {
             return [];
         }
-        $json = json_decode($this->data);
+        $json = JsonHelper::decode($this->data);
         if (empty($json->image)) {
             return [];
         }

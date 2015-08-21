@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\JsonHelper;
 use App\Helper\LogHelper;
 use App\Organizer;
 use App\Setting;
@@ -111,7 +112,7 @@ class VoteEventController extends Controller
                 'max_selected' => $max_selected,
                 'organizer_id' => ($request->has('organizer')) ? $request->get('organizer') : null,
                 'show' => !$request->get('hideVoteEvent', false),
-                'vote_condition' => (!empty($condition)) ? json_encode((object)array_filter((array)$condition)) : null,
+                'vote_condition' => (!empty($condition)) ? JsonHelper::encode((object)array_filter((array)$condition)) : null,
                 'show_result' => $request->get('show_result')
             ));
 
@@ -233,7 +234,7 @@ class VoteEventController extends Controller
             //投票條件
             $condition = new \stdClass();
             $condition->prefix = ($request->has('prefix')) ? str_replace(' ', '', $request->get('prefix')) : null;
-            $voteEvent->vote_condition = (!empty($condition)) ? json_encode((object)array_filter((array)$condition)) : null;
+            $voteEvent->vote_condition = (!empty($condition)) ? JsonHelper::encode((object)array_filter((array)$condition)) : null;
 
             $voteEvent->show_result = $request->get('show_result');
 

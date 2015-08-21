@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App;
+use App\Helper\JsonHelper;
 use App\Helper\LogHelper;
 use App\Role;
 use App\User;
@@ -312,7 +313,7 @@ class MemberController extends Controller
             ]
         );
 
-        return json_decode($response->getBody());
+        return JsonHelper::decode($response->getBody());
     }
 
     //驗證信箱
