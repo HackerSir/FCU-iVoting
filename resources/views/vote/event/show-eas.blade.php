@@ -4,8 +4,8 @@
     {{ $voteEvent->subject }} - 投票活動
 @endsection
 
-@section('og-description')
-    <meta property="og:description" content="{{ strip_tags(App\Helper\MarkdownHelper::translate($voteEvent->info)) }}">
+@section('metaTag')
+    <meta name="description" property="og:description" content="{{ strip_tags(App\Helper\MarkdownHelper::translate($voteEvent->info)) }}">
 @endsection
 
 @section('css')
