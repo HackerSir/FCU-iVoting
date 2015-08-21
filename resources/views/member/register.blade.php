@@ -65,3 +65,12 @@
         </div>
     </div>
 @endsection
+
+@section('javascript')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            {{-- 將 「--請下拉選擇--」 設定成不可選 --}}
+            $("select[name='email_domain'] option[value='']").prop('disabled', true);
+        });
+    </script>
+@endsection
