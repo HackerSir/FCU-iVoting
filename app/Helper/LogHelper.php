@@ -135,7 +135,7 @@ class LogHelper
             if (is_string($context)) {
                 $temp = $context;
             } else {
-                $temp = json_encode($context, JSON_UNESCAPED_UNICODE);
+                $temp = json_encode($context, JSON_UNESCAPED_UNICODE + JSON_UNESCAPED_SLASHES);
             }
             $message .= $temp . PHP_EOL;
         }

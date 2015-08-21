@@ -27,7 +27,7 @@ class UpdateTitleOfVoteSelection extends Migration
                 //找出並移除data中的title
                 $voteSelection->title = $json->title;
                 unset($json->title);
-                $voteSelection->data = json_encode($json, JSON_UNESCAPED_UNICODE);
+                $voteSelection->data = json_encode($json, JSON_UNESCAPED_UNICODE + JSON_UNESCAPED_SLASHES);
                 $voteSelection->save();
             }
         }
@@ -52,7 +52,7 @@ class UpdateTitleOfVoteSelection extends Migration
             //將title存入data
             $json->title = $voteSelection->title;
             $voteSelection->title = "";
-            $voteSelection->data = json_encode($json, JSON_UNESCAPED_UNICODE);
+            $voteSelection->data = json_encode($json, JSON_UNESCAPED_UNICODE + JSON_UNESCAPED_SLASHES);
             $voteSelection->save();
         }
     }

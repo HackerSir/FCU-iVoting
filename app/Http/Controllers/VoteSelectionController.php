@@ -98,7 +98,7 @@ class VoteSelectionController extends Controller
             $obj = new stdClass();
             //$obj->image = explode(PHP_EOL, $request->get('image'));
             $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), NULL, PREG_SPLIT_NO_EMPTY);
-            $json = json_encode($obj, JSON_UNESCAPED_UNICODE);
+            $json = json_encode($obj, JSON_UNESCAPED_UNICODE + JSON_UNESCAPED_SLASHES);
             $order = ($voteEvent->voteSelections->count() > 0) ? $voteEvent->voteSelections->max('order') + 1 : 0;
             $voteSelection = VoteSelection::create(array(
                 'title' => $request->get('title'),
@@ -176,7 +176,7 @@ class VoteSelectionController extends Controller
             $obj = new stdClass();
             //$obj->image = explode(PHP_EOL, $request->get('image'));
             $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), NULL, PREG_SPLIT_NO_EMPTY);
-            $json = json_encode($obj, JSON_UNESCAPED_UNICODE);
+            $json = json_encode($obj, JSON_UNESCAPED_UNICODE + JSON_UNESCAPED_SLASHES);
 
             $voteSelection->data = $json;
             $voteSelection->save();
