@@ -23,8 +23,12 @@ out/
 # laravel-ide-helper
 _ide_helper.php
 
-#Google Analytics
+# Google Analytics
 /public/js/analyticstracking.js
 
-#Google Search Console
+# Google Search Console
 /public/google*.html
+
+# privacy & terms
+public/privacy.md
+public/terms.md
