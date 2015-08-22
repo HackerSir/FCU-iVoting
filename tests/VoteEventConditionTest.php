@@ -1,5 +1,6 @@
 <?php
 
+use App\Role;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 /**
@@ -17,10 +18,10 @@ class VoteEventConditionTest extends TestCase
     protected $d03User;
     protected $d04User;
 
-    public function setUp() {
-        parent::setUp();
-
-        $this->staffUser = factory('App\User', 'staff')->make();
+    private function createUser() {
+        $this->staffUser = factory('App\User')->create();
+        $staff = Role::where('name', '=', 'staff')->first();
+        $this->staffUser->attachRole($staff);
 
         $this->d02User = factory('App\User')->make([
             'email' => 'd0200000@fcu.edu.tw'
@@ -36,6 +37,8 @@ class VoteEventConditionTest extends TestCase
     }
 
     public function test_VoteEventCondition() {
+        $this->createUser();
+
         $subject = str_random(20);
         $voteSelectionId = $this->createVoteEvent($subject);
 
