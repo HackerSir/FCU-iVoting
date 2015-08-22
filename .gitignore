@@ -26,3 +26,7 @@ _github.php
 
 # laravel-ide-helper
 _ide_helper.php
+
+# privacy & terms
+public/privacy.md
+public/terms.md

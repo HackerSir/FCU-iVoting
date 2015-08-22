@@ -10,5 +10,14 @@
                 <a href="{{ URL::route('policies', 'terms') }}">服務條款</a>
             </li>
         </ul>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @if(Request::is('policies/privacy'))
+                    {!! App\MarkdownUtil::translate(File::get('privacy.md')) !!}
+                @elseif(Request::is('policies/terms'))
+                    {!! App\MarkdownUtil::translate(File::get('terms.md')) !!}
+                @endif
+            </div>
+        </div>
     </div>
 @endsection
