@@ -27,9 +27,6 @@
         {{-- 好看的提示框 --}}
         {!! HTML::style('css/tipped.css') !!}
 
-        <!-- Fonts -->
-        {!! HTML::style('//fonts.googleapis.com/css?family=Roboto:400,300') !!}
-
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
