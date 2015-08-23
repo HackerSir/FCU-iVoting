@@ -11,7 +11,7 @@
             </li>
         </ul>
         <div class="panel panel-default">
-            <div class="panel-body">
+            <div class="panel-body" style="font-size: larger;">
                 @if(Request::is('policies/privacy'))
                     {!! App\MarkdownUtil::translate(File::get('privacy.md')) !!}
                 @elseif(Request::is('policies/terms'))
