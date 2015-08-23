@@ -21,10 +21,10 @@
         {!! HTML::style('css/animate.css') !!}
         {!! HTML::style('css/stylesheet.css') !!}
         {!! HTML::style('css/bootstrap-datetimepicker.css') !!}
-        {!! HTML::style('css/tipped/tipped.css') !!}
         {!! HTML::style('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css') !!}
         {!! HTML::style('css/select2-bootstrap.min.css') !!}
         {!! HTML::style('css/sticky-footer-navbar.css') !!}
+        {!! HTML::style('css/tipped.css') !!}
 
         <!-- Fonts -->
         {!! HTML::style('//fonts.googleapis.com/css?family=Roboto:400,300') !!}
@@ -67,8 +67,8 @@
         {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js') !!}
         {!! HTML::script('js/moment_zh-tw.js') !!}
         {!! HTML::script('js/bootstrap-datetimepicker.js') !!}
+        {!! HTML::script('js/tipped.js') !!}
         {!! HTML::script('js/bootstrap-notify.min.js') !!}
-        {!! HTML::script('js/tipped/tipped.js') !!}
         {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js') !!}
         @if(App::environment('production'))
             {!! HTML::script('js/analyticstracking.js') !!}
