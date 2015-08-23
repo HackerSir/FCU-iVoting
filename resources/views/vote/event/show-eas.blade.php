@@ -9,6 +9,7 @@
 @endsection
 
 @section('css')
+    {!! HTML::style('css/bootstrap-social.css') !!}
     {!! HTML::style('css/callout.css') !!}
     {!! HTML::style('css/ribbon.css') !!}
     <style type="text/css">
@@ -372,6 +373,8 @@
 @endsection
 
 @section('javascript')
+    {!! HTML::script('//code.jquery.com/ui/1.11.3/jquery-ui.min.js') !!}
+    {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/holder/2.8.0/holder.min.js') !!}
     <script type="text/javascript">
         {{-- 等待DOM載入完成 --}}
         $(document).ready(function () {

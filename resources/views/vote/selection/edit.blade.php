@@ -4,6 +4,10 @@
     編輯投票選項
 @endsection
 
+@section('css')
+    {!! HTML::style('css/fileinput.min.css') !!}
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -64,6 +68,8 @@
 @endsection
 
 @section('javascript')
+    {!! HTML::script('js/fileinput.min.js') !!}
+    {!! HTML::script('js/fileinput_locale_tw.js') !!}
     <script type="text/javascript">
         $("#image_upload").fileinput({
             'language': 'tw',
