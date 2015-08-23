@@ -20,11 +20,11 @@
         {!! HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') !!}
 
         {!! Minify::stylesheet(array(
-            './css/stylesheet.css',            // 全域自訂 CSS
-            './css/sticky-footer-navbar.css',  // 頁尾資訊
-            './css/animate.css',               // 給 bootstrap-notify 使用，用來彈出訊息框的淡入淡出特效
-            './css/tipped.css',                // 好看的提示框
-        )) !!}
+            '/css/stylesheet.css',            // 全域自訂 CSS
+            '/css/sticky-footer-navbar.css',  // 頁尾資訊
+            '/css/animate.css',               // 給 bootstrap-notify 使用，用來彈出訊息框的淡入淡出特效
+            '/css/tipped.css',                // 好看的提示框
+        ))->withFullUrl() !!}
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -58,7 +58,7 @@
         {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js') !!}
         {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js') !!}
         {{-- 好看的提示框 --}}
-        {!! Minify::javascript('./js/tipped.js') !!}
+        {!! Minify::javascript('/js/tipped.js')->withFullUrl() !!}
         {{-- 好看的彈出訊息框 --}}
         {!! HTML::script('js/bootstrap-notify.min.js') !!}
 
