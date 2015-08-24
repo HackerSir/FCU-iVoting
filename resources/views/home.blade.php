@@ -11,7 +11,7 @@
                 <p><a href="{{ URL::route('vote-event.index') }}" class="btn btn-primary btn-lg">查看票選活動 »</a></p>
             </div>
             <div class="col-sm-4 hidden-xs">
-                <img src="{{ asset('pic/logo.gif') }}" style="float: right; height: 400px" />
+                <img src="{{ asset('pic/logo.png') }}" style="float: right; height: 400px" />
             </div>
         </div>
     </div>
