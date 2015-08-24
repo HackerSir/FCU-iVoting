@@ -153,7 +153,7 @@
 
 @section('javascript')
     {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js') !!}
-    {!! HTML::script('js/moment_zh-tw.js') !!}
+    {!! Minify::javascript('/js/moment_zh-tw.js')->withFullUrl() !!}
     {!! HTML::script('js/bootstrap-datetimepicker.min.js') !!}
     <script type="text/javascript">
         $(function () {
