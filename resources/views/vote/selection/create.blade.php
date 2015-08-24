@@ -70,7 +70,7 @@
 
 @section('javascript')
     {!! HTML::script('js/fileinput.min.js') !!}
-    {!! HTML::script('js/fileinput_locale_tw.js') !!}
+    {!! Minify::javascript('/js/fileinput_locale_tw.js')->withFullUrl() !!}
     <script type="text/javascript">
         $("#image_upload").fileinput({
             'language': 'tw',
