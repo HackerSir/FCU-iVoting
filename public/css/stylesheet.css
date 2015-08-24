@@ -6,14 +6,14 @@ body {
     /* navbar */
     padding-top: 70px;
     padding-right: 0 !important;
-    background: #eeeeee url('../pic/squirrel.jpg') no-repeat fixed center center;
+    background: #eeeeee url("../pic/squirrel.jpg") no-repeat fixed center center;
     background-size: cover;
 }
 
 @media
 only screen and (max-width: 479px) {
     body {
-        background: #eeeeee url('../pic/squirrel_mobile.jpg') no-repeat fixed;
+        background: #eeeeee url("../pic/squirrel_mobile.jpg") no-repeat fixed;
     }
 }
 
