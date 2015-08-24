@@ -26,4 +26,12 @@
     <ifmodule mod_deflate.c>
         AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x-javascript application/javascript text/javascript
     </ifmodule>
+    
+    # Expires
+    <IfModule mod_expires.c>
+        <FilesMatch "\.(jpe?g|png|gif)$">
+            ExpiresActive On
+            ExpiresDefault "access plus 1 week"
+        </FilesMatch>
+    </IfModule>
 </IfModule>
