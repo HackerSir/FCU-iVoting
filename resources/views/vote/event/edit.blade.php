@@ -4,6 +4,10 @@
     編輯投票活動
 @endsection
 
+@section('css')
+    {!! HTML::style('css/bootstrap-datetimepicker.css') !!}
+@endsection
+
 @section('content')
     <div class="container" style="min-height: 600px">
         <div class="row">
@@ -148,6 +152,9 @@
 @endsection
 
 @section('javascript')
+    {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js') !!}
+    {!! Minify::javascript('/js/moment_zh-tw.js')->withFullUrl() !!}
+    {!! HTML::script('js/bootstrap-datetimepicker.min.js') !!}
     <script type="text/javascript">
         $(function () {
             $('#datetimepicker1').datetimepicker({

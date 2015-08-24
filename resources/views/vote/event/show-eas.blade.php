@@ -9,83 +9,12 @@
 @endsection
 
 @section('css')
-    {!! HTML::style('css/callout.css') !!}
-    {!! HTML::style('css/ribbon.css') !!}
-    <style type="text/css">
-        div.more-image-fake-shadow {
-            background: lightgrey;
-            position: absolute;
-            width: 94%;
-            margin-left: 3%;
-            height: 14px;
-            top: -7px;
-            z-index: -1;
-        }
-
-        {{-- 複寫 Carousel 底下的點點樣式 --}}
-        .carousel-indicators li {
-            width: 24px;
-            height: 24px;
-            background-color: white;
-            border-width: 1px;
-            border-color: black;
-        }
-
-        .carousel-indicators .active {
-            background-color: #2e6da4;
-            width: 24px;
-            height: 24px;
-        }
-
-        .label-adjust {
-            font-size: 70%;
-            margin-left: 10px;
-            position: relative;
-            top: -5px;
-        }
-
-        img.vote-selection {
-            max-width: 100%;
-            max-height: 200px;
-            width: auto;
-            height: auto;
-        }
-
-        {{-- 改寫下列提供的CSS --}}
-        {{-- http://stackoverflow.com/questions/4861224/how-to-use-css-to-surround-a-number-with-a-circle --}}
-        .numberCircle {
-            border-radius: 50%;
-            font-weight: bold;
-            width: 30px;
-            height: 30px;
-            border: 2px solid #bf3e11;
-            text-align: center;
-            display: inline-block;
-            background-color: #bf3e11;
-            color: #fff;
-        }
-
-        {{-- 標記使用者投下的勾勾樣式 --}}
-        .voted {
-            position: absolute;
-            z-index: 5;
-            right: 20px;
-            pointer-events: none;
-        }
-
-        .voted span {
-            font-size: 40px;
-            color: #511c39;
-        }
-
-        @media
-        only screen and (max-width: 768px) {
-            .jumbotron {
-                padding-left: 10px !important;
-                padding-right: 10px !important;
-            }
-        }
-    </style>
+    {!! Minify::stylesheet([
+            '/css/bootstrap-social.css',     // 社群分享按鈕
+            '/css/callout.css',              // 說明框樣式
+            '/css/ribbon.css',               // 最高票的標籤樣式
+            '/css/vote-event-show-eas.css',  // 這個頁面的自訂樣式
+    ])->withFullUrl() !!}
 @endsection
 
 @section('content')
@@ -372,6 +301,9 @@
 @endsection
 
 @section('javascript')
+    {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/holder/2.8.0/holder.min.js') !!}
+    {!! HTML::script('//code.jquery.com/ui/1.11.3/jquery-ui.min.js') !!}
+    {!! Minify::javascript('/js/imgur-helper.js')->withFullUrl() !!}
     <script type="text/javascript">
         {{-- 等待DOM載入完成 --}}
         $(document).ready(function () {
@@ -579,17 +511,6 @@
             $.each(selections, function () {
                 $(this).css('minHeight', maxHeight);
             });
-        }
-
-        function getImgurImageId(url) {
-            var reg = /^https?:\/\/[iw\.]*imgur\.[^\/]*\/(?:gallery\/)?([^\?\s\.]*).*$/im;
-            return reg.exec(url)[1];
-        }
-
-        function getImgurThumbnail(url) {
-            var extensionReg = /[^\\\\]*\.(\w+)$/;
-            var extension = extensionReg.exec(url)[1];
-            return "https://i.imgur.com/" + getImgurImageId(url) + ((extension != "gif") ? "l." : ".") + extension;
         }
     </script>
 @endsection

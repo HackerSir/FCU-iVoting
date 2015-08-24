@@ -142,6 +142,7 @@ return [
         BackupManager\Laravel\Laravel5ServiceProvider::class,
         GrahamCampbell\Throttle\ThrottleServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+        Devfactory\Minify\MinifyServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -205,6 +206,7 @@ return [
         'Carbon' => Carbon\Carbon::class,
         'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
         'Entrust' => Zizaco\Entrust\EntrustFacade::class,
+        'Minify' => Devfactory\Minify\Facades\MinifyFacade::class,
 
     ],
 
