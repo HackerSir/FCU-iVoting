@@ -32,5 +32,7 @@ _ide_helper.php
 # privacy & terms
 public/privacy.md
 public/terms.md
-public/css/builds/
-public/js/builds/
+
+# Minify builds
+public/css-builds/
+public/js-builds/
