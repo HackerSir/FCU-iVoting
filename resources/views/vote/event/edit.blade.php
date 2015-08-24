@@ -154,7 +154,7 @@
 @section('javascript')
     {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js') !!}
     {!! HTML::script('js/moment_zh-tw.js') !!}
-    {!! HTML::script('js/bootstrap-datetimepicker.js') !!}
+    {!! HTML::script('js/bootstrap-datetimepicker.min.js') !!}
     <script type="text/javascript">
         $(function () {
             $('#datetimepicker1').datetimepicker({
