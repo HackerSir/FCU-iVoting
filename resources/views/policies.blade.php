@@ -13,9 +13,9 @@
         <div class="panel panel-default">
             <div class="panel-body" style="font-size: larger;">
                 @if(Request::is('policies/privacy'))
-                    {!! App\MarkdownUtil::translate(File::get('privacy.md')) !!}
+                    {!! Markdown::parse(File::get('privacy.md')) !!}
                 @elseif(Request::is('policies/terms'))
-                    {!! App\MarkdownUtil::translate(File::get('terms.md')) !!}
+                    {!! Markdown::parse(File::get('terms.md')) !!}
                 @endif
             </div>
         </div>
