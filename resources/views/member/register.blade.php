@@ -4,6 +4,10 @@
     註冊
 @endsection
 
+@section('head-javascript')
+    {!! HTML::script('https://www.google.com/recaptcha/api.js') !!}
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -45,6 +49,14 @@
                         {!! Form::password('password_again', ['id' => 'password_again', 'placeholder' => '請再輸入一次密碼', 'class' => 'form-control', 'required']) !!}
                         @if($errors->has('password_again'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
                     </div>
+                    <div class="form-group has-feedback{{ ($errors->has('g-recaptcha-response'))?' has-error':'' }}">
+                        <label class="control-label" for="password_again">驗證
+                            @if($errors->has('g-recaptcha-response'))
+                                <span class="label label-danger">您必須勾選「我不是機器人」</span>
+                            @endif
+                        </label>
+                        <div class="g-recaptcha" data-sitekey="{{ env('Data_Sitekey') }}"></div>
+                    </div>
                     <p class="help-block">當你點選註冊時，代表你同意本站的<a href="{{ URL::route('policies', 'privacy') }}" target="_blank">《隱私權政策》<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>&nbsp;與<a href="{{ URL::route('policies', 'terms') }}" target="_blank">《服務條款》<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>
                     {!! Form::submit('註冊', ['class' => 'btn btn-primary']) !!}
                     <a href="{{ URL::route('member.login') }}", class="btn btn-default">返回登入頁</a>
@@ -53,4 +65,13 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('javascript')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            {{-- 將 「--請下拉選擇--」 設定成不可選 --}}
+            $("select[name='email_domain'] option[value='']").prop('disabled', true);
+        });
+    </script>
 @endsection

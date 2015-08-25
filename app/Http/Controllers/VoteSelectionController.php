@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\JsonHelper;
+use App\Helper\LogHelper;
 use App\VoteBallot;
 use App\VoteEvent;
 use App\VoteSelection;
@@ -27,7 +29,7 @@ class VoteSelectionController extends Controller
             ]
         ]);
         //限工作人員
-        $this->middleware('staff', [
+        $this->middleware('role:staff', [
             'except' => [
                 'index',
                 'show',
@@ -95,15 +97,24 @@ class VoteSelectionController extends Controller
         } else {
             //封裝JSON
             $obj = new stdClass();
-            $obj->title = $request->get('title');
             //$obj->image = explode(PHP_EOL, $request->get('image'));
             $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), NULL, PREG_SPLIT_NO_EMPTY);
-            $json = json_encode($obj);
-
+            $json = JsonHelper::encode($obj);
+            $order = ($voteEvent->voteSelections->count() > 0) ? $voteEvent->voteSelections->max('order') + 1 : 0;
             $voteSelection = VoteSelection::create(array(
+                'title' => $request->get('title'),
                 'vote_event_id' => $voteEvent->id,
-                'data' => $json
+                'data' => $json,
+                'order' => $order
             ));
+
+            //紀錄
+            LogHelper::info(
+                '[VoteSelectionCreated] ' .
+                Auth::user()->email . ' 為 ' . $voteEvent->subject . ' 建立選項',
+                $voteSelection
+            );
+
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('global', '投票選項已建立');
         }
@@ -158,15 +169,28 @@ class VoteSelectionController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
+            //複製一份，在Log時比較差異
+            $beforeEdit = $voteSelection->replicate();
+
+            $voteSelection->title = $request->get('title');
             //封裝JSON
             $obj = new stdClass();
-            $obj->title = $request->get('title');
             //$obj->image = explode(PHP_EOL, $request->get('image'));
             $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), NULL, PREG_SPLIT_NO_EMPTY);
-            $json = json_encode($obj);
+            $json = JsonHelper::encode($obj);
 
             $voteSelection->data = $json;
             $voteSelection->save();
+
+            $afterEdit = $voteSelection->replicate();
+
+            //Log
+            LogHelper::info(
+                '[VoteSelectionEdited] ' . Auth::user()->email . ' 編輯了選項(Id: ' . $voteSelection->id . ', Title: ' . $voteSelection->title . ')',
+                "編輯前", $beforeEdit->attributesToArray(),
+                "編輯後", $afterEdit->attributesToArray()
+            );
+
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('global', '投票選項已更新');
         }
@@ -190,6 +214,11 @@ class VoteSelectionController extends Controller
                 ->with('warning', '只能在投票活動開始前編輯選項');
         }
         $voteEvent = $voteSelection->voteEvent;
+        //Log
+        LogHelper::info(
+            '[VoteSelectionDeleted] ' . Auth::user()->email . ' 刪除了選項(Id: ' . $voteSelection->id . ', Title: ' . $voteSelection->title . ')',
+            $voteSelection->attributesToArray()
+        );
         //移除投票選項
         $voteSelection->delete();
         return Redirect::route('vote-event.show', $voteEvent->id)
@@ -231,6 +260,11 @@ class VoteSelectionController extends Controller
             $voteSelectionIdList = $voteSelection->voteEvent->voteSelections->lists('id')->toArray();
             while ($voteSelection->voteEvent->getMaxSelected() < $voteSelection->voteEvent->getSelectedCount(Auth::user())) {
                 $voteBallot = VoteBallot::where('user_id', '=', Auth::user()->id)->whereIn('vote_selection_id', $voteSelectionIdList)->orderBy('created_at', 'desc')->first();
+                //Log
+                LogHelper::info(
+                    '[VoteError] ' . Auth::user()->email . ' 投票時出現異常選票，已移除(Id: ' . $voteSelection->voteEvent->id . ', Subject: ' . $voteSelection->voteEvent->subject . ')',
+                    '選票資料', $voteBallot
+                );
                 $voteBallot->delete();
             }
         }

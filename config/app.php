@@ -140,6 +140,9 @@ return [
         AlfredoRamos\ParsedownExtra\ParsedownExtraServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         BackupManager\Laravel\Laravel5ServiceProvider::class,
+        GrahamCampbell\Throttle\ThrottleServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
+        Devfactory\Minify\MinifyServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -201,6 +204,9 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Markdown' => AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra::class,
         'Carbon' => Carbon\Carbon::class,
+        'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
+        'Entrust' => Zizaco\Entrust\EntrustFacade::class,
+        'Minify' => Devfactory\Minify\Facades\MinifyFacade::class,
 
     ],
 

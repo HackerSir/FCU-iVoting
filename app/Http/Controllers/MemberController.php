@@ -1,8 +1,12 @@
 <?php namespace App\Http\Controllers;
 
-use App\Group;
+use App;
+use App\Helper\JsonHelper;
+use App\Helper\LogHelper;
+use App\Role;
 use App\User;
 use Carbon\Carbon;
+use GrahamCampbell\Throttle\Facades\Throttle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -10,8 +14,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
+use GuzzleHttp\Client;
+use Exception;
 
 class MemberController extends Controller
 {
@@ -50,7 +57,7 @@ class MemberController extends Controller
             ]
         ]);*/
         //限工作人員
-        $this->middleware('admin', [
+        $this->middleware('role:admin', [
             'only' => [
                 'getIndex',
                 'getEditOtherProfile',
@@ -71,21 +78,60 @@ class MemberController extends Controller
     //登入
     public function getLogin()
     {
+        $this->markPreviousURL();
         return view('member.login');
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function postLogin(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
         ]);
+        //檢查登入冷卻，防止惡意登入
+        $throttle = Throttle::get($request, 5, 10);
+
+        //上線環境再檢查
+        if (App::environment('production')) {
+            //密碼錯誤三次後，追加reCaptcha
+            $validator->sometimes('g-recaptcha-response', 'required', function ($input) use ($throttle) {
+                return $throttle->count() >= 3;
+            });
+        }
 
         if ($validator->fails()) {
             return Redirect::route('member.login')
                 ->withErrors($validator)
                 ->withInput();
         } else {
+            //檢查登入次數
+            if (!$throttle->check()) {
+                return Redirect::route('member.login')
+                    ->with('warning', '嘗試登入過於頻繁，請等待10分鐘。')
+                    ->with('delay', 10 * 60)
+                    ->withInput();
+            }
+
+            //上線環境再檢查
+            if (App::environment('production')) {
+                //密碼錯誤三次後，追加檢查reCaptcha
+                if ($throttle->count() >= 3) {
+                    $result = $this->tryPassGoogleReCAPTCHA($request);
+                    if ($result->success !== false) {
+                        return Redirect::route('member.login')
+                            ->with('warning', '沒有通過 reCAPTCHA 驗證，請再試一次。')
+                            ->withInput();
+                    }
+                }
+            }
+
+            //增加次數
+            $throttle->hit();
+
             $remember = ($request->has('remember')) ? true : false;
             $auth = Auth::attempt([
                 'email' => $request->get('email'),
@@ -100,9 +146,23 @@ class MemberController extends Controller
                 $user->save();
                 //移除重新設定密碼的驗證碼
                 DB::table('password_resets')->where('email', '=', $user->email)->delete();
+                //記錄
+                LogHelper::info('[LoginSucceeded] 登入成功：' . $request->get('email'), [
+                    'email' => $request->get('email'),
+                    'ip' => $request->getClientIp()
+                ]);
                 //重導向至登入前頁面
-                return Redirect::intended('/');
+                if (Session::has('previous-url')) {
+                    return Redirect::to(Session::get('previous-url'))->with('global', '已順利登入');
+                } else {
+                    return Redirect::intended('/')->with('global', '已順利登入');
+                }
             } else {
+                //紀錄
+                LogHelper::info('[LoginFailed] 登入失敗：' . $request->get('email'), [
+                    'email' => $request->get('email'),
+                    'ip' => $request->getClientIp()
+                ]);
                 return Redirect::route('member.login')
                     ->with('warning', '帳號或密碼錯誤');
             }
@@ -137,6 +197,7 @@ class MemberController extends Controller
                 'email_domain' => 'required',
                 'password' => 'required|min:6',
                 'password_again' => 'required|same:password',
+                'g-recaptcha-response' => 'required',
             )
         );
 
@@ -145,6 +206,13 @@ class MemberController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
+            $result = $this->tryPassGoogleReCAPTCHA($request);
+            if ($result->success !== false) {
+                return Redirect::route('member.register')
+                    ->with('warning', '沒有通過 reCAPTCHA 驗證，請再試一次。')
+                    ->withInput();
+            }
+
             //註冊允許使用之信箱類型
             $allowedEmails = Config::get('config.allowed_emails');
             if (Config::get('app.debug')) {
@@ -190,21 +258,62 @@ class MemberController extends Controller
                 'register_ip' => $request->getClientIp(),
                 'register_at' => Carbon::now()->toDateTimeString()
             ));
-            //預設群組
-            $group = Group::where('name', '=', 'default')->first();
-            $user = $group->users()->save($user);
 
             if ($user) {
                 //發送驗證信件
-                Mail::send('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
-                    $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
-                });
+                try {
+                    Mail::send('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
+                        $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
+                    });
+                } catch (Exception $e) {
+                    //Log
+                    LogHelper::info('[RegisterFailed] 註冊失敗：無法寄出認證信件給' . $email, [
+                        'email' => $email,
+                        'ip' => $request->getClientIp()
+                    ]);
+                    //刪除使用者
+                    $user->delete();
+
+                    return Redirect::route('member.register')
+                        ->with('warning', '無法寄出認證信件，請檢查信箱是否填寫正確，或是稍後在嘗試。')
+                        ->withInput();
+                }
+                //記錄
+                LogHelper::info('[RegisterSucceeded] 註冊成功：' . $email, [
+                    'email' => $email,
+                    'ip' => $request->getClientIp()
+                ]);
                 return Redirect::route('home')
                     ->with('global', '註冊完成，請至信箱收取驗證信件並啟用帳號。');
             }
         }
         return Redirect::route('member.register')
             ->with('warning', '註冊時發生錯誤。');
+    }
+
+    protected function tryPassGoogleReCAPTCHA(Request $request)
+    {
+        $client = null;
+        if (App::environment('production')) {
+            $client = new Client([
+                'timeout' => 10.0,
+            ]);
+        } else {
+            $client = new Client([
+                'timeout' => 10.0,
+                'verify' => false,
+            ]);
+        }
+
+        $response = $client->post('https://www.google.com/recaptcha/api/siteverify',
+            [
+                'secret' => env('Secret_Key'),
+                'response' => $request->get('g-recaptcha-response'),
+                'remoteip' => $request->getClientIp(),
+            ]
+        );
+
+        return JsonHelper::decode($response->getBody());
     }
 
     //驗證信箱
@@ -253,9 +362,22 @@ class MemberController extends Controller
 
         if ($user->save()) {
             //重新發送驗證信件
-            Mail::send('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
-                $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
-            });
+            try {
+                Mail::send('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
+                    $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
+                });
+            } catch (Exception $e) {
+                //Log
+                LogHelper::info('[SendEmailFailed] 無法重寄認證信件給' . $user->email, [
+                    'email' => $user->email,
+                    'ip' => $request->getClientIp()
+                ]);
+
+                return Redirect::route('member.resend')
+                    ->with('warning', '無法重寄認證信件，請稍後再嘗試。')
+                    ->withInput();
+            }
+
             return Redirect::route('home')
                 ->with('global', '已重新發送，請至信箱收取驗證信件並啟用帳號。');
         }
@@ -302,10 +424,22 @@ class MemberController extends Controller
                     ]);
                 }
                 if ($user->save()) {
-                    //發送信件
-                    Mail::send('emails.forgot', array('link' => URL::route('member.reset-password', $code)), function ($message) use ($user) {
-                        $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 重新設定密碼");
-                    });
+                    try {
+                        //發送信件
+                        Mail::send('emails.forgot', array('link' => URL::route('member.reset-password', $code)), function ($message) use ($user) {
+                            $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 重新設定密碼");
+                        });
+                    } catch (Exception $e) {
+                        //Log
+                        LogHelper::info('[SendEmailFailed] 註冊失敗：無法寄出密碼重設信件給' . $user->email, [
+                            'email' => $user->email,
+                            'ip' => $request->getClientIp()
+                        ]);
+
+                        return Redirect::route('member.forgot-password')
+                            ->with('warning', '無法寄出密碼重設信件，請稍後再嘗試。');
+                    }
+
                     return Redirect::route('home')
                         ->with('global', '更換密碼的連結已發送至信箱。');
                 }
@@ -474,14 +608,10 @@ class MemberController extends Controller
     //修改他人資料
     public function getEditOtherProfile($uid)
     {
-        $user = Auth::user();
         $showUser = User::find($uid);
         if ($showUser) {
-            $groups = Group::all();
-            foreach ($groups as $group) {
-                $groupList[$group->name] = $group->title;
-            }
-            return view('member.edit-other-profile')->with('user', $user)->with('showUser', $showUser)->with('groupList', $groupList);
+            $roleList = Role::all();
+            return view('member.edit-other-profile')->with('showUser', $showUser)->with('roleList', $roleList);
         } else {
             return Redirect::route('member.list')
                 ->with('warning', '該成員不存在。');
@@ -513,12 +643,22 @@ class MemberController extends Controller
                 ->withInput();
         } else {
             $showUser->nid = strtoupper($request->get('nid'));
-            if ($showUser->id != $user->id) {
-                $groupName = $request->get('group');
-                $group = Group::where('name', '=', $groupName)->first();
-                $showUser = $group->users()->save($showUser);
+            //管理員禁止去除自己的管理員職務
+            $keepAdmin = false;
+            if ($showUser->id == Auth::user()->id) {
+                $keepAdmin = true;
             }
-
+            //移除原有權限
+            $showUser->detachRoles($showUser->roles);
+            //重新添加該有的權限
+            if ($request->has('role')) {
+                $showUser->attachRoles($request->get('role'));
+            }
+            if ($keepAdmin) {
+                $admin = Role::where('name', '=', 'admin')->first();
+                $showUser->attachRole($admin);
+            }
+            //儲存資料
             if ($showUser->save()) {
                 return Redirect::route('member.profile', $uid)
                     ->with('global', '資料修改完成。');
@@ -535,4 +675,16 @@ class MemberController extends Controller
         return Redirect::route('home');
     }
 
+    //紀錄上一頁網址
+    public function markPreviousURL()
+    {
+        //上一頁的網址
+        $previousURL = URL::previous();
+        //忽略登入頁面與註冊頁面
+        if (str_is('*login*', $previousURL) || str_is('*register*', $previousURL)) {
+            return;
+        }
+        //紀錄上一頁的網址
+        Session::put('previous-url', $previousURL);
+    }
 }

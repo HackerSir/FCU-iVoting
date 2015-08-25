@@ -8,25 +8,23 @@
         <meta property="og:title" content="@if (trim($__env->yieldContent('title'))) @yield('title') - @endif{{ Config::get('config.sitename') }}">
         <meta property="og:url" content="{{ URL::current() }}">
         <meta property="og:image" content="{{ asset('pic/logo.jpg') }}">
-        <meta property="og:description" content="逢甲票選系統(iVoting) - 一個由學生社團做的票選系統，快來參加各種票選活動吧！！！">
+        @section('metaTag')
+            <meta name="description" property="og:description" content="逢甲票選系統(iVoting) - 一個由學生社團做的票選系統，快來參加各種票選活動吧！！！">
+        @show
 
         <title>@if (trim($__env->yieldContent('title'))) @yield('title') - @endif{{ Config::get('config.sitename') }}</title>
 
+        {{-- Bootstrap United Theme--}}
         {!! HTML::style('//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/united/bootstrap.min.css') !!}
-        {!! HTML::style('css/fileinput.min.css') !!}
+        {{-- 提供超多好看的Icon --}}
         {!! HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') !!}
-        {!! HTML::style('css/bootstrap-social.css') !!}
-        {!! HTML::style('css/animate.css') !!}
-        {!! HTML::style('css/stylesheet.css') !!}
-        {!! HTML::style('css/bootstrap-datetimepicker.css') !!}
-        {!! HTML::style('css/tipped/tipped.css') !!}
-        {!! HTML::style('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css') !!}
-        {!! HTML::style('css/select2-bootstrap.min.css') !!}
-        {!! HTML::style('css/callout.css') !!}
-        {!! HTML::style('css/sticky-footer-navbar.css') !!}
 
-        <!-- Fonts -->
-        {!! HTML::style('//fonts.googleapis.com/css?family=Roboto:400,300') !!}
+        {!! Minify::stylesheet(array(
+            '/css/stylesheet.css',            // 全域自訂 CSS
+            '/css/sticky-footer-navbar.css',  // 頁尾資訊
+            '/css/animate.css',               // 給 bootstrap-notify 使用，用來彈出訊息框的淡入淡出特效
+            '/css/tipped.css',                // 好看的提示框
+        ))->withFullUrl() !!}
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,6 +34,8 @@
         <![endif]-->
 
         @yield('css')
+
+        @yield('head-javascript')
     </head>
     <body>
         {{-- navbar--}}
@@ -43,10 +43,8 @@
 
         @yield('main-jumbotron')
 
-        <div class="container-fluid">
-            {{-- content --}}
-            @yield('content')
-        </div>
+        {{-- content --}}
+        @yield('content')
 
         <footer class="footer">
             <div class="container">
@@ -63,19 +61,17 @@
 
         <!-- Scripts -->
         {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js') !!}
-        {!! HTML::script('js/fileinput.min.js') !!}
-        {!! HTML::script('js/fileinput_locale_tw.js') !!}
         {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js') !!}
-        {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/holder/2.8.0/holder.min.js') !!}
-        {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js') !!}
-        {!! HTML::script('js/moment_zh-tw.js') !!}
-        {!! HTML::script('js/bootstrap-datetimepicker.js') !!}
+        {{-- 好看的提示框 --}}
+        {!! Minify::javascript('/js/tipped.js')->withFullUrl() !!}
+        {{-- 好看的彈出訊息框 --}}
         {!! HTML::script('js/bootstrap-notify.min.js') !!}
-        {!! HTML::script('js/tipped/tipped.js') !!}
-        {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js') !!}
+
         @if(App::environment('production'))
             {!! HTML::script('js/analyticstracking.js') !!}
         @endif
+
+        @yield('javascript')
 
         <script type="text/javascript">
             @if(Session::has('global'))
@@ -113,7 +109,7 @@
                         align: 'center'
                     },
                     offset: 70,
-                    delay: 0,
+                    delay: parseInt('{{ Session::get('delay', 0) }}', 10) * 1000,
                     timer: 500,
                     mouse_over: 'pause',
                     animate: {
@@ -136,7 +132,5 @@
                 });
             });
         </script>
-
-        @yield('javascript')
     </body>
 </html>

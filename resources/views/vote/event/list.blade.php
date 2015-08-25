@@ -37,8 +37,8 @@
                             <tr>
                                 <th class="col-md-1">狀態</th>
                                 <th class="col-md-4">投票主題</th>
-                                <th class="col-md-1"></th>
-                                <th class="col-md-3">開始時間</th>
+                                <th></th>
+                                <th class="col-md-offset-1 col-md-3">開始時間</th>
                                 <th class="col-md-3">結束時間</th>
                             </tr>
                             </thead>

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\JsonHelper;
+use App\Helper\LogHelper;
 use App\Organizer;
 use App\Setting;
 use App\VoteEvent;
+use App\VoteSelection;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -21,7 +24,7 @@ class VoteEventController extends Controller
     {
         parent::__construct();
         //限工作人員
-        $this->middleware('staff', [
+        $this->middleware('role:staff', [
             'except' => [
                 'index',
                 'show'
@@ -109,8 +112,13 @@ class VoteEventController extends Controller
                 'max_selected' => $max_selected,
                 'organizer_id' => ($request->has('organizer')) ? $request->get('organizer') : null,
                 'show' => !$request->get('hideVoteEvent', false),
-                'vote_condition' => (!empty($condition)) ? json_encode((object)array_filter((array)$condition)) : null
+                'vote_condition' => (!empty($condition)) ? JsonHelper::encode((object)array_filter((array)$condition)) : null,
+                'show_result' => $request->get('show_result')
             ));
+
+            //紀錄
+            LogHelper::info('[VoteEventCreated] ' . Auth::user()->email . ' 建立了活動(Id: ' . $voteEvent->id . ', Subject: ' . $voteEvent->subject . ')', $voteEvent);
+
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
         }
@@ -195,6 +203,9 @@ class VoteEventController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
+            //複製一份，在Log時比較差異
+            $beforeEdit = $voteEvent->replicate();
+
             //檢查時間
             if (!$voteEvent->isStarted()) {
                 $open_time = ($request->has('open_time')) ? $request->get('open_time') : null;
@@ -223,9 +234,21 @@ class VoteEventController extends Controller
             //投票條件
             $condition = new \stdClass();
             $condition->prefix = ($request->has('prefix')) ? str_replace(' ', '', $request->get('prefix')) : null;
-            $voteEvent->vote_condition = (!empty($condition)) ? json_encode((object)array_filter((array)$condition)) : null;
+            $voteEvent->vote_condition = (!empty($condition)) ? JsonHelper::encode((object)array_filter((array)$condition)) : null;
+
+            $voteEvent->show_result = $request->get('show_result');
 
             $voteEvent->save();
+
+            $afterEdit = $voteEvent->replicate();
+
+            //Log
+            LogHelper::info(
+                '[VoteEventEdited] ' . Auth::user()->email . ' 編輯了活動(Id: ' . $voteEvent->id . ', Subject: ' . $voteEvent->subject . ')',
+                "編輯前", $beforeEdit,
+                "編輯後", $afterEdit
+            );
+
             return Redirect::route('vote-event.show', $id)
                 ->with('global', '投票活動已更新');
         }
@@ -300,5 +323,45 @@ class VoteEventController extends Controller
         $voteEvent->save();
         return Redirect::route('vote-event.show', $id)
             ->with('global', '投票活動已結束');
+    }
+
+    //排序選項
+    public function sort($id, Request $request)
+    {
+        //只接受Ajax請求
+        if (!$request->ajax()) {
+            return 'error';
+        }
+        $voteEvent = VoteEvent::find($id);
+        if (!$voteEvent) {
+            return '投票活動不存在';
+        }
+        //若無選項，直接回傳成功
+        if ($voteEvent->voteSelections->count() == 0) {
+            return 'success';
+        }
+        //取得原選項順序
+        $originalIdList = $voteEvent->voteSelections->lists('title', 'id')->toArray();
+        //取得排序後的id清單
+        $idList = $request->get('idList');
+        foreach ($idList as $order => $id) {
+            $selection = VoteSelection::find($id);
+            $selection->order = $order;
+            $selection->save();
+        }
+        //更新$voteEvent資料
+        $voteEvent = VoteEvent::find($voteEvent->id);
+        //取得新選項順序
+        $newIdList = $voteEvent->voteSelections->lists('title', 'id')->toArray();
+        //若不同則紀錄
+        if ($originalIdList !== $newIdList) {
+            //Log
+            LogHelper::info(
+                '[VoteSelectionOrderEdited] ' . Auth::user()->email . ' 編輯了選項排序(Id: ' . $voteEvent->id . ', Subject: ' . $voteEvent->subject . ')',
+                "編輯前", $originalIdList,
+                "編輯後", $newIdList
+            );
+        }
+        return 'success';
     }
 }

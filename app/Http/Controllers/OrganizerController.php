@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\LogHelper;
 use App\Organizer;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,7 +18,7 @@ class OrganizerController extends Controller
     {
         parent::__construct();
         //限管理員
-        $this->middleware('admin');
+        $this->middleware('role:admin');
     }
 
     /**
@@ -63,6 +65,13 @@ class OrganizerController extends Controller
                 'url' => $request->get('url'),
                 'logo_url' => $request->get('logo_url')
             ]);
+
+            //紀錄
+            LogHelper::info(
+                '[OrganizerCreated] ' . Auth::user()->email . ' 建立了主辦單位(Id: ' . $organizer->id . ')',
+                $organizer
+            );
+
             return Redirect::route('organizer.show', $organizer->id)
                 ->with('global', '主辦單位已建立');
         }
@@ -127,10 +136,23 @@ class OrganizerController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
+            //複製一份，在Log時比較差異
+            $beforeEdit = $organizer->replicate();
+
             $organizer->name = $request->get('name');
             $organizer->url = $request->get('url');
             $organizer->logo_url = $request->get('logo_url');
             $organizer->save();
+
+            $afterEdit = $organizer->replicate();
+
+            //紀錄
+            LogHelper::info(
+                '[OrganizerEdited] ' . Auth::user()->email . ' 編輯了主辦單位(Id: ' . $organizer->id . ')',
+                "編輯前", $beforeEdit,
+                "編輯後", $afterEdit
+            );
+
             return Redirect::route('organizer.show', $id)
                 ->with('global', '主辦單位已更新');
         }
@@ -150,7 +172,18 @@ class OrganizerController extends Controller
                 ->with('global', '主辦單位不存在');
 
         }
+
+        //複製一份，在Log時使用
+        $beforeDelete = $organizer->replicate();
+
         $organizer->delete();
+
+        //紀錄
+        LogHelper::info(
+            '[OrganizerDeleted] ' . Auth::user()->email . ' 刪除了主辦單位(Id: ' . $organizer->id . ')',
+            $beforeDelete
+        );
+
         return Redirect::route('organizer.index')
             ->with('global', '主辦單位已移除');
     }

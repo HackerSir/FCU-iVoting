@@ -4,8 +4,12 @@
     編輯投票活動
 @endsection
 
+@section('css')
+    {!! HTML::style('css/bootstrap-datetimepicker.css') !!}
+@endsection
+
 @section('content')
-    <div class="container" style="min-height: 600px">
+    <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="well bs-component">
@@ -101,6 +105,10 @@
                                 @if($errors->has('prefix'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                                 <span class="label label-danger">{{ $errors->first('prefix') }}</span>@endif
                             </div>
+                            <div>
+                                <label class="control-label" for="show_result" style="margin-bottom: 5px;">顯示投票結果</label>
+                                {!! Form::select('show_result', ['always' => '隨時可以查看票選結果', 'after-vote' => '完成投票者可看見結果（活動結束後對所有人顯示）', 'after-event' => '投票結果將在活動結束後顯示'], $voteEvent->show_result, ['id' => 'show_result', 'class' => 'form-control']) !!}
+                            </div>
                         </div>
                     </div>
                     <div class="form-group has-feedback{{ ($errors->has('info'))?' has-error':'' }}">
@@ -144,6 +152,9 @@
 @endsection
 
 @section('javascript')
+    {!! HTML::script('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js') !!}
+    {!! Minify::javascript('/js/moment_zh-tw.js')->withFullUrl() !!}
+    {!! HTML::script('js/bootstrap-datetimepicker.min.js') !!}
     <script type="text/javascript">
         $(function () {
             $('#datetimepicker1').datetimepicker({

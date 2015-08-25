@@ -1,5 +1,6 @@
 <?php
 
+use App\Role;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 /**
@@ -16,11 +17,11 @@ class HideVoteEventTest extends TestCase
     protected $defaultUser;
     protected $staffUser;
 
-    public function setUp() {
-        parent::setUp();
-
-        $this->defaultUser = factory('App\User')->make();
-        $this->staffUser = factory('App\User', 'staff')->make();
+    private function createUser() {
+        $this->defaultUser = factory('App\User')->create();
+        $this->staffUser = factory('App\User')->create();
+        $staff = Role::where('name', '=', 'staff')->first();
+        $this->staffUser->attachRole($staff);
     }
 
     /**
@@ -31,6 +32,8 @@ class HideVoteEventTest extends TestCase
      * @return void
      */
     public function test_CheckBoxOnCreate() {
+        $this->createUser();
+
         $voteEvent_hide_info = array(
             'subject' => str_random(20),
             'open_time' => Carbon::now(),
@@ -51,6 +54,7 @@ class HideVoteEventTest extends TestCase
     }
 
     protected function createVoteEvent($info) {
+        $this->createUser();
 
         $this->actingAs($this->staffUser)
             ->visit('/vote-event/create')
@@ -89,6 +93,8 @@ class HideVoteEventTest extends TestCase
      * @return void
      */
     public function test_Visible_and_Access() {
+        $this->createUser();
+
         $voteEvents = array(
             'a' => array(
                 'subject' => str_random(20),

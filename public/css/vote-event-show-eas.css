@@ -1,0 +1,73 @@
+div.more-image-fake-shadow {
+    background: lightgrey;
+    position: absolute;
+    width: 94%;
+    margin-left: 3%;
+    height: 14px;
+    top: -7px;
+    z-index: -1;
+}
+
+/* 複寫 Carousel 底下的點點樣式 */
+.carousel-indicators li {
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-width: 1px;
+    border-color: black;
+}
+
+.carousel-indicators .active {
+    background-color: #2e6da4;
+    width: 24px;
+    height: 24px;
+}
+
+.label-adjust {
+    font-size: 70%;
+    margin-left: 10px;
+    position: relative;
+    top: -5px;
+}
+
+img.vote-selection {
+    max-width: 100%;
+    max-height: 200px;
+    width: auto;
+    height: auto;
+}
+
+/* 改寫下列提供的CSS */
+/* http://stackoverflow.com/questions/4861224/how-to-use-css-to-surround-a-number-with-a-circle */
+.numberCircle {
+    border-radius: 50%;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #bf3e11;
+    text-align: center;
+    display: inline-block;
+    background-color: #bf3e11;
+    color: #fff;
+}
+
+/* 標記使用者投下的勾勾樣式 */
+.voted {
+    position: absolute;
+    z-index: 5;
+    right: 20px;
+    pointer-events: none;
+}
+
+.voted span {
+    font-size: 40px;
+    color: #511c39;
+}
+
+@media
+only screen and (max-width: 768px) {
+    .jumbotron {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+}

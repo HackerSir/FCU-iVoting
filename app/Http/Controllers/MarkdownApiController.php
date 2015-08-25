@@ -2,7 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\MarkdownUtil;
+use App\Helper\MarkdownHelper;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -31,6 +31,6 @@ class MarkdownApiController extends Controller
         if (empty($data)) {
             return Response::make(" ");
         }
-        return Response::make(MarkdownUtil::translate($data));
+        return Response::make(MarkdownHelper::translate($data));
     }
 }

@@ -2,12 +2,13 @@
 
 namespace App;
 
+use App\Helper\JsonHelper;
 use Illuminate\Database\Eloquent\Model;
 
 class VoteSelection extends Model
 {
     protected $table = 'vote_selections';
-    protected $fillable = ['vote_event_id', 'data'];
+    protected $fillable = ['vote_event_id', 'title', 'data', 'order'];
 
     public function voteEvent()
     {
@@ -19,18 +20,6 @@ class VoteSelection extends Model
         return $this->hasMany('App\VoteBallot');
     }
 
-    public function getTitle()
-    {
-        if (!JSON::isJson($this->data)) {
-            return $this->data;
-        }
-        $json = json_decode($this->data);
-        if (empty($json->title)) {
-            return $this->data;
-        }
-        return $json->title;
-    }
-
     public function getImageLinksText()
     {
         return ($this->getImageLinks()) ? implode(PHP_EOL, $this->getImageLinks()) : null;
@@ -38,10 +27,10 @@ class VoteSelection extends Model
 
     public function getImageLinks()
     {
-        if (!JSON::isJson($this->data)) {
+        if (!JsonHelper::isJson($this->data)) {
             return [];
         }
-        $json = json_decode($this->data);
+        $json = JsonHelper::decode($this->data);
         if (empty($json->image)) {
             return [];
         }
@@ -72,8 +61,11 @@ class VoteSelection extends Model
         return $selfCount == $maxCount;
     }
 
-    public function hasVoted($user)
+    public function hasVoted(User $user = null)
     {
+        if (!$user) {
+            return false;
+        }
         $count = $this->voteBallots()->where('user_id', '=', $user->id)->count();
         return $count > 0;
     }

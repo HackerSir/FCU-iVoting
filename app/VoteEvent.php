@@ -2,13 +2,15 @@
 
 namespace App;
 
+use App\Helper\JsonHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class VoteEvent extends Model
 {
     protected $table = 'vote_events';
-    protected $fillable = ['open_time', 'close_time', 'subject', 'info', 'max_selected', 'organizer_id', 'show', 'vote_condition'];
+    protected $fillable = ['open_time', 'close_time', 'subject', 'info', 'max_selected', 'organizer_id', 'show', 'vote_condition', 'show_result'];
 
     //有效的活動條件，以及說明文字（{value}會自動替換為條件的值）
     static protected $validConditionList = [
@@ -17,7 +19,7 @@ class VoteEvent extends Model
 
     public function voteSelections()
     {
-        return $this->hasMany('App\VoteSelection');
+        return $this->hasMany('App\VoteSelection')->orderBy('order')->orderBy('id');
     }
 
     public function organizer()
@@ -70,8 +72,11 @@ class VoteEvent extends Model
     }
 
     //特定用戶在此活動選擇之選項數量
-    public function getSelectedCount($user)
+    public function getSelectedCount(User $user = null)
     {
+        if ($user == null) {
+            return 0;
+        }
         $voteSelectionIdList = $this->voteSelections->lists('id')->toArray();
         $count = $user->voteBallots()->whereIn('vote_selection_id', $voteSelectionIdList)->count();
         return $count;
@@ -94,9 +99,10 @@ class VoteEvent extends Model
         return $string;
     }
 
-    public function getTimeSpanTag($time) {
+    public function getTimeSpanTag($time)
+    {
         //style="display: inline-block; 是防止字換行
-        return '<span title="' . (new Carbon($time))->diffForHumans() . '"  style="display: inline-block;">' . $time . '</span>';
+        return '<strong title="' . (new Carbon($time))->diffForHumans() . '"  style="display: inline-block;">' . $time . '</strong>';
     }
 
     public function isVisible()
@@ -108,7 +114,7 @@ class VoteEvent extends Model
     public function getConditionValue($key)
     {
         //取得條件的json
-        $condition = json_decode($this->vote_condition);
+        $condition = JsonHelper::decode($this->vote_condition);
         //有需要的值就回傳
         if (!empty($condition->$key)) {
             return $condition->$key;
@@ -125,7 +131,7 @@ class VoteEvent extends Model
             return false;
         }
         //取得條件的json
-        $condition = json_decode($this->vote_condition);
+        $condition = JsonHelper::decode($this->vote_condition);
         //此活動無條件限制
         if (empty((array)$condition)) {
             return true;
@@ -150,7 +156,7 @@ class VoteEvent extends Model
             return false;
         }
         //取得條件的json
-        $condition = json_decode($this->vote_condition);
+        $condition = JsonHelper::decode($this->vote_condition);
         //此活動無條件限制
         if (empty((array)$condition)) {
             return true;
@@ -199,5 +205,42 @@ class VoteEvent extends Model
             }
         }
         return $result;
+    }
+
+    public function isResultVisible()
+    {
+        $showResult = $this->show_result;
+        if ($showResult == 'always') {
+            //總是顯示
+            return $this->isStarted();
+        } elseif ($showResult == 'after-vote') {
+            //完成投票者可看見結果（活動結束後對所有人顯示）
+            return ($this->isEnded() || $this->getMaxSelected() <= $this->getSelectedCount(Auth::user()));
+        } elseif ($showResult == 'after-event') {
+            //活動結束後顯示
+            return $this->isEnded();
+        }
+        //錯誤情況，直接不顯示
+        return false;
+    }
+
+    //是否先幫使用者隱藏結果，給View使用
+    public function isHideResult() {
+        //可以顯示結果 and 活動進行中 and 總是顯示 and (未登入 or 登入但未完成投票)
+        return $this->isResultVisible() && $this->isStarted() && ($this->show_result == 'always') && ((Auth::user() == null) || !($this->getMaxSelected() <= $this->getSelectedCount(Auth::user())));
+    }
+
+    public function getResultVisibleHintText()
+    {
+        $showResult = $this->show_result;
+        if ($showResult == 'always') {
+            return '隨時可以查看票選結果';
+        } elseif ($showResult == 'after-vote') {
+            return '完成投票者可看見結果（活動結束後對所有人顯示）';
+        } elseif ($showResult == 'after-event') {
+            return '投票結果將在活動結束後顯示';
+        }
+        //錯誤情況，直接不顯示
+        return null;
     }
 }

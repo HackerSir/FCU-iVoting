@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Helper;
 
 use AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra as Markdown;
 
-class MarkdownUtil
+class MarkdownHelper
 {
     static public function translate($string)
     {

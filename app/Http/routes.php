@@ -49,6 +49,10 @@ Route::post('vote-event/end/{vid}', [
     'as' => 'vote-event.end',
     'uses' => 'VoteEventController@end'
 ]);
+Route::post('vote-event/sort/{vid}', [
+    'as' => 'vote-event.sort',
+    'uses' => 'VoteEventController@sort'
+]);
 Route::resource('vote-event', 'VoteEventController');
 Route::post('vote-selection/vote/{id}', [
     'as' => 'vote-selection.vote',
@@ -76,7 +80,7 @@ Route::controller('upload', 'UploadController', [
 Route::get('log', [
     'as' => 'log',
     'uses' => '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index',
-    'middleware' => 'admin'
+    'middleware' => 'role:admin'
 ]);
 
 $policiesTabs = ['privacy', 'terms'];

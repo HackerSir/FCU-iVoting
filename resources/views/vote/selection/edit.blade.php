@@ -4,6 +4,10 @@
     編輯投票選項
 @endsection
 
+@section('css')
+    {!! HTML::style('css/fileinput.min.css') !!}
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -23,7 +27,7 @@
                             <label class="col-md-2 control-label" for="title">選項內容</label>
 
                             <div class="col-md-10">
-                                {!! Form::text('title', $voteSelection->getTitle(), ['id' => 'title', 'placeholder' => '請輸入選項內容', 'class' => 'form-control']) !!}
+                                {!! Form::text('title', $voteSelection->title, ['id' => 'title', 'placeholder' => '請輸入選項內容', 'class' => 'form-control']) !!}
                                 @if($errors->has('title'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                                 <span class="label label-danger">{{ $errors->first('title') }}</span>@endif
                             </div>
@@ -64,6 +68,8 @@
 @endsection
 
 @section('javascript')
+    {!! HTML::script('js/fileinput.min.js') !!}
+    {!! Minify::javascript('/js/fileinput_locale_tw.js')->withFullUrl() !!}
     <script type="text/javascript">
         $("#image_upload").fileinput({
             'language': 'tw',

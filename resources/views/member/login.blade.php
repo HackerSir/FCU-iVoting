@@ -4,6 +4,10 @@
     登入
 @endsection
 
+@section('head-javascript')
+    {!! HTML::script('https://www.google.com/recaptcha/api.js') !!}
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -31,6 +35,17 @@
                         {!! Form::password('password', ['id' => 'password', 'placeholder' => '請輸入密碼', 'class' => 'form-control', 'required']) !!}
                         @if($errors->has('password'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
                     </div>
+                    @if(App::environment('production') && Throttle::get(URL::getRequest())->count() >= 3)
+                        <div class="form-group has-feedback{{ ($errors->has('g-recaptcha-response'))?' has-error':'' }}">
+                            <label class="control-label" for="password_again">驗證
+                                @if($errors->has('g-recaptcha-response'))
+                                    <span class="label label-danger">您必須通過驗證</span>
+                                @endif
+                            </label>
+
+                            <div class="g-recaptcha" data-sitekey="{{ env('Data_Sitekey') }}"></div>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <div class="checkbox">
                             <label>

@@ -30,7 +30,11 @@
                                             <span class="label label-danger">未驗證</span>
                                         @endif
                                     </td>
-                                    <td>{{ $userItem->group->title }}</td>
+                                    <td>
+                                        @foreach($userItem->roles as $role)
+                                            {{ $role->display_name }}<br />
+                                        @endforeach
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

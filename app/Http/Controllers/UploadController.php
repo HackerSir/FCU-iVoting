@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\JsonHelper;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
@@ -32,7 +33,7 @@ class UploadController extends Controller
             $result = [
                 'error' => '請設定Imgur Client ID',
             ];
-            return json_encode($result);
+            return JsonHelper::encode($result);
         }
         //發送請求
         $client = new Client();
@@ -46,7 +47,7 @@ class UploadController extends Controller
             ],
             'verify' => false
         ]);
-        $jsonResponse = json_decode($response->getBody());
+        $jsonResponse = JsonHelper::decode($response->getBody());
         //取得連結
         $image = $jsonResponse->data->link;
         //回傳詳細資訊
@@ -62,7 +63,7 @@ class UploadController extends Controller
                 'key' => $image
             ]]
         ];
-        return json_encode($result);
+        return JsonHelper::encode($result);
     }
 
     public function deleteImage(Request $request)
@@ -75,6 +76,6 @@ class UploadController extends Controller
         $result = [
             'success' => 'success'
         ];
-        return json_encode($result);
+        return JsonHelper::encode($result);
     }
 }
