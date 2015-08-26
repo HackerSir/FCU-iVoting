@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use App;
 use Illuminate\Support\Facades\Log;
 use Monolog\Logger as MonologLogger;
 
@@ -129,6 +130,10 @@ class LogHelper
      */
     static protected function writeLog($level)
     {
+        if (App::environment('testing')) {
+            return;
+        }
+
         $contextList = func_get_arg(1);
         $message = "";
         foreach ($contextList as $context) {
