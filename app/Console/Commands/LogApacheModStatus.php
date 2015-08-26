@@ -23,7 +23,7 @@ class LogApacheModStatus extends Command
      */
     protected $description = 'Log apache mod-status.';
 
-    protected static $logger;
+    public static $logger;
 
     /**
      * Create a new command instance.
@@ -35,13 +35,24 @@ class LogApacheModStatus extends Command
         parent::__construct();
 
         if (is_null(self::$logger)) {
-            //TODO:: 保存天數設定
-            //參考這個試試
-            //http://laravel.com/api/5.0/Illuminate/Log/Writer.html#method_useDailyFiles
-            //ENDTODO
-            self::$logger = new Writer(new Logger('ModStatusLog'));
-            self::$logger->useDailyFiles(storage_path('logs-mod-status/mod-status.log'));
+            self::initLogger();
         }
+    }
+
+    public static function getLogger() {
+        if (is_null(self::$logger)) {
+            self::initLogger();
+        }
+        return self::$logger;
+    }
+
+    private static function initLogger() {
+        //TODO:: 保存天數設定
+        //參考這個試試
+        //http://laravel.com/api/5.0/Illuminate/Log/Writer.html#method_useDailyFiles
+        //ENDTODO
+        self::$logger = new Writer(new Logger('ModStatusLog'));
+        self::$logger->useDailyFiles(storage_path('logs-mod-status/mod-status.log'));
     }
 
     /**
@@ -51,7 +62,10 @@ class LogApacheModStatus extends Command
      */
     public function handle()
     {
-        //FIXME:: 這是測試用CODE
-        self::$logger->info('Test');
+        //self::$logger->info('Test');
+    }
+
+    protected function getServerStatus() {
+
     }
 }
