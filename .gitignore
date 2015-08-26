@@ -23,19 +23,11 @@ out/
 # laravel-ide-helper
 _ide_helper.php
 
-# privacy & terms
-public/privacy.md
-public/terms.md
-
 # Google Analytics
 /public/js/analyticstracking.js
 
 # Google Search Console
 /public/google*.html
-
-# privacy & terms
-public/privacy.md
-public/terms.md
 
 # Minify builds
 public/css-builds/
