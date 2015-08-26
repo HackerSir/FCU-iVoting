@@ -104,4 +104,20 @@ class VoteEventConditionTest extends TestCase
     protected function getVoteEventId($subject) {
         return DB::table('vote_events')->where('subject', $subject)->value('id');
     }
+
+    public function test_fun_VoteEvent_checkCondition() {
+        $d02User = factory('App\User')->make([
+            'email' => 'd0255555@fcu.edu.tw'
+        ]);
+
+        $D02User = factory('App\User')->make([
+            'email' => 'D0244444@fcu.edu.tw'
+        ]);
+
+        $voteEvent = new App\VoteEvent();
+        $voteEvent->vote_condition = '{"prefix":"d02"}';
+
+        $this->assertTrue($voteEvent->checkCondition($d02User, 'prefix'));
+        $this->assertTrue($voteEvent->checkCondition($D02User, 'prefix'));
+    }
 }

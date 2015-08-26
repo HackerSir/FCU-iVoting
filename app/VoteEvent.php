@@ -168,7 +168,8 @@ class VoteEvent extends Model
                 $prefixList = explode(',', $condition->prefix);
                 $match = false;
                 foreach ($prefixList as $prefix) {
-                    if (starts_with($user->email, $prefix)) {
+                    //不分大小寫
+                    if (starts_with(strtolower($user->email), strtolower($prefix))) {
                         $match = true;
                     }
                 }
