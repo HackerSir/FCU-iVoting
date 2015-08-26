@@ -207,7 +207,8 @@ class MemberController extends Controller
                 ->withInput();
         } else {
             $result = $this->tryPassGoogleReCAPTCHA($request);
-            if ($result->success !== false) {
+            if (! (is_bool($result->success) && $result->success)) {
+                LogHelper::info('[reCAPTCHA Failed]', $result);
                 return Redirect::route('member.register')
                     ->with('warning', '沒有通過 reCAPTCHA 驗證，請再試一次。')
                     ->withInput();
@@ -307,9 +308,11 @@ class MemberController extends Controller
 
         $response = $client->post('https://www.google.com/recaptcha/api/siteverify',
             [
-                'secret' => env('Secret_Key'),
-                'response' => $request->get('g-recaptcha-response'),
-                'remoteip' => $request->getClientIp(),
+                'form_params' => [
+                    'secret'   => env('Secret_Key'),
+                    'response' => $request->get('g-recaptcha-response'),
+                    'remoteip' => $request->getClientIp(),
+                ]
             ]
         );
 
