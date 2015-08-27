@@ -239,7 +239,7 @@ class VoteEvent extends Model
         } elseif ($showResult == 'after-vote') {
             return '完成投票者可看見結果（活動結束後對所有人顯示）';
         } elseif ($showResult == 'after-event') {
-            return '投票結果將在活動結束後顯示';
+            return '票選結果將在活動結束後顯示';
         }
         //錯誤情況，直接不顯示
         return null;
