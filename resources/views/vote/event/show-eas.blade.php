@@ -184,7 +184,7 @@
                                         <div class="voted"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></div>
                                     @endif
                                     <div class="vertical-center" style="height: 210px; padding-top: 10px">
-                                        <div style="position: relative; z-index: 0;">
+                                        <div style="position: relative; z-index: 0; max-width: 100%;">
                                             @if(count($voteSelectionItem->getImageLinks()) > 0)
                                                 @if(count($voteSelectionItem->getImageLinks()) > 1)
                                                     <div class="more-image-fake-shadow img-rounded"></div>
