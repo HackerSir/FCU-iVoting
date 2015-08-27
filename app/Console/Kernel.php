@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\Inspire::class,
         \App\Console\Commands\QuickBackup::class,
-        \App\Console\Commands\LogApacheModStatus::class,
+        \App\Console\Commands\LogApacheStatus::class,
     ];
 
     /**
@@ -28,6 +28,6 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('inspire')->hourly();
         $schedule->command('db:quick-backup')->dailyAt('5:00');
-        $schedule->command('apache-mod-status:log')->everyMinute();
+        $schedule->command('apache-status:log')->everyMinute();
     }
 }
