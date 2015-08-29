@@ -213,10 +213,12 @@
                                         @if($voteEvent->isInProgress())
                                             @if(!Auth::check())
                                                 <div title="登入以完成投票" style="display: inline-block">
-                                                    <span class="btn btn-default btn-lg disabled">按此投票</span>
+                                                    {!! HTML::linkRoute('member.login', '按此投票', [], ['class' => 'btn btn-success btn-lg']) !!}
                                                 </div>
                                             @elseif(!Auth::user()->isConfirmed())
-                                                {!! HTML::linkRoute('member.resend', '按此投票', [], ['title' => '投票前請先完成信箱驗證', 'class' => 'btn btn-default btn-lg']) !!}
+                                                <div title="投票前請先完成信箱驗證" style="display: inline-block">
+                                                    {!! HTML::linkRoute('member.resend', '按此投票', [], ['class' => 'btn btn-warning btn-lg']) !!}
+                                                </div>
                                             @else
                                                 @if(!$voteEvent->canVote(Auth::user()))
                                                     <div title="不符合投票資格" style="display: inline-block">
