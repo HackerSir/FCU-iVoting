@@ -37,12 +37,8 @@ class LogApacheStatus extends Command
 
     public static function initLogger() {
         if (is_null(self::$logger)) {
-            //TODO:: 保存天數設定
-            //參考這個試試
-            //http://laravel.com/api/5.0/Illuminate/Log/Writer.html#method_useDailyFiles
-            //ENDTODO
             self::$logger = new Writer(new Logger('StatusLog'));
-            self::$logger->useDailyFiles(storage_path('logs-status/mod-status.log'));
+            self::$logger->useDailyFiles(storage_path('logs-status/mod-status.log'), 365);
         }
     }
 
