@@ -371,7 +371,7 @@
 
                 var $div2 = $('<div>').css({
                     'height': maxHeight,
-                    'display': 'flex',
+                    'display': '-webkit-flex',
                     'flex-direction': 'column',
                     'justify-content': 'center'
                 });
