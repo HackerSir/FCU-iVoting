@@ -7,7 +7,7 @@ html {
 
 body {
     /* Margin bottom by footer height */
-    margin-bottom: 83px; /* 68 + 15*/
+    margin-bottom: 103px; /* 68 + 15 + 20*/
 }
 
 .footer {
@@ -15,12 +15,13 @@ body {
     bottom: 0;
     width: 100%;
     /* Set the fixed height of the footer here */
-    height: 68px;
+    height: 88px; /* 68 + 20 */
     background-color: #f5f5f5;
 }
 
 .footer > .container {
     padding-top: 10px;
+    margin-bottom: 20px;
 }
 
 .footer > .container > p {
