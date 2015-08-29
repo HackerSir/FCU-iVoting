@@ -53,6 +53,7 @@
                             </label>
                         </div>
                     </div>
+                    <p class="help-block">沒有<strong>IVoting</strong>帳號嗎？<a href="{{ URL::route('member.register') }}">註冊</a>一個吧！<a href="{{ URL::route('policies', 'FAQ') }}">（為什麼我要註冊？）</a></p>
                     {!! Form::submit('登入', ['class' => 'btn btn-success']) !!}
                     <a href="{{ URL::route('member.register') }}" class="btn btn-default">註冊</a>
                 {!! Form::close() !!}

@@ -83,7 +83,7 @@ Route::get('log', [
     'middleware' => 'role:admin'
 ]);
 
-$policiesTabs = ['privacy', 'terms'];
+$policiesTabs = ['privacy', 'terms', 'FAQ'];
 Route::get('policies/{tab}', [
         'as' => 'policies',
         function ($tab) use ($policiesTabs) {
