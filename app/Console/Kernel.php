@@ -28,6 +28,6 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('inspire')->hourly();
         $schedule->command('db:quick-backup')->dailyAt('5:00');
-        $schedule->command('apache-status:log')->everyMinute();
+        //$schedule->command('apache-status:log')->everyMinute();
     }
 }
