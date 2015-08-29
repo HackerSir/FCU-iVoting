@@ -3,8 +3,9 @@ function getImgurImageId(url) {
     return reg.exec(url)[1];
 }
 
-function getImgurThumbnail(url) {
+function getImgurThumbnail(url, suffix) {
     var extensionReg = /[^\\\\]*\.(\w+)$/;
     var extension = extensionReg.exec(url)[1];
-    return "//i.imgur.com/" + getImgurImageId(url) + ((extension != "gif") ? "l." : ".") + extension;
+    suffix = (typeof suffix === 'undefined' && $.inArray(suffix, ['s', 'b', 't', 'm', 'l', 'h'])) ? '' : suffix;
+    return '//i.imgur.com/' + getImgurImageId(url) + ((extension != "gif") ? suffix : '') + '.' + extension;
 }

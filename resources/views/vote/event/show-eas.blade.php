@@ -107,7 +107,7 @@
                         <div class="media">
                             @if($voteEvent->organizer->url)
                                 <a href="{{ $voteEvent->organizer->url }}" target="_blank">
-                            @endif
+                                    @endif
                                     <div class="media-left media-middle">
                                         @if($voteEvent->organizer->logo_url)
                                             <img class="media-object" style="max-height: 75px;" src="{{ $voteEvent->organizer->logo_url }}">
@@ -116,7 +116,7 @@
                                     <div class="media-body" style="vertical-align: middle;">
                                         <h4 class="media-heading">{{ $voteEvent->organizer->name }}</h4>
                                     </div>
-                            @if($voteEvent->organizer->url)
+                                    @if($voteEvent->organizer->url)
                                 </a>
                             @endif
                         </div>
@@ -125,6 +125,7 @@
             @endif
 
             <a href="{{ URL::route('vote-event.index') }}" class="btn btn-primary pull-right" role="button"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回列表</a>
+
             <div class="clearfix"></div>
         </div>
 
@@ -176,7 +177,7 @@
                     @if(count($voteEvent->voteSelections))
                         @foreach($voteEvent->voteSelections as $selectionOrder => $voteSelectionItem)
                             <div class="col-sm-4 col-md-3" selection_id="{{ $voteSelectionItem->id }}">
-                                <div class="thumbnail selectionBox"@if($voteSelectionItem->hasVoted(Auth::user())) style="background: #C1FFE4"@endif>
+                                <div class="thumbnail selectionBox" @if($voteSelectionItem->hasVoted(Auth::user())) style="background: #C1FFE4"@endif>
                                     @if($voteEvent->isResultVisible() && $voteSelectionItem->isMax())
                                         <div class="ribbon" data-result-hidden><span>最高票</span></div>
                                     @endif
@@ -277,10 +278,10 @@
                         <div class="carousel-inner" role="listbox">
                             {{-- 請保留這個，避免 bootstrap 初始化時炸掉 --}}
                             <div class="item active">
-                                <img src="" />
+                                <img src=""/>
                             </div>
                             {{--<div class="item">--}}
-                                {{--<img src="..." />--}}
+                            {{--<img src="..." />--}}
                             {{--</div>--}}
                         </div>
 
@@ -314,11 +315,11 @@
                     $(this).hide();
                 });
 
-                $('#showResult').click(function () {
-                    $('[data-result-hidden]').each(function () {
-                        $(this).toggle();
-                    });
+            $('#showResult').click(function () {
+                $('[data-result-hidden]').each(function () {
+                    $(this).toggle();
                 });
+            });
             @endif
 
             {{-- 當 userPanel 沒有元素時，將它隱藏 --}}
@@ -328,7 +329,7 @@
             }
         });
         {{-- 等待所有資源載入完成 --}}
-        $(window).load(function() {
+        $(window).load(function () {
             consistencySelectionsHeight();
         });
 
@@ -359,7 +360,7 @@
 
             $div_ol.empty();
             $div_image.empty();
-            $.each(images, function(index, value) {
+            $.each(images, function (index, value) {
                 $div_ol.append($('<li>', {
                     "data-target": "#carousel-image",
                     "data-slide-to": index
@@ -376,7 +377,7 @@
                     'justify-content': 'center'
                 });
 
-                var src = ($body.width() >= 768) ? value : getImgurThumbnail(value);
+                var src = ($body.width() >= 768) ? getImgurThumbnail(value) : getImgurThumbnail(value, 'l');
                 var $img = $('<img>', {
                     "src": src,
                     "class": "img-responsive center-block"
@@ -419,18 +420,18 @@
                         opacity: 0.5,
                         containment: "parent",
                         placeholder: {
-                            element: function(currentItem) {
+                            element: function (currentItem) {
                                 selectionHeight = selections.children("div:first").height();
                                 selectionInnerHeight = selections.children("div:first").children("div:first").height();
-                                return $("<div class=\"col-sm-6 col-md-3\" style=\"height: "+selectionHeight+"px;\"><div class=\"thumbnail\" style=\"background: #eeeeee; height: "+selectionInnerHeight+"px;\"></div></div>")[0];
+                                return $("<div class=\"col-sm-6 col-md-3\" style=\"height: " + selectionHeight + "px;\"><div class=\"thumbnail\" style=\"background: #eeeeee; height: " + selectionInnerHeight + "px;\"></div></div>")[0];
                             },
-                            update: function(container, p) {
+                            update: function (container, p) {
                                 return;
                             }
                         },
-                        create:function(){
-                            var resize=function(){
-                                $(this).css("height","auto");
+                        create: function () {
+                            var resize = function () {
+                                $(this).css("height", "auto");
                                 $(this).height($(this).height());
                             };
                             $(this).height($(this).height());
@@ -466,7 +467,7 @@
                         type: "POST",
                         dataType: "text",
 
-                        success: function (data){
+                        success: function (data) {
                             status.removeClass();
                             if (data == "success") {
                                 refreshSelectionsShowOrder();
@@ -502,7 +503,8 @@
             var selections = $('#selections .thumbnail');
             var maxHeight = -1;
             $.each(selections, function () {
-                var height = $(this).outerHeight(); {{-- outerHeight() 包含 padding, border --}}
+                var height = $(this).outerHeight();
+                {{-- outerHeight() 包含 padding, border --}}
                 if (height > maxHeight) {
                     maxHeight = height;
                 }
