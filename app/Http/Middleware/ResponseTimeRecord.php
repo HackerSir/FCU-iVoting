@@ -8,7 +8,7 @@ use Exception;
 use Log;
 
 //http://stackoverflow.com/questions/31619350/correct-way-to-get-server-response-time-in-laravel
-class ResponseAnalytics
+class ResponseTimeRecord
 {
     public function handle($request, Closure $next)
     {
