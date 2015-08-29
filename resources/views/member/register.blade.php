@@ -57,6 +57,7 @@
                         </label>
                         <div class="g-recaptcha" data-sitekey="{{ env('Data_Sitekey') }}"></div>
                     </div>
+                    <p class="help-block">當你點選註冊時，代表你同意本站的<a href="{{ URL::route('policies', 'privacy') }}" target="_blank">《隱私權政策》<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>&nbsp;與<a href="{{ URL::route('policies', 'terms') }}" target="_blank">《服務條款》<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>
                     {!! Form::submit('註冊', ['class' => 'btn btn-primary']) !!}
                     <a href="{{ URL::route('member.login') }}", class="btn btn-default">返回登入頁</a>
                     {!! Form::close() !!}

@@ -83,6 +83,17 @@ Route::get('log', [
     'middleware' => 'role:admin'
 ]);
 
+$policiesTabs = ['privacy', 'terms'];
+Route::get('policies/{tab}', [
+        'as' => 'policies',
+        function ($tab) use ($policiesTabs) {
+            if (!in_array($tab, $policiesTabs)) {
+                return redirect()->route('policies', $policiesTabs[0]);
+            }
+            return response()->view('policies');
+        }]
+);
+
 //未定義路由
 Route::get('{all}', array(
     'as' => 'not-found',
