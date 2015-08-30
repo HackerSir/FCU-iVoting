@@ -16,11 +16,11 @@
         <div class="panel panel-default">
             <div class="panel-body" style="font-size: larger;">
                 @if(Request::is('policies/privacy'))
-                    {!! Markdown::parse(File::get('privacy.md')) !!}
+                    {!! App\Helper\MarkdownHelper::translate(File::get('privacy.md'), ['autoLineBreak' => false]) !!}
                 @elseif(Request::is('policies/terms'))
-                    {!! Markdown::parse(File::get('terms.md')) !!}
+                    {!! App\Helper\MarkdownHelper::translate(File::get('terms.md'), ['autoLineBreak' => false]) !!}
                 @elseif(Request::is('policies/FAQ'))
-                    {!! Markdown::parse(File::get('faq.md')) !!}
+                    {!! App\Helper\MarkdownHelper::translate(File::get('faq.md'), ['autoLineBreak' => false]) !!}
                 @endif
             </div>
         </div>
