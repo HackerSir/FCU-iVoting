@@ -374,16 +374,20 @@
 
                 var $div2 = $('<div>').css({
                     'height': maxHeight,
-                    'display': '-webkit-flex',
-                    'flex-direction': 'column',
-                    'justify-content': 'center'
+                    'position': 'relative'
                 });
 
                 var src = ($body.width() >= 768) ? getImgurThumbnail(value, 'h') : getImgurThumbnail(value, 'l');
                 var $img = $('<img>', {
                     "src": src,
-                    "class": "img-responsive center-block"
-                }).css({'max-height': maxHeight});
+                    "class": 'img-responsive'
+                }).css({
+                    'max-height': maxHeight,
+                    'position': 'absolute',
+                    'top': '50%',
+                    'left': '50%',
+                    'transform': 'translate(-50%, -50%)'
+                });
 
                 $div_image.append($div1.append($div2.append($img)));
             });
