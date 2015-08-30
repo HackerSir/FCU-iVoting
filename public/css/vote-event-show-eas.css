@@ -15,6 +15,7 @@ div.more-image-fake-shadow {
     background-color: white;
     border-width: 1px;
     border-color: black;
+    opacity: 0.6;
 }
 
 .carousel-indicators .active {
