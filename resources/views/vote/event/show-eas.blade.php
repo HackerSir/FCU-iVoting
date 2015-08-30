@@ -379,7 +379,7 @@
                     'justify-content': 'center'
                 });
 
-                var src = ($body.width() >= 768) ? getImgurThumbnail(value) : getImgurThumbnail(value, 'l');
+                var src = ($body.width() >= 768) ? getImgurThumbnail(value, 'h') : getImgurThumbnail(value, 'l');
                 var $img = $('<img>', {
                     "src": src,
                     "class": "img-responsive center-block"
