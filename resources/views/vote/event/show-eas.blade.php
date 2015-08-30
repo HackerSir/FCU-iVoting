@@ -383,7 +383,7 @@
                 var $img = $('<img>', {
                     "src": src,
                     "class": "img-responsive center-block"
-                }).css({'max-height': maxHeight, 'height': '100%'});
+                }).css({'max-height': maxHeight});
 
                 $div_image.append($div1.append($div2.append($img)));
             });
