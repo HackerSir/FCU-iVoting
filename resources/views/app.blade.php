@@ -55,7 +55,7 @@
                     <li><a href="{{ URL::route('policies', 'privacy') }}">隱私權</a></li>
                     <li><a href="{{ URL::route('policies', 'terms') }}">服務條款</a></li>
                     <li><a href="{{ URL::route('policies', 'FAQ') }}">常見問題</a></li>
-                    <li><a href="mailto:%22%E9%80%A2%E7%94%B2%E5%A4%A7%E5%AD%B8%E9%BB%91%E5%AE%A2%E7%A4%BE%22<ifcu.today@gmail.com>" target="_blank"><span class="glyphicon glyphicon-envelope" aria-hidden="true" style="margin-right: 5px;"></span>聯絡我們</a></li>
+                    <li><a href="mailto:%22%E9%80%A2%E7%94%B2%E7%A5%A8%E9%81%B8%E7%B3%BB%E7%B5%B1%22<ifcu.today@gmail.com>" target="_blank"><span class="glyphicon glyphicon-envelope" aria-hidden="true" style="margin-right: 5px;"></span>聯絡我們</a></li>
                     @if(env('Report_URL'))
                         <li><a href="{{ env('Report_URL') }}" target="_blank"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-right: 5px;"></span>回報問題</a></li>
                     @endif
