@@ -38,10 +38,10 @@
                                             @endforeach
                                         </td>
                                     </tr>
-                                    @if($user->isStaff())
+                                    @if($user->isAdmin())
                                         <tr>
                                             <td colspan="2" class="danger">
-                                                以下僅工作人員可見
+                                                以下僅管理員可見
                                             </td>
                                         </tr>
                                         <tr>

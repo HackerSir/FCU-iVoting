@@ -555,8 +555,8 @@ class MemberController extends Controller
         if (empty($uid)) {
             return view('member.profile')->with('user', $user);
         } else {
-            //只有工作人員或資料主人可以查看
-            if ($user->isStaff() || $user->id == $uid) {
+            //只有管理員或資料主人可以查看
+            if ($user->isAdmin() || $user->id == $uid) {
                 $showUser = User::find($uid);
                 if ($showUser) {
                     return view('member.other-profile')->with('user', $user)->with('showUser', $showUser);
