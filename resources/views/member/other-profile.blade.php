@@ -27,6 +27,10 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td>暱稱：</td>
+                                        <td>{{ $showUser->nickname }}</td>
+                                    </tr>
+                                    <tr>
                                         <td>用戶組：</td>
                                         <td>
                                             @foreach($showUser->roles as $role)
@@ -39,6 +43,10 @@
                                             <td colspan="2" class="danger">
                                                 以下僅工作人員可見
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td>註解：</td>
+                                            <td>{!! nl2br(htmlspecialchars($showUser->comment)) !!}</td>
                                         </tr>
                                         <tr>
                                             <td>註冊時間：</td>

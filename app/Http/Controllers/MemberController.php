@@ -207,7 +207,7 @@ class MemberController extends Controller
                 ->withInput();
         } else {
             $result = $this->tryPassGoogleReCAPTCHA($request);
-            if (! (is_bool($result->success) && $result->success)) {
+            if (!(is_bool($result->success) && $result->success)) {
                 LogHelper::info('[reCAPTCHA Failed]', $result);
                 return Redirect::route('member.register')
                     ->with('warning', '沒有通過 reCAPTCHA 驗證，請再試一次。')
@@ -309,7 +309,7 @@ class MemberController extends Controller
         $response = $client->post('https://www.google.com/recaptcha/api/siteverify',
             [
                 'form_params' => [
-                    'secret'   => env('Secret_Key'),
+                    'secret' => env('Secret_Key'),
                     'response' => $request->get('g-recaptcha-response'),
                     'remoteip' => $request->getClientIp(),
                 ]
@@ -570,44 +570,40 @@ class MemberController extends Controller
             }
         }
     }
-    /*
-        //修改資料
-        public function getEditProfile()
-        {
-            $user = Auth::user();
-            return view('member.edit-profile')->with('user', $user);
-        }
 
-        public function postEditProfile(Request $request)
-        {
-            $validator = Validator::make($request->all(),
-                array(
-                    'nid' => array(
-                        'size:8',
-                        'unique:users,nid,' . Auth::user()->id,
-                        'regex:/^([depm]([0-9]){7})|(t[0-9]{5})$/i'
-                    ),
-                )
-            );
+    //修改資料
+    public function getEditProfile()
+    {
+        $user = Auth::user();
+        return view('member.edit-profile')->with('user', $user);
+    }
 
-            if ($validator->fails()) {
-                return Redirect::route('member.edit-profile')
-                    ->withErrors($validator)
-                    ->withInput();
-            } else {
-                $user = Auth::user();
-                if (empty($user->nid)) {
-                    $user->nid = strtoupper($request->get('nid'));
-                }
-                if ($user->save()) {
-                    return Redirect::route('member.profile')
-                        ->with('global', '個人資料修改完成。');
-                }
-            }
+    public function postEditProfile(Request $request)
+    {
+        $validator = Validator::make($request->all(),
+            array(
+                'nickname' => 'max:100'
+            )
+        );
+
+        if ($validator->fails()) {
             return Redirect::route('member.edit-profile')
-                ->with('warning', '個人資料無法修改。');
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            $user = Auth::user();
+            if (empty($user->nid)) {
+                $user->nickname = $request->get('nickname');
+            }
+            if ($user->save()) {
+                return Redirect::route('member.profile')
+                    ->with('global', '個人資料修改完成。');
+            }
         }
-    */
+        return Redirect::route('member.edit-profile')
+            ->with('warning', '個人資料無法修改。');
+    }
+
     //修改他人資料
     public function getEditOtherProfile($uid)
     {
@@ -632,11 +628,8 @@ class MemberController extends Controller
 
         $validator = Validator::make($request->all(),
             array(
-                'nid' => array(
-                    'size:8',
-                    'unique:users,nid,' . $showUser->id,
-                    'regex:/^([depm]([0-9]){7})|(t[0-9]{5})$/i'
-                ),
+                'nickname' => 'max:100',
+                'comment' => 'max:100'
             )
         );
 
@@ -645,7 +638,8 @@ class MemberController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
-            $showUser->nid = strtoupper($request->get('nid'));
+            $showUser->nickname = $request->get('nickname');
+            $showUser->comment = $request->get('comment');
             //管理員禁止去除自己的管理員職務
             $keepAdmin = false;
             if ($showUser->id == Auth::user()->id) {

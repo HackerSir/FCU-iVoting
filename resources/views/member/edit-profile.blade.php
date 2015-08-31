@@ -14,17 +14,12 @@
                     <div class="panel-body">
                         <div class="row">
                             {!! Form::open(['route' => 'member.edit-profile', 'class' => 'form-horizontal']) !!}
-                                <div class="form-group has-feedback{{ ($errors->has('nid'))?' has-error':'' }}">
-                                    <label class="control-label col-md-2" for="nid">NID</label>
+                                <div class="form-group has-feedback{{ ($errors->has('nickname'))?' has-error':'' }}">
+                                    <label class="control-label col-md-2" for="nickname">暱稱</label>
                                     <div class="col-md-9">
-                                        @if(empty($user->nid))
-                                            {!! Form::text('nid', $user->nid, ['id' => 'nid', 'placeholder' => '請輸入NID', 'class' => 'form-control']) !!}
-                                            @if($errors->has('nid'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                                            <span class="label label-danger">{{ $errors->first('nid') }}</span><br />@endif
-                                        @else
-                                            {!! Form::text('nid', $user->nid, ['id' => 'nid', 'placeholder' => '請輸入NID', 'class' => 'form-control', 'readonly']) !!}
-                                        @endif
-                                        <span class="label label-primary">NID僅能設定一次，設定後將無法修改</span>
+                                        {!! Form::text('nickname', $user->nickname, ['id' => 'nickname', 'placeholder' => '請輸入暱稱', 'class' => 'form-control']) !!}
+                                        @if($errors->has('nickname'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                        <span class="label label-danger">{{ $errors->first('nickname') }}</span><br />@endif
                                     </div>
                                 </div>
                                 <div class="form-group">

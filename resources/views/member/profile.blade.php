@@ -27,6 +27,10 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td>暱稱：</td>
+                                        <td>{{ $user->nickname }}</td>
+                                    </tr>
+                                    <tr>
                                         <td>用戶組：</td>
                                         <td>
                                             @foreach($user->roles as $role)
@@ -44,7 +48,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            {{--{!! HTML::linkRoute('member.edit-profile', '編輯個人資料', null, ['class' => 'btn btn-primary']) !!}--}}
+                                            {!! HTML::linkRoute('member.edit-profile', '編輯個人資料', null, ['class' => 'btn btn-primary']) !!}
                                             {!! HTML::linkRoute('member.profile', '預覽個人資料', $user->id, ['class' => 'btn btn-default']) !!}
                                         </td>
                                     </tr>

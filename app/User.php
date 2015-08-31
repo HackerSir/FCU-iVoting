@@ -26,7 +26,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['email', 'password', 'confirm_code', 'confirm_at', 'register_ip', 'register_at', 'lastlogin_ip', 'lastlogin_at'];
+    protected $fillable = ['email', 'nickname', 'comment', 'password', 'confirm_code', 'confirm_at', 'register_ip', 'register_at', 'lastlogin_ip', 'lastlogin_at'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -61,8 +61,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function getNickname()
     {
-        if (!empty($this->nid)) {
-            $nickname = $this->nid;
+        if (!empty($this->nickname)) {
+            $nickname = $this->nickname;
         } else {
             $nickname = explode("@", $this->email)[0];
         }

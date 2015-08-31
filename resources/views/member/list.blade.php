@@ -16,6 +16,8 @@
                             <thead>
                             <tr>
                                 <th>信箱</th>
+                                <th>暱稱</th>
+                                <th>註解</th>
                                 <th>群組</th>
                             </tr>
                             </thead>
@@ -29,6 +31,12 @@
                                         @else
                                             <span class="label label-danger">未驗證</span>
                                         @endif
+                                    </td>
+                                    <td>
+                                        {{ $userItem->nickname }}
+                                    </td>
+                                    <td>
+                                        {!! nl2br(htmlspecialchars($userItem->comment)) !!}
                                     </td>
                                     <td>
                                         @foreach($userItem->roles as $role)
