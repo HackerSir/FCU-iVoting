@@ -180,9 +180,9 @@
                                 <div class="thumbnail selectionBox" @if($voteSelectionItem->hasVoted(Auth::user())) style="background: #C1FFE4"@endif>
                                     @if($voteEvent->isResultVisible())
                                         @if ($voteSelectionItem->isMax())
-                                            <div class="ribbon ribbon-gold" data-result-hidden><span>最高票</span></div>
+                                            <div class="ribbon ribbon-gold" data-result-hidden hidden><span>最高票</span></div>
                                         @else
-                                            <div class="ribbon ribbon-gray" data-result-hidden><span>第&nbsp;{{ $voteSelectionItem->rank }}&nbsp;名</span></div>
+                                            <div class="ribbon ribbon-gray" data-result-hidden hidden><span>第&nbsp;{{ $voteSelectionItem->rank }}&nbsp;名</span></div>
                                         @endif
                                     @endif
                                     @if($voteSelectionItem->hasVoted(Auth::user()))
@@ -211,7 +211,7 @@
                                         </h3>
 
                                         @if($voteEvent->isResultVisible())
-                                            <p class="lead text-right" data-result-hidden>{{ number_format($voteSelectionItem->getCount()) }}&nbsp;票</p>
+                                            <p class="lead text-right" data-result-hidden hidden>{{ number_format($voteSelectionItem->getCount()) }}&nbsp;票</p>
                                         @endif
 
                                         @if($voteEvent->isInProgress())
@@ -316,11 +316,13 @@
         $(document).ready(function () {
             refreshSelectionsShowOrder();
 
-            @if($voteEvent->isHideResult())
+            @if($voteEvent->isEnded())
                 $('[data-result-hidden]').each(function () {
-                    $(this).hide();
+                    $(this).show();
                 });
+            @endif
 
+            @if($voteEvent->isHideResult())
                 $('#showResult').click(function () {
                     $('[data-result-hidden]').each(function () {
                         $(this).toggle();
