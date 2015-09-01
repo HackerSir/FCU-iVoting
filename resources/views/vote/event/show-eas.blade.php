@@ -180,9 +180,9 @@
                                 <div class="thumbnail selectionBox" @if($voteSelectionItem->hasVoted(Auth::user())) style="background: #C1FFE4"@endif>
                                     @if($voteEvent->isResultVisible())
                                         @if ($voteSelectionItem->isMax())
-                                            <div class="ribbon" data-result-hidden><span>最高票</span></div>
+                                            <div class="ribbon ribbon-gold" data-result-hidden><span>最高票</span></div>
                                         @else
-                                            <div class="ribbon-gray" data-result-hidden><span>第&nbsp;{{ $voteSelectionItem->rank }}&nbsp;名</span></div>
+                                            <div class="ribbon ribbon-gray" data-result-hidden><span>第&nbsp;{{ $voteSelectionItem->rank }}&nbsp;名</span></div>
                                         @endif
                                     @endif
                                     @if($voteSelectionItem->hasVoted(Auth::user()))

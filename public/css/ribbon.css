@@ -24,83 +24,60 @@
     width: 180px;
     display: block;
     background: #79A70A;
-    background: linear-gradient(#F79E05 0%, #8F5408 100%);
     box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
     position: absolute;
     top: 30px;
     left: -40px;
 }
 
-.ribbon span::before {
+.ribbon-gold span {
+    background: linear-gradient(#F79E05 0%, #8F5408 100%);
+}
+
+.ribbon-gold span::before {
+    border: 3px solid #8F5408;
     content: "";
     position: absolute;
     left: 0;
     top: 100%;
     z-index: -1;
-    border: 3px solid #8F5408;
     border-right-color: transparent;
     border-bottom-color: transparent;
 }
 
-.ribbon span::after {
+.ribbon-gold span::after {
+    border: 3px solid #8F5408;
     content: "";
     position: absolute;
     right: 0;
     top: 100%;
     z-index: -1;
-    border: 3px solid #8F5408;
     border-bottom-color: transparent;
     border-left-color: transparent;
 }
 
-.ribbon-gray {
-    position: absolute;
-    left: 10px;
-    top: -5px;
-    z-index: 1;
-    overflow: hidden;
-    width: 150px;
-    height: 150px;
-    text-align: right;
-    pointer-events: none;
-}
-
 .ribbon-gray span {
-    font-size: 20px;
-    font-weight: bold;
-    color: #FFF;
-    text-transform: uppercase;
-    text-align: center;
-    line-height: 40px;
-    transform: rotate(-45deg);
-    width: 180px;
-    display: block;
-    background: #79A70A;
     background: linear-gradient(#B6BAC9 0%, #808080 100%);
-    box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
-    position: absolute;
-    top: 30px;
-    left: -40px;
 }
 
 .ribbon-gray span::before {
+    border: 3px solid #808080;
     content: "";
     position: absolute;
     left: 0;
     top: 100%;
     z-index: -1;
-    border: 3px solid #808080;
     border-right-color: transparent;
     border-bottom-color: transparent;
 }
 
 .ribbon-gray span::after {
+    border: 3px solid #808080;
     content: "";
     position: absolute;
     right: 0;
     top: 100%;
     z-index: -1;
-    border: 3px solid #808080;
     border-bottom-color: transparent;
     border-left-color: transparent;
 }
