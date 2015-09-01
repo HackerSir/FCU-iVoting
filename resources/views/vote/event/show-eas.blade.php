@@ -321,11 +321,11 @@
                     $(this).hide();
                 });
 
-            $('#showResult').click(function () {
-                $('[data-result-hidden]').each(function () {
-                    $(this).toggle();
+                $('#showResult').click(function () {
+                    $('[data-result-hidden]').each(function () {
+                        $(this).toggle();
+                    });
                 });
-            });
             @endif
 
             {{-- 當 userPanel 沒有元素時，將它隱藏 --}}
