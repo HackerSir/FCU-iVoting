@@ -15,6 +15,7 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
+                                <th>#</th>
                                 <th>信箱</th>
                                 <th>暱稱</th>
                                 <th>註解</th>
@@ -22,8 +23,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($userList as $userItem)
+                            @foreach($userList as $key => $userItem)
                                 <tr>
+                                    <td>{{ (Input::get('page',1) - 1) * $amountPerPage + $key + 1}}</td>
                                     <td>
                                         <a href="{{ URL::route('member.profile',$userItem->id) }}">{{ $userItem->email }}</a>
                                         @if($userItem->isConfirmed())

@@ -71,8 +71,9 @@ class MemberController extends Controller
     {
         $user = Auth::user();
         //取得會員清單
-        $userList = User::paginate(20);
-        return view('member.list')->with('userList', $userList);
+        $amountPerPage = 20;
+        $userList = User::paginate($amountPerPage);
+        return view('member.list')->with('userList', $userList)->with('amountPerPage', $amountPerPage);
     }
 
     //登入
