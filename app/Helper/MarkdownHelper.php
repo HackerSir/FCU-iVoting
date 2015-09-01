@@ -37,7 +37,7 @@ class MarkdownHelper
         if ($options['openLinkInNewWindow']) {
             $result = preg_replace(
                 '/<a[^>]*href="([^"]*)"[^>]*>([^<]*)<\/a>/',
-                '<a href=\'$1\' target=\'_blank\'>$2</a>',
+                '<a href="$1" target="_blank">$2</a>',
                 $result
             );
         }
