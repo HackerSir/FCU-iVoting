@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\Inspire::class,
         \App\Console\Commands\QuickBackup::class,
         \App\Console\Commands\LogApacheStatus::class,
+        \App\Console\Commands\DeleteUnConfirmUser::class,
     ];
 
     /**
@@ -28,6 +29,7 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('inspire')->hourly();
         $schedule->command('db:quick-backup')->dailyAt('5:00');
+        $schedule->command('user:delete-unconfirm')->dailyAt('5:30');
         //$schedule->command('apache-status:log')->everyMinute();
     }
 }
