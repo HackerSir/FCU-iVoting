@@ -36,7 +36,7 @@ class MarkdownHelper
         //新視窗開啟超連結
         if ($options['openLinkInNewWindow']) {
             $result = preg_replace(
-                '/<a[^>]*href="([^"]*)"[^>]*>([^<]*)<\/a>/',
+                '/<a[^>]*href="([^"]*)"[^>]*>((?:[^<]|(?:<[^\/])|(?:<\/[^a])|(?:<\/a[^>]))*)<\/a>/',
                 '<a href="$1" target="_blank">$2</a>',
                 $result
             );
