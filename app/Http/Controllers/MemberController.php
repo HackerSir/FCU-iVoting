@@ -122,7 +122,8 @@ class MemberController extends Controller
                 //密碼錯誤三次後，追加檢查reCaptcha
                 if ($throttle->count() >= 3) {
                     $result = $this->tryPassGoogleReCAPTCHA($request);
-                    if ($result->success !== false) {
+                     if (!(is_bool($result->success) && $result->success)) {
+                        LogHelper::info('[reCAPTCHA Failed]', $result);
                         return Redirect::route('member.login')
                             ->with('warning', '沒有通過 reCAPTCHA 驗證，請再試一次。')
                             ->withInput();
