@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DB;
 use App\Helper\JsonHelper;
 use Illuminate\Database\Eloquent\Model;
 
@@ -59,6 +60,21 @@ class VoteSelection extends Model
         $selfCount = $this->getCount();
         //判斷
         return $selfCount == $maxCount;
+    }
+
+    //取得排名
+    public function getRankAttribute()
+    {
+        $voteSelectionsId = VoteSelection::where('vote_event_id', '=', $this->vote_event_id)->lists('id')->toArray();
+        $voteBallotList = VoteBallot::select('vote_selection_id', DB::raw('count(*) as total'))
+                ->whereIn('vote_selection_id', $voteSelectionsId)
+                ->groupBy('vote_selection_id')
+                ->orderBy(DB::raw('count(vote_selection_id)'), 'desc')
+                ->lists('total')
+                ->toArray();
+        $search = array_search($this->getCount(), $voteBallotList);
+        $rank = ($search !== false) ? $search + 1 : count($voteBallotList) + 1;
+        return $rank;
     }
 
     public function hasVoted(User $user = null)

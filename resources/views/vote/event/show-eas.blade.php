@@ -178,8 +178,12 @@
                         @foreach($voteEvent->voteSelections as $selectionOrder => $voteSelectionItem)
                             <div class="col-sm-4 col-md-3" selection_id="{{ $voteSelectionItem->id }}">
                                 <div class="thumbnail selectionBox" @if($voteSelectionItem->hasVoted(Auth::user())) style="background: #C1FFE4"@endif>
-                                    @if($voteEvent->isResultVisible() && $voteSelectionItem->isMax())
-                                        <div class="ribbon" data-result-hidden><span>最高票</span></div>
+                                    @if($voteEvent->isResultVisible())
+                                        @if ($voteSelectionItem->isMax())
+                                            <div class="ribbon" data-result-hidden><span>最高票</span></div>
+                                        @else
+                                            <div class="ribbon ribbon-gray" data-result-hidden><span>第&nbsp;{{ $voteSelectionItem->rank }}&nbsp;名</span></div>
+                                        @endif
                                     @endif
                                     @if($voteSelectionItem->hasVoted(Auth::user()))
                                         <div class="voted"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></div>
