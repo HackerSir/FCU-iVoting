@@ -59,6 +59,9 @@
                     @if(env('Report_URL'))
                         <li><a href="{{ env('Report_URL') }}" target="_blank"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-right: 5px;"></span>回報問題</a></li>
                     @endif
+                    @if(Entrust::hasRole('admin'))
+                        <li><a href="{{ URL::route('stats.index') }}"><span class="glyphicon glyphicon-stats" aria-hidden="true" style="margin-right: 5px;"></span>統計</a></li>
+                    @endif
                 </ol>
             </div>
         </footer>

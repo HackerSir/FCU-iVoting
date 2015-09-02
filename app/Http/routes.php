@@ -64,6 +64,12 @@ Route::resource('organizer', 'OrganizerController');
 //網站設定
 Route::resource('setting', 'SettingController', ['except' => ['create', 'store', 'destroy']]);
 
+//統計頁面
+Route::controller('stats', 'StatsController', [
+    'getIndex' => 'stats.index',
+    'getForceRenew' => 'stats.force-renew'
+]);
+
 //Markdown API
 Route::any('markdown', [
     'as' => 'markdown.preview',
@@ -84,14 +90,17 @@ Route::get('log', [
 ]);
 
 $policiesTabs = ['privacy', 'terms', 'FAQ'];
-Route::get('policies/{tab}', [
+Route::get(
+    'policies/{tab}',
+    [
         'as' => 'policies',
         function ($tab) use ($policiesTabs) {
             if (!in_array($tab, $policiesTabs)) {
                 return redirect()->route('policies', $policiesTabs[0]);
             }
             return response()->view('policies');
-        }]
+        }
+    ]
 );
 
 //未定義路由
