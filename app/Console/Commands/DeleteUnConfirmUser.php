@@ -48,7 +48,8 @@ class DeleteUnConfirmUser extends Command
         if(!empty($unConfirmUsers)) {
             User::destroy(array_keys($unConfirmUsers));
 
-            LogHelper::info('[CommandExecuted] 刪除超過一週未驗證的帳號', array_values($unConfirmUsers));
+            $userArray = array_values($unConfirmUsers);
+            LogHelper::info('[CommandExecuted] 刪除超過一週未驗證的帳號' . '(' . count($userArray) .'個)', $userArray);
         }
     }
 }
