@@ -1,5 +1,16 @@
 @extends('app')
 
+@section('css')
+    <style type="text/css">
+        @media
+        only screen and (min-width: 768px) {
+            .custom {
+                font-size: larger;
+            }
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container container-background">
         <ul class="nav nav-tabs">
@@ -14,7 +25,7 @@
             </li>
         </ul>
         <div class="panel panel-default">
-            <div class="panel-body" style="font-size: larger;">
+            <div class="panel-body custom">
                 @if(Request::is('policies/privacy'))
                     {!! App\Helper\MarkdownHelper::translate(File::get('privacy.md'), ['autoLineBreak' => false]) !!}
                 @elseif(Request::is('policies/terms'))
