@@ -74,7 +74,7 @@
                             </tbody>
                         </table>
                         <div class="text-center">
-                            {!! str_replace('/?', '?', $userList->render()) !!}
+                            {!! str_replace('/?', '?', $userList->appends(Input::except(['page']))->render()) !!}
                         </div>
                     </div>
                 </div>
