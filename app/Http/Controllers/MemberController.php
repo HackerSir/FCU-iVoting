@@ -86,8 +86,9 @@ class MemberController extends Controller
                     ->orWhere('comment', 'like', $q);
             });
         }
+        $totalCount = $userQuery->count();
         $userList = $userQuery->paginate($amountPerPage);
-        return view('member.list')->with('userList', $userList)->with('amountPerPage', $amountPerPage);
+        return view('member.list')->with('userList', $userList)->with('amountPerPage', $amountPerPage)->with('totalCount', $totalCount);
     }
 
     //登入

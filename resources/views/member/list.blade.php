@@ -28,7 +28,7 @@
                             <div class="col-md-7">
                                 @if(Input::has('q'))
                                     @if($userList->count())
-                                        符合「{{ Input::get('q') }}」的資料共 {{ $userList->count() }} 筆
+                                        符合「{{ Input::get('q') }}」的資料共 {{ $totalCount }} 筆
                                     @else
                                         找不到符合「{{ Input::get('q') }}」的資料
                                     @endif
