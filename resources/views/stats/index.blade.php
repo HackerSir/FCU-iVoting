@@ -14,7 +14,7 @@
                         {!! link_to_route('stats.force-renew','強制更新',null,['class' => 'btn btn-xs btn-primary', 'title' => '強制更新緩存資料']) !!}
                     </div>
                     <div class="panel-body">
-                        <table class="table table-bordered table-striped">
+                        <table class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th class="col-md-4">項目</th>
