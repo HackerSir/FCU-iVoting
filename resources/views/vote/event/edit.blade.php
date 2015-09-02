@@ -174,7 +174,7 @@
             if (e.target.id == 'tab_preview') {
                 $("#preview").html("");
 
-                var URLs = "{{ URL::route('markdown.preview') }}"
+                var URLs = "{{ URL::route('markdown.preview') }}";
                 var val = $('#info').val();
 
                 $.ajax({
