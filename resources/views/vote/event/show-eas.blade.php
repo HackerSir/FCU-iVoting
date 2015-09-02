@@ -90,7 +90,7 @@
 
             @if($voteEvent->info)
                 <blockquote>
-                    <p>{!! App\Helper\MarkdownHelper::translate($voteEvent->info) !!}</p>
+                    {!! App\Helper\MarkdownHelper::translate($voteEvent->info) !!}
                 </blockquote>
             @endif
 
