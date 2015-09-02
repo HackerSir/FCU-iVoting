@@ -10,8 +10,32 @@
             <div class="col-md-12 col-md-offset-0">
                 <div class="panel panel-default">
                     <div class="panel-heading">成員清單</div>
-                    {{-- Panel body --}}
                     <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                {!! Form::open(['route' => 'member.list', 'class' => 'form-horizontal', 'method' => 'GET']) !!}
+                                <div class="input-group">
+                                    {!! Form::text('q', Input::get('q'), ['id' => 'q', 'placeholder' => '搜尋信箱、暱稱、註解...', 'class' => 'form-control', 'required']) !!}
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-primary" title="搜尋"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                        @if(Input::has('q'))
+                                            <a class="btn btn-default" href="{{ URL::current() }}" title="清除搜尋結果"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                                        @endif
+                                    </span>
+                                </div>
+                                {!! Form::close() !!}
+                            </div>
+                            <div class="col-md-7">
+                                @if(Input::has('q'))
+                                    @if($userList->count())
+                                        符合「{{ Input::get('q') }}」的資料共 {{ $userList->count() }} 筆
+                                    @else
+                                        找不到符合「{{ Input::get('q') }}」的資料
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
+
                         <table class="table table-hover">
                             <thead>
                             <tr>

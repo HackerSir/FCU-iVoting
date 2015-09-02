@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -72,7 +73,20 @@ class MemberController extends Controller
         $user = Auth::user();
         //取得會員清單
         $amountPerPage = 20;
-        $userList = User::paginate($amountPerPage);
+        //搜尋
+        $userQuery = User::query();
+        if (Input::has('q')) {
+            $q = Input::get('q');
+            //模糊匹配
+            $q = '%' . $q . '%';
+            //搜尋：信箱、暱稱、註解
+            $userQuery->where(function ($query) use ($q) {
+                $query->where('email', 'like', $q)
+                    ->orWhere('nickname', 'like', $q)
+                    ->orWhere('comment', 'like', $q);
+            });
+        }
+        $userList = $userQuery->paginate($amountPerPage);
         return view('member.list')->with('userList', $userList)->with('amountPerPage', $amountPerPage);
     }
 
