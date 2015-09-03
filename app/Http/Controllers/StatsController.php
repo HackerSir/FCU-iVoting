@@ -40,13 +40,13 @@ class StatsController extends Controller
 
             $data['未驗證會員人數'] = $this->formatDataInfo(User::whereNull('confirm_at')->count(), $userCount);
 
-            $data['101年入學會員數'] = $this->formatDataInfo(User::whereNotNull('confirm_at')->where('email', 'like', 'd01%fcu.edu.tw')->count(), $userCount);
+            $data['101年入學會員數（d01xxxxx@fcu.edu.tw）'] = $this->formatDataInfo(User::whereNotNull('confirm_at')->where('email', 'like', 'd01%fcu.edu.tw')->count(), $userCount);
 
-            $data['102年入學會員數'] = $this->formatDataInfo(User::whereNotNull('confirm_at')->where('email', 'like', 'd02%fcu.edu.tw')->count(), $userCount);
+            $data['102年入學會員數（d02xxxxx@fcu.edu.tw）'] = $this->formatDataInfo(User::whereNotNull('confirm_at')->where('email', 'like', 'd02%fcu.edu.tw')->count(), $userCount);
 
-            $data['103年入學會員數'] = $this->formatDataInfo(User::whereNotNull('confirm_at')->where('email', 'like', 'd03%fcu.edu.tw')->count(), $userCount);
+            $data['103年入學會員數（d03xxxxx@fcu.edu.tw）'] = $this->formatDataInfo(User::whereNotNull('confirm_at')->where('email', 'like', 'd03%fcu.edu.tw')->count(), $userCount);
 
-            $data['104年入學會員數'] = $this->formatDataInfo(User::whereNotNull('confirm_at')->where('email', 'like', 'd04%fcu.edu.tw')->count(), $userCount);
+            $data['104年入學會員數（d04xxxxx@fcu.edu.tw）'] = $this->formatDataInfo(User::whereNotNull('confirm_at')->where('email', 'like', 'd04%fcu.edu.tw')->count(), $userCount);
 
             $newStats->data = $data;
             return $newStats;
