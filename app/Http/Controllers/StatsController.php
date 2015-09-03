@@ -34,19 +34,18 @@ class StatsController extends Controller
             //統計資料
             $data = [];
             $userCount = User::count();
-            $data['會員人數'] = sprintf("%6s", number_format($userCount));
+            $confirmedUsers = User::whereNotNull('confirm_at');
+            $unconfirmedUsers = User::whereNull('confirm_at');
 
-            $data['已驗證會員人數'] = $this->formatDataInfo(User::whereNotNull('confirm_at')->count(), $userCount);
+            $data['會員人數'] = $this->formatNumberDataInfo($userCount);
 
-            $data['未驗證會員人數'] = $this->formatDataInfo(User::whereNull('confirm_at')->count(), $userCount);
+            $data['已驗證會員人數'] = $this->formatNumberDataInfo($confirmedUsers->count(), $userCount);
+            $data['未驗證會員人數'] = $this->formatNumberDataInfo($unconfirmedUsers->count(), $userCount);
 
-            $data['101年入學會員數（d01xxxxx@fcu.edu.tw）'] = $this->formatDataInfo(User::whereNotNull('confirm_at')->where('email', 'like', 'd01%fcu.edu.tw')->count(), $userCount);
-
-            $data['102年入學會員數（d02xxxxx@fcu.edu.tw）'] = $this->formatDataInfo(User::whereNotNull('confirm_at')->where('email', 'like', 'd02%fcu.edu.tw')->count(), $userCount);
-
-            $data['103年入學會員數（d03xxxxx@fcu.edu.tw）'] = $this->formatDataInfo(User::whereNotNull('confirm_at')->where('email', 'like', 'd03%fcu.edu.tw')->count(), $userCount);
-
-            $data['104年入學會員數（d04xxxxx@fcu.edu.tw）'] = $this->formatDataInfo(User::whereNotNull('confirm_at')->where('email', 'like', 'd04%fcu.edu.tw')->count(), $userCount);
+            $data['101年入學會員數（d01xxxxx@fcu.edu.tw）'] = $this->formatNumberDataInfo($confirmedUsers->where('email', 'like', 'd01%fcu.edu.tw')->count(), $userCount);
+            $data['102年入學會員數（d02xxxxx@fcu.edu.tw）'] = $this->formatNumberDataInfo($confirmedUsers->where('email', 'like', 'd02%fcu.edu.tw')->count(), $userCount);
+            $data['103年入學會員數（d03xxxxx@fcu.edu.tw）'] = $this->formatNumberDataInfo($confirmedUsers->where('email', 'like', 'd03%fcu.edu.tw')->count(), $userCount);
+            $data['104年入學會員數（d04xxxxx@fcu.edu.tw）'] = $this->formatNumberDataInfo($confirmedUsers->where('email', 'like', 'd04%fcu.edu.tw')->count(), $userCount);
 
             $newStats->data = $data;
             return $newStats;
@@ -63,9 +62,20 @@ class StatsController extends Controller
         return Redirect::route('stats.index')->with('global', '統計資料已更新');
     }
 
-    private function formatDataInfo($count, $userCount)
+    //數值類資料顯示
+    private function formatNumberDataInfo($number, $denominator = 0)
     {
-        //數字的括號用半形就好
-        return sprintf("%6s (%6.2f %%)", number_format($count), round($count / $userCount * 100));
+        //防止非數字
+        if (!is_numeric($number)) {
+            return $number;
+        }
+        if ($denominator > 0) {
+            //需額外以比例顯示
+            //數字的括號用半形就好
+            return sprintf("%6s (%6.2f %%)", number_format($number), round($number / $denominator * 100, 2));
+        } else {
+            //僅顯示數值
+            return sprintf("%6s", number_format($number));
+        }
     }
 }
