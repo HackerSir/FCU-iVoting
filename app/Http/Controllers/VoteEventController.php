@@ -100,7 +100,7 @@ class VoteEventController extends Controller
                     }
                 }
             }
-            $max_selected = ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1;
+
             //投票條件
             $condition = new \stdClass();
             $condition->prefix = ($request->has('prefix')) ? str_replace(' ', '', $request->get('prefix')) : null;
@@ -110,7 +110,7 @@ class VoteEventController extends Controller
                 'open_time' => $open_time,
                 'close_time' => $close_time,
                 'info' => $request->get('info'),
-                'max_selected' => $max_selected,
+                'max_selected' => ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1,
                 'organizer_id' => ($request->has('organizer')) ? $request->get('organizer') : null,
                 'show' => !$request->get('hideVoteEvent', false),
                 'vote_condition' => (!empty($condition)) ? JsonHelper::encode((object)array_filter((array)$condition)) : null,
