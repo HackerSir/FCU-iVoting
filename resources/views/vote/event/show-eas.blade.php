@@ -95,6 +95,8 @@
             @endif
 
             <ul style="font-size: 21px; padding-left: 25px;">
+                <li>選出&nbsp;<strong class="text-info">{{ $voteEvent->award_count }}</strong>&nbsp;名</li>
+
                 <li>活動期間：{!! $voteEvent->getHumanTimeString() !!}</li>
 
                 <li>{{ $voteEvent->getResultVisibleHintText() }}</li>
@@ -140,7 +142,6 @@
                         ，您已經投了&nbsp;<strong class="text-info" style="font-size: 25px;">{{ $voteEvent->getSelectedCount(Auth::user()) }}</strong>&nbsp;票
                     @endif
                 </li>
-                <li><del>選出一名，採相對多數決（也就是最高票獲選）</del></li>
                 @if(!empty(json_decode($voteEvent->vote_condition, true)))
                     <li>投票資格限制：</li>
                     <ul>
