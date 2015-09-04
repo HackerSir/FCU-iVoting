@@ -12,7 +12,7 @@
     {!! Minify::stylesheet([
             '/css/bootstrap-social.css',     // 社群分享按鈕
             '/css/callout.css',              // 說明框樣式
-            '/css/ribbon.css',               // 最高票的標籤樣式
+            '/css/ribbon.css',               // 排名的標籤樣式
             '/css/vote-event-show-eas.css',  // 這個頁面的自訂樣式
     ])->withFullUrl() !!}
 @endsection
