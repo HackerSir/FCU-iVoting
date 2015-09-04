@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class VoteEvent extends Model
 {
     protected $table = 'vote_events';
-    protected $fillable = ['open_time', 'close_time', 'subject', 'info', 'max_selected', 'organizer_id', 'show', 'vote_condition', 'show_result'];
+    protected $fillable = ['open_time', 'close_time', 'subject', 'info', 'max_selected', 'organizer_id', 'show', 'vote_condition', 'show_result', 'award_count'];
 
     //有效的活動條件，以及說明文字（{value}會自動替換為條件的值）
     static protected $validConditionList = [
