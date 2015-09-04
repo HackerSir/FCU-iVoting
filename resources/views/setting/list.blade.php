@@ -93,15 +93,63 @@
                 dataType: "text",
 
                 success: function (data) {
-                    alert('成功寄出測試信');
+                    if (data == "success") {
+                        globalNotify('成功寄出測試信');
+                    }
+                    else {
+                        warningNotify('發生未知的錯誤', 0);
+                    }
+
+                    $btnSend.prop('disabled', false);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status);
-                    alert(thrownError);
+                    warningNotify(xhr.status + ': ' + thrownError, 0);
+
+                    $btnSend.prop('disabled', false);
                 }
             });
-
-            $btnSend.prop('disabled', false);
         });
+
+        function globalNotify(massage) {
+            $.notify({
+                // options
+                message: massage
+            },{
+                // settings
+                type: 'success',
+                placement: {
+                    align: 'center'
+                },
+                offset: 70,
+                delay: 5000,
+                timer: 500,
+                mouse_over: 'pause',
+                animate: {
+                    enter: 'animated zoomIn',
+                    exit: 'animated zoomOut'
+                }
+            });
+        }
+
+        function warningNotify(massage, delay) {
+            $.notify({
+                // options
+                message: massage
+            },{
+                // settings
+                type: 'danger',
+                placement: {
+                    align: 'center'
+                },
+                offset: 70,
+                delay: delay,
+                timer: 500,
+                mouse_over: 'pause',
+                animate: {
+                    enter: 'animated rubberBand',
+                    exit: 'animated zoomOut'
+                }
+            });
+        }
     </script>
 @endsection
