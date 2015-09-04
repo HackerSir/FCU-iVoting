@@ -79,7 +79,8 @@ class VoteEventController extends Controller
                 'open_time' => 'date',
                 'close_time' => 'date',
                 'info' => 'max:65535',
-                'max_selected' => 'integer|min:1'
+                'max_selected' => 'integer|min:1',
+                'award_count' => 'integer|min:1'
             )
         );
         if ($validator->fails()) {
@@ -113,7 +114,8 @@ class VoteEventController extends Controller
                 'organizer_id' => ($request->has('organizer')) ? $request->get('organizer') : null,
                 'show' => !$request->get('hideVoteEvent', false),
                 'vote_condition' => (!empty($condition)) ? JsonHelper::encode((object)array_filter((array)$condition)) : null,
-                'show_result' => $request->get('show_result')
+                'show_result' => $request->get('show_result'),
+                'award_count' => ($request->get('award_count') > 0) ? $request->get('award_count') : 1
             ));
 
             //紀錄
@@ -195,7 +197,8 @@ class VoteEventController extends Controller
                 'open_time' => 'date',
                 'close_time' => 'date',
                 'info' => 'max:65535',
-                'max_selected' => 'integer|min:1'
+                'max_selected' => 'integer|min:1',
+                'award_count' => 'integer|min:1'
             )
         );
         if ($validator->fails()) {
@@ -228,6 +231,7 @@ class VoteEventController extends Controller
                 $voteEvent->max_selected = ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1;
                 $voteEvent->organizer_id = ($request->has('organizer')) ? $request->get('organizer') : null;
                 $voteEvent->show = !$request->get('hideVoteEvent', false);
+                $voteEvent->award_count = ($request->get('award_count') > 0) ? $request->get('award_count') : 1;
             }
             $voteEvent->close_time = $close_time;
             $voteEvent->info = $request->get('info');
