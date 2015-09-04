@@ -73,6 +73,7 @@
         {!! Minify::javascript('/js/tipped.js')->withFullUrl() !!}
         {{-- 好看的彈出訊息框 --}}
         {!! HTML::script('js/bootstrap-notify.min.js') !!}
+        {!! HTML::script('js/notify.js') !!}
 
         @if(App::environment('production'))
             {!! HTML::script('js/analyticstracking.js') !!}
@@ -83,47 +84,11 @@
         <script type="text/javascript">
             @if(Session::has('global'))
                 /* Global message */
-                /* Bootstrap Notify */
-                $.notify({
-                    // options
-                    message: '{{ Session::get('global') }}'
-                },{
-                    // settings
-                    type: 'success',
-                    placement: {
-                        align: 'center'
-                    },
-                    offset: 70,
-                    delay: 5000,
-                    timer: 500,
-                    mouse_over: 'pause',
-                    animate: {
-                        enter: 'animated zoomIn',
-                        exit: 'animated zoomOut'
-                    }
-                });
+                notifySuccess('{{ Session::get('global') }}');
             @endif
             @if(Session::has('warning'))
                 /* Warning message */
-                /* Bootstrap Notify */
-                $.notify({
-                    // options
-                    message: '{{ Session::get('warning') }}'
-                },{
-                    // settings
-                    type: 'danger',
-                    placement: {
-                        align: 'center'
-                    },
-                    offset: 70,
-                    delay: parseInt('{{ Session::get('delay', 0) }}', 10) * 1000,
-                    timer: 500,
-                    mouse_over: 'pause',
-                    animate: {
-                        enter: 'animated rubberBand',
-                        exit: 'animated zoomOut'
-                    }
-                });
+                notifyWarning('{{ Session::get('warning') }}', '{{ Session::get('delay', 0) }}');
             @endif
 
             $(document).ready(function() {
