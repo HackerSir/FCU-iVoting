@@ -30,11 +30,11 @@
     left: -40px;
 }
 
-.ribbon-gold span {
+.ribbon.ribbon-gold span {
     background: linear-gradient(#F79E05 0%, #8F5408 100%);
 }
 
-.ribbon-gold span::before {
+.ribbon.ribbon-gold span::before {
     border: 3px solid #8F5408;
     content: "";
     position: absolute;
@@ -45,7 +45,7 @@
     border-bottom-color: transparent;
 }
 
-.ribbon-gold span::after {
+.ribbon.ribbon-gold span::after {
     border: 3px solid #8F5408;
     content: "";
     position: absolute;
@@ -56,11 +56,11 @@
     border-left-color: transparent;
 }
 
-.ribbon-gray span {
+.ribbon.ribbon-gray span {
     background: linear-gradient(#B6BAC9 0%, #808080 100%);
 }
 
-.ribbon-gray span::before {
+.ribbon.ribbon-gray span::before {
     border: 3px solid #808080;
     content: "";
     position: absolute;
@@ -71,7 +71,7 @@
     border-bottom-color: transparent;
 }
 
-.ribbon-gray span::after {
+.ribbon.ribbon-gray span::after {
     border: 3px solid #808080;
     content: "";
     position: absolute;
@@ -82,11 +82,11 @@
     border-left-color: transparent;
 }
 
-.ribbon-blue span {
+.ribbon.ribbon-blue span {
     background: linear-gradient(#2989d8 0%, #1e5799 100%);
 }
 
-.ribbon-blue span::before {
+.ribbon.ribbon-blue span::before {
     border: 3px solid #1e5799;
     content: "";
     position: absolute;
@@ -97,7 +97,7 @@
     border-bottom-color: transparent;
 }
 
-.ribbon-blue span::after {
+.ribbon.ribbon-blue span::after {
     border: 3px solid #1e5799;
     content: "";
     position: absolute;
@@ -108,11 +108,11 @@
     border-left-color: transparent;
 }
 
-.ribbon-silver span {
+.ribbon.ribbon-silver span {
     background: linear-gradient(#8E8E8E 0%, Silver 100%);
 }
 
-.ribbon-silver span::before {
+.ribbon.ribbon-silver span::before {
     border: 3px solid Silver;
     content: "";
     position: absolute;
@@ -123,7 +123,7 @@
     border-bottom-color: transparent;
 }
 
-.ribbon-silver span::after {
+.ribbon.ribbon-silver span::after {
     border: 3px solid Silver;
     content: "";
     position: absolute;
@@ -134,11 +134,11 @@
     border-left-color: transparent;
 }
 
-.ribbon-copper span {
+.ribbon.ribbon-copper span {
     background: linear-gradient(#8E5627 0%, #b87333 100%);
 }
 
-.ribbon-copper span::before {
+.ribbon.ribbon-copper span::before {
     border: 3px solid #b87333;
     content: "";
     position: absolute;
@@ -149,7 +149,7 @@
     border-bottom-color: transparent;
 }
 
-.ribbon-copper span::after {
+.ribbon.ribbon-copper span::after {
     border: 3px solid #b87333;
     content: "";
     position: absolute;
