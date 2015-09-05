@@ -271,7 +271,7 @@
                                         @if(Entrust::hasRole('admin'))
                                             <div class="row" data-result-hidden hidden>
                                                 <div class="col-md-3 text-center" title="權重">{{ $voteSelectionItem->weight }}</div>
-                                                <div class="col-md-3 text-center" title="分數">{{ $voteSelectionItem->score }}</div>
+                                                <div class="col-md-3 text-center" title="分數（票數*權重）">{{ $voteSelectionItem->score }}</div>
                                                 <div class="col-md-3 text-center" title="原始排名">{{ $voteSelectionItem->rank }}</div>
                                                 <div class="col-md-3 text-center" title="加權排名">{{ $voteSelectionItem->scoreRank }}</div>
                                             </div>
