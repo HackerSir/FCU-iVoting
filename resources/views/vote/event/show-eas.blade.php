@@ -180,7 +180,23 @@
                             <div class="col-sm-4 col-md-3" selection_id="{{ $voteSelectionItem->id }}">
                                 <div class="thumbnail selectionBox" @if($voteSelectionItem->hasVoted(Auth::user())) style="background: #C1FFE4"@endif>
                                     @if($voteEvent->isResultVisible())
-                                        <div class="ribbon ribbon-gray" data-result-hidden hidden><span>第&nbsp;{{ $voteSelectionItem->scoreRank }}&nbsp;名</span></div>
+                                        <?php
+                                        $scoreRank = $voteSelectionItem->scoreRank;
+                                        $ribbonClass = 'ribbon-gray';
+                                        if ($scoreRank == 1) {
+                                            $ribbonClass = 'ribbon-gold';
+                                        }
+                                        elseif ($scoreRank == 2) {
+                                            $ribbonClass = 'ribbon-silver';
+                                        }
+                                        elseif ($scoreRank == 3) {
+                                            $ribbonClass = 'ribbon-copper';
+                                        }
+                                        elseif ($scoreRank <= $voteEvent->award_count) {
+                                            $ribbonClass = 'ribbon-blue';
+                                        }
+                                        ?>
+                                        <div class="ribbon {{ $ribbonClass }}" data-result-hidden hidden><span>第&nbsp;{{ $scoreRank }}&nbsp;名</span></div>
                                     @endif
                                     @if($voteSelectionItem->hasVoted(Auth::user()))
                                         <div class="voted"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></div>

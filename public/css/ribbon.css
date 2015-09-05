@@ -31,11 +31,11 @@
 }
 
 .ribbon.ribbon-gold span {
-    background: linear-gradient(#F79E05 0%, #8F5408 100%);
+    background: linear-gradient(#f9da89 0%, #f9ca52 100%);
 }
 
 .ribbon.ribbon-gold span::before {
-    border: 3px solid #8F5408;
+    border: 3px solid #f9ca52;
     content: "";
     position: absolute;
     left: 0;
@@ -46,7 +46,7 @@
 }
 
 .ribbon.ribbon-gold span::after {
-    border: 3px solid #8F5408;
+    border: 3px solid #f9ca52;
     content: "";
     position: absolute;
     right: 0;
@@ -109,11 +109,11 @@
 }
 
 .ribbon.ribbon-silver span {
-    background: linear-gradient(#8E8E8E 0%, Silver 100%);
+    background: linear-gradient(#dedfe0 0%, #d6d6d6 100%);
 }
 
 .ribbon.ribbon-silver span::before {
-    border: 3px solid Silver;
+    border: 3px solid #d6d6d6;
     content: "";
     position: absolute;
     left: 0;
@@ -124,7 +124,7 @@
 }
 
 .ribbon.ribbon-silver span::after {
-    border: 3px solid Silver;
+    border: 3px solid #d6d6d6;
     content: "";
     position: absolute;
     right: 0;
@@ -135,11 +135,11 @@
 }
 
 .ribbon.ribbon-copper span {
-    background: linear-gradient(#8E5627 0%, #b87333 100%);
+    background: linear-gradient(#f0b7a1 0%, #bf6e4e 100%);
 }
 
 .ribbon.ribbon-copper span::before {
-    border: 3px solid #b87333;
+    border: 3px solid #bf6e4e;
     content: "";
     position: absolute;
     left: 0;
@@ -150,7 +150,7 @@
 }
 
 .ribbon.ribbon-copper span::after {
-    border: 3px solid #b87333;
+    border: 3px solid #bf6e4e;
     content: "";
     position: absolute;
     right: 0;
