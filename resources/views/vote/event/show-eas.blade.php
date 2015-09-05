@@ -12,7 +12,7 @@
     {!! Minify::stylesheet([
             '/css/bootstrap-social.css',     // 社群分享按鈕
             '/css/callout.css',              // 說明框樣式
-            '/css/ribbon.css',               // 最高票的標籤樣式
+            '/css/ribbon.css',               // 排名的標籤樣式
             '/css/vote-event-show-eas.css',  // 這個頁面的自訂樣式
     ])->withFullUrl() !!}
 @endsection
@@ -95,6 +95,8 @@
             @endif
 
             <ul style="font-size: 21px; padding-left: 25px;">
+                <li>選出&nbsp;<strong class="text-info">{{ $voteEvent->award_count }}</strong>&nbsp;名</li>
+
                 <li>活動期間：{!! $voteEvent->getHumanTimeString() !!}</li>
 
                 <li>{{ $voteEvent->getResultVisibleHintText() }}</li>
@@ -140,7 +142,6 @@
                         ，您已經投了&nbsp;<strong class="text-info" style="font-size: 25px;">{{ $voteEvent->getSelectedCount(Auth::user()) }}</strong>&nbsp;票
                     @endif
                 </li>
-                <li><del>選出一名，採相對多數決（也就是最高票獲選）</del></li>
                 @if(!empty(json_decode($voteEvent->vote_condition, true)))
                     <li>投票資格限制：</li>
                     <ul>
@@ -179,11 +180,23 @@
                             <div class="col-sm-4 col-md-3" selection_id="{{ $voteSelectionItem->id }}">
                                 <div class="thumbnail selectionBox" @if($voteSelectionItem->hasVoted(Auth::user())) style="background: #C1FFE4"@endif>
                                     @if($voteEvent->isResultVisible())
-                                        @if ($voteSelectionItem->isMax())
-                                            <div class="ribbon ribbon-gold" data-result-hidden hidden><span>最高票</span></div>
-                                        @else
-                                            <div class="ribbon ribbon-gray" data-result-hidden hidden><span>第&nbsp;{{ $voteSelectionItem->rank }}&nbsp;名</span></div>
-                                        @endif
+                                        <?php
+                                        $scoreRank = $voteSelectionItem->scoreRank;
+                                        $ribbonClass = 'ribbon-gray';
+                                        if ($scoreRank == 1) {
+                                            $ribbonClass = 'ribbon-gold';
+                                        }
+                                        elseif ($scoreRank == 2) {
+                                            $ribbonClass = 'ribbon-silver';
+                                        }
+                                        elseif ($scoreRank == 3) {
+                                            $ribbonClass = 'ribbon-copper';
+                                        }
+                                        elseif ($scoreRank <= $voteEvent->award_count) {
+                                            $ribbonClass = 'ribbon-blue';
+                                        }
+                                        ?>
+                                        <div class="ribbon {{ $ribbonClass }}" data-result-hidden hidden><span>第&nbsp;{{ $scoreRank }}&nbsp;名</span></div>
                                     @endif
                                     @if($voteSelectionItem->hasVoted(Auth::user()))
                                         <div class="voted"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></div>
@@ -255,6 +268,14 @@
                                             {!! Form::close() !!}
                                         @endif
                                     </div>
+                                        @if(Entrust::hasRole('admin'))
+                                            <div class="row" data-result-hidden hidden>
+                                                <div class="col-md-3 text-center" title="權重">{{ $voteSelectionItem->weight }}</div>
+                                                <div class="col-md-3 text-center" title="分數">{{ $voteSelectionItem->score }}</div>
+                                                <div class="col-md-3 text-center" title="原始排名">{{ $voteSelectionItem->rank }}</div>
+                                                <div class="col-md-3 text-center" title="加權排名">{{ $voteSelectionItem->scoreRank }}</div>
+                                            </div>
+                                        @endif
                                 </div>
                             </div>
                         @endforeach

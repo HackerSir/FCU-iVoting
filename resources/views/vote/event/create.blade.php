@@ -50,6 +50,15 @@
                             <span class="label label-danger">{{ $errors->first('close_time') }}</span>@endif
                         </div>
                     </div>
+                    <div class="form-group has-feedback{{ ($errors->has('award_count'))?' has-error':'' }}">
+                        <label class="control-label col-md-2" for="award_count">選出名額</label>
+
+                        <div class="col-md-9">
+                            {!! Form::number('award_count', null, ['id' => 'award_count', 'placeholder' => '活動選出的名額，預設為1', 'class' => 'form-control', 'min' => 1]) !!}
+                            @if($errors->has('award_count'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                            <span class="label label-danger">{{ $errors->first('award_count') }}</span>@endif
+                        </div>
+                    </div>
                     <div class="form-group has-feedback{{ ($errors->has('max_selected'))?' has-error':'' }}">
                         <label class="control-label col-md-2" for="max_selected">最多可選幾項</label>
 

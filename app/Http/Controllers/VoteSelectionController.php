@@ -87,6 +87,7 @@ class VoteSelectionController extends Controller
         $validator = Validator::make($request->all(),
             array(
                 'title' => 'required|max:65535',
+                'weight' => 'numeric',
                 'image' => 'max:65535'
             )
         );
@@ -104,6 +105,7 @@ class VoteSelectionController extends Controller
             $voteSelection = VoteSelection::create(array(
                 'title' => $request->get('title'),
                 'vote_event_id' => $voteEvent->id,
+                'weight' => $request->has('weight') ? $request->get('weight') : 1,
                 'data' => $json,
                 'order' => $order
             ));
@@ -161,6 +163,7 @@ class VoteSelectionController extends Controller
         $validator = Validator::make($request->all(),
             array(
                 'title' => 'required|max:65535',
+                'weight' => 'numeric',
                 'image' => 'max:65535'
             )
         );
@@ -173,6 +176,7 @@ class VoteSelectionController extends Controller
             $beforeEdit = $voteSelection->replicate();
 
             $voteSelection->title = $request->get('title');
+            $voteSelection->weight = $request->has('weight') ? $request->get('weight') : 1;
             //封裝JSON
             $obj = new stdClass();
             //$obj->image = explode(PHP_EOL, $request->get('image'));
