@@ -316,17 +316,15 @@
         $(document).ready(function () {
             refreshSelectionsShowOrder();
 
-            @if($voteEvent->isEnded())
-                $('[data-result-hidden]').each(function () {
-                    $(this).show();
-                });
-            @endif
-
             @if($voteEvent->isHideResult())
                 $('#showResult').click(function () {
                     $('[data-result-hidden]').each(function () {
                         $(this).toggle();
                     });
+                });
+            @else
+                $('[data-result-hidden]').each(function () {
+                    $(this).show();
                 });
             @endif
 
