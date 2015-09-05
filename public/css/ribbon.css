@@ -108,11 +108,11 @@
     border-left-color: transparent;
 }
 
-.ribbon-Silver span {
+.ribbon-silver span {
     background: linear-gradient(#8E8E8E 0%, Silver 100%);
 }
 
-.ribbon-Silver span::before {
+.ribbon-silver span::before {
     border: 3px solid Silver;
     content: "";
     position: absolute;
@@ -123,7 +123,7 @@
     border-bottom-color: transparent;
 }
 
-.ribbon-Silver span::after {
+.ribbon-silver span::after {
     border: 3px solid Silver;
     content: "";
     position: absolute;
@@ -134,11 +134,11 @@
     border-left-color: transparent;
 }
 
-.ribbon-Silver span {
+.ribbon-copper span {
     background: linear-gradient(#8E5627 0%, #b87333 100%);
 }
 
-.ribbon-Silver span::before {
+.ribbon-copper span::before {
     border: 3px solid #b87333;
     content: "";
     position: absolute;
@@ -149,7 +149,7 @@
     border-bottom-color: transparent;
 }
 
-.ribbon-Silver span::after {
+.ribbon-copper span::after {
     border: 3px solid #b87333;
     content: "";
     position: absolute;
