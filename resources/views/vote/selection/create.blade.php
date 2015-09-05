@@ -32,6 +32,15 @@
                                 <span class="label label-danger">{{ $errors->first('title') }}</span>@endif
                             </div>
                         </div>
+                        <div class="form-group has-feedback{{ ($errors->has('weight'))?' has-error':'' }}">
+                            <label class="col-md-2 control-label" for="weight">選項權重</label>
+
+                            <div class="col-md-10">
+                                {!! Form::text('weight', null, ['id' => 'weight', 'placeholder' => '請輸入選項分數計算權重，預設為1', 'class' => 'form-control']) !!}
+                                @if($errors->has('weight'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                <span class="label label-danger">{{ $errors->first('weight') }}</span>@endif
+                            </div>
+                        </div>
                         <div class="form-group has-feedback{{ ($errors->has('image'))?' has-error':'' }}">
                             <label class="col-md-2 control-label" for="image">圖片網址</label>
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class VoteSelection extends Model
 {
     protected $table = 'vote_selections';
-    protected $fillable = ['vote_event_id', 'title', 'data', 'order'];
+    protected $fillable = ['vote_event_id', 'title', 'weight', 'data', 'order'];
 
     public function voteEvent()
     {
