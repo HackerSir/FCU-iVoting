@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\LogHelper;
 use App\Setting;
+use Exception;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -92,5 +96,28 @@ class SettingController extends Controller
             return Redirect::route('setting.show', $setting->id)
                 ->with('global', '設定項目已更新');
         }
+    }
+
+    public function sendTestMail(Request $request)
+    {
+        //只接受Ajax請求
+        if (!$request->ajax()) {
+            return 'error';
+        }
+
+        $email = $request->get('email');
+
+        try {
+            Mail::raw('這是測試信。', function ($message) use ($email) {
+                $message->to($email)->subject("[" . Config::get('config.sitename') . "] 測試信");
+            });
+        } catch (Exception $e) {
+            //Log
+            LogHelper::info('[MailSendFailed] 無法發送測試信' . $email);
+
+            return 'error';
+        }
+
+        return 'success';
     }
 }

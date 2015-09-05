@@ -61,6 +61,11 @@ Route::post('vote-selection/vote/{id}', [
 Route::resource('vote-selection', 'VoteSelectionController', ['except' => ['index', 'show']]);
 Route::resource('organizer', 'OrganizerController');
 
+//寄送測試信
+Route::post('send-test-mail',[
+    'as' => 'send-test-mail',
+    'uses' => 'SettingController@sendTestMail'
+]);
 //網站設定
 Route::resource('setting', 'SettingController', ['except' => ['create', 'store', 'destroy']]);
 

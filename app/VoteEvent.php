@@ -10,7 +10,20 @@ use Illuminate\Support\Facades\Auth;
 class VoteEvent extends Model
 {
     protected $table = 'vote_events';
-    protected $fillable = ['open_time', 'close_time', 'subject', 'info', 'max_selected', 'organizer_id', 'show', 'vote_condition', 'show_result', 'award_count'];
+
+    protected $fillable = [
+        'open_time',
+        'close_time',
+        'subject',
+        'info',
+        'max_selected',
+        'organizer_id',
+        'show',
+        'vote_condition',
+        'show_result',
+        'award_count'
+    ];
+
 
     //有效的活動條件，以及說明文字（{value}會自動替換為條件的值）
     static protected $validConditionList = [
@@ -63,7 +76,7 @@ class VoteEvent extends Model
     {
         if ($this->max_selected < 1) {
             $max_selected = 1;
-        } else if ($this->max_selected > $this->voteSelections->count()) {
+        } elseif ($this->max_selected > $this->voteSelections->count()) {
             $max_selected = $this->voteSelections->count();
         } else {
             $max_selected = $this->max_selected;
@@ -90,7 +103,7 @@ class VoteEvent extends Model
         } else {
             if ($this->open_time) {
                 $string = $this->getTimeSpanTag($this->open_time) . ' 起';
-            } else if ($this->close_time) {
+            } elseif ($this->close_time) {
                 $string = '到 ' . $this->getTimeSpanTag($this->close_time) . ' 為止';
             } else {
                 $string = "尚未決定";
@@ -226,9 +239,23 @@ class VoteEvent extends Model
     }
 
     //是否先幫使用者隱藏結果，給View使用
-    public function isHideResult() {
+    public function isHideResult()
+    {
         //可以顯示結果 and 活動進行中 and 總是顯示 and (未登入 or 登入但未完成投票)
-        return $this->isResultVisible() && $this->isStarted() && ($this->show_result == 'always') && ((Auth::user() == null) || !($this->getMaxSelected() <= $this->getSelectedCount(Auth::user())));
+
+        //必須可以顯示結果＆活動進行中＆總是顯示
+        if (!$this->isResultVisible() || !$this->isInProgress() || $this->show_result != 'always') {
+            return false;
+        }
+        //未登入者
+        if (!Auth::check()) {
+            return true;
+        }
+        //已完成投票
+        if ($this->getMaxSelected() <= $this->getSelectedCount(Auth::user())) {
+            return false;
+        }
+        return true;
     }
 
     public function getResultVisibleHintText()
