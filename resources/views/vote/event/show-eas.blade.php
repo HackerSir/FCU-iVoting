@@ -180,11 +180,7 @@
                             <div class="col-sm-4 col-md-3" selection_id="{{ $voteSelectionItem->id }}">
                                 <div class="thumbnail selectionBox" @if($voteSelectionItem->hasVoted(Auth::user())) style="background: #C1FFE4"@endif>
                                     @if($voteEvent->isResultVisible())
-                                        @if ($voteSelectionItem->isMax())
-                                            <div class="ribbon ribbon-gold" data-result-hidden hidden><span>最高票</span></div>
-                                        @else
-                                            <div class="ribbon ribbon-gray" data-result-hidden hidden><span>第&nbsp;{{ $voteSelectionItem->rank }}&nbsp;名</span></div>
-                                        @endif
+                                        <div class="ribbon ribbon-gray" data-result-hidden hidden><span>第&nbsp;{{ $voteSelectionItem->scoreRank }}&nbsp;名</span></div>
                                     @endif
                                     @if($voteSelectionItem->hasVoted(Auth::user()))
                                         <div class="voted"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></div>
@@ -256,6 +252,14 @@
                                             {!! Form::close() !!}
                                         @endif
                                     </div>
+                                        @if(Entrust::hasRole('admin'))
+                                            <div class="row" data-result-hidden hidden>
+                                                <div class="col-md-3 text-center" title="權重">{{ $voteSelectionItem->weight }}</div>
+                                                <div class="col-md-3 text-center" title="分數">{{ $voteSelectionItem->score }}</div>
+                                                <div class="col-md-3 text-center" title="原始排名">{{ $voteSelectionItem->rank }}</div>
+                                                <div class="col-md-3 text-center" title="加權排名">{{ $voteSelectionItem->scoreRank }}</div>
+                                            </div>
+                                        @endif
                                 </div>
                             </div>
                         @endforeach
