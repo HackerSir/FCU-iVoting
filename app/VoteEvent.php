@@ -228,7 +228,7 @@ class VoteEvent extends Model
     //是否先幫使用者隱藏結果，給View使用
     public function isHideResult() {
         //可以顯示結果 and 活動進行中 and 總是顯示 and (未登入 or 登入但未完成投票)
-        return $this->isResultVisible() && $this->isStarted() && ($this->show_result == 'always') && ((Auth::user() == null) || !($this->getMaxSelected() <= $this->getSelectedCount(Auth::user())));
+        return $this->isResultVisible() && $this->isStarted() && ($this->show_result == 'always') && ((Auth::user() == null) || !($this->getMaxSelected() < $this->getSelectedCount(Auth::user())));
     }
 
     public function getResultVisibleHintText()
