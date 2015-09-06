@@ -273,7 +273,19 @@
                                                 <div class="col-md-3 text-center" title="權重">{{ $voteSelectionItem->weight }}</div>
                                                 <div class="col-md-3 text-center" title="分數（票數*權重）">{{ $voteSelectionItem->score }}</div>
                                                 <div class="col-md-3 text-center" title="原始排名">{{ $voteSelectionItem->rank }}</div>
-                                                <div class="col-md-3 text-center" title="加權排名">{{ $voteSelectionItem->scoreRank }}</div>
+                                                @if($voteSelectionItem->scoreRank > $voteSelectionItem->rank)
+                                                    <div class="col-md-3 text-center" title="加權排名<br />與原始排名比較：<span class='glyphicon glyphicon-arrow-down'></span> -{{ $voteSelectionItem->scoreRank - $voteSelectionItem->rank }}">
+                                                        {{ $voteSelectionItem->scoreRank }}<span class="glyphicon glyphicon-arrow-down"></span>
+                                                    </div>
+                                                @elseif($voteSelectionItem->scoreRank < $voteSelectionItem->rank)
+                                                    <div class="col-md-3 text-center" title="加權排名<br />與原始排名比較：<span class='glyphicon glyphicon-arrow-up'></span> +{{ $voteSelectionItem->rank - $voteSelectionItem->scoreRank }}">
+                                                        {{ $voteSelectionItem->scoreRank }}<span class="glyphicon glyphicon-arrow-up"></span>
+                                                    </div>
+                                                @else
+                                                    <div class="col-md-3 text-center" title="加權排名<br />與原始排名相同">
+                                                        {{ $voteSelectionItem->scoreRank }}
+                                                    </div>
+                                                @endif
                                             </div>
                                         @endif
                                 </div>
