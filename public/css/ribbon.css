@@ -30,6 +30,12 @@
     left: -40px;
 }
 
+.ribbon.ribbon-gold span, .ribbon.ribbon-silver span, .ribbon.ribbon-copper span {
+    font-size: 25px;
+    text-shadow: 0 0 1px #dd0303, 0 0 1px #dd0303, 0 0 1px #dd0303, 0 0 1px #dd0303, 0 0 1px #dd0303, 0 0 1px #dd0303, 0 2px 5px #7d7d7d,
+    0 0 0 rgb(218, 218, 218), -1px 0 0 rgb(203, 203, 203), -2px 0 0 rgb(187, 187, 187), -3px 0 0 rgb(172, 172, 172), -4px 0 0 rgb(156, 156, 156), -5px 0 0 rgb(140, 140, 140), -6px 0 5px rgba(0, 0, 0, 0.5), -6px 0 1px rgba(0, 0, 0, 0.5);
+}
+
 .ribbon.ribbon-gold span {
     background: linear-gradient(#f9da89 0%, #f9ca52 100%);
 }
