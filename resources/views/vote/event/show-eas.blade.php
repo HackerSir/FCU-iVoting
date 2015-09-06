@@ -190,7 +190,7 @@
                                             $ribbonClass = 'ribbon-silver';
                                         }
                                         elseif ($scoreRank == 3) {
-                                            $ribbonClass = 'ribbon-copper';
+                                            $ribbonClass = 'ribbon-bronze';
                                         }
                                         elseif ($scoreRank <= $voteEvent->award_count) {
                                             $ribbonClass = 'ribbon-blue';
