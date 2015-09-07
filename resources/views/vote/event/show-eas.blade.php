@@ -270,8 +270,8 @@
                                     </div>
                                         @if(Entrust::hasRole('admin'))
                                             <div class="row" data-result-hidden hidden>
-                                                <div class="col-md-3 text-center" title="權重">{{ $voteSelectionItem->weight }}</div>
-                                                <div class="col-md-3 text-center" title="分數（票數*權重）">{{ $voteSelectionItem->score }}</div>
+                                                <div class="col-md-3 text-center" title="權重<br />{{ $voteSelectionItem->weight }}">{{ round($voteSelectionItem->weight,3) }}</div>
+                                                <div class="col-md-3 text-center" title="分數（票數*權重）<br />{{ $voteSelectionItem->score }}">{{ round($voteSelectionItem->score,3) }}</div>
                                                 <div class="col-md-3 text-center" title="原始排名">{{ $voteSelectionItem->rank }}</div>
                                                 @if($voteSelectionItem->scoreRank > $voteSelectionItem->rank)
                                                     <div class="col-md-3 text-center" title="加權排名<br />與原始排名比較：<span class='glyphicon glyphicon-arrow-down'></span> -{{ $voteSelectionItem->scoreRank - $voteSelectionItem->rank }}">
