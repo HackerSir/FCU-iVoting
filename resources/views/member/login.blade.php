@@ -42,8 +42,15 @@
                                     <span class="label label-danger">您必須通過驗證</span>
                                 @endif
                             </label>
-
-                            <div class="g-recaptcha" data-sitekey="{{ env('Data_Sitekey') }}"></div>
+                            @if(App::environment('production')))
+                                <div class="g-recaptcha" data-sitekey="{{ env('Data_Sitekey') }}"></div>
+                            @else
+                                <div class="checkbox">
+                                    <label>
+                                        {!! Form::checkbox('g-recaptcha-response', true, null,['class' => 'checkbox']) !!} <strong>我不是機器人</strong>
+                                    </label>
+                                </div>
+                            @endif
                         </div>
                     @endif
                     <div class="form-group">
