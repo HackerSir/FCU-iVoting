@@ -114,10 +114,21 @@ class VoteEventConditionTest extends TestCase
             'email' => 'D0244444@fcu.edu.tw'
         ]);
 
+        $d03User = factory('App\User')->make([
+            'email' => 'd0355555@fcu.edu.tw'
+        ]);
+
+        $D03User = factory('App\User')->make([
+            'email' => 'D0344444@fcu.edu.tw'
+        ]);
+
         $voteEvent = new App\VoteEvent();
         $voteEvent->vote_condition = '{"prefix":"d02"}';
 
         $this->assertTrue($voteEvent->checkCondition($d02User, 'prefix'));
         $this->assertTrue($voteEvent->checkCondition($D02User, 'prefix'));
+
+        $this->assertFalse($voteEvent->checkCondition($d03User, 'prefix'));
+        $this->assertFalse($voteEvent->checkCondition($D03User, 'prefix'));
     }
 }
