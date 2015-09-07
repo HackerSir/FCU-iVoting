@@ -55,7 +55,15 @@
                                 <span class="label label-danger">您必須勾選「我不是機器人」</span>
                             @endif
                         </label>
-                        <div class="g-recaptcha" data-sitekey="{{ env('Data_Sitekey') }}"></div>
+                        @if(App::environment('production')))
+                            <div class="g-recaptcha" data-sitekey="{{ env('Data_Sitekey') }}"></div>
+                        @else
+                            <div class="checkbox">
+                                <label>
+                                    {!! Form::checkbox('g-recaptcha-response', true, null,['class' => 'checkbox']) !!} <strong>我不是機器人</strong>
+                                </label>
+                            </div>
+                        @endif
                     </div>
                     <p class="help-block">當你點選註冊時，代表你同意本站的<a href="{{ URL::route('policies', 'privacy') }}" target="_blank">《隱私權政策》<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>&nbsp;與<a href="{{ URL::route('policies', 'terms') }}" target="_blank">《服務條款》<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>
                     {!! Form::submit('註冊', ['class' => 'btn btn-primary']) !!}

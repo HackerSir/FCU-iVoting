@@ -223,12 +223,15 @@ class MemberController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
-            $result = $this->tryPassGoogleReCAPTCHA($request);
-            if (!(is_bool($result->success) && $result->success)) {
-                LogHelper::info('[reCAPTCHA Failed]', $result);
-                return Redirect::route('member.register')
-                    ->with('warning', '沒有通過 reCAPTCHA 驗證，請再試一次。')
-                    ->withInput();
+            //上線環境再檢查
+            if (App::environment('production')) {
+                $result = $this->tryPassGoogleReCAPTCHA($request);
+                if (!(is_bool($result->success) && $result->success)) {
+                    LogHelper::info('[reCAPTCHA Failed]', $result);
+                    return Redirect::route('member.register')
+                        ->with('warning', '沒有通過 reCAPTCHA 驗證，請再試一次。')
+                        ->withInput();
+                }
             }
 
             //註冊允許使用之信箱類型
