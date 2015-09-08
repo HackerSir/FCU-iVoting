@@ -95,11 +95,11 @@
         <script type="text/javascript">
             @if(Session::has('global'))
                 /* Global message */
-                notifySuccess('{{ Session::get('global') }}');
+                notifySuccess('{!! Session::get('global') !!}');
             @endif
             @if(Session::has('warning'))
                 /* Warning message */
-                notifyWarning('{{ Session::get('warning') }}', '{{ Session::get('delay', 0) }}');
+                notifyWarning('{!! Session::get('warning') !!}', '{{ Session::get('delay', 0) }}');
             @endif
 
             $(document).ready(function() {
