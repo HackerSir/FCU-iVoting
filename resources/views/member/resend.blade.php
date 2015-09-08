@@ -16,6 +16,8 @@
                             <div class="form-group">
                                 <label class="control-label" for="email">信箱</label>
                                 {!! Form::email('email', Auth::user()->email, ['id' => 'email', 'placeholder' => '信箱', 'class' => 'form-control', 'readonly']) !!}
+                                <b>注意：</b>請先確認您是此信箱擁有者，再點擊下方按鈕。<br />
+                                若此信箱不屬於您，請登出並重新以自己的信箱註冊帳號。
                             </div>
                             {!! Form::submit('重新發送驗證信', ['class' => 'btn btn-primary']) !!}
                         {!! Form::close() !!}
