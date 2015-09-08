@@ -40,6 +40,11 @@ class StatsController extends Controller
             $data['已驗證會員人數'] = $this->formatNumberDataInfo(User::whereNotNull('confirm_at')->count(), $userCount);
             $data['未驗證會員人數'] = $this->formatNumberDataInfo(User::whereNull('confirm_at')->count(), $userCount);
 
+            $data['100年入學會員數（d00xxxxx@fcu.edu.tw）'] = $this->formatNumberDataInfo(
+                User::whereNotNull('confirm_at')->where('email', 'like', 'd00%fcu.edu.tw')->count(),
+                $userCount
+            );
+
             $data['101年入學會員數（d01xxxxx@fcu.edu.tw）'] = $this->formatNumberDataInfo(
                 User::whereNotNull('confirm_at')->where('email', 'like', 'd01%fcu.edu.tw')->count(),
                 $userCount
