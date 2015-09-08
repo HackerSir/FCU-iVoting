@@ -72,7 +72,7 @@ class MemberController extends Controller
     {
         $user = Auth::user();
         //取得會員清單
-        $amountPerPage = 20;
+        $amountPerPage = 50;
         //搜尋
         $userQuery = User::query();
         if (Input::has('q')) {
