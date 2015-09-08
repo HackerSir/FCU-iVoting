@@ -18,7 +18,7 @@
                         <legend>註冊</legend>
                     </fieldset>
                     <div class="form-group has-feedback{{ ($errors->has('email_name'))?' has-error':'' }}">
-                        <label class="control-label" for="email_name">信箱
+                        <label class="control-label" for="email_name">信箱（註冊後請收取郵件並完成驗證）
                             @if($errors->has('email_name'))
                                 <span class="label label-danger">{{ $errors->first('email_name') }}</span>
                             @endif
