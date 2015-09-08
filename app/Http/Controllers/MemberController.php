@@ -280,7 +280,7 @@ class MemberController extends Controller
             if ($user) {
                 //發送驗證信件
                 try {
-                    Mail::send('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
+                    Mail::queue('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
                         $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
                     });
                 } catch (Exception $e) {
@@ -383,7 +383,7 @@ class MemberController extends Controller
         if ($user->save()) {
             //重新發送驗證信件
             try {
-                Mail::send('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
+                Mail::queue('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
                     $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
                 });
             } catch (Exception $e) {
