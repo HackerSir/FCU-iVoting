@@ -88,7 +88,8 @@ class MemberController extends Controller
         }
         $totalCount = $userQuery->count();
         $userList = $userQuery->paginate($amountPerPage);
-        return view('member.list')->with('userList', $userList)->with('amountPerPage', $amountPerPage)->with('totalCount', $totalCount);
+        return view('member.list')->with('userList', $userList)->with('amountPerPage',
+            $amountPerPage)->with('totalCount', $totalCount);
     }
 
     //登入
@@ -280,9 +281,10 @@ class MemberController extends Controller
             if ($user) {
                 //發送驗證信件
                 try {
-                    Mail::queue('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
-                        $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
-                    });
+                    Mail::queue('emails.confirm', array('link' => URL::route('member.confirm', $code)),
+                        function ($message) use ($user) {
+                            $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
+                        });
                 } catch (Exception $e) {
                     //Log
                     LogHelper::info('[RegisterFailed] 註冊失敗：無法寄出認證信件給' . $email, [
@@ -351,8 +353,13 @@ class MemberController extends Controller
                     ->with('global', '帳號啟用成功。');
             }
         }
+        $message = '驗證連結無效，可能原因：<ul>';
+        $message .= '<li>連結網址錯誤</li>';
+        $message .= '<li>帳號已啟用</li>';
+        $message .= '<li>點擊的不是最後一封驗證信中的連結<br />（僅最後一次發送的驗證信有效）</li>';
+        $message .= '</ul>請再次確認';
         return Redirect::route('home')
-            ->with('warning', '驗證連結無效，也可能是帳號已啟用，請再次確認');
+            ->with('warning', $message);
     }
 
     //重發驗證信
@@ -383,9 +390,10 @@ class MemberController extends Controller
         if ($user->save()) {
             //重新發送驗證信件
             try {
-                Mail::queue('emails.confirm', array('link' => URL::route('member.confirm', $code)), function ($message) use ($user) {
-                    $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
-                });
+                Mail::queue('emails.confirm', array('link' => URL::route('member.confirm', $code)),
+                    function ($message) use ($user) {
+                        $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
+                    });
             } catch (Exception $e) {
                 //Log
                 LogHelper::info('[SendEmailFailed] 無法重寄認證信件給' . $user->email, [
@@ -446,9 +454,10 @@ class MemberController extends Controller
                 if ($user->save()) {
                     try {
                         //發送信件
-                        Mail::send('emails.forgot', array('link' => URL::route('member.reset-password', $code)), function ($message) use ($user) {
-                            $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 重新設定密碼");
-                        });
+                        Mail::send('emails.forgot', array('link' => URL::route('member.reset-password', $code)),
+                            function ($message) use ($user) {
+                                $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 重新設定密碼");
+                            });
                     } catch (Exception $e) {
                         //Log
                         LogHelper::info('[SendEmailFailed] 註冊失敗：無法寄出密碼重設信件給' . $user->email, [
