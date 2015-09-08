@@ -41,7 +41,7 @@ class DeleteUnConfirmUser extends Command
     public function handle()
     {
         $unConfirmUsers = User::whereNull('confirm_at')
-            ->where('register_at', '<', Carbon::now()->subWeek())
+            ->where('register_at', '<', Carbon::now()->subMonth())
             ->lists('email', 'id')//$column, $key
             ->toArray();
 
@@ -49,9 +49,9 @@ class DeleteUnConfirmUser extends Command
             User::destroy(array_keys($unConfirmUsers));
 
             $userArray = array_values($unConfirmUsers);
-            LogHelper::info('[CommandExecuted] 刪除超過一週未驗證的帳號' . '(' . count($userArray) . '個)', $userArray);
+            LogHelper::info('[CommandExecuted] 刪除超過一個月未驗證的帳號' . '(' . count($userArray) . '個)', $userArray);
         } else {
-            LogHelper::info('[CommandExecuted] 嘗試刪除超過一週未驗證的帳號，無符合條件之帳號');
+            LogHelper::info('[CommandExecuted] 嘗試刪除超過一個月未驗證的帳號，無符合條件之帳號');
         }
     }
 }

@@ -47,7 +47,7 @@
                 <div class="alert alert-danger" role="alert">
                     <span class="glyphicon glyphicon-alert"></span> <b>請注意：</b>
                     您的帳號尚未完成{!! link_to_route('member.resend','Email驗證') !!}，可使用功能依然受限。
-                    請盡快完成{!! link_to_route('member.resend','Email驗證') !!}，否則帳號將於 <span title="{{ (new Carbon(Auth::user()->created_at))->hour(5)->minute(30)->addWeek()->diffForHumans(Carbon::now())}}">{{ (new Carbon(Auth::user()->created_at))->hour(5)->minute(30)->addWeek()->formatLocalized('%Y-%m-%d') }}</span> 自動刪除。
+                    請盡快完成{!! link_to_route('member.resend','Email驗證') !!}，否則帳號將於 <span title="{{ (new Carbon(Auth::user()->created_at))->hour(5)->minute(30)->addMonth()->diffForHumans(Carbon::now())}}">{{ (new Carbon(Auth::user()->created_at))->hour(5)->minute(30)->addMonth()->formatLocalized('%Y-%m-%d') }}</span> 自動刪除。
                 </div>
             </div>
         @endif
