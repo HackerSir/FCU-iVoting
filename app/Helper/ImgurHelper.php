@@ -17,10 +17,10 @@ class ImgurHelper
 
     static public function thumbnail($url, $suffix = null)
     {
-        if (is_null(self::getImgurID($url))) {
+        if (empty(self::getImgurID($url))) {
             return $url;
         }
-        if (!is_null($suffix) && !in_array($suffix, ['s', 'b', 't', 'm', 'l', 'h'])) {
+        if (!empty($suffix) && !in_array($suffix, ['s', 'b', 't', 'm', 'l', 'h'])) {
             return null;
         }
         //取得附檔名
