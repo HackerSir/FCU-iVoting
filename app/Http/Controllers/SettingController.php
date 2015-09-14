@@ -121,7 +121,7 @@ class SettingController extends Controller
             }
         }
         elseif ($type == 'queue') {
-            Mail::queue('emails.raw', ['message' => '這是測試信。'],  function ($message) use ($email) {
+            Mail::queue('emails.raw', ['text' => '這是測試信。'],  function ($message) use ($email) {
                 $message->to($email)->subject("[" . Config::get('config.sitename') . "] 測試信");
             });
         }
