@@ -106,15 +106,26 @@ class SettingController extends Controller
         }
 
         $email = $request->get('email');
+        $type = $request->get('type');
 
-        try {
-            Mail::raw('這是測試信。', function ($message) use ($email) {
+        if ($type == 'normal') {
+            try {
+                Mail::raw('這是測試信。', function ($message) use ($email) {
+                    $message->to($email)->subject("[" . Config::get('config.sitename') . "] 測試信");
+                });
+            } catch (Exception $e) {
+                //Log
+                LogHelper::info('[MailSendFailed] 無法發送測試信' . $email);
+
+                return 'error';
+            }
+        }
+        elseif ($type == 'queue') {
+            Mail::queue('emails.raw', ['message' => '這是測試信。'],  function ($message) use ($email) {
                 $message->to($email)->subject("[" . Config::get('config.sitename') . "] 測試信");
             });
-        } catch (Exception $e) {
-            //Log
-            LogHelper::info('[MailSendFailed] 無法發送測試信' . $email);
-
+        }
+        else {
             return 'error';
         }
 

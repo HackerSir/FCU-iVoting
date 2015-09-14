@@ -62,7 +62,8 @@
                         <div class="form-group">
                             {!! Form::email('email', null, ['id' => 'testMailTo', 'placeholder' => 'Email', 'class' => 'form-control', 'required']) !!}
                         </div>
-                        {!! Form::submit('寄送測試信', ['class' => 'btn btn-success', 'id' => 'btnSend']) !!}
+                        {!! Form::button('寄送測試信(使用Queue)', ['class' => 'btn btn-success', 'id' => 'btnSend_queue']) !!}
+                        {!! Form::button('寄送測試信', ['class' => 'btn btn-success', 'id' => 'btnSend']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -73,10 +74,19 @@
 
 @section('javascript')
     <script type="text/javascript">
-        $('#sendTestMail').submit(function (event) {
-            event.preventDefault();
+        $btnSend_queue = $('#btnSend_queue');
+        $btnSend = $('#btnSend');
 
-            $btnSend = $('#btnSend');
+        $btnSend_queue.click(function() {
+            sendTestMailRequest('queue');
+        });
+
+        $btnSend.click(function() {
+            sendTestMailRequest('normal');
+        });
+
+        function sendTestMailRequest(type) {
+            $btnSend_queue.prop('disabled', true);
             $btnSend.prop('disabled', true);
 
             var URLs = "{{ URL::route('send-test-mail') }}";
@@ -84,7 +94,7 @@
 
             $.ajax({
                 url: URLs,
-                data: {email: val},
+                data: {email: val, type: type},
                 headers: {
                     'X-CSRF-Token': "{{ Session::token() }}",
                     "Accept": "application/json"
@@ -100,14 +110,16 @@
                         notifyWarning('發生未知的錯誤');
                     }
 
+                    $btnSend_queue.prop('disabled', false);
                     $btnSend.prop('disabled', false);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     notifyWarning(xhr.status + ': ' + thrownError);
 
+                    $btnSend_queue.prop('disabled', false);
                     $btnSend.prop('disabled', false);
                 }
             });
-        });
+        }
     </script>
 @endsection
