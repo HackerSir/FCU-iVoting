@@ -7,19 +7,26 @@
 @section('css')
     {!! HTML::style('css/no-more-table.css') !!}
     <style type="text/css">
-        @media
-        only screen and (max-width: 479px) {
+        @media only screen and (max-width: 479px) {
             .container {
-                padding:0;
-                margin:0;
+                padding: 0;
+                margin: 0;
             }
 
             /*
             Label the data
             */
-            .noMoreTable td:nth-of-type(1):before { content: "ID"; }
-            .noMoreTable td:nth-of-type(2):before { content: "描述"; }
-            .noMoreTable td:nth-of-type(3):before { content: "設定資料"; }
+            .noMoreTable td:nth-of-type(1):before {
+                content: "ID";
+            }
+
+            .noMoreTable td:nth-of-type(2):before {
+                content: "描述";
+            }
+
+            .noMoreTable td:nth-of-type(3):before {
+                content: "設定資料";
+            }
         }
     </style>
 @endsection
@@ -77,13 +84,22 @@
         $btnSend_queue = $('#btnSend_queue');
         $btnSend = $('#btnSend');
 
-        $btnSend_queue.click(function() {
+        $btnSend_queue.click(function () {
             sendTestMailRequest('queue');
         });
 
-        $btnSend.click(function() {
+        $btnSend.click(function () {
             sendTestMailRequest('normal');
         });
+
+        function validateEmail(sEmail) {
+            var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            if (filter.test(sEmail)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
         function sendTestMailRequest(type) {
             $btnSend_queue.prop('disabled', true);
@@ -91,7 +107,21 @@
 
             var URLs = "{{ URL::route('send-test-mail') }}";
             var val = $('#testMailTo').val();
+            val = $.trim(val);
 
+            //輸入檢查
+            if (val.length == 0) {
+                notifyWarning('請輸入信箱');
+                $btnSend_queue.prop('disabled', false);
+                $btnSend.prop('disabled', false);
+                return;
+            }
+            if (!validateEmail(val)) {
+                notifyWarning('信箱格式錯誤');
+                $btnSend_queue.prop('disabled', false);
+                $btnSend.prop('disabled', false);
+                return;
+            }
             $.ajax({
                 url: URLs,
                 data: {email: val, type: type},
