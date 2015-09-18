@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Support\Facades\DB;
+
 class QueueStatusController extends Controller
 {
     public function __construct()
@@ -15,6 +17,8 @@ class QueueStatusController extends Controller
     //主頁面
     public function index()
     {
-        return view('queue-status');
+        $jobs = DB::table('jobs')->take(5)->get();
+
+        return view('queue-status')->with('jobs', $jobs);
     }
 }
