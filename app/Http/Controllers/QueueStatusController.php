@@ -19,6 +19,8 @@ class QueueStatusController extends Controller
     {
         $jobs = DB::table('jobs')->take(5)->get();
 
-        return view('queue-status')->with('jobs', $jobs);
+        $failedJobs = DB::table('failed_jobs')->get();
+
+        return view('queue-status')->with('jobs', $jobs)->with('failedJobs', $failedJobs);
     }
 }

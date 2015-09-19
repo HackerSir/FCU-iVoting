@@ -16,13 +16,13 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Jobs Queue</h3>
             </div>
-            <table class="table table-striped table-bordered">
+            <table class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>
                     <th class="col-md-1 text-center">#</th>
                     <th class="col-md-1">Queue</th>
                     <th class="col-md-8">Payload</th>
-                    <th class="col-md-2">建立時間</th>
+                    <th class="col-md-2 text-center">建立時間</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,7 +37,45 @@
                                 {{ mb_strimwidth($job->payload, 0, 100, "...") }}
                             </td>
                         @endif
-                        <td>{{ date('Y-m-d H:i:s', $job->created_at) }}</td>
+                        <td class="text-center">{{ date('Y-m-d H:i:s', $job->created_at) }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td  class="text-center" colspan="4">沒有資料</td>
+                    </tr>
+                @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Failed Jobs</h3>
+            </div>
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th class="col-md-1 text-center">#</th>
+                    <th class="col-md-2">Connection</th>
+                    <th class="col-md-1">Queue</th>
+                    <th class="col-md-6">Payload</th>
+                    <th class="col-md-2 text-center">失敗時間</th>
+                </tr>
+                </thead>
+                <tbody>
+                @forelse($failedJobs as $failedJob)
+                    <tr>
+                        <td class="text-center">{{ $failedJob->id }}</td>
+                        <td>{{ $failedJob->connection }}</td>
+                        <td>{{ $failedJob->queue }}</td>
+                        @if(strlen($failedJob->payload) <= 100)
+                            <td>{{ $failedJob->payload }}</td>
+                        @else
+                            <td data-toggle="popover" data-placement="bottom" data-content="{{ $failedJob->payload }}">
+                                {{ mb_strimwidth($failedJob->payload, 0, 100, "...") }}
+                            </td>
+                        @endif
+                        <td class="text-center">{{ $failedJob->failed_at }}</td>
                     </tr>
                 @empty
                     <tr>
