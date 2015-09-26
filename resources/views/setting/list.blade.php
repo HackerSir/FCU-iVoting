@@ -43,16 +43,18 @@
                             <thead>
                             <tr>
                                 <th class="col-md-2">ID</th>
-                                <th class="col-md-5">描述</th>
-                                <th class="col-md-5">設定資料</th>
+                                <th class="col-md-2">類型</th>
+                                <th class="col-md-4">描述</th>
+                                <th class="col-md-4">設定資料</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($settingList as $settingItem)
                                 <tr class="classData">
                                     <td>{!! HTML::linkRoute('setting.show', $settingItem->id, $settingItem->id, null) !!}</td>
+                                    <td>{{ $settingItem->getTypeDesc() }}</td>
                                     <td>{{ $settingItem->desc }}</td>
-                                    <td>{{ $settingItem->data }}</td>
+                                    <td>{!! $settingItem->getData() !!}</td>
                                 </tr>
                             @endforeach
                             </tbody>

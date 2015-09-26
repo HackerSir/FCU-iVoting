@@ -20,12 +20,16 @@
                                         <td>{{ $setting->id }}</td>
                                     </tr>
                                     <tr>
+                                        <td>類型：</td>
+                                        <td>{{ $setting->getTypeDesc() }}</td>
+                                    </tr>
+                                    <tr>
                                         <td>描述：</td>
                                         <td>{{ $setting->desc }}</td>
                                     </tr>
                                     <tr>
                                         <td>設定資料：</td>
-                                        <td>{{ $setting->data }}</td>
+                                        <td>{!! $setting->getData() !!}</td>
                                     </tr>
                                 </table>
                                 <div>

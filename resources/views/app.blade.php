@@ -44,7 +44,7 @@
         @if(!empty(App\Setting::get('global-notice')))
             <div class="container">
                 <div class="alert alert-warning" role="alert">
-                    {{ App\Setting::get('global-notice') }}
+                    {!! App\Setting::get('global-notice') !!}
                 </div>
             </div>
         @endif
