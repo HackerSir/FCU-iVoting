@@ -9,7 +9,7 @@ class Setting extends Model
     protected $table = 'settings';
     protected $fillable = ['id', 'desc', 'data'];
 
-    static public function get($id)
+    public static function get($id)
     {
         $setting = self::find($id);
         if (!$setting) {
@@ -18,7 +18,7 @@ class Setting extends Model
         return $setting->data;
     }
 
-    static public function set($id, $data)
+    public static function set($id, $data)
     {
         $setting = self::find($id);
         $setting->data = $data;
