@@ -2,10 +2,9 @@
 
 namespace App\Helper;
 
-
 class ImgurHelper
 {
-    static public function getImgurID($url)
+    public static function getImgurID($url)
     {
         $pattern = '/^(?:(?:https?:)?\/\/)?[iw\.]*imgur\.[^\/]*\/(?:gallery\/)?([^\?\s\.]*).*$/im';
         preg_match($pattern, $url, $matches);
@@ -15,7 +14,7 @@ class ImgurHelper
         return $matches[1];
     }
 
-    static public function thumbnail($url, $suffix = null)
+    public static function thumbnail($url, $suffix = null)
     {
         if (empty(self::getImgurID($url))) {
             return $url;

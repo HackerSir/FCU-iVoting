@@ -6,7 +6,7 @@ use AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra as Markdown;
 
 class MarkdownHelper
 {
-    static public function translate($string, array $options = [])
+    public static function translate($string, array $options = [])
     {
         //設定值
         $options = array_merge([

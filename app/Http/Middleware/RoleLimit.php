@@ -52,11 +52,11 @@ class RoleLimit
             } else {
                 return redirect()->route('member.login');
             }
-        } else if (!$this->checkRoleInheritance(Auth::user(), $role)) {
+        } elseif (!$this->checkRoleInheritance(Auth::user(), $role)) {
             //權限不足
             return redirect()->route('home')
                 ->with('warning', '權限不足');
-        } else if (empty($this->auth->user()->confirm_at)) {
+        } elseif (empty($this->auth->user()->confirm_at)) {
             //未驗證信箱
             return redirect()->route('member.resend')
                 ->with('warning', '完成信箱驗證方可進入此頁面');
@@ -83,7 +83,9 @@ class RoleLimit
         //檢查擁有的角色，是否繼承欲檢查之角色
         $roleList = $user->roles;
         foreach ($roleList as $roleItem) {
-            if (isset(static::$inheritance[$roleItem->name]) || array_key_exists($roleItem->name, static::$inheritance)) {
+            if (isset(static::$inheritance[$roleItem->name])
+                || array_key_exists($roleItem->name, static::$inheritance)
+            ) {
                 //繼承表有該角色
                 $roleInheritanceList = static::$inheritance[$roleItem->name];
                 if (is_array($roleInheritanceList)) {

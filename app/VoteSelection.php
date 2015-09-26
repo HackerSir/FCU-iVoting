@@ -65,7 +65,8 @@ class VoteSelection extends Model
     //取得排名
     public function getRankAttribute()
     {
-        $voteSelectionsIdList = VoteSelection::where('vote_event_id', '=', $this->vote_event_id)->lists('id')->toArray();
+        $voteSelectionsIdList = VoteSelection::where('vote_event_id', '=', $this->vote_event_id)
+            ->lists('id')->toArray();
         $voteBallotList = VoteBallot::select('vote_selection_id', DB::raw('count(*) as total'))
             ->whereIn('vote_selection_id', $voteSelectionsIdList)
             ->groupBy('vote_selection_id')
@@ -86,14 +87,16 @@ class VoteSelection extends Model
     //取得加權排名
     public function getScoreRankAttribute()
     {
-        $voteSelectionsIdList = VoteSelection::where('vote_event_id', '=', $this->vote_event_id)->lists('id')->toArray();
+        $voteSelectionsIdList = VoteSelection::where('vote_event_id', '=', $this->vote_event_id)
+            ->lists('id')->toArray();
         $voteBallotList = VoteBallot::select('vote_selection_id', DB::raw('vote_selection_id, count(*) as total'))
             ->whereIn('vote_selection_id', $voteSelectionsIdList)
             ->groupBy('vote_selection_id')
             ->orderBy(DB::raw('count(vote_selection_id)'), 'desc')
             ->lists('total', 'vote_selection_id')
             ->toArray();
-        $voteSelectionsWeight = VoteSelection::where('vote_event_id', '=', $this->vote_event_id)->lists('weight', 'id')->toArray();
+        $voteSelectionsWeight = VoteSelection::where('vote_event_id', '=', $this->vote_event_id)
+            ->lists('weight', 'id')->toArray();
         $score = [];
         foreach ($voteSelectionsIdList as $voteSelectionsId) {
             $ballotCount = isset($voteBallotList[$voteSelectionsId]) ? $voteBallotList[$voteSelectionsId] : 0;

@@ -8,7 +8,8 @@ class ImgurHelperTest extends TestCase
     /**
      * 測試 ImgurHelper::getImgurID function
      */
-    public function test_getImgurID_function() {
+    public function test_getImgurID_function()
+    {
         //測試 http:// 開頭
         $this->assertEquals(
             ImgurHelper::getImgurID('http://i.imgur.com/ABCDEF.jpg'),
@@ -37,7 +38,8 @@ class ImgurHelperTest extends TestCase
      * @depends test_getImgurID_function
      * @return void
      */
-    public function test_thumbnail_function() {
+    public function test_thumbnail_function()
+    {
         //測試 錯誤網址
         $this->assertEquals(
             ImgurHelper::thumbnail('http://i.imgur.com/'),

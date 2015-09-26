@@ -55,13 +55,17 @@ class UploadController extends Controller
             'success' => 'success',
             'url' => $image,
             'initialPreview' => [
-                "<img src='$image' class='file-preview-image' title=" . substr($image, strrpos($image, '/') + 1) . " style='max-width:200px;max-height:200px;width:auto;height:auto;'>",
+                "<img src='$image' class='file-preview-image' title="
+                . substr($image, strrpos($image, '/') + 1)
+                . " style='max-width:200px;max-height:200px;width:auto;height:auto;'>",
             ],
-            'initialPreviewConfig' => [[
-                'caption' => substr($image, strrpos($image, '/') + 1),
-                'url' => URL::route('upload.delete-image'), // server delete action
-                'key' => $image
-            ]]
+            'initialPreviewConfig' => [
+                [
+                    'caption' => substr($image, strrpos($image, '/') + 1),
+                    'url' => URL::route('upload.delete-image'), // server delete action
+                    'key' => $image
+                ]
+            ]
         ];
         return JsonHelper::encode($result);
     }

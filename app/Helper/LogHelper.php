@@ -31,9 +31,9 @@ class LogHelper
      * @param  array $contextList
      * @return void
      */
-    static public function emergency($message, array $contextList = [])
+    public static function emergency($message, array $contextList = [])
     {
-        return forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
+        forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
     }
 
     /**
@@ -43,9 +43,9 @@ class LogHelper
      * @param  array $contextList
      * @return void
      */
-    static public function alert($message, array $contextList = [])
+    public static function alert($message, array $contextList = [])
     {
-        return forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
+        forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
     }
 
     /**
@@ -55,9 +55,9 @@ class LogHelper
      * @param  array $contextList
      * @return void
      */
-    static public function critical($message, array $contextList = [])
+    public static function critical($message, array $contextList = [])
     {
-        return forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
+        forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
     }
 
     /**
@@ -67,9 +67,9 @@ class LogHelper
      * @param  array $contextList
      * @return void
      */
-    static public function error($message, array $contextList = [])
+    public static function error($message, array $contextList = [])
     {
-        return forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
+        forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
     }
 
     /**
@@ -79,9 +79,9 @@ class LogHelper
      * @param  array $contextList
      * @return void
      */
-    static public function warning($message, array $contextList = [])
+    public static function warning($message, array $contextList = [])
     {
-        return forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
+        forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
     }
 
     /**
@@ -91,9 +91,9 @@ class LogHelper
      * @param  array $contextList
      * @return void
      */
-    static public function notice($message, array $contextList = [])
+    public static function notice($message, array $contextList = [])
     {
-        return forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
+        forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
     }
 
     /**
@@ -103,9 +103,9 @@ class LogHelper
      * @param  array $contextList
      * @return void
      */
-    static public function info($message)
+    public static function info($message)
     {
-        return forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
+        forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
     }
 
     /**
@@ -115,9 +115,9 @@ class LogHelper
      * @param  array $contextList
      * @return void
      */
-    static public function debug($message, array $contextList = [])
+    public static function debug($message, array $contextList = [])
     {
-        return forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
+        forward_static_call_array([new static(), 'writeLog'], [__FUNCTION__, func_get_args()]);
     }
 
     /**
@@ -128,7 +128,7 @@ class LogHelper
      * @param  array $contextList
      * @return void
      */
-    static protected function writeLog($level)
+    protected static function writeLog($level)
     {
         if (App::environment('testing')) {
             return;

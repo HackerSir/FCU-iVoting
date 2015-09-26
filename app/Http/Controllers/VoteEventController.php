@@ -73,16 +73,14 @@ class VoteEventController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),
-            array(
-                'subject' => 'required|max:100',
-                'open_time' => 'date',
-                'close_time' => 'date',
-                'info' => 'max:65535',
-                'max_selected' => 'integer|min:1',
-                'award_count' => 'integer|min:1'
-            )
-        );
+        $validator = Validator::make($request->all(), [
+            'subject' => 'required|max:100',
+            'open_time' => 'date',
+            'close_time' => 'date',
+            'info' => 'max:65535',
+            'max_selected' => 'integer|min:1',
+            'award_count' => 'integer|min:1'
+        ]);
         if ($validator->fails()) {
             return Redirect::route('vote-event.create')
                 ->withErrors($validator)
@@ -119,7 +117,11 @@ class VoteEventController extends Controller
             ));
 
             //紀錄
-            LogHelper::info('[VoteEventCreated] ' . Auth::user()->email . ' 建立了活動(Id: ' . $voteEvent->id . ', Subject: ' . $voteEvent->subject . ')', $voteEvent);
+            LogHelper::info(
+                '[VoteEventCreated] ' . Auth::user()->email . ' 建立了活動(Id: ' . $voteEvent->id
+                . ', Subject: ' . $voteEvent->subject . ')',
+                $voteEvent
+            );
 
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
@@ -138,7 +140,9 @@ class VoteEventController extends Controller
         $autoRedirectSetting = Setting::find('auto-redirect');
         if ($voteEvent) {
             if ((Auth::check() && Auth::user()->isStaff()) || $voteEvent->isVisible()) {
-                return view('vote.event.show-eas')->with('voteEvent', $voteEvent)->with('autoRedirectSetting', $autoRedirectSetting);
+                return view('vote.event.show-eas')
+                    ->with('voteEvent', $voteEvent)
+                    ->with('autoRedirectSetting', $autoRedirectSetting);
             } else {
                 return Redirect::route('vote-event.index')
                     ->with('warning', '投票活動尚未開放');
@@ -191,16 +195,14 @@ class VoteEventController extends Controller
             return Redirect::route('vote-event.show', $id)
                 ->with('warning', '無法編輯已結束之投票活動');
         }
-        $validator = Validator::make($request->all(),
-            array(
-                'subject' => 'required|max:100',
-                'open_time' => 'date',
-                'close_time' => 'date',
-                'info' => 'max:65535',
-                'max_selected' => 'integer|min:1',
-                'award_count' => 'integer|min:1'
-            )
-        );
+        $validator = Validator::make($request->all(), [
+            'subject' => 'required|max:100',
+            'open_time' => 'date',
+            'close_time' => 'date',
+            'info' => 'max:65535',
+            'max_selected' => 'integer|min:1',
+            'award_count' => 'integer|min:1'
+        ]);
         if ($validator->fails()) {
             return Redirect::route('vote-event.edit', $id)
                 ->withErrors($validator)
@@ -248,9 +250,12 @@ class VoteEventController extends Controller
 
             //Log
             LogHelper::info(
-                '[VoteEventEdited] ' . Auth::user()->email . ' 編輯了活動(Id: ' . $voteEvent->id . ', Subject: ' . $voteEvent->subject . ')',
-                "編輯前", $beforeEdit,
-                "編輯後", $afterEdit
+                '[VoteEventEdited] ' . Auth::user()->email . ' 編輯了活動(Id: ' . $voteEvent->id
+                . ', Subject: ' . $voteEvent->subject . ')',
+                "編輯前",
+                $beforeEdit,
+                "編輯後",
+                $afterEdit
             );
 
             return Redirect::route('vote-event.show', $id)
@@ -361,9 +366,12 @@ class VoteEventController extends Controller
         if ($originalIdList !== $newIdList) {
             //Log
             LogHelper::info(
-                '[VoteSelectionOrderEdited] ' . Auth::user()->email . ' 編輯了選項排序(Id: ' . $voteEvent->id . ', Subject: ' . $voteEvent->subject . ')',
-                "編輯前", $originalIdList,
-                "編輯後", $newIdList
+                '[VoteSelectionOrderEdited] ' . Auth::user()->email . ' 編輯了選項排序(Id: ' . $voteEvent->id
+                . ', Subject: ' . $voteEvent->subject . ')',
+                "編輯前",
+                $originalIdList,
+                "編輯後",
+                $newIdList
             );
         }
         return 'success';

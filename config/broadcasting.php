@@ -14,7 +14,6 @@ return [
     */
 
     'default' => env('BROADCAST_DRIVER', 'pusher'),
-
     /*
     |--------------------------------------------------------------------------
     | Broadcast Connections
@@ -34,12 +33,10 @@ return [
             'secret' => env('PUSHER_SECRET'),
             'app_id' => env('PUSHER_APP_ID'),
         ],
-
         'redis' => [
             'driver' => 'redis',
             'connection' => 'default',
         ],
-
         'log' => [
             'driver' => 'log',
         ],

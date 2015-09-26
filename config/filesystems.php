@@ -16,7 +16,6 @@ return [
     */
 
     'default' => 'local',
-
     /*
     |--------------------------------------------------------------------------
     | Default Cloud Filesystem Disk
@@ -29,7 +28,6 @@ return [
     */
 
     'cloud' => 's3',
-
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -45,15 +43,13 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root'   => storage_path('app'),
+            'root' => storage_path('app'),
         ],
-
         'ftp' => [
-            'driver'   => 'ftp',
-            'host'     => 'ftp.example.com',
+            'driver' => 'ftp',
+            'host' => 'ftp.example.com',
             'username' => 'your-username',
             'password' => 'your-password',
-
             // Optional FTP Settings...
             // 'port'     => 21,
             // 'root'     => '',
@@ -61,23 +57,21 @@ return [
             // 'ssl'      => true,
             // 'timeout'  => 30,
         ],
-
         's3' => [
             'driver' => 's3',
-            'key'    => 'your-key',
+            'key' => 'your-key',
             'secret' => 'your-secret',
             'region' => 'your-region',
             'bucket' => 'your-bucket',
         ],
-
         'rackspace' => [
-            'driver'    => 'rackspace',
-            'username'  => 'your-username',
-            'key'       => 'your-key',
+            'driver' => 'rackspace',
+            'username' => 'your-username',
+            'key' => 'your-key',
             'container' => 'your-container',
-            'endpoint'  => 'https://identity.api.rackspacecloud.com/v2.0/',
-            'region'    => 'IAD',
-            'url_type'  => 'publicURL',
+            'endpoint' => 'https://identity.api.rackspacecloud.com/v2.0/',
+            'region' => 'IAD',
+            'url_type' => 'publicURL',
         ],
 
     ],

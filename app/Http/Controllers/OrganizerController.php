@@ -149,8 +149,10 @@ class OrganizerController extends Controller
             //紀錄
             LogHelper::info(
                 '[OrganizerEdited] ' . Auth::user()->email . ' 編輯了主辦單位(Id: ' . $organizer->id . ')',
-                "編輯前", $beforeEdit,
-                "編輯後", $afterEdit
+                "編輯前",
+                $beforeEdit,
+                "編輯後",
+                $afterEdit
             );
 
             return Redirect::route('organizer.show', $id)

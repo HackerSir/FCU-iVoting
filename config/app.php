@@ -14,7 +14,6 @@ return [
     */
 
     'debug' => env('APP_DEBUG', false),
-
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -27,7 +26,6 @@ return [
     */
 
     'url' => 'http://localhost',
-
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -40,7 +38,6 @@ return [
     */
 
     'timezone' => 'Asia/Taipei',
-
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -53,7 +50,6 @@ return [
     */
 
     'locale' => 'zh-tw',
-
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -66,7 +62,6 @@ return [
     */
 
     'fallback_locale' => 'zh-tw',
-
     /*
     |--------------------------------------------------------------------------
     | Encryption Key
@@ -79,9 +74,7 @@ return [
     */
 
     'key' => env('APP_KEY', 'SomeRandomString'),
-
     'cipher' => 'AES-256-CBC',
-
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration
@@ -96,14 +89,12 @@ return [
     */
 
     'log' => 'daily',
-
     /*
      * 設定 log 最大檔案個數，365個似乎不錯
      * http://stackoverflow.com/a/29486238/4983032
      */
 
     'log_max_files' => 365,
-
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -150,18 +141,15 @@ return [
         GrahamCampbell\Throttle\ThrottleServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Devfactory\Minify\MinifyServiceProvider::class,
-
         /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
         //laravel-ide-helper
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Class Aliases

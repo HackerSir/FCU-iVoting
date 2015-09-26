@@ -81,11 +81,9 @@ class SettingController extends Controller
                 ->with('warning', '設定項目不存在');
         }
 
-        $validator = Validator::make($request->all(),
-            array(
-                'data' => 'max:65535'
-            )
-        );
+        $validator = Validator::make($request->all(), [
+            'data' => 'max:65535'
+        ]);
         if ($validator->fails()) {
             return Redirect::route('setting.edit', $id)
                 ->withErrors($validator)
@@ -119,13 +117,15 @@ class SettingController extends Controller
 
                 return 'error';
             }
-        }
-        elseif ($type == 'queue') {
-            Mail::queue('emails.raw', ['text' => '這是測試信。'],  function ($message) use ($email) {
-                $message->to($email)->subject("[" . Config::get('config.sitename') . "] 測試信");
-            });
-        }
-        else {
+        } elseif ($type == 'queue') {
+            Mail::queue(
+                'emails.raw',
+                ['text' => '這是測試信。'],
+                function ($message) use ($email) {
+                    $message->to($email)->subject("[" . Config::get('config.sitename') . "] 測試信");
+                }
+            );
+        } else {
             return 'error';
         }
 

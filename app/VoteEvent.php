@@ -115,7 +115,8 @@ class VoteEvent extends Model
     public function getTimeSpanTag($time)
     {
         //style="display: inline-block; 是防止字換行
-        return '<strong title="' . (new Carbon($time))->diffForHumans() . '"  style="display: inline-block;">' . $time . '</strong>';
+        return '<strong title="' . (new Carbon($time))->diffForHumans()
+        . '"  style="display: inline-block;">' . $time . '</strong>';
     }
 
     public function isVisible()

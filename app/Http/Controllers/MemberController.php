@@ -88,8 +88,10 @@ class MemberController extends Controller
         }
         $totalCount = $userQuery->count();
         $userList = $userQuery->paginate($amountPerPage);
-        return view('member.list')->with('userList', $userList)->with('amountPerPage',
-            $amountPerPage)->with('totalCount', $totalCount);
+        return view('member.list')
+            ->with('userList', $userList)
+            ->with('amountPerPage', $amountPerPage)
+            ->with('totalCount', $totalCount);
     }
 
     //登入
@@ -206,15 +208,13 @@ class MemberController extends Controller
 
     public function postRegister(Request $request)
     {
-        $validator = Validator::make($request->all(),
-            array(
-                'email_name' => 'required',
-                'email_domain' => 'required',
-                'password' => 'required|min:6',
-                'password_again' => 'required|same:password',
-                'g-recaptcha-response' => 'required',
-            )
-        );
+        $validator = Validator::make($request->all(), [
+            'email_name' => 'required',
+            'email_domain' => 'required',
+            'password' => 'required|min:6',
+            'password_again' => 'required|same:password',
+            'g-recaptcha-response' => 'required',
+        ]);
 
         if ($validator->fails()) {
             return Redirect::route('member.register')
@@ -421,11 +421,9 @@ class MemberController extends Controller
 
     public function postForgotPassword(Request $request)
     {
-        $validator = Validator::make($request->all(),
-            array(
-                'email' => 'required|email',
-            )
-        );
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+        ]);
         if ($validator->fails()) {
             return Redirect::route('member.forgot-password')
                 ->withErrors($validator)
@@ -454,10 +452,15 @@ class MemberController extends Controller
                 if ($user->save()) {
                     try {
                         //發送信件
-                        Mail::send('emails.forgot', array('link' => URL::route('member.reset-password', $code)),
+                        Mail::send(
+                            'emails.forgot',
+                            array(
+                                'link' => URL::route('member.reset-password', $code)
+                            ),
                             function ($message) use ($user) {
                                 $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 重新設定密碼");
-                            });
+                            }
+                        );
                     } catch (Exception $e) {
                         //Log
                         LogHelper::info('[SendEmailFailed] 註冊失敗：無法寄出密碼重設信件給' . $user->email, [
@@ -504,12 +507,10 @@ class MemberController extends Controller
             $user = User::where('email', '=', $email)->first();
             //檢查使用者是否存在
             if ($user) {
-                $validator = Validator::make($request->all(),
-                    array(
-                        'password' => 'required|min:6',
-                        'password_again' => 'required|same:password',
-                    )
-                );
+                $validator = Validator::make($request->all(), [
+                    'password' => 'required|min:6',
+                    'password_again' => 'required|same:password',
+                ]);
 
                 if ($validator->fails()) {
                     return Redirect::route('member.reset-password', $token)
@@ -540,13 +541,11 @@ class MemberController extends Controller
 
     public function postChangePassword(Request $request)
     {
-        $validator = Validator::make($request->all(),
-            array(
-                'old_password' => 'required',
-                'password' => 'required|min:6',
-                'password_again' => 'required|same:password',
-            )
-        );
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required',
+            'password' => 'required|min:6',
+            'password_again' => 'required|same:password',
+        ]);
 
         if ($validator->fails()) {
             return Redirect::route('member.change-password')
@@ -606,11 +605,9 @@ class MemberController extends Controller
 
     public function postEditProfile(Request $request)
     {
-        $validator = Validator::make($request->all(),
-            array(
-                'nickname' => 'max:100'
-            )
-        );
+        $validator = Validator::make($request->all(), [
+            'nickname' => 'max:100'
+        ]);
 
         if ($validator->fails()) {
             return Redirect::route('member.edit-profile')
@@ -652,12 +649,10 @@ class MemberController extends Controller
                 ->with('warning', '該成員不存在。');
         }
 
-        $validator = Validator::make($request->all(),
-            array(
-                'nickname' => 'max:100',
-                'comment' => 'max:100'
-            )
-        );
+        $validator = Validator::make($request->all(), [
+            'nickname' => 'max:100',
+            'comment' => 'max:100'
+        ]);
 
         if ($validator->fails()) {
             return Redirect::route('member.edit-other-profile', $uid)

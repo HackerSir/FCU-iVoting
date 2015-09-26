@@ -118,7 +118,7 @@ class Handler extends ExceptionHandler
         );
         if (in_array($status, $exclude_code) && view()->exists("errors.{$status}")) {
             return response()->view("errors.{$status}", [], $status);
-        } else if (array_key_exists($status, $http_codes)) {
+        } elseif (array_key_exists($status, $http_codes)) {
             $error = array(
                 'code' => $status,
                 'message' => $http_codes[$status]

@@ -2,8 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 
-return array(
-
+return [
     /**
      * 巡覽列
      *
@@ -15,36 +14,32 @@ return array(
      */
 
     //基本巡覽列
-    'navbar' => array(
+    'navbar' => [
         '票選活動' => 'vote-event',
-    ),
-
+    ],
     //會員
-    'member' => array(
-        '%user%' => array(
+    'member' => [
+        '%user%' => [
             '個人資料' => 'member/profile',
             '修改密碼' => 'member/change-password',
             '登出' => 'member/logout'
-        )
-    ),
-
+        ]
+    ],
     //工作人員
-    'staff' => array(
-        '工作人員' => array()
-    ),
-
+    'staff' => [
+        '工作人員' => []
+    ],
     //管理員
-    'admin' => array(
-        '管理員' => array(
+    'admin' => [
+        '管理員' => [
             '成員清單' => 'member',
             '主辦單位清單' => 'organizer',
             '網站設定' => 'setting',
             '記錄檢視器' => '!log'
-        )
-    ),
-
+        ]
+    ],
     //遊客
-    'guest' => array(
+    'guest' => [
         '登入' => 'member/login'
-    ),
-);
+    ]
+];

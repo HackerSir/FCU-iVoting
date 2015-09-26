@@ -35,7 +35,8 @@ class LogApacheStatus extends Command
         parent::__construct();
     }
 
-    public static function initLogger() {
+    public static function initLogger()
+    {
         if (is_null(self::$logger)) {
             self::$logger = new Writer(new Logger('StatusLog'));
             self::$logger->useDailyFiles(storage_path('logs-status/mod-status.log'), 365);
@@ -52,7 +53,8 @@ class LogApacheStatus extends Command
         //self::$logger->info('Test');
     }
 
-    protected function getServerStatus() {
+    protected function getServerStatus()
+    {
 
     }
 }

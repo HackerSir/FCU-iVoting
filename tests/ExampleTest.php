@@ -14,6 +14,6 @@ class ExampleTest extends TestCase
     public function testBasicExample()
     {
         $this->visit('/')
-             ->see(Config::get('config.sitename'));
+            ->see(Config::get('config.sitename'));
     }
 }

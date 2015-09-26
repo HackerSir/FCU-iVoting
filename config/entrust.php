@@ -20,7 +20,6 @@ return [
     |
     */
     'role' => 'App\Role',
-
     /*
     |--------------------------------------------------------------------------
     | Entrust Roles Table
@@ -30,7 +29,6 @@ return [
     |
     */
     'roles_table' => 'roles',
-
     /*
     |--------------------------------------------------------------------------
     | Entrust Permission Model
@@ -41,7 +39,6 @@ return [
     |
     */
     'permission' => 'App\Permission',
-
     /*
     |--------------------------------------------------------------------------
     | Entrust Permissions Table
@@ -52,7 +49,6 @@ return [
     |
     */
     'permissions_table' => 'permissions',
-
     /*
     |--------------------------------------------------------------------------
     | Entrust permission_role Table
@@ -63,7 +59,6 @@ return [
     |
     */
     'permission_role_table' => 'permission_role',
-
     /*
     |--------------------------------------------------------------------------
     | Entrust role_user Table

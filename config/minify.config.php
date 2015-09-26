@@ -13,7 +13,6 @@ return array(
     */
 
     'reverse_sort' => true,
-
     /*
     |--------------------------------------------------------------------------
     | App environments to not minify
@@ -27,7 +26,6 @@ return array(
     'ignore_environments' => array(
         'local',
     ),
-
     /*
     |--------------------------------------------------------------------------
     | CSS build path
@@ -42,7 +40,6 @@ return array(
 
     'css_build_path' => '/css-builds/',
     'css_url_path' => '/css-builds/',
-
     /*
     |--------------------------------------------------------------------------
     | JS build path
@@ -57,7 +54,6 @@ return array(
 
     'js_build_path' => '/js-builds/',
     'js_url_path' => '/js-builds/',
-
     /*
     |--------------------------------------------------------------------------
     | Hash modification
@@ -70,7 +66,6 @@ return array(
 
     'disable_mtime' => false,
     'hash_salt' => '',
-
     /*
     |--------------------------------------------------------------------------
     | Base URL

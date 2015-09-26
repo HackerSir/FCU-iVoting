@@ -84,13 +84,11 @@ class VoteSelectionController extends Controller
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('warning', '只能在投票活動開始前編輯選項');
         }
-        $validator = Validator::make($request->all(),
-            array(
-                'title' => 'required|max:65535',
-                'weight' => 'numeric',
-                'image' => 'max:65535'
-            )
-        );
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:65535',
+            'weight' => 'numeric',
+            'image' => 'max:65535'
+        ]);
         if ($validator->fails()) {
             return Redirect::route('vote-selection.create', ['vid' => $voteEvent->id])
                 ->withErrors($validator)
@@ -99,7 +97,7 @@ class VoteSelectionController extends Controller
             //封裝JSON
             $obj = new stdClass();
             //$obj->image = explode(PHP_EOL, $request->get('image'));
-            $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), NULL, PREG_SPLIT_NO_EMPTY);
+            $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), null, PREG_SPLIT_NO_EMPTY);
             $json = JsonHelper::encode($obj);
             $order = ($voteEvent->voteSelections->count() > 0) ? $voteEvent->voteSelections->max('order') + 1 : 0;
             $voteSelection = VoteSelection::create(array(
@@ -160,13 +158,11 @@ class VoteSelectionController extends Controller
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('warning', '只能在投票活動開始前編輯選項');
         }
-        $validator = Validator::make($request->all(),
-            array(
-                'title' => 'required|max:65535',
-                'weight' => 'numeric',
-                'image' => 'max:65535'
-            )
-        );
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:65535',
+            'weight' => 'numeric',
+            'image' => 'max:65535'
+        ]);
         if ($validator->fails()) {
             return Redirect::route('vote-selection.edit', $id)
                 ->withErrors($validator)
@@ -180,7 +176,7 @@ class VoteSelectionController extends Controller
             //封裝JSON
             $obj = new stdClass();
             //$obj->image = explode(PHP_EOL, $request->get('image'));
-            $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), NULL, PREG_SPLIT_NO_EMPTY);
+            $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), null, PREG_SPLIT_NO_EMPTY);
             $json = JsonHelper::encode($obj);
 
             $voteSelection->data = $json;
@@ -190,9 +186,12 @@ class VoteSelectionController extends Controller
 
             //Log
             LogHelper::info(
-                '[VoteSelectionEdited] ' . Auth::user()->email . ' 編輯了選項(Id: ' . $voteSelection->id . ', Title: ' . $voteSelection->title . ')',
-                "編輯前", $beforeEdit->attributesToArray(),
-                "編輯後", $afterEdit->attributesToArray()
+                '[VoteSelectionEdited] ' . Auth::user()->email . ' 編輯了選項(Id: ' . $voteSelection->id
+                . ', Title: ' . $voteSelection->title . ')',
+                "編輯前",
+                $beforeEdit->attributesToArray(),
+                "編輯後",
+                $afterEdit->attributesToArray()
             );
 
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
@@ -220,7 +219,8 @@ class VoteSelectionController extends Controller
         $voteEvent = $voteSelection->voteEvent;
         //Log
         LogHelper::info(
-            '[VoteSelectionDeleted] ' . Auth::user()->email . ' 刪除了選項(Id: ' . $voteSelection->id . ', Title: ' . $voteSelection->title . ')',
+            '[VoteSelectionDeleted] ' . Auth::user()->email . ' 刪除了選項(Id: ' . $voteSelection->id
+            . ', Title: ' . $voteSelection->title . ')',
             $voteSelection->attributesToArray()
         );
         //移除投票選項
@@ -262,12 +262,18 @@ class VoteSelectionController extends Controller
         //發現投太多票時，移除最後一票
         if ($voteSelection->voteEvent->getMaxSelected() < $voteSelection->voteEvent->getSelectedCount(Auth::user())) {
             $voteSelectionIdList = $voteSelection->voteEvent->voteSelections->lists('id')->toArray();
-            while ($voteSelection->voteEvent->getMaxSelected() < $voteSelection->voteEvent->getSelectedCount(Auth::user())) {
-                $voteBallot = VoteBallot::where('user_id', '=', Auth::user()->id)->whereIn('vote_selection_id', $voteSelectionIdList)->orderBy('created_at', 'desc')->first();
+            while ($voteSelection->voteEvent->getMaxSelected()
+                < $voteSelection->voteEvent->getSelectedCount(Auth::user())) {
+                $voteBallot = VoteBallot::where('user_id', '=', Auth::user()->id)
+                    ->whereIn('vote_selection_id', $voteSelectionIdList)
+                    ->orderBy('created_at', 'desc')
+                    ->first();
                 //Log
                 LogHelper::info(
-                    '[VoteError] ' . Auth::user()->email . ' 投票時出現異常選票，已移除(Id: ' . $voteSelection->voteEvent->id . ', Subject: ' . $voteSelection->voteEvent->subject . ')',
-                    '選票資料', $voteBallot
+                    '[VoteError] ' . Auth::user()->email . ' 投票時出現異常選票，已移除(Id: '
+                    . $voteSelection->voteEvent->id . ', Subject: ' . $voteSelection->voteEvent->subject . ')',
+                    '選票資料',
+                    $voteBallot
                 );
                 $voteBallot->delete();
             }
