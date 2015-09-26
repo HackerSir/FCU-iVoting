@@ -41,6 +41,14 @@
         {{-- navbar--}}
         @include('common.navbar')
 
+        @if(!empty(App\Setting::get('global-notice')))
+            <div class="container">
+                <div class="alert alert-warning" role="alert">
+                    {{ App\Setting::get('global-notice') }}
+                </div>
+            </div>
+        @endif
+
         {{-- 信箱未驗證提示--}}
         @if(Auth::check() && !Auth::user()->isConfirmed())
             <div class="container">
