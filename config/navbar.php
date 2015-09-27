@@ -35,6 +35,7 @@ return [
             '成員清單' => 'member',
             '主辦單位清單' => 'organizer',
             '網站設定' => 'setting',
+            'Queue狀態' => 'queue-status',
             '記錄檢視器' => '!log'
         ]
     ],

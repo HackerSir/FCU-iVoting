@@ -66,6 +66,13 @@ Route::post('send-test-mail',[
     'as' => 'send-test-mail',
     'uses' => 'SettingController@sendTestMail'
 ]);
+
+//Queue狀態
+Route::get('queue-status', [
+    'as' => 'queue-status',
+    'uses' => 'QueueStatusController@index'
+]);
+
 //網站設定
 Route::resource('setting', 'SettingController', ['except' => ['create', 'store', 'destroy']]);
 
