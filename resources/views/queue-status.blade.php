@@ -14,6 +14,40 @@
     <div class="container container-background">
         <div class="panel panel-primary">
             <div class="panel-heading">
+                <h3 class="panel-title">Queue Status</h3>
+            </div>
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th class="col-md-3">Name</th>
+                    <th class="col-md-6">Description</th>
+                    <th class="col-md-3">State</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if(is_array($queues))
+                    @forelse($queues as $queue)
+                        <tr>
+                            <td>{{ $queue['name'] }}</td>
+                            <td>{{ $queue['description'] }}</td>
+                            <td>{{ $queue['state'] }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td class="text-center" colspan="3">沒有資料</td>
+                        </tr>
+                    @endforelse
+                @else
+                    <tr>
+                        <td class="text-center" colspan="3">{{ $queues }}</td>
+                    </tr>
+                @endif
+                </tbody>
+            </table>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
                 <h3 class="panel-title">Jobs Queue</h3>
             </div>
             <table class="table table-striped table-bordered table-hover">
