@@ -67,7 +67,7 @@
                         @if(strlen($job->payload) <= 100)
                             <td>{{ $job->payload }}</td>
                         @else
-                            <td data-toggle="popover" data-placement="bottom" data-content="{{ $job->payload }}">
+                            <td style="cursor: pointer;" data-toggle="popover" data-placement="bottom" data-content="{{ $job->payload }}">
                                 {{ mb_strimwidth($job->payload, 0, 100, "...") }}
                             </td>
                         @endif
