@@ -14,7 +14,7 @@
     <div class="container container-background">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">Queue Status</h3>
+                <h3 class="panel-title">Queue Status(All)</h3>
             </div>
             <table class="table table-striped table-bordered table-hover">
                 <thead>
