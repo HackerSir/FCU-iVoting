@@ -133,7 +133,7 @@ class MemberController extends Controller
             }
 
             //上線環境再檢查
-            if (App::environment('production')) {
+            if (App::environment('production') && !empty(env('Data_Sitekey'))) {
                 //密碼錯誤三次後，追加檢查reCaptcha
                 if ($throttle->count() >= 3) {
                     $result = $this->tryPassGoogleReCAPTCHA($request);
@@ -222,7 +222,7 @@ class MemberController extends Controller
                 ->withInput();
         } else {
             //上線環境再檢查
-            if (App::environment('production')) {
+            if (App::environment('production') && !empty(env('Data_Sitekey'))) {
                 $result = $this->tryPassGoogleReCAPTCHA($request);
                 if (!(is_bool($result->success) && $result->success)) {
                     LogHelper::info('[reCAPTCHA Failed]', $result);

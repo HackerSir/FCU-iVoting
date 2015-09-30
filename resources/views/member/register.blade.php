@@ -55,7 +55,7 @@
                                 <span class="label label-danger">您必須勾選「我不是機器人」</span>
                             @endif
                         </label>
-                        @if(App::environment('production'))
+                        @if(App::environment('production') && !empty(env('Data_Sitekey')))
                             <div class="g-recaptcha" data-sitekey="{{ env('Data_Sitekey') }}"></div>
                         @else
                             <div class="checkbox">
