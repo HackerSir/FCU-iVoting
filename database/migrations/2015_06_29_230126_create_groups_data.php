@@ -12,9 +12,9 @@ class CreateGroupsData extends Migration
      */
     public function up()
     {
-        DB::table('groups')->insert(array('name' => 'admin', 'title' => '管理員'));
-        DB::table('groups')->insert(array('name' => 'staff', 'title' => '工作人員'));
-        DB::table('groups')->insert(array('name' => 'default', 'title' => '預設'));
+        DB::table('groups')->insert(['name' => 'admin', 'title' => '管理員']);
+        DB::table('groups')->insert(['name' => 'staff', 'title' => '工作人員']);
+        DB::table('groups')->insert(['name' => 'default', 'title' => '預設']);
     }
 
     /**

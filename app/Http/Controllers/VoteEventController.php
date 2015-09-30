@@ -103,7 +103,7 @@ class VoteEventController extends Controller
             $condition = new \stdClass();
             $condition->prefix = ($request->has('prefix')) ? str_replace(' ', '', $request->get('prefix')) : null;
 
-            $voteEvent = VoteEvent::create(array(
+            $voteEvent = VoteEvent::create([
                 'subject' => $request->get('subject'),
                 'open_time' => $open_time,
                 'close_time' => $close_time,
@@ -111,10 +111,12 @@ class VoteEventController extends Controller
                 'max_selected' => ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1,
                 'organizer_id' => ($request->has('organizer')) ? $request->get('organizer') : null,
                 'show' => !$request->get('hideVoteEvent', false),
-                'vote_condition' => (!empty($condition)) ? JsonHelper::encode((object)array_filter((array)$condition)) : null,
+                'vote_condition' => (!empty($condition))
+                    ? JsonHelper::encode((object)array_filter((array)$condition))
+                    : null,
                 'show_result' => $request->get('show_result'),
                 'award_count' => ($request->get('award_count') > 0) ? $request->get('award_count') : 1
-            ));
+            ]);
 
             //紀錄
             LogHelper::info(
@@ -240,7 +242,9 @@ class VoteEventController extends Controller
             //投票條件
             $condition = new \stdClass();
             $condition->prefix = ($request->has('prefix')) ? str_replace(' ', '', $request->get('prefix')) : null;
-            $voteEvent->vote_condition = (!empty($condition)) ? JsonHelper::encode((object)array_filter((array)$condition)) : null;
+            $voteEvent->vote_condition = (!empty($condition))
+                ? JsonHelper::encode((object)array_filter((array)$condition))
+                : null;
 
             $voteEvent->show_result = $request->get('show_result');
 

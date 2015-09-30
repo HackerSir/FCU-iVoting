@@ -100,13 +100,13 @@ class VoteSelectionController extends Controller
             $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), null, PREG_SPLIT_NO_EMPTY);
             $json = JsonHelper::encode($obj);
             $order = ($voteEvent->voteSelections->count() > 0) ? $voteEvent->voteSelections->max('order') + 1 : 0;
-            $voteSelection = VoteSelection::create(array(
+            $voteSelection = VoteSelection::create([
                 'title' => $request->get('title'),
                 'vote_event_id' => $voteEvent->id,
                 'weight' => $request->has('weight') ? $request->get('weight') : 1,
                 'data' => $json,
                 'order' => $order
-            ));
+            ]);
 
             //紀錄
             LogHelper::info(

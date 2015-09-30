@@ -19,12 +19,12 @@
         {{-- 提供超多好看的Icon --}}
         {!! HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') !!}
 
-        {!! Minify::stylesheet(array(
+        {!! Minify::stylesheet([
             '/css/stylesheet.css',            // 全域自訂 CSS
             '/css/sticky-footer-navbar.css',  // 頁尾資訊
             '/css/animate.css',               // 給 bootstrap-notify 使用，用來彈出訊息框的淡入淡出特效
             '/css/tipped.css',                // 好看的提示框
-        ))->withFullUrl() !!}
+        ])->withFullUrl() !!}
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

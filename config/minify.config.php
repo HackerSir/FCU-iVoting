@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -23,9 +23,9 @@ return array(
     |
     */
 
-    'ignore_environments' => array(
+    'ignore_environments' => [
         'local',
-    ),
+    ],
     /*
     |--------------------------------------------------------------------------
     | CSS build path
@@ -76,4 +76,4 @@ return array(
     |
     */
     'base_url' => ''
-);
+];

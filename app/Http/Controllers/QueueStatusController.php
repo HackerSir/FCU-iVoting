@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use DOMDocument;
 use Exception;
 use GuzzleHttp\Client;
@@ -29,8 +28,7 @@ class QueueStatusController extends Controller
 
             if ($res->getStatusCode() == 200) {
                 $bodyStr = $res->getBody();
-            }
-            else {
+            } else {
                 $queues = '無法取得Queue狀態資料(code: ' . $res->getStatusCode() . ')';
             }
         } catch (Exception $e) {
@@ -52,7 +50,7 @@ class QueueStatusController extends Controller
                     $description = $cols[1]->getElementsByTagName('span')[0]->nodeValue;
                     $queue['description'] = substr($description, strpos($description, ',') + 2);
 
-                    $queue['name'] = $cols[2]->getElementsByTagName('a')[0]->nodeValue;;
+                    $queue['name'] = $cols[2]->getElementsByTagName('a')[0]->nodeValue;
 
                     array_push($queues, $queue);
                 }

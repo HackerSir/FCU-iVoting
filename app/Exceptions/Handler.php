@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
     protected function renderHttpException(HttpException $e)
     {
         $status = $e->getStatusCode();
-        $http_codes = array(
+        $http_codes = [
             100 => 'Continue',
             101 => 'Switching Protocols',
             102 => 'Processing',
@@ -111,18 +111,18 @@ class Handler extends ExceptionHandler
             507 => 'Insufficient Storage',
             509 => 'Bandwidth Limit Exceeded',
             510 => 'Not Extended'
-        );
+        ];
         //使用獨立錯誤頁面
-        $exclude_code = array(
+        $exclude_code = [
             '503'
-        );
+        ];
         if (in_array($status, $exclude_code) && view()->exists("errors.{$status}")) {
             return response()->view("errors.{$status}", [], $status);
         } elseif (array_key_exists($status, $http_codes)) {
-            $error = array(
+            $error = [
                 'code' => $status,
                 'message' => $http_codes[$status]
-            );
+            ];
             return response()->view("errors.error", $error, $status);
         } else {
             return (new SymfonyDisplayer(config('app.debug')))->createResponse($e);

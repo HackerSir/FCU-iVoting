@@ -42,7 +42,7 @@ class RemoveGroupsTable extends Migration
                 'title' => $role->display_name
             ]);
         }
-        DB::table('groups')->insert(array('name' => 'default', 'title' => '預設'));
+        DB::table('groups')->insert(['name' => 'default', 'title' => '預設']);
 
         $defaultGroup = DB::table('groups')->where('name', 'default')->first();
 

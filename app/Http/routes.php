@@ -17,7 +17,7 @@ Route::get('/', [
     'uses' => 'HomeController@index'
 ]);
 
-Route::controller('member', 'MemberController', array(
+Route::controller('member', 'MemberController', [
     'getIndex' => 'member.list',
     'getLogin' => 'member.login',
     'postLogin' => 'member.login',
@@ -38,7 +38,7 @@ Route::controller('member', 'MemberController', array(
     'getEditOtherProfile' => 'member.edit-other-profile',
     'postEditOtherProfile' => 'member.edit-other-profile',
     'getLogout' => 'member.logout'
-));
+]);
 
 //投票系統
 Route::post('vote-event/start/{vid}', [
@@ -62,7 +62,7 @@ Route::resource('vote-selection', 'VoteSelectionController', ['except' => ['inde
 Route::resource('organizer', 'OrganizerController');
 
 //寄送測試信
-Route::post('send-test-mail',[
+Route::post('send-test-mail', [
     'as' => 'send-test-mail',
     'uses' => 'SettingController@sendTestMail'
 ]);
@@ -116,9 +116,9 @@ Route::get(
 );
 
 //未定義路由
-Route::get('{all}', array(
+Route::get('{all}', [
     'as' => 'not-found',
     function () {
         abort(404);
     }
-))->where('all', '.*');
+])->where('all', '.*');

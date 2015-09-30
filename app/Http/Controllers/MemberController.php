@@ -191,7 +191,7 @@ class MemberController extends Controller
     {
         //註冊允許使用之信箱類型
         $allowedEmails = Config::get('config.allowed_emails');
-        $allowedEmailsArray = array(null => '--請下拉選擇--');
+        $allowedEmailsArray = [null => '--請下拉選擇--'];
 
         foreach ($allowedEmails as $allowedEmail) {
             $allowedEmailsArray[$allowedEmail] = $allowedEmail;
@@ -270,21 +270,26 @@ class MemberController extends Controller
             //驗證碼
             $code = str_random(60);
 
-            $user = User::create(array(
+            $user = User::create([
                 'email' => $email,
                 'password' => Hash::make($password),
                 'confirm_code' => $code,
                 'register_ip' => $request->getClientIp(),
                 'register_at' => Carbon::now()->toDateTimeString()
-            ));
+            ]);
 
             if ($user) {
                 //發送驗證信件
                 try {
-                    Mail::queue('emails.confirm', array('link' => URL::route('member.confirm', $code)),
+                    Mail::queue(
+                        'emails.confirm',
+                        [
+                            'link' => URL::route('member.confirm', $code)
+                        ],
                         function ($message) use ($user) {
                             $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
-                        });
+                        }
+                    );
                 } catch (Exception $e) {
                     //Log
                     LogHelper::info('[RegisterFailed] 註冊失敗：無法寄出認證信件給' . $email, [
@@ -325,7 +330,8 @@ class MemberController extends Controller
             ]);
         }
 
-        $response = $client->post('https://www.google.com/recaptcha/api/siteverify',
+        $response = $client->post(
+            'https://www.google.com/recaptcha/api/siteverify',
             [
                 'form_params' => [
                     'secret' => env('Secret_Key'),
@@ -390,10 +396,15 @@ class MemberController extends Controller
         if ($user->save()) {
             //重新發送驗證信件
             try {
-                Mail::queue('emails.confirm', array('link' => URL::route('member.confirm', $code)),
+                Mail::queue(
+                    'emails.confirm',
+                    [
+                        'link' => URL::route('member.confirm', $code)
+                    ],
                     function ($message) use ($user) {
                         $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
-                    });
+                    }
+                );
             } catch (Exception $e) {
                 //Log
                 LogHelper::info('[SendEmailFailed] 無法重寄認證信件給' . $user->email, [
@@ -454,9 +465,9 @@ class MemberController extends Controller
                         //發送信件
                         Mail::send(
                             'emails.forgot',
-                            array(
+                            [
                                 'link' => URL::route('member.reset-password', $code)
-                            ),
+                            ],
                             function ($message) use ($user) {
                                 $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 重新設定密碼");
                             }
