@@ -21,7 +21,7 @@
 
         {!! Minify::stylesheet([
             '/css/stylesheet.css',            // 全域自訂 CSS
-            '/css/sticky-footer-navbar.css',  // 頁尾資訊
+            '/css/sticky-footer.css',         // 頁尾資訊
             '/css/animate.css',               // 給 bootstrap-notify 使用，用來彈出訊息框的淡入淡出特效
             '/css/tipped.css',                // 好看的提示框
         ])->withFullUrl() !!}
