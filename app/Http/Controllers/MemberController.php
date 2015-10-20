@@ -474,7 +474,7 @@ class MemberController extends Controller
                         );
                     } catch (Exception $e) {
                         //Log
-                        LogHelper::info('[SendEmailFailed] 註冊失敗：無法寄出密碼重設信件給' . $user->email, [
+                        LogHelper::info('[SendEmailFailed] 發送失敗：無法寄出密碼重設信件給' . $user->email, [
                             'email' => $user->email,
                             'ip' => $request->getClientIp()
                         ]);
