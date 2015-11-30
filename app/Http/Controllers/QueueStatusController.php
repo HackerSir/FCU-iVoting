@@ -36,26 +36,35 @@ class QueueStatusController extends Controller
         }
 
         if ($bodyStr != '') {
+            $count = 0;
+            $bodyStr = preg_replace_callback('/name="([^"]*)"/',
+                function ($matches) use (&$count) {
+                    $count++;
+                    return 'name="'.$matches[1].$count.'"';
+                }
+                , $bodyStr);
+
             try {
                 $DOM = new DOMDocument;
                 $DOM->loadHTML($bodyStr);
 
-                $rows = $DOM->getElementsByTagName('tbody')[0]->getElementsByTagName('tr');
+                $rows = $DOM->getElementsByTagName('tbody')->item(0)->getElementsByTagName('tr');
 
                 for ($i = 0; $i < $rows->length; $i++) {
-                    $cols = $rows[$i]->getElementsByTagName('td');
+                    $cols = $rows->item($i)->getElementsByTagName('td');
                     $queue = [];
-                    $queue['state'] = $cols[0]->getElementsByTagName('span')[0]->nodeValue;
+                    $queue['state'] = $cols->item(0)->getElementsByTagName('span')->item(0)->nodeValue;
 
-                    $description = $cols[1]->getElementsByTagName('span')[0]->nodeValue;
+                    $description = $cols->item(1)->getElementsByTagName('span')->item(0)->nodeValue;
                     $queue['description'] = substr($description, strpos($description, ',') + 2);
 
-                    $queue['name'] = $cols[2]->getElementsByTagName('a')[0]->nodeValue;
+                    $queue['name'] = $cols->item(2)->getElementsByTagName('a')->item(0)->nodeValue;
 
                     array_push($queues, $queue);
                 }
             } catch (Exception $e) {
                 $queues = '解析Queue狀態資料發生錯誤';
+                Log::error($e);
             }
         }
 
