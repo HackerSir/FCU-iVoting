@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use App\Role;
 use App\User;
 use Closure;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
 
 class RoleLimit
