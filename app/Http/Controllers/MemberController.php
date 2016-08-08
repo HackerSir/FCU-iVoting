@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App;
 use App\Helper\JsonHelper;
@@ -36,8 +38,8 @@ class MemberController extends Controller
                 'getForgotPassword',
                 'postForgotPassword',
                 'getResetPassword',
-                'postResetPassword'
-            ]
+                'postResetPassword',
+            ],
         ]);
         //會員限定
         $this->middleware('auth', [
@@ -48,8 +50,8 @@ class MemberController extends Controller
                 'postChangePassword',
                 'getProfile',
                 'getEditProfile',
-                'postEditProfile'
-            ]
+                'postEditProfile',
+            ],
         ]);
         //需完成信箱驗證
         /*$this->middleware('email', [
@@ -62,8 +64,8 @@ class MemberController extends Controller
             'only' => [
                 'getIndex',
                 'getEditOtherProfile',
-                'postEditOtherProfile'
-            ]
+                'postEditOtherProfile',
+            ],
         ]);
     }
 
@@ -88,6 +90,7 @@ class MemberController extends Controller
         }
         $totalCount = $userQuery->count();
         $userList = $userQuery->paginate($amountPerPage);
+
         return view('member.list')
             ->with('userList', $userList)
             ->with('amountPerPage', $amountPerPage)
@@ -98,6 +101,7 @@ class MemberController extends Controller
     public function getLogin()
     {
         $this->markPreviousURL();
+
         return view('member.login');
     }
 
@@ -108,7 +112,7 @@ class MemberController extends Controller
     public function postLogin(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
+            'email'    => 'required|email',
             'password' => 'required',
         ]);
         //檢查登入冷卻，防止惡意登入
@@ -139,6 +143,7 @@ class MemberController extends Controller
                     $result = $this->tryPassGoogleReCAPTCHA($request);
                     if (!(is_bool($result->success) && $result->success)) {
                         LogHelper::info('[reCAPTCHA Failed]', $result);
+
                         return Redirect::route('member.login')
                             ->with('warning', '沒有通過 reCAPTCHA 驗證，請再試一次。')
                             ->withInput();
@@ -151,7 +156,7 @@ class MemberController extends Controller
 
             $remember = ($request->has('remember')) ? true : false;
             $auth = Auth::attempt([
-                'email' => $request->get('email'),
+                'email'    => $request->get('email'),
                 'password' => $request->get('password'),
             ], $remember);
 
@@ -166,7 +171,7 @@ class MemberController extends Controller
                 //記錄
                 LogHelper::info('[LoginSucceeded] 登入成功：' . $request->get('email'), [
                     'email' => $request->get('email'),
-                    'ip' => $request->getClientIp()
+                    'ip'    => $request->getClientIp(),
                 ]);
                 //重導向至登入前頁面
                 if (Session::has('previous-url')) {
@@ -178,8 +183,9 @@ class MemberController extends Controller
                 //紀錄
                 LogHelper::info('[LoginFailed] 登入失敗：' . $request->get('email'), [
                     'email' => $request->get('email'),
-                    'ip' => $request->getClientIp()
+                    'ip'    => $request->getClientIp(),
                 ]);
+
                 return Redirect::route('member.login')
                     ->with('warning', '帳號或密碼錯誤');
             }
@@ -209,10 +215,10 @@ class MemberController extends Controller
     public function postRegister(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email_name' => 'required',
-            'email_domain' => 'required',
-            'password' => 'required|min:6',
-            'password_again' => 'required|same:password',
+            'email_name'           => 'required',
+            'email_domain'         => 'required',
+            'password'             => 'required|min:6',
+            'password_again'       => 'required|same:password',
             'g-recaptcha-response' => 'required',
         ]);
 
@@ -226,6 +232,7 @@ class MemberController extends Controller
                 $result = $this->tryPassGoogleReCAPTCHA($request);
                 if (!(is_bool($result->success) && $result->success)) {
                     LogHelper::info('[reCAPTCHA Failed]', $result);
+
                     return Redirect::route('member.register')
                         ->with('warning', '沒有通過 reCAPTCHA 驗證，請再試一次。')
                         ->withInput();
@@ -246,7 +253,7 @@ class MemberController extends Controller
                 $email = $email_name . '@' . $email_domain;
             } else {
                 //若信箱名稱含有@，則以信箱名稱作為完整信箱
-                $email_domain = preg_split("/@/", $email_name, 2)[1];
+                $email_domain = preg_split('/@/', $email_name, 2)[1];
                 $email = $email_name;
             }
             //檢查Email格式
@@ -271,11 +278,11 @@ class MemberController extends Controller
             $code = str_random(60);
 
             $user = User::create([
-                'email' => $email,
-                'password' => Hash::make($password),
+                'email'        => $email,
+                'password'     => Hash::make($password),
                 'confirm_code' => $code,
-                'register_ip' => $request->getClientIp(),
-                'register_at' => Carbon::now()->toDateTimeString()
+                'register_ip'  => $request->getClientIp(),
+                'register_at'  => Carbon::now()->toDateTimeString(),
             ]);
 
             if ($user) {
@@ -284,17 +291,17 @@ class MemberController extends Controller
                     Mail::queue(
                         'emails.confirm',
                         [
-                            'link' => URL::route('member.confirm', $code)
+                            'link' => URL::route('member.confirm', $code),
                         ],
                         function ($message) use ($user) {
-                            $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
+                            $message->to($user->email)->subject('[' . Config::get('config.sitename') . '] 信箱驗證');
                         }
                     );
                 } catch (Exception $e) {
                     //Log
                     LogHelper::info('[RegisterFailed] 註冊失敗：無法寄出認證信件給' . $email, [
                         'email' => $email,
-                        'ip' => $request->getClientIp()
+                        'ip'    => $request->getClientIp(),
                     ]);
                     //刪除使用者
                     $user->delete();
@@ -306,12 +313,14 @@ class MemberController extends Controller
                 //記錄
                 LogHelper::info('[RegisterSucceeded] 註冊成功：' . $email, [
                     'email' => $email,
-                    'ip' => $request->getClientIp()
+                    'ip'    => $request->getClientIp(),
                 ]);
+
                 return Redirect::route('home')
                     ->with('global', '註冊完成，請至信箱收取驗證信件並啟用帳號。');
             }
         }
+
         return Redirect::route('member.register')
             ->with('warning', '註冊時發生錯誤。');
     }
@@ -326,7 +335,7 @@ class MemberController extends Controller
         } else {
             $client = new Client([
                 'timeout' => 10.0,
-                'verify' => false,
+                'verify'  => false,
             ]);
         }
 
@@ -334,10 +343,10 @@ class MemberController extends Controller
             'https://www.google.com/recaptcha/api/siteverify',
             [
                 'form_params' => [
-                    'secret' => env('Secret_Key'),
+                    'secret'   => env('Secret_Key'),
                     'response' => $request->get('g-recaptcha-response'),
                     'remoteip' => $request->getClientIp(),
-                ]
+                ],
             ]
         );
 
@@ -364,6 +373,7 @@ class MemberController extends Controller
         $message .= '<li>帳號已啟用</li>';
         $message .= '<li>點擊的不是最後一封驗證信中的連結<br />（僅最後一次發送的驗證信有效）</li>';
         $message .= '</ul>請再次確認';
+
         return Redirect::route('home')
             ->with('warning', $message);
     }
@@ -399,17 +409,17 @@ class MemberController extends Controller
                 Mail::queue(
                     'emails.confirm',
                     [
-                        'link' => URL::route('member.confirm', $code)
+                        'link' => URL::route('member.confirm', $code),
                     ],
                     function ($message) use ($user) {
-                        $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 信箱驗證");
+                        $message->to($user->email)->subject('[' . Config::get('config.sitename') . '] 信箱驗證');
                     }
                 );
             } catch (Exception $e) {
                 //Log
                 LogHelper::info('[SendEmailFailed] 無法重寄認證信件給' . $user->email, [
                     'email' => $user->email,
-                    'ip' => $request->getClientIp()
+                    'ip'    => $request->getClientIp(),
                 ]);
 
                 return Redirect::route('member.resend')
@@ -420,6 +430,7 @@ class MemberController extends Controller
             return Redirect::route('home')
                 ->with('global', '已重新發送，請至信箱收取驗證信件並啟用帳號。');
         }
+
         return Redirect::route('member.resend')
             ->with('warning', '發送信件時發生錯誤。');
     }
@@ -448,16 +459,16 @@ class MemberController extends Controller
                 if (DB::table('password_resets')->where('email', '=', $user->email)->count()) {
                     //更新找回密碼的驗證碼
                     DB::table('password_resets')->where('email', '=', $user->email)->update([
-                        'token' => $code,
-                        'updated_at' => Carbon::now()->toDateTimeString()
+                        'token'      => $code,
+                        'updated_at' => Carbon::now()->toDateTimeString(),
                     ]);
                 } else {
                     //產生找回密碼的驗證碼
                     DB::table('password_resets')->insert([
-                        'email' => $user->email,
-                        'token' => $code,
+                        'email'      => $user->email,
+                        'token'      => $code,
                         'created_at' => Carbon::now()->toDateTimeString(),
-                        'updated_at' => Carbon::now()->toDateTimeString()
+                        'updated_at' => Carbon::now()->toDateTimeString(),
                     ]);
                 }
                 if ($user->save()) {
@@ -466,17 +477,17 @@ class MemberController extends Controller
                         Mail::send(
                             'emails.forgot',
                             [
-                                'link' => URL::route('member.reset-password', $code)
+                                'link' => URL::route('member.reset-password', $code),
                             ],
                             function ($message) use ($user) {
-                                $message->to($user->email)->subject("[" . Config::get('config.sitename') . "] 重新設定密碼");
+                                $message->to($user->email)->subject('[' . Config::get('config.sitename') . '] 重新設定密碼');
                             }
                         );
                     } catch (Exception $e) {
                         //Log
                         LogHelper::info('[SendEmailFailed] 發送失敗：無法寄出密碼重設信件給' . $user->email, [
                             'email' => $user->email,
-                            'ip' => $request->getClientIp()
+                            'ip'    => $request->getClientIp(),
                         ]);
 
                         return Redirect::route('member.forgot-password')
@@ -491,6 +502,7 @@ class MemberController extends Controller
                     ->with('warning', '此信箱仍未註冊成為會員。');
             }
         }
+
         return Redirect::route('member.forgot-password')
             ->with('warning', '無法取得更換密碼的連結。');
     }
@@ -506,6 +518,7 @@ class MemberController extends Controller
                 return view('member.reset-password')->with('user', $user)->with('token', $token);
             }
         }
+
         return Redirect::route('home')
             ->with('warning', '連結無效，無法重新設定密碼，請再次確認');
     }
@@ -519,7 +532,7 @@ class MemberController extends Controller
             //檢查使用者是否存在
             if ($user) {
                 $validator = Validator::make($request->all(), [
-                    'password' => 'required|min:6',
+                    'password'       => 'required|min:6',
                     'password_again' => 'required|same:password',
                 ]);
 
@@ -534,12 +547,14 @@ class MemberController extends Controller
                     if ($user->save()) {
                         //移除重新設定密碼的驗證碼
                         DB::table('password_resets')->where('email', '=', $email)->delete();
+
                         return Redirect::route('home')
                             ->with('global', '密碼重新設定完成，請使用新密碼重新登入。');
                     }
                 }
             }
         }
+
         return Redirect::route('member.change-password')
             ->with('warning', '密碼無法修改。');
     }
@@ -553,8 +568,8 @@ class MemberController extends Controller
     public function postChangePassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'old_password' => 'required',
-            'password' => 'required|min:6',
+            'old_password'   => 'required',
+            'password'       => 'required|min:6',
             'password_again' => 'required|same:password',
         ]);
 
@@ -580,6 +595,7 @@ class MemberController extends Controller
                     ->with('warning', '舊密碼輸入錯誤。');
             }
         }
+
         return Redirect::route('member.change-password')
             ->with('warning', '密碼無法修改。');
     }
@@ -611,13 +627,14 @@ class MemberController extends Controller
     public function getEditProfile()
     {
         $user = Auth::user();
+
         return view('member.edit-profile')->with('user', $user);
     }
 
     public function postEditProfile(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nickname' => 'max:100'
+            'nickname' => 'max:100',
         ]);
 
         if ($validator->fails()) {
@@ -634,6 +651,7 @@ class MemberController extends Controller
                     ->with('global', '個人資料修改完成。');
             }
         }
+
         return Redirect::route('member.edit-profile')
             ->with('warning', '個人資料無法修改。');
     }
@@ -644,6 +662,7 @@ class MemberController extends Controller
         $showUser = User::find($uid);
         if ($showUser) {
             $roleList = Role::all();
+
             return view('member.edit-other-profile')->with('showUser', $showUser)->with('roleList', $roleList);
         } else {
             return Redirect::route('member.list')
@@ -662,7 +681,7 @@ class MemberController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nickname' => 'max:100',
-            'comment' => 'max:100'
+            'comment'  => 'max:100',
         ]);
 
         if ($validator->fails()) {
@@ -693,6 +712,7 @@ class MemberController extends Controller
                     ->with('global', '資料修改完成。');
             }
         }
+
         return Redirect::route('member.edit-other-profile', $uid)
             ->with('warning', '資料無法修改。');
     }
@@ -701,6 +721,7 @@ class MemberController extends Controller
     public function getLogout()
     {
         Auth::logout();
+
         return Redirect::route('home');
     }
 

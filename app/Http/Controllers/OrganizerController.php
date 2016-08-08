@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Helper\LogHelper;
 use App\Organizer;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -29,6 +26,7 @@ class OrganizerController extends Controller
     public function index()
     {
         $organizerList = Organizer::paginate(20);
+
         return view('vote.organizer.list')->with('organizerList', $organizerList);
     }
 
@@ -51,9 +49,9 @@ class OrganizerController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:100|unique:organizers',
-            'url' => 'url|max:255',
-            'logo_url' => 'url|max:255'
+            'name'     => 'required|max:100|unique:organizers',
+            'url'      => 'url|max:255',
+            'logo_url' => 'url|max:255',
         ]);
         if ($validator->fails()) {
             return Redirect::route('organizer.create')
@@ -61,9 +59,9 @@ class OrganizerController extends Controller
                 ->withInput();
         } else {
             $organizer = Organizer::create([
-                'name' => $request->get('name'),
-                'url' => $request->get('url'),
-                'logo_url' => $request->get('logo_url')
+                'name'     => $request->get('name'),
+                'url'      => $request->get('url'),
+                'logo_url' => $request->get('logo_url'),
             ]);
 
             //紀錄
@@ -89,8 +87,8 @@ class OrganizerController extends Controller
         if (!$organizer) {
             return Redirect::route('organizer.index')
                 ->with('global', '主辦單位不存在');
-
         }
+
         return view('vote.organizer.show')->with('organizer', $organizer);
     }
 
@@ -106,8 +104,8 @@ class OrganizerController extends Controller
         if (!$organizer) {
             return Redirect::route('organizer.index')
                 ->with('global', '主辦單位不存在');
-
         }
+
         return view('vote.organizer.edit')->with('organizer', $organizer);
     }
 
@@ -124,12 +122,11 @@ class OrganizerController extends Controller
         if (!$organizer) {
             return Redirect::route('organizer.index')
                 ->with('global', '主辦單位不存在');
-
         }
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:100|unique:organizers,name,' . $id,
-            'url' => 'url|max:255',
-            'logo_url' => 'url|max:255'
+            'name'     => 'required|max:100|unique:organizers,name,' . $id,
+            'url'      => 'url|max:255',
+            'logo_url' => 'url|max:255',
         ]);
         if ($validator->fails()) {
             return Redirect::route('organizer.edit', $id)
@@ -149,9 +146,9 @@ class OrganizerController extends Controller
             //紀錄
             LogHelper::info(
                 '[OrganizerEdited] ' . Auth::user()->email . ' 編輯了主辦單位(Id: ' . $organizer->id . ')',
-                "編輯前",
+                '編輯前',
                 $beforeEdit,
-                "編輯後",
+                '編輯後',
                 $afterEdit
             );
 
@@ -172,7 +169,6 @@ class OrganizerController extends Controller
         if (!$organizer) {
             return Redirect::route('organizer.index')
                 ->with('global', '主辦單位不存在');
-
         }
 
         //複製一份，在Log時使用

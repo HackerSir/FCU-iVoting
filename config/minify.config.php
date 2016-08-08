@@ -39,7 +39,7 @@ return [
     */
 
     'css_build_path' => '/css-builds/',
-    'css_url_path' => '/css-builds/',
+    'css_url_path'   => '/css-builds/',
     /*
     |--------------------------------------------------------------------------
     | JS build path
@@ -53,7 +53,7 @@ return [
     */
 
     'js_build_path' => '/js-builds/',
-    'js_url_path' => '/js-builds/',
+    'js_url_path'   => '/js-builds/',
     /*
     |--------------------------------------------------------------------------
     | Hash modification
@@ -65,7 +65,7 @@ return [
     */
 
     'disable_mtime' => false,
-    'hash_salt' => '',
+    'hash_salt'     => '',
     /*
     |--------------------------------------------------------------------------
     | Base URL
@@ -75,5 +75,5 @@ return [
     | value. By default if empty HTTP_HOST would be used.
     |
     */
-    'base_url' => ''
+    'base_url' => '',
 ];

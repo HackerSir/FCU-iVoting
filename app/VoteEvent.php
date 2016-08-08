@@ -21,13 +21,13 @@ class VoteEvent extends Model
         'show',
         'vote_condition',
         'show_result',
-        'award_count'
+        'award_count',
     ];
 
 
     //有效的活動條件，以及說明文字（{value}會自動替換為條件的值）
-    static protected $validConditionList = [
-        'prefix' => '學號開頭必須是：{value}'
+    protected static $validConditionList = [
+        'prefix' => '學號開頭必須是：{value}',
     ];
 
     public function voteSelections()
@@ -49,6 +49,7 @@ class VoteEvent extends Model
         if (Carbon::now()->gte($open_time)) {
             return true;
         }
+
         return false;
     }
 
@@ -64,6 +65,7 @@ class VoteEvent extends Model
         if (Carbon::now()->gte($close_time)) {
             return true;
         }
+
         return false;
     }
 
@@ -81,6 +83,7 @@ class VoteEvent extends Model
         } else {
             $max_selected = $this->max_selected;
         }
+
         return $max_selected;
     }
 
@@ -92,23 +95,25 @@ class VoteEvent extends Model
         }
         $voteSelectionIdList = $this->voteSelections->lists('id')->toArray();
         $count = $user->voteBallots()->whereIn('vote_selection_id', $voteSelectionIdList)->count();
+
         return $count;
     }
 
     public function getHumanTimeString()
     {
-        $string = "";
+        $string = '';
         if ($this->open_time && $this->close_time) {
-            $string = $this->getTimeSpanTag($this->open_time) . " ~ " . $this->getTimeSpanTag($this->close_time);
+            $string = $this->getTimeSpanTag($this->open_time) . ' ~ ' . $this->getTimeSpanTag($this->close_time);
         } else {
             if ($this->open_time) {
                 $string = $this->getTimeSpanTag($this->open_time) . ' 起';
             } elseif ($this->close_time) {
                 $string = '到 ' . $this->getTimeSpanTag($this->close_time) . ' 為止';
             } else {
-                $string = "尚未決定";
+                $string = '尚未決定';
             }
         }
+
         return $string;
     }
 
@@ -134,7 +139,6 @@ class VoteEvent extends Model
             return $condition->$key;
         }
         //找不到則回傳空值
-        return null;
     }
 
     //檢查是否符合投票資格
@@ -147,7 +151,7 @@ class VoteEvent extends Model
         //取得條件的json
         $condition = JsonHelper::decode($this->vote_condition);
         //此活動無條件限制
-        if (empty((array)$condition)) {
+        if (empty((array) $condition)) {
             return true;
         }
 
@@ -172,7 +176,7 @@ class VoteEvent extends Model
         //取得條件的json
         $condition = JsonHelper::decode($this->vote_condition);
         //此活動無條件限制
-        if (empty((array)$condition)) {
+        if (empty((array) $condition)) {
             return true;
         }
         //根據不同類型的條件進行檢查
@@ -219,6 +223,7 @@ class VoteEvent extends Model
                 $result[] = $message;
             }
         }
+
         return $result;
     }
 
@@ -230,7 +235,7 @@ class VoteEvent extends Model
             return $this->isStarted();
         } elseif ($showResult == 'after-vote') {
             //完成投票者可看見結果（活動結束後對所有人顯示）
-            return ($this->isEnded() || $this->getMaxSelected() <= $this->getSelectedCount(Auth::user()));
+            return $this->isEnded() || $this->getMaxSelected() <= $this->getSelectedCount(Auth::user());
         } elseif ($showResult == 'after-event') {
             //活動結束後顯示
             return $this->isEnded();
@@ -256,6 +261,7 @@ class VoteEvent extends Model
         if ($this->getMaxSelected() <= $this->getSelectedCount(Auth::user())) {
             return false;
         }
+
         return true;
     }
 
@@ -270,6 +276,5 @@ class VoteEvent extends Model
             return '票選結果將在活動結束後顯示';
         }
         //錯誤情況，直接不顯示
-        return null;
     }
 }

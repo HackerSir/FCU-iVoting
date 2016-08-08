@@ -1,18 +1,15 @@
-<?php namespace App\Http\Controllers;
+<?php
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+namespace App\Http\Controllers;
+
 use App\Helper\MarkdownHelper;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
 class MarkdownApiController extends Controller
 {
-
     /**
      * Create a new controller instance.
-     *
      */
     public function __construct()
     {
@@ -24,13 +21,14 @@ class MarkdownApiController extends Controller
     {
         //只接受Ajax請求
         if (!$request->ajax()) {
-            return "error";
+            return 'error';
         }
         $data = $request->getContent();
         //檢查是否有內容
         if (empty($data)) {
-            return Response::make(" ");
+            return Response::make(' ');
         }
+
         return Response::make(MarkdownHelper::translate($data));
     }
 }

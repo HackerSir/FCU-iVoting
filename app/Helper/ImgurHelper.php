@@ -9,8 +9,9 @@ class ImgurHelper
         $pattern = '/^(?:(?:https?:)?\/\/)?[iw\.]*imgur\.[^\/]*\/(?:gallery\/)?([^\?\s\.]*).*$/im';
         preg_match($pattern, $url, $matches);
         if (empty($matches) || count($matches) < 2) {
-            return null;
+            return;
         }
+
         return $matches[1];
     }
 
@@ -20,13 +21,14 @@ class ImgurHelper
             return $url;
         }
         if (!empty($suffix) && !in_array($suffix, ['s', 'b', 't', 'm', 'l', 'h'])) {
-            return null;
+            return;
         }
         //取得附檔名
         $extensionPattern = '/[^\\\\]*\.(\w+)$/';
         preg_match($extensionPattern, $url, $matches);
         $extension = $matches[1];
         $thumbnail = '//i.imgur.com/' . self::getImgurID($url) . $suffix . '.' . $extension;
+
         return $thumbnail;
     }
 }

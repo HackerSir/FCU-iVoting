@@ -4,10 +4,6 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 
@@ -63,8 +59,10 @@ class StatsController extends Controller
             );
 
             $newStats->data = $data;
+
             return $newStats;
         });
+
         return view('stats.index')->with('stats', $stats)->with('cacheMinute', self::$cacheMinute);
     }
 
@@ -87,10 +85,10 @@ class StatsController extends Controller
         if ($denominator > 0) {
             //需額外以比例顯示
             //數字的括號用半形就好
-            return sprintf("%6s (%6.2f %%)", number_format($number), round($number / $denominator * 100, 2));
+            return sprintf('%6s (%6.2f %%)', number_format($number), round($number / $denominator * 100, 2));
         } else {
             //僅顯示數值
-            return sprintf("%6s", number_format($number));
+            return sprintf('%6s', number_format($number));
         }
     }
 }

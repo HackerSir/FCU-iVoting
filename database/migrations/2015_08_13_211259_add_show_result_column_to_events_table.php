@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class AddShowResultColumnToEventsTable extends Migration
@@ -16,7 +15,7 @@ class AddShowResultColumnToEventsTable extends Migration
             $table->enum('show_result', [
                 'always',
                 'after-vote',
-                'after-event'
+                'after-event',
             ])->default('after-event');
         });
     }

@@ -36,7 +36,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'register_ip',
         'register_at',
         'lastlogin_ip',
-        'lastlogin_at'
+        'lastlogin_at',
     ];
 
     /**
@@ -51,6 +51,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if (!empty($this->confirm_at)) {
             return true;
         }
+
         return false;
     }
 
@@ -59,6 +60,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if ($this->isAdmin() || $this->hasRole('staff')) {
             return true;
         }
+
         return false;
     }
 
@@ -67,6 +69,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if ($this->hasRole('admin')) {
             return true;
         }
+
         return false;
     }
 
@@ -75,8 +78,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if (!empty($this->nickname)) {
             $nickname = $this->nickname;
         } else {
-            $nickname = explode("@", $this->email)[0];
+            $nickname = explode('@', $this->email)[0];
         }
+
         return $nickname;
     }
 

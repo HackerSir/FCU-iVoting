@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
-
 class QuickBackup extends Command
 {
     /**
@@ -44,10 +43,10 @@ class QuickBackup extends Command
 
         // database, destination, destinationPath, compression
         $this->call('db:backup', [
-            '--database' => 'mysql',
-            '--destination' => 'local',
+            '--database'        => 'mysql',
+            '--destination'     => 'local',
             '--destinationPath' => $filename,
-            '--compression' => 'null',
+            '--compression'     => 'null',
         ]);
     }
 }

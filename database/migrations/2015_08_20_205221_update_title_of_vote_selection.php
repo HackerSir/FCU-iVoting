@@ -1,7 +1,6 @@
 <?php
 
 use App\VoteSelection;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class UpdateTitleOfVoteSelection extends Migration
@@ -51,7 +50,7 @@ class UpdateTitleOfVoteSelection extends Migration
             }
             //將title存入data
             $json->title = $voteSelection->title;
-            $voteSelection->title = "";
+            $voteSelection->title = '';
             $voteSelection->data = json_encode($json, JSON_UNESCAPED_UNICODE + JSON_UNESCAPED_SLASHES);
             $voteSelection->save();
         }

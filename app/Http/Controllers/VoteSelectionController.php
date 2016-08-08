@@ -8,9 +8,6 @@ use App\VoteBallot;
 use App\VoteEvent;
 use App\VoteSelection;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -25,16 +22,16 @@ class VoteSelectionController extends Controller
         //Email必須驗證
         $this->middleware('email', [
             'only' => [
-                'vote'
-            ]
+                'vote',
+            ],
         ]);
         //限工作人員
         $this->middleware('role:staff', [
             'except' => [
                 'index',
                 'show',
-                'vote'
-            ]
+                'vote',
+            ],
         ]);
     }
 
@@ -59,6 +56,7 @@ class VoteSelectionController extends Controller
             return Redirect::route('vote-event.show', $voteEvent->id)
                 ->with('warning', '只能在投票活動開始前編輯選項');
         }
+
         return view('vote.selection.create')->with('voteEvent', $voteEvent);
     }
 
@@ -85,9 +83,9 @@ class VoteSelectionController extends Controller
                 ->with('warning', '只能在投票活動開始前編輯選項');
         }
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:65535',
+            'title'  => 'required|max:65535',
             'weight' => 'numeric',
-            'image' => 'max:65535'
+            'image'  => 'max:65535',
         ]);
         if ($validator->fails()) {
             return Redirect::route('vote-selection.create', ['vid' => $voteEvent->id])
@@ -101,11 +99,11 @@ class VoteSelectionController extends Controller
             $json = JsonHelper::encode($obj);
             $order = ($voteEvent->voteSelections->count() > 0) ? $voteEvent->voteSelections->max('order') + 1 : 0;
             $voteSelection = VoteSelection::create([
-                'title' => $request->get('title'),
+                'title'         => $request->get('title'),
                 'vote_event_id' => $voteEvent->id,
-                'weight' => $request->has('weight') ? $request->get('weight') : 1,
-                'data' => $json,
-                'order' => $order
+                'weight'        => $request->has('weight') ? $request->get('weight') : 1,
+                'data'          => $json,
+                'order'         => $order,
             ]);
 
             //紀錄
@@ -137,6 +135,7 @@ class VoteSelectionController extends Controller
             return Redirect::route('vote-event.show', $voteSelection->voteEvent->id)
                 ->with('warning', '只能在投票活動開始前編輯選項');
         }
+
         return view('vote.selection.edit')->with('voteSelection', $voteSelection);
     }
 
@@ -159,9 +158,9 @@ class VoteSelectionController extends Controller
                 ->with('warning', '只能在投票活動開始前編輯選項');
         }
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:65535',
+            'title'  => 'required|max:65535',
             'weight' => 'numeric',
-            'image' => 'max:65535'
+            'image'  => 'max:65535',
         ]);
         if ($validator->fails()) {
             return Redirect::route('vote-selection.edit', $id)
@@ -188,9 +187,9 @@ class VoteSelectionController extends Controller
             LogHelper::info(
                 '[VoteSelectionEdited] ' . Auth::user()->email . ' 編輯了選項(Id: ' . $voteSelection->id
                 . ', Title: ' . $voteSelection->title . ')',
-                "編輯前",
+                '編輯前',
                 $beforeEdit->attributesToArray(),
-                "編輯後",
+                '編輯後',
                 $afterEdit->attributesToArray()
             );
 
@@ -225,6 +224,7 @@ class VoteSelectionController extends Controller
         );
         //移除投票選項
         $voteSelection->delete();
+
         return Redirect::route('vote-event.show', $voteEvent->id)
             ->with('global', '投票選項已刪除');
     }
@@ -255,10 +255,10 @@ class VoteSelectionController extends Controller
                 ->with('warning', '無法再投更多項目');
         }
         //新增投票資料
-        $voteBallots = VoteBallot::create(array(
-            'user_id' => Auth::user()->id,
-            'vote_selection_id' => $voteSelection->id
-        ));
+        $voteBallots = VoteBallot::create([
+            'user_id'           => Auth::user()->id,
+            'vote_selection_id' => $voteSelection->id,
+        ]);
         //發現投太多票時，移除最後一票
         if ($voteSelection->voteEvent->getMaxSelected() < $voteSelection->voteEvent->getSelectedCount(Auth::user())) {
             $voteSelectionIdList = $voteSelection->voteEvent->voteSelections->lists('id')->toArray();

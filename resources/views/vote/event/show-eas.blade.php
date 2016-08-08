@@ -185,14 +185,11 @@
                                         $ribbonClass = 'ribbon-gray';
                                         if ($scoreRank == 1) {
                                             $ribbonClass = 'ribbon-gold';
-                                        }
-                                        elseif ($scoreRank == 2) {
+                                        } elseif ($scoreRank == 2) {
                                             $ribbonClass = 'ribbon-silver';
-                                        }
-                                        elseif ($scoreRank == 3) {
+                                        } elseif ($scoreRank == 3) {
                                             $ribbonClass = 'ribbon-bronze';
-                                        }
-                                        elseif ($scoreRank <= $voteEvent->award_count) {
+                                        } elseif ($scoreRank <= $voteEvent->award_count) {
                                             $ribbonClass = 'ribbon-blue';
                                         }
                                         ?>

@@ -25,15 +25,15 @@ class VoteEventConditionTest extends TestCase
         $this->staffUser->attachRole($staff);
 
         $this->d02User = factory('App\User')->make([
-            'email' => 'd0200000@fcu.edu.tw'
+            'email' => 'd0200000@fcu.edu.tw',
         ]);
 
         $this->d03User = factory('App\User')->make([
-            'email' => 'd0300000@fcu.edu.tw'
+            'email' => 'd0300000@fcu.edu.tw',
         ]);
 
         $this->d04User = factory('App\User')->make([
-            'email' => 'd0400000@fcu.edu.tw'
+            'email' => 'd0400000@fcu.edu.tw',
         ]);
     }
 
@@ -109,19 +109,19 @@ class VoteEventConditionTest extends TestCase
     public function test_fun_VoteEvent_checkCondition()
     {
         $d02User = factory('App\User')->make([
-            'email' => 'd0255555@fcu.edu.tw'
+            'email' => 'd0255555@fcu.edu.tw',
         ]);
 
         $D02User = factory('App\User')->make([
-            'email' => 'D0244444@fcu.edu.tw'
+            'email' => 'D0244444@fcu.edu.tw',
         ]);
 
         $d03User = factory('App\User')->make([
-            'email' => 'd0355555@fcu.edu.tw'
+            'email' => 'd0355555@fcu.edu.tw',
         ]);
 
         $D03User = factory('App\User')->make([
-            'email' => 'D0344444@fcu.edu.tw'
+            'email' => 'D0344444@fcu.edu.tw',
         ]);
 
         $voteEvent = new App\VoteEvent();

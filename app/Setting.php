@@ -11,17 +11,18 @@ class Setting extends Model
     protected $fillable = ['id', 'type', 'desc', 'data'];
     //有效型態與對應簡介
     public static $types = [
-        'text' => '單行文字',
+        'text'      => '單行文字',
         'multiline' => '多行文字',
-        'markdown' => 'Markdown多行文字'
+        'markdown'  => 'Markdown多行文字',
     ];
 
     public static function get($id)
     {
         $setting = self::find($id);
         if (!$setting) {
-            return null;
+            return;
         }
+
         return $setting->getData();
     }
 
@@ -29,8 +30,9 @@ class Setting extends Model
     {
         $setting = self::find($id);
         if (!$setting) {
-            return null;
+            return;
         }
+
         return $setting->data;
     }
 
@@ -49,6 +51,7 @@ class Setting extends Model
             //若不是，則自動選擇第一個型態
             return head(array_keys(static::$types));
         }
+
         return $this->type;
     }
 

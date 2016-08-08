@@ -10,16 +10,12 @@ use App\VoteEvent;
 use App\VoteSelection;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
 class VoteEventController extends Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -27,8 +23,8 @@ class VoteEventController extends Controller
         $this->middleware('role:staff', [
             'except' => [
                 'index',
-                'show'
-            ]
+                'show',
+            ],
         ]);
     }
 
@@ -47,6 +43,7 @@ class VoteEventController extends Controller
                     ->orWhere('open_time', '<=', Carbon::now());
             })->paginate(20);
         }
+
         return view('vote.event.list')->with('voteEventList', $voteEventList);
     }
 
@@ -62,6 +59,7 @@ class VoteEventController extends Controller
         foreach ($organizerList as $organizer) {
             $organizerArray[$organizer->id] = $organizer->name;
         }
+
         return view('vote.event.create')->with('organizerArray', $organizerArray);
     }
 
@@ -74,12 +72,12 @@ class VoteEventController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'subject' => 'required|max:100',
-            'open_time' => 'date',
-            'close_time' => 'date',
-            'info' => 'max:65535',
+            'subject'      => 'required|max:100',
+            'open_time'    => 'date',
+            'close_time'   => 'date',
+            'info'         => 'max:65535',
             'max_selected' => 'integer|min:1',
-            'award_count' => 'integer|min:1'
+            'award_count'  => 'integer|min:1',
         ]);
         if ($validator->fails()) {
             return Redirect::route('vote-event.create')
@@ -104,18 +102,18 @@ class VoteEventController extends Controller
             $condition->prefix = ($request->has('prefix')) ? str_replace(' ', '', $request->get('prefix')) : null;
 
             $voteEvent = VoteEvent::create([
-                'subject' => $request->get('subject'),
-                'open_time' => $open_time,
-                'close_time' => $close_time,
-                'info' => $request->get('info'),
-                'max_selected' => ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1,
-                'organizer_id' => ($request->has('organizer')) ? $request->get('organizer') : null,
-                'show' => !$request->get('hideVoteEvent', false),
+                'subject'        => $request->get('subject'),
+                'open_time'      => $open_time,
+                'close_time'     => $close_time,
+                'info'           => $request->get('info'),
+                'max_selected'   => ($request->get('max_selected') > 0) ? $request->get('max_selected') : 1,
+                'organizer_id'   => ($request->has('organizer')) ? $request->get('organizer') : null,
+                'show'           => !$request->get('hideVoteEvent', false),
                 'vote_condition' => (!empty($condition))
-                    ? JsonHelper::encode((object)array_filter((array)$condition))
+                    ? JsonHelper::encode((object) array_filter((array) $condition))
                     : null,
                 'show_result' => $request->get('show_result'),
-                'award_count' => ($request->get('award_count') > 0) ? $request->get('award_count') : 1
+                'award_count' => ($request->get('award_count') > 0) ? $request->get('award_count') : 1,
             ]);
 
             //紀錄
@@ -150,6 +148,7 @@ class VoteEventController extends Controller
                     ->with('warning', '投票活動尚未開放');
             }
         }
+
         return Redirect::route('vote-event.index')
             ->with('warning', '投票活動不存在');
     }
@@ -176,6 +175,7 @@ class VoteEventController extends Controller
         foreach ($organizerList as $organizer) {
             $organizerArray[$organizer->id] = $organizer->name;
         }
+
         return view('vote.event.edit')->with('voteEvent', $voteEvent)->with('organizerArray', $organizerArray);
     }
 
@@ -198,12 +198,12 @@ class VoteEventController extends Controller
                 ->with('warning', '無法編輯已結束之投票活動');
         }
         $validator = Validator::make($request->all(), [
-            'subject' => 'required|max:100',
-            'open_time' => 'date',
-            'close_time' => 'date',
-            'info' => 'max:65535',
+            'subject'      => 'required|max:100',
+            'open_time'    => 'date',
+            'close_time'   => 'date',
+            'info'         => 'max:65535',
             'max_selected' => 'integer|min:1',
-            'award_count' => 'integer|min:1'
+            'award_count'  => 'integer|min:1',
         ]);
         if ($validator->fails()) {
             return Redirect::route('vote-event.edit', $id)
@@ -243,7 +243,7 @@ class VoteEventController extends Controller
             $condition = new \stdClass();
             $condition->prefix = ($request->has('prefix')) ? str_replace(' ', '', $request->get('prefix')) : null;
             $voteEvent->vote_condition = (!empty($condition))
-                ? JsonHelper::encode((object)array_filter((array)$condition))
+                ? JsonHelper::encode((object) array_filter((array) $condition))
                 : null;
 
             $voteEvent->show_result = $request->get('show_result');
@@ -256,9 +256,9 @@ class VoteEventController extends Controller
             LogHelper::info(
                 '[VoteEventEdited] ' . Auth::user()->email . ' 編輯了活動(Id: ' . $voteEvent->id
                 . ', Subject: ' . $voteEvent->subject . ')',
-                "編輯前",
+                '編輯前',
                 $beforeEdit,
-                "編輯後",
+                '編輯後',
                 $afterEdit
             );
 
@@ -286,6 +286,7 @@ class VoteEventController extends Controller
         }
         //移除投票活動
         $voteEvent->delete();
+
         return Redirect::route('vote-event.index')
             ->with('global', '投票活動已刪除');
     }
@@ -312,6 +313,7 @@ class VoteEventController extends Controller
         }
         $voteEvent->open_time = Carbon::now()->toDateTimeString();
         $voteEvent->save();
+
         return Redirect::route('vote-event.show', $id)
             ->with('global', '投票活動已開始');
     }
@@ -334,6 +336,7 @@ class VoteEventController extends Controller
         }
         $voteEvent->close_time = Carbon::now()->toDateTimeString();
         $voteEvent->save();
+
         return Redirect::route('vote-event.show', $id)
             ->with('global', '投票活動已結束');
     }
@@ -372,12 +375,13 @@ class VoteEventController extends Controller
             LogHelper::info(
                 '[VoteSelectionOrderEdited] ' . Auth::user()->email . ' 編輯了選項排序(Id: ' . $voteEvent->id
                 . ', Subject: ' . $voteEvent->subject . ')',
-                "編輯前",
+                '編輯前',
                 $originalIdList,
-                "編輯後",
+                '編輯後',
                 $newIdList
             );
         }
+
         return 'success';
     }
 }
