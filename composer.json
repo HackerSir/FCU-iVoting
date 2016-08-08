@@ -9,7 +9,7 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*",
+        "laravel/framework": "5.2.*",
         "laravelcollective/html": "~5.0",
         "alfredo-ramos/parsedown-extra-laravel": "~0.2",
         "nesbot/carbon": "~1.14",
@@ -18,7 +18,7 @@
         "doctrine/dbal": "~2.3",
         "rap2hpoutre/laravel-log-viewer": "^0.4.0",
         "backup-manager/laravel": "^1.0",
-        "graham-campbell/throttle": "^4.1",
+        "graham-campbell/throttle": "^5.2",
         "zizaco/entrust": "dev-laravel-5",
         "devfactory/minify": "1.0.*"
     },
@@ -26,7 +26,9 @@
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",
-        "phpspec/phpspec": "~2.1"
+        "phpspec/phpspec": "~2.1",
+        "symfony/css-selector": "2.8.*|3.0.*",
+        "symfony/dom-crawler": "2.8.*|3.0.*"
     },
     "autoload": {
         "classmap": [
