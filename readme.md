@@ -1,4 +1,5 @@
 # FCU-iVoting
+[![Build Status](https://travis-ci.org/HackerSir/FCU-iVoting.svg?branch=master)](https://travis-ci.org/HackerSir/FCU-iVoting)
 投票網站
 
 ## 網址
