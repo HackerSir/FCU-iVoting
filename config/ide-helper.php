@@ -12,7 +12,7 @@ return [
     */
 
     'filename' => '_ide_helper',
-    'format' => 'php',
+    'format'   => 'php',
     /*
     |--------------------------------------------------------------------------
     | Helper files to include
@@ -24,9 +24,9 @@ return [
     */
 
     'include_helpers' => false,
-    'helper_files' => array(
+    'helper_files'    => [
         base_path() . '/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
-    ),
+    ],
     /*
     |--------------------------------------------------------------------------
     | Model locations to include
@@ -37,9 +37,9 @@ return [
     |
     */
 
-    'model_locations' => array(
+    'model_locations' => [
         'app',
-    ),
+    ],
     /*
     |--------------------------------------------------------------------------
     | Extra classes
@@ -49,22 +49,22 @@ return [
     |
     */
 
-    'extra' => array(
-        'Eloquent' => array('Illuminate\Database\Eloquent\Builder', 'Illuminate\Database\Query\Builder'),
-        'Session' => array('Illuminate\Session\Store'),
-    ),
-    'magic' => array(
-        'Log' => array(
-            'debug' => 'Monolog\Logger::addDebug',
-            'info' => 'Monolog\Logger::addInfo',
-            'notice' => 'Monolog\Logger::addNotice',
-            'warning' => 'Monolog\Logger::addWarning',
-            'error' => 'Monolog\Logger::addError',
-            'critical' => 'Monolog\Logger::addCritical',
-            'alert' => 'Monolog\Logger::addAlert',
+    'extra' => [
+        'Eloquent' => ['Illuminate\Database\Eloquent\Builder', 'Illuminate\Database\Query\Builder'],
+        'Session'  => ['Illuminate\Session\Store'],
+    ],
+    'magic' => [
+        'Log' => [
+            'debug'     => 'Monolog\Logger::addDebug',
+            'info'      => 'Monolog\Logger::addInfo',
+            'notice'    => 'Monolog\Logger::addNotice',
+            'warning'   => 'Monolog\Logger::addWarning',
+            'error'     => 'Monolog\Logger::addError',
+            'critical'  => 'Monolog\Logger::addCritical',
+            'alert'     => 'Monolog\Logger::addAlert',
             'emergency' => 'Monolog\Logger::addEmergency',
-        )
-    ),
+        ],
+    ],
     /*
     |--------------------------------------------------------------------------
     | Interface implementations
@@ -75,9 +75,9 @@ return [
     |
     */
 
-    'interfaces' => array(
+    'interfaces' => [
         '\Illuminate\Contracts\Auth\Authenticatable' => config('auth.model', 'App\User'),
-    ),
+    ],
     /*
     |--------------------------------------------------------------------------
     | Support for custom DB types
@@ -104,6 +104,6 @@ return [
     |  ),
     |
     */
-    'custom_db_types' => array(),
+    'custom_db_types' => [],
 
 ];

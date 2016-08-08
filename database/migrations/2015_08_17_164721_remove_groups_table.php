@@ -2,7 +2,6 @@
 
 use App\Role;
 use App\User;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class RemoveGroupsTable extends Migration
@@ -38,8 +37,8 @@ class RemoveGroupsTable extends Migration
         $roleList = Role::all();
         foreach ($roleList as $role) {
             DB::table('groups')->insert([
-                'name' => $role->name,
-                'title' => $role->display_name
+                'name'  => $role->name,
+                'title' => $role->display_name,
             ]);
         }
         DB::table('groups')->insert(['name' => 'default', 'title' => '預設']);

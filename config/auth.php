@@ -64,7 +64,7 @@ return [
     |
     */
 
-    /**
+    /*
      * FIXME: 額外設定model
      * 額外加上的model，須與下面那個相同
      * 為了使Entrust能夠順利刪除角色

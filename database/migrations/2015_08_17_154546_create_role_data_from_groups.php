@@ -1,7 +1,6 @@
 <?php
 
 use App\Role;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateRoleDataFromGroups extends Migration
@@ -19,7 +18,7 @@ class CreateRoleDataFromGroups extends Migration
             if ($group->name == 'default') {
                 continue;
             }
-            $role = New Role();
+            $role = new Role();
             $role->name = $group->name;
             $role->display_name = $group->title;
             $role->save();

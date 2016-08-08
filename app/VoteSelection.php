@@ -35,6 +35,7 @@ class VoteSelection extends Model
         if (empty($json->image)) {
             return [];
         }
+
         return $json->image;
     }
 
@@ -43,6 +44,7 @@ class VoteSelection extends Model
         $selfCount = $this->voteBallots()
             ->where('vote_selection_id', '=', $this->id)
             ->count();
+
         return $selfCount;
     }
 
@@ -65,7 +67,7 @@ class VoteSelection extends Model
     //取得排名
     public function getRankAttribute()
     {
-        $voteSelectionsIdList = VoteSelection::where('vote_event_id', '=', $this->vote_event_id)
+        $voteSelectionsIdList = self::where('vote_event_id', '=', $this->vote_event_id)
             ->lists('id')->toArray();
         $voteBallotList = VoteBallot::select('vote_selection_id', DB::raw('count(*) as total'))
             ->whereIn('vote_selection_id', $voteSelectionsIdList)
@@ -75,6 +77,7 @@ class VoteSelection extends Model
             ->toArray();
         $search = array_search($this->getCount(), $voteBallotList);
         $rank = ($search !== false) ? $search + 1 : count($voteBallotList) + 1;
+
         return $rank;
     }
 
@@ -87,7 +90,7 @@ class VoteSelection extends Model
     //取得加權排名
     public function getScoreRankAttribute()
     {
-        $voteSelectionsIdList = VoteSelection::where('vote_event_id', '=', $this->vote_event_id)
+        $voteSelectionsIdList = self::where('vote_event_id', '=', $this->vote_event_id)
             ->lists('id')->toArray();
         $voteBallotList = VoteBallot::select('vote_selection_id', DB::raw('vote_selection_id, count(*) as total'))
             ->whereIn('vote_selection_id', $voteSelectionsIdList)
@@ -95,7 +98,7 @@ class VoteSelection extends Model
             ->orderBy(DB::raw('count(vote_selection_id)'), 'desc')
             ->lists('total', 'vote_selection_id')
             ->toArray();
-        $voteSelectionsWeight = VoteSelection::where('vote_event_id', '=', $this->vote_event_id)
+        $voteSelectionsWeight = self::where('vote_event_id', '=', $this->vote_event_id)
             ->lists('weight', 'id')->toArray();
         $score = [];
         foreach ($voteSelectionsIdList as $voteSelectionsId) {
@@ -106,6 +109,7 @@ class VoteSelection extends Model
         rsort($score);  //排序＆去除索引值
         $search = array_search($this->score, $score);
         $rank = ($search !== false) ? $search + 1 : count($score) + 1;
+
         return $rank;
     }
 
@@ -115,7 +119,7 @@ class VoteSelection extends Model
             return false;
         }
         $count = $this->voteBallots()->where('user_id', '=', $user->id)->count();
+
         return $count > 0;
     }
-
 }

@@ -1,11 +1,12 @@
-<?php namespace App\Http\Middleware;
+<?php
+
+namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
 class EmailConfirm
 {
-
     /**
      * The Guard implementation.
      *
@@ -47,5 +48,4 @@ class EmailConfirm
 
         return $next($request);
     }
-
 }

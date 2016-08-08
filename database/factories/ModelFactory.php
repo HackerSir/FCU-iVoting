@@ -13,9 +13,9 @@
 
 $factory->define(App\User::class, function ($faker) {
     return [
-        'email' => $faker->email,
-        'password' => str_random(10),
+        'email'          => $faker->email,
+        'password'       => str_random(10),
         'remember_token' => str_random(10),
-        'confirm_at' => Carbon::now(),
+        'confirm_at'     => Carbon::now(),
     ];
 });

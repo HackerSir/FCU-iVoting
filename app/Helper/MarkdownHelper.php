@@ -10,9 +10,9 @@ class MarkdownHelper
     {
         //設定值
         $options = array_merge([
-            'autoLineBreak' => true,            //自動換行
-            'supportHtml' => false,             //支援HTML
-            'openLinkInNewWindow' => true    //以新視窗開啟超連結
+            'autoLineBreak'       => true,            //自動換行
+            'supportHtml'         => false,             //支援HTML
+            'openLinkInNewWindow' => true,    //以新視窗開啟超連結
         ], $options);
 
         $result = $string;
@@ -41,6 +41,7 @@ class MarkdownHelper
                 $result
             );
         }
+
         return $result;
     }
 }

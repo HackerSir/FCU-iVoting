@@ -13,14 +13,14 @@ class LogHelper
      *
      * @var array
      */
-    static protected $levels = [
-        'debug' => MonologLogger::DEBUG,
-        'info' => MonologLogger::INFO,
-        'notice' => MonologLogger::NOTICE,
-        'warning' => MonologLogger::WARNING,
-        'error' => MonologLogger::ERROR,
-        'critical' => MonologLogger::CRITICAL,
-        'alert' => MonologLogger::ALERT,
+    protected static $levels = [
+        'debug'     => MonologLogger::DEBUG,
+        'info'      => MonologLogger::INFO,
+        'notice'    => MonologLogger::NOTICE,
+        'warning'   => MonologLogger::WARNING,
+        'error'     => MonologLogger::ERROR,
+        'critical'  => MonologLogger::CRITICAL,
+        'alert'     => MonologLogger::ALERT,
         'emergency' => MonologLogger::EMERGENCY,
     ];
 
@@ -135,7 +135,7 @@ class LogHelper
         }
 
         $contextList = func_get_arg(1);
-        $message = "";
+        $message = '';
         foreach ($contextList as $context) {
             if (is_string($context)) {
                 $temp = $context;

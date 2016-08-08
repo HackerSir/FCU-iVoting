@@ -37,18 +37,18 @@ class HideVoteEventTest extends TestCase
         $this->createUser();
 
         $voteEvent_hide_info = [
-            'subject' => str_random(20),
+            'subject'   => str_random(20),
             'open_time' => Carbon::now(),
-            'show' => false,
+            'show'      => false,
         ];
 
         $this->createVoteEvent($voteEvent_hide_info);
         $this->seeInDatabase('vote_events', $voteEvent_hide_info);
 
         $voteEvent_noHide_info = [
-            'subject' => str_random(20),
+            'subject'   => str_random(20),
             'open_time' => Carbon::now(),
-            'show' => true,
+            'show'      => true,
         ];
 
         $this->createVoteEvent($voteEvent_noHide_info);
@@ -101,32 +101,32 @@ class HideVoteEventTest extends TestCase
 
         $voteEvents = [
             'a' => [
-                'subject' => str_random(20),
+                'subject'   => str_random(20),
                 'open_time' => Carbon::now()->addDay(),
-                'show' => false,
+                'show'      => false,
             ],
             'b' => [
-                'subject' => str_random(20),
+                'subject'   => str_random(20),
                 'open_time' => Carbon::now()->addDay(),
-                'show' => true,
+                'show'      => true,
             ],
             'c' => [
-                'subject' => str_random(20),
+                'subject'   => str_random(20),
                 'open_time' => Carbon::now()->subDay(),
-                'show' => false,
+                'show'      => false,
             ],
             'd' => [
-                'subject' => str_random(20),
+                'subject'   => str_random(20),
                 'open_time' => Carbon::now()->subDay(),
-                'show' => true,
+                'show'      => true,
             ],
             'e' => [
                 'subject' => str_random(20),
-                'show' => false,
+                'show'    => false,
             ],
             'f' => [
                 'subject' => str_random(20),
-                'show' => true,
+                'show'    => true,
             ],
         ];
 
@@ -203,24 +203,24 @@ class HideVoteEventTest extends TestCase
     {
         $voteEvents = [
             'a' => [
-                'subject' => str_random(20),
+                'subject'   => str_random(20),
                 'open_time' => Carbon::now()->addDay(),
-                'show' => false,
+                'show'      => false,
             ],
             'b' => [
-                'subject' => str_random(20),
+                'subject'   => str_random(20),
                 'open_time' => Carbon::now()->addDay(),
-                'show' => true,
+                'show'      => true,
             ],
             'c' => [
-                'subject' => str_random(20),
+                'subject'   => str_random(20),
                 'open_time' => Carbon::now()->subDay(),
-                'show' => false,
+                'show'      => false,
             ],
             'd' => [
-                'subject' => str_random(20),
+                'subject'   => str_random(20),
                 'open_time' => Carbon::now()->subDay(),
-                'show' => true,
+                'show'      => true,
             ],
         ];
 
@@ -244,7 +244,6 @@ class HideVoteEventTest extends TestCase
                 );
             }
         }
-
     }
 
     protected function reverseVisible($info)
@@ -262,5 +261,4 @@ class HideVoteEventTest extends TestCase
         }
         $this->makeRequestUsingForm($form);
     }
-
 }

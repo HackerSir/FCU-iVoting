@@ -1,16 +1,13 @@
-<?php namespace App\Http\Controllers;
+<?php
 
-use App\Announcement;
+namespace App\Http\Controllers;
+
 use App\Course;
 use App\Setting;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
-
     /*
     |--------------------------------------------------------------------------
     | Home Controller
@@ -24,7 +21,6 @@ class HomeController extends Controller
 
     /**
      * Create a new controller instance.
-     *
      */
     public function __construct()
     {
@@ -43,6 +39,7 @@ class HomeController extends Controller
         if (filter_var($autoRedirect, FILTER_VALIDATE_URL)) {
             return Redirect::to($autoRedirect);
         }
+
         return $this->home();
     }
 
@@ -50,5 +47,4 @@ class HomeController extends Controller
     {
         return view('home');
     }
-
 }

@@ -6,9 +6,6 @@ use App\Helper\LogHelper;
 use App\Setting;
 use Exception;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
@@ -31,6 +28,7 @@ class SettingController extends Controller
     public function index()
     {
         $settingList = Setting::all();
+
         return view('setting.list')->with('settingList', $settingList);
     }
 
@@ -46,6 +44,7 @@ class SettingController extends Controller
         if ($setting) {
             return view('setting.show')->with('setting', $setting);
         }
+
         return Redirect::route('setting.index')
             ->with('warning', '設定項目不存在');
     }
@@ -62,6 +61,7 @@ class SettingController extends Controller
         if ($setting) {
             return view('setting.edit')->with('setting', $setting);
         }
+
         return Redirect::route('setting.index')
             ->with('warning', '設定項目不存在');
     }
@@ -82,7 +82,7 @@ class SettingController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'data' => 'max:65535'
+            'data' => 'max:65535',
         ]);
         if ($validator->fails()) {
             return Redirect::route('setting.edit', $id)
@@ -91,6 +91,7 @@ class SettingController extends Controller
         } else {
             $setting->data = $request->get('data');
             $setting->save();
+
             return Redirect::route('setting.show', $setting->id)
                 ->with('global', '設定項目已更新');
         }
@@ -109,7 +110,7 @@ class SettingController extends Controller
         if ($type == 'normal') {
             try {
                 Mail::raw('這是測試信。', function ($message) use ($email) {
-                    $message->to($email)->subject("[" . Config::get('config.sitename') . "] 測試信");
+                    $message->to($email)->subject('[' . Config::get('config.sitename') . '] 測試信');
                 });
             } catch (Exception $e) {
                 //Log
@@ -122,7 +123,7 @@ class SettingController extends Controller
                 'emails.raw',
                 ['text' => '這是測試信。'],
                 function ($message) use ($email) {
-                    $message->to($email)->subject("[" . Config::get('config.sitename') . "] 測試信");
+                    $message->to($email)->subject('[' . Config::get('config.sitename') . '] 測試信');
                 }
             );
         } else {

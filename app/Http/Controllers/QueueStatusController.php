@@ -40,9 +40,9 @@ class QueueStatusController extends Controller
             $bodyStr = preg_replace_callback('/name="([^"]*)"/',
                 function ($matches) use (&$count) {
                     $count++;
-                    return 'name="'.$matches[1].$count.'"';
-                }
-                , $bodyStr);
+
+                    return 'name="' . $matches[1] . $count . '"';
+                }, $bodyStr);
 
             try {
                 $DOM = new DOMDocument;

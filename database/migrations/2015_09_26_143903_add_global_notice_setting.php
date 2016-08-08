@@ -1,7 +1,6 @@
 <?php
 
 use App\Setting;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class AddGlobalNoticeSetting extends Migration
@@ -15,8 +14,8 @@ class AddGlobalNoticeSetting extends Migration
     {
         //
         Setting::create([
-            'id' => 'global-notice',
-            'desc' => '顯示在網頁頂端的訊息（留白不顯示）'
+            'id'   => 'global-notice',
+            'desc' => '顯示在網頁頂端的訊息（留白不顯示）',
         ]);
     }
 

@@ -37,14 +37,13 @@ class RoleLimit
      */
     //角色繼承關係
     //FIXME 不該有角色繼承，應使用權限作為基本控管
-    static protected $inheritance = [
+    protected static $inheritance = [
         'admin' => ['staff'],
-        'staff' => []
+        'staff' => [],
     ];
 
     public function handle($request, Closure $next, $role)
     {
-
         if ($this->auth->guest()) {
             //未登入
             if ($request->ajax()) {
@@ -61,6 +60,7 @@ class RoleLimit
             return redirect()->route('member.resend')
                 ->with('warning', '完成信箱驗證方可進入此頁面');
         }
+
         return $next($request);
     }
 
@@ -97,6 +97,7 @@ class RoleLimit
                 }
             }
         }
+
         return false;
     }
 }

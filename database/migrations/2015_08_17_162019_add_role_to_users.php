@@ -2,7 +2,6 @@
 
 use App\Role;
 use App\User;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class AddRoleToUsers extends Migration

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helper\JsonHelper;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -21,7 +19,7 @@ class UploadController extends Controller
     {
         //只接受Ajax請求
         if (!$request->ajax()) {
-            return "error";
+            return 'error';
         }
         //上傳至Imgur
         //取得檔案
@@ -33,6 +31,7 @@ class UploadController extends Controller
             $result = [
                 'error' => '請設定Imgur Client ID',
             ];
+
             return JsonHelper::encode($result);
         }
         //發送請求
@@ -40,20 +39,20 @@ class UploadController extends Controller
         $response = $client->post('https://api.imgur.com/3/image', [
             'timeout' => 30,
             'headers' => [
-                'Authorization' => 'Client-ID ' . $client_id
+                'Authorization' => 'Client-ID ' . $client_id,
             ],
             'form_params' => [
-                'image' => base64_encode($file)
+                'image' => base64_encode($file),
             ],
-            'verify' => false
+            'verify' => false,
         ]);
         $jsonResponse = JsonHelper::decode($response->getBody());
         //取得連結
         $image = $jsonResponse->data->link;
         //回傳詳細資訊
         $result = [
-            'success' => 'success',
-            'url' => $image,
+            'success'        => 'success',
+            'url'            => $image,
             'initialPreview' => [
                 "<img src='$image' class='file-preview-image' title="
                 . substr($image, strrpos($image, '/') + 1)
@@ -62,11 +61,12 @@ class UploadController extends Controller
             'initialPreviewConfig' => [
                 [
                     'caption' => substr($image, strrpos($image, '/') + 1),
-                    'url' => URL::route('upload.delete-image'), // server delete action
-                    'key' => $image
-                ]
-            ]
+                    'url'     => URL::route('upload.delete-image'), // server delete action
+                    'key'     => $image,
+                ],
+            ],
         ];
+
         return JsonHelper::encode($result);
     }
 
@@ -75,11 +75,12 @@ class UploadController extends Controller
         //目前什麼都不用做，只是需要確保請求發送成功
         //只接受Ajax請求
         if (!$request->ajax()) {
-            return "error";
+            return 'error';
         }
         $result = [
-            'success' => 'success'
+            'success' => 'success',
         ];
+
         return JsonHelper::encode($result);
     }
 }

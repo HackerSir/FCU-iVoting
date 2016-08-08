@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 
 return [
-    /**
+    /*
      * 巡覽列
      *
      * 基本格式：'連結名稱' => '連結路由'
@@ -22,25 +21,25 @@ return [
         '%user%' => [
             '個人資料' => 'member/profile',
             '修改密碼' => 'member/change-password',
-            '登出' => 'member/logout'
-        ]
+            '登出'   => 'member/logout',
+        ],
     ],
     //工作人員
     'staff' => [
-        '工作人員' => []
+        '工作人員' => [],
     ],
     //管理員
     'admin' => [
         '管理員' => [
-            '成員清單' => 'member',
-            '主辦單位清單' => 'organizer',
-            '網站設定' => 'setting',
+            '成員清單'    => 'member',
+            '主辦單位清單'  => 'organizer',
+            '網站設定'    => 'setting',
             'Queue狀態' => 'queue-status',
-            '記錄檢視器' => '!log'
-        ]
+            '記錄檢視器'   => '!log',
+        ],
     ],
     //遊客
     'guest' => [
-        '登入' => 'member/login'
-    ]
+        '登入' => 'member/login',
+    ],
 ];

@@ -110,20 +110,21 @@ class Handler extends ExceptionHandler
             506 => 'Variant Also Negotiates',
             507 => 'Insufficient Storage',
             509 => 'Bandwidth Limit Exceeded',
-            510 => 'Not Extended'
+            510 => 'Not Extended',
         ];
         //使用獨立錯誤頁面
         $exclude_code = [
-            '503'
+            '503',
         ];
         if (in_array($status, $exclude_code) && view()->exists("errors.{$status}")) {
             return response()->view("errors.{$status}", [], $status);
         } elseif (array_key_exists($status, $http_codes)) {
             $error = [
-                'code' => $status,
-                'message' => $http_codes[$status]
+                'code'    => $status,
+                'message' => $http_codes[$status],
             ];
-            return response()->view("errors.error", $error, $status);
+
+            return response()->view('errors.error', $error, $status);
         } else {
             return (new SymfonyDisplayer(config('app.debug')))->createResponse($e);
         }

@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Log\Writer;
-use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 class LogApacheStatus extends Command
@@ -55,7 +54,6 @@ class LogApacheStatus extends Command
 
     protected function getServerStatus()
     {
-
     }
 }
 
