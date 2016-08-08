@@ -54,22 +54,19 @@ class VoteEventConditionTest extends TestCase
         $this->actingAs($this->d03User)
             ->post($postURL)
             ->followRedirects()
-            ->dontSee('不符合投票資格')
-            ->see('投票完成');
+            ->assertSessionHas('global', '投票完成');
 
         $this->flushSession();
         $this->actingAs($this->d02User)
             ->post($postURL)
             ->followRedirects()
-            ->see('不符合投票資格')
-            ->dontSee('投票完成');
+            ->assertSessionHas('warning', '不符合投票資格');
 
         $this->flushSession();
         $this->actingAs($this->d04User)
             ->post($postURL)
             ->followRedirects()
-            ->see('不符合投票資格')
-            ->dontSee('投票完成');
+            ->assertSessionHas('warning', '不符合投票資格');
     }
 
     protected function createVoteEvent($subject)
