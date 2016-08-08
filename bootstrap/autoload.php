@@ -1,7 +1,4 @@
 <?php
-//FIXME Laravel 5.1 出現 Maximum function nesting level of '100' reached, aborting! 的暫時解法
-//來源：http://stackoverflow.com/questions/30803342
-ini_set('xdebug.max_nesting_level', 120);
 
 define('LARAVEL_START', microtime(true));
 
