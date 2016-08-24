@@ -9,6 +9,7 @@ class Setting extends Model
 {
     protected $table = 'settings';
     protected $fillable = ['id', 'type', 'desc', 'data'];
+    public $incrementing = false;
     //有效型態與對應簡介
     public static $types = [
         'text'      => '單行文字',
