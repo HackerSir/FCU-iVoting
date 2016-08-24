@@ -46,7 +46,7 @@ return [
                     'firsturl.net', 'flameupload.com', 'flq.us', 'folu.me', 'fon.gs', 'forexurls.net',
                     'freean.us', 'freegaysitepass.com', 'freetexthost.com', 'fru.me', 'fu.gy', 'fwd4.me',
                     'fyad.org', 'g1n.co', 'galleries.bz', 'go4up.com', 'goandgrab.info', 'goblig.com',
-                    'goldpaste.us', 'goneviral.com', 'goo.gl', 'goshrink.com', 'guardian.noip.es', 'guardlink.org',
+                    'goldpaste.us', 'goneviral.com', 'goshrink.com', 'guardian.noip.es', 'guardlink.org',
                     'h-url.in', 'hasurl.co.cc', 'hide-url.net', 'hidelinkz.com', 'hidemyass.com', 'hidemylink.org',
                     'hidemylinks.com.ar', 'hidemylinks.net', 'hides.at', 'hideurl.biz', 'ho.io', 'hornywood.tv',
                     'href.hu', 'hurl.me', 'hurlme.com', 'i0u.ru', 'id2.tryjav.com', 'iiiii.in',
