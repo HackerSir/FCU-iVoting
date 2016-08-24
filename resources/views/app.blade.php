@@ -68,7 +68,7 @@
         <footer class="footer">
             <div class="container">
                 <p class="text-muted">
-                    Powered by <a href="https://hackersir.info" target="_blank">逢甲大學黑客社</a>
+                    Powered by <a href="https://hackersir.org" target="_blank">逢甲大學黑客社</a>
                 </p>
                 <ol class="breadcrumb" style="padding-top: 0; margin-bottom: 0px;">
                     <li><a href="{{ URL::route('policies', 'privacy') }}">隱私權</a></li>
