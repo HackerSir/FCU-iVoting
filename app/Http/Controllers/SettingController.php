@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\LogHelper;
+use Hackersir\Helper\LogHelper;
 use App\Setting;
 use Exception;
 use Illuminate\Http\Request;

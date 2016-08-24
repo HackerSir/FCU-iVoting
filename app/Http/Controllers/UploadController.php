@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\JsonHelper;
+use Hackersir\Helper\JsonHelper;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;

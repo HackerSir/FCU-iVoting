@@ -5,7 +5,7 @@
 @endsection
 
 @section('metaTag')
-    <meta name="description" property="og:description" content="{{ strip_tags(App\Helper\MarkdownHelper::translate($voteEvent->info)) }}">
+    <meta name="description" property="og:description" content="{{ strip_tags(Hackersir\Helper\MarkdownHelper::translate($voteEvent->info)) }}">
 @endsection
 
 @section('css')
@@ -90,7 +90,7 @@
 
             @if($voteEvent->info)
                 <blockquote>
-                    {!! App\Helper\MarkdownHelper::translate($voteEvent->info) !!}
+                    {!! Hackersir\Helper\MarkdownHelper::translate($voteEvent->info) !!}
                 </blockquote>
             @endif
 
@@ -204,7 +204,7 @@
                                                 @if(count($voteSelectionItem->getImageLinks()) > 1)
                                                     <div class="more-image-fake-shadow img-rounded"></div>
                                                 @endif
-                                                <img src="{{ App\Helper\ImgurHelper::thumbnail($voteSelectionItem->getImageLinks()[0], 'm') }}" class="img-rounded vote-selection" style="cursor: pointer;" data-toggle="modal" data-target="#imageModal" data-title="{{ $voteSelectionItem->title }}" data-images="{{ implode(';',$voteSelectionItem->getImageLinks()) }}"/>
+                                                <img src="{{ Hackersir\Helper\ImgurHelper::thumbnail($voteSelectionItem->getImageLinks()[0], 'm') }}" class="img-rounded vote-selection" style="cursor: pointer;" data-toggle="modal" data-target="#imageModal" data-title="{{ $voteSelectionItem->title }}" data-images="{{ implode(';',$voteSelectionItem->getImageLinks()) }}"/>
                                             @else
                                                 <img data-src="holder.js/200x200?text=沒有圖片&size=30" class="img-rounded vote-selection"/>
                                             @endif

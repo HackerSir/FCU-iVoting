@@ -5,9 +5,9 @@
     <file url="file://$PROJECT_DIR$/.gitignore" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/Console/Commands/DeleteUnConfirmUser.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/Console/Kernel.php" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/Helper/ImgurHelper.php" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/Helper/JsonHelper.php" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/Helper/LogHelper.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/HackerSir/Helper/ImgurHelper.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/HackerSir/Helper/JsonHelper.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/HackerSir/Helper/LogHelper.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/Http/Controllers/HomeController.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/Http/Controllers/VoteEventController.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/Http/Kernel.php" charset="UTF-8" />

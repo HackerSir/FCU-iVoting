@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Helper\ImgurHelper;
+use Hackersir\Helper\ImgurHelper;
 
 class ImgurHelperTest extends TestCase
 {

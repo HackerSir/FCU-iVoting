@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helper;
+namespace Hackersir\Helper;
 
 use App;
 use Illuminate\Support\Facades\Log;

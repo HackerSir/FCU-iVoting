@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App;
-use App\Helper\JsonHelper;
-use App\Helper\LogHelper;
+use Hackersir\Helper\JsonHelper;
+use Hackersir\Helper\LogHelper;
 use App\Role;
 use App\User;
 use Carbon\Carbon;

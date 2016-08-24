@@ -3,7 +3,7 @@
 namespace App;
 
 use DB;
-use App\Helper\JsonHelper;
+use Hackersir\Helper\JsonHelper;
 use Illuminate\Database\Eloquent\Model;
 
 class VoteSelection extends Model

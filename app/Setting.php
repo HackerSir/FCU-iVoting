@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Helper\MarkdownHelper;
+use Hackersir\Helper\MarkdownHelper;
 use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model

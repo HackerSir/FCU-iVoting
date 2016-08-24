@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\MarkdownHelper;
+use Hackersir\Helper\MarkdownHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 

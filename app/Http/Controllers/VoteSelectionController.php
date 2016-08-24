@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\JsonHelper;
-use App\Helper\LogHelper;
+use Hackersir\Helper\JsonHelper;
+use Hackersir\Helper\LogHelper;
 use App\VoteBallot;
 use App\VoteEvent;
 use App\VoteSelection;

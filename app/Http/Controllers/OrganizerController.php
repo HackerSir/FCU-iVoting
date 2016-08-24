@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\LogHelper;
+use Hackersir\Helper\LogHelper;
 use App\Organizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Helper\JsonHelper;
+use Hackersir\Helper\JsonHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;

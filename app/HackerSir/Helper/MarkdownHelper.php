@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helper;
+namespace Hackersir\Helper;
 
 use AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra as Markdown;
 
