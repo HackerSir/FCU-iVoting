@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e3e36a16a1b79446c523fe9514325ade",
-    "content-hash": "069a93dbfe2075032d2b0a3e1fc841ab",
+    "hash": "428edfb570e9e09dd7d3409980ef7aed",
+    "content-hash": "aee920dd1fe14b83d0944f93d2010ae9",
     "packages": [
         {
             "name": "alfredo-ramos/parsedown-extra-laravel",
@@ -1712,6 +1712,48 @@
             "description": "HTML and Form Builders for the Laravel Framework",
             "homepage": "http://laravelcollective.com",
             "time": "2016-01-27 22:29:54"
+        },
+        {
+            "name": "lavary/laravel-menu",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lavary/laravel-menu.git",
+                "reference": "60ce1815819f1d57a415f97f4f9a7e8e73938a92"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lavary/laravel-menu/zipball/60ce1815819f1d57a415f97f4f9a7e8e73938a92",
+                "reference": "60ce1815819f1d57a415f97f4f9a7e8e73938a92",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=5.0",
+                "illuminate/view": ">=5.0",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Lavary\\Menu\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lavary",
+                    "email": "mrl.8081@gmail.com"
+                }
+            ],
+            "description": "A quick way to create menus in Laravel 5",
+            "homepage": "https://github.com/lavary/laravel-menu",
+            "keywords": [
+                "laravel"
+            ],
+            "time": "2016-05-01 19:18:01"
         },
         {
             "name": "league/flysystem",
@@ -5069,7 +5111,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "zizaco/entrust": 20
+        "zizaco/entrust": 20,
+        "lavary/laravel-menu": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

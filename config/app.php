@@ -151,6 +151,7 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
         Devfactory\Minify\MinifyServiceProvider::class,
         Recca0120\LaravelTracy\ServiceProvider::class,
+        Lavary\Menu\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -212,6 +213,7 @@ return [
         'Throttle'  => GrahamCampbell\Throttle\Facades\Throttle::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Minify'    => Devfactory\Minify\Facades\MinifyFacade::class,
+        'Menu'      => Lavary\Menu\Facade::class,
 
     ],
 
