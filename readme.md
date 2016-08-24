@@ -3,17 +3,17 @@
 [![codecov](https://codecov.io/gh/HackerSir/FCU-iVoting/branch/master/graph/badge.svg)](https://codecov.io/gh/HackerSir/FCU-iVoting)
 [![StyleCI](https://styleci.io/repos/65181574/shield)](https://styleci.io/repos/65181574)
 
-投票網站
+逢甲票選網站
 
 ## 網址
-[http://ivoting.ifcu.today/](http://ivoting.ifcu.today/)
+[https://ivoting.hackersir.org/](https://ivoting.hackersir.org/)
 
 ## 基礎架構
 - PHP
 - MySQL
 
 ## 主要框架
-- Laravel 5.1
+- Laravel 5.2
 - Bootstrap 3
 
 ## 文件格式
