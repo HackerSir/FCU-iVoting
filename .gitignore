@@ -116,6 +116,7 @@ $RECYCLE.BIN/
 
 # laravel-ide-helper
 _ide_helper.php
+.phpstorm.meta.php
 
 # Google Analytics
 /public/js/analyticstracking.js
