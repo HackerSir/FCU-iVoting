@@ -94,13 +94,6 @@ Route::controller('upload', 'UploadController', [
     'deleteImage' => 'upload.delete-image',
 ]);
 
-//Log Viewer
-Route::get('log', [
-    'as'         => 'log',
-    'uses'       => '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index',
-    'middleware' => 'role:admin',
-]);
-
 $policiesTabs = ['privacy', 'terms', 'FAQ'];
 Route::get(
     'policies/{tab}',
@@ -115,11 +108,3 @@ Route::get(
         },
     ]
 );
-
-//未定義路由
-Route::get('{all}', [
-    'as' => 'not-found',
-    function () {
-        abort(404);
-    },
-])->where('all', '.*');

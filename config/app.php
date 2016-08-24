@@ -145,7 +145,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         AlfredoRamos\ParsedownExtra\ParsedownExtraServiceProvider::class,
-        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
         BackupManager\Laravel\Laravel5ServiceProvider::class,
         GrahamCampbell\Throttle\ThrottleServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
