@@ -77,17 +77,4 @@ Route::group(['prefix' => 'upload'], function () {
     Route::post('delete-image', 'UploadController@deleteImage')->name('upload.delete-image');
 });
 
-$policiesTabs = ['privacy', 'terms', 'FAQ'];
-Route::get(
-    'policies/{tab}',
-    [
-        'as' => 'policies',
-        function ($tab) use ($policiesTabs) {
-            if (!in_array($tab, $policiesTabs)) {
-                return redirect()->route('policies', $policiesTabs[0]);
-            }
-
-            return response()->view('policies');
-        },
-    ]
-);
+Route::get('policies/{tab?}', 'PolicyController@index')->name('policies');
