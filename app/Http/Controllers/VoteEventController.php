@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Hackersir\Helper\JsonHelper;
 use Hackersir\Helper\LogHelper;
-use App\Organizer;
-use App\Setting;
-use App\VoteEvent;
-use App\VoteSelection;
+use Hackersir\Organizer;
+use Hackersir\Setting;
+use Hackersir\VoteEvent;
+use Hackersir\VoteSelection;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

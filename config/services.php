@@ -27,7 +27,7 @@ return [
         'region' => 'us-east-1',
     ],
     'stripe' => [
-        'model'  => App\User::class,
+        'model'  => Hackersir\User::class,
         'key'    => '',
         'secret' => '',
     ],

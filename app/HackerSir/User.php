@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Hackersir;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -86,6 +86,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function voteBallots()
     {
-        return $this->hasMany('App\VoteBallot');
+        return $this->hasMany(VoteBallot::class);
     }
 }

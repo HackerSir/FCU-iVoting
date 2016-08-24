@@ -1,6 +1,6 @@
 <?php
 
-use App\Role;
+use Hackersir\Role;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateRoleDataFromGroups extends Migration

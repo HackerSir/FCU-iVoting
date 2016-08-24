@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Hackersir\Helper\LogHelper;
-use App\Organizer;
+use Hackersir\Organizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;

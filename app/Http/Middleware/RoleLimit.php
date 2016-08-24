@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Role;
-use App\User;
+use Hackersir\Role;
+use Hackersir\User;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Auth;

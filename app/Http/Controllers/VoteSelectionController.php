@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Hackersir\Helper\JsonHelper;
 use Hackersir\Helper\LogHelper;
-use App\VoteBallot;
-use App\VoteEvent;
-use App\VoteSelection;
+use Hackersir\VoteBallot;
+use Hackersir\VoteEvent;
+use Hackersir\VoteSelection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;

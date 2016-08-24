@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Hackersir;
 
 use DB;
 use Hackersir\Helper\JsonHelper;
@@ -13,12 +13,12 @@ class VoteSelection extends Model
 
     public function voteEvent()
     {
-        return $this->belongsTo('App\VoteEvent');
+        return $this->belongsTo(VoteEvent::class);
     }
 
     public function voteBallots()
     {
-        return $this->hasMany('App\VoteBallot');
+        return $this->hasMany(VoteBallot::class);
     }
 
     public function getImageLinksText()

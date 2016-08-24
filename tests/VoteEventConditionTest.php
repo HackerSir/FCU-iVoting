@@ -1,6 +1,7 @@
 <?php
 
-use App\Role;
+use Hackersir\Role;
+use Hackersir\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 /**
@@ -20,19 +21,19 @@ class VoteEventConditionTest extends TestCase
 
     private function createUser()
     {
-        $this->staffUser = factory('App\User')->create();
+        $this->staffUser = factory(User::class)->create();
         $staff = Role::where('name', '=', 'staff')->first();
         $this->staffUser->attachRole($staff);
 
-        $this->d02User = factory('App\User')->make([
+        $this->d02User = factory(User::class)->make([
             'email' => 'd0200000@fcu.edu.tw',
         ]);
 
-        $this->d03User = factory('App\User')->make([
+        $this->d03User = factory(User::class)->make([
             'email' => 'd0300000@fcu.edu.tw',
         ]);
 
-        $this->d04User = factory('App\User')->make([
+        $this->d04User = factory(User::class)->make([
             'email' => 'd0400000@fcu.edu.tw',
         ]);
     }
@@ -108,23 +109,23 @@ class VoteEventConditionTest extends TestCase
 
     public function test_fun_VoteEvent_checkCondition()
     {
-        $d02User = factory('App\User')->make([
+        $d02User = factory(User::class)->make([
             'email' => 'd0255555@fcu.edu.tw',
         ]);
 
-        $D02User = factory('App\User')->make([
+        $D02User = factory(User::class)->make([
             'email' => 'D0244444@fcu.edu.tw',
         ]);
 
-        $d03User = factory('App\User')->make([
+        $d03User = factory(User::class)->make([
             'email' => 'd0355555@fcu.edu.tw',
         ]);
 
-        $D03User = factory('App\User')->make([
+        $D03User = factory(User::class)->make([
             'email' => 'D0344444@fcu.edu.tw',
         ]);
 
-        $voteEvent = new App\VoteEvent();
+        $voteEvent = new Hackersir\VoteEvent();
         $voteEvent->vote_condition = '{"prefix":"d02"}';
 
         $this->assertTrue($voteEvent->checkCondition($d02User, 'prefix'));

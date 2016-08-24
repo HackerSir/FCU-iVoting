@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Hackersir\Helper\LogHelper;
-use App\User;
+use Hackersir\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 

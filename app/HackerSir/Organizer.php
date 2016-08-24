@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Hackersir;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +11,6 @@ class Organizer extends Model
 
     public function voteEvents()
     {
-        return $this->hasMany('App\VoteEvent');
+        return $this->hasMany(VoteEvent::class);
     }
 }

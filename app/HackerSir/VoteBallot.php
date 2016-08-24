@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Hackersir;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,11 +11,11 @@ class VoteBallot extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
     }
 
     public function voteSelection()
     {
-        return $this->belongsTo('App\VoteSelection');
+        return $this->belongsTo(VoteSelection::class);
     }
 }

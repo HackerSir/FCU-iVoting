@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(App\User::class, function ($faker) {
+$factory->define(Hackersir\User::class, function ($faker) {
     return [
         'email'          => $faker->email,
         'password'       => str_random(10),

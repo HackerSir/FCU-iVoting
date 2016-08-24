@@ -1,5 +1,6 @@
 <?php
 
+use Hackersir\Setting;
 use Illuminate\Database\Migrations\Migration;
 
 class UpdateSettingTypeOfGlobalNotice extends Migration
@@ -11,7 +12,7 @@ class UpdateSettingTypeOfGlobalNotice extends Migration
      */
     public function up()
     {
-        $setting = \App\Setting::find('global-notice');
+        $setting = Setting::find('global-notice');
         $setting->type = 'markdown';
         $setting->save();
     }
@@ -23,7 +24,7 @@ class UpdateSettingTypeOfGlobalNotice extends Migration
      */
     public function down()
     {
-        $setting = \App\Setting::find('global-notice');
+        $setting = Setting::find('global-notice');
         $setting->type = 'text';
         $setting->save();
     }

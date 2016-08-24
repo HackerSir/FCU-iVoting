@@ -1,6 +1,6 @@
 <?php
 
-use App\Setting;
+use Hackersir\Setting;
 use Illuminate\Database\Migrations\Migration;
 
 class AddGlobalNoticeSetting extends Migration

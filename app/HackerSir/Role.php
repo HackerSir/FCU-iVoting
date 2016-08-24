@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Hackersir;
 
 use Zizaco\Entrust\EntrustRole;
 

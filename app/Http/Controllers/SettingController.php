@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Hackersir\Helper\LogHelper;
-use App\Setting;
+use Hackersir\Setting;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;

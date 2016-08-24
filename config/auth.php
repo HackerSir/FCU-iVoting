@@ -71,12 +71,12 @@ return [
      * @link https://github.com/Zizaco/entrust/issues/472
      * @see \Zizaco\Entrust\Traits\EntrustRoleTrait::users
      */
-    'model'  => App\User::class,
+    'model'  => Hackersir\User::class,
 
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model'  => App\User::class,
+            'model'  => Hackersir\User::class,
         ],
 
         // 'users' => [

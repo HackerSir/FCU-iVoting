@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Hackersir;
 
 use Hackersir\Helper\JsonHelper;
 use Carbon\Carbon;
@@ -32,12 +32,12 @@ class VoteEvent extends Model
 
     public function voteSelections()
     {
-        return $this->hasMany('App\VoteSelection')->orderBy('order')->orderBy('id');
+        return $this->hasMany(VoteSelection::class)->orderBy('order')->orderBy('id');
     }
 
     public function organizer()
     {
-        return $this->belongsTo('App\Organizer');
+        return $this->belongsTo(Organizer::class);
     }
 
     public function isStarted()

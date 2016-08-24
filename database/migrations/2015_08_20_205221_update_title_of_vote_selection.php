@@ -1,6 +1,6 @@
 <?php
 
-use App\VoteSelection;
+use Hackersir\VoteSelection;
 use Illuminate\Database\Migrations\Migration;
 
 class UpdateTitleOfVoteSelection extends Migration

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Hackersir;
 
 use Hackersir\Helper\MarkdownHelper;
 use Illuminate\Database\Eloquent\Model;

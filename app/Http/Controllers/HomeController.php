@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
-use App\Setting;
+use Hackersir\Setting;
 use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller

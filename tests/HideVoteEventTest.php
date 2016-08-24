@@ -1,6 +1,7 @@
 <?php
 
-use App\Role;
+use Hackersir\Role;
+use Hackersir\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 /**
@@ -19,8 +20,8 @@ class HideVoteEventTest extends TestCase
 
     private function createUser()
     {
-        $this->defaultUser = factory('App\User')->create();
-        $this->staffUser = factory('App\User')->create();
+        $this->defaultUser = factory(User::class)->create();
+        $this->staffUser = factory(User::class)->create();
         $staff = Role::where('name', '=', 'staff')->first();
         $this->staffUser->attachRole($staff);
     }

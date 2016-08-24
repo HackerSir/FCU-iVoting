@@ -1,7 +1,7 @@
 <?php
 
-use App\Role;
-use App\User;
+use Hackersir\Role;
+use Hackersir\User;
 use Illuminate\Database\Migrations\Migration;
 
 class RemoveGroupsTable extends Migration
