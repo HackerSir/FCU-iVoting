@@ -78,6 +78,11 @@
                     @if(env('Report_URL'))
                         <li><a href="{{ env('Report_URL') }}" target="_blank"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-right: 5px;"></span>回報問題</a></li>
                     @endif
+                    <li>
+                        <a href="https://github.com/HackerSir/FCU-iVoting" target="_blank">
+                            <i class="fa fa-github" aria-hidden="true"></i> GitHub
+                        </a>
+                    </li>
                 </ol>
             </div>
         </footer>
