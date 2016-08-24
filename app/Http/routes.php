@@ -12,10 +12,7 @@
 */
 
 //入口頁面首頁
-Route::get('/', [
-    'as'   => 'home',
-    'uses' => 'HomeController@index',
-]);
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'member'], function () {
     Route::get('/', 'MemberController@getIndex')->name('member.list');
@@ -36,45 +33,34 @@ Route::group(['prefix' => 'member'], function () {
     Route::get('edit-profile', 'MemberController@getEditProfile')->name('member.edit-profile');
     Route::post('edit-profile', 'MemberController@postEditProfile')->name('member.edit-profile');
     Route::get('edit-other-profile/{uid}', 'MemberController@getEditOtherProfile')->name('member.edit-other-profile');
-    Route::post('edit-other-profile/{uid?}', 'MemberController@postEditOtherProfile')->name('member.edit-other-profile');
+    Route::post('edit-other-profile/{uid?}', 'MemberController@postEditOtherProfile')
+        ->name('member.edit-other-profile');
     Route::get('logout', 'MemberController@getLogout')->name('member.logout');
 });
 
 //投票系統
-Route::post('vote-event/start/{vid}', [
-    'as'   => 'vote-event.start',
-    'uses' => 'VoteEventController@start',
-]);
-Route::post('vote-event/end/{vid}', [
-    'as'   => 'vote-event.end',
-    'uses' => 'VoteEventController@end',
-]);
-Route::post('vote-event/sort/{vid}', [
-    'as'   => 'vote-event.sort',
-    'uses' => 'VoteEventController@sort',
-]);
+Route::post('vote-event/start/{vid}', 'VoteEventController@start')->name('vote-event.start');
+Route::post('vote-event/end/{vid}', 'VoteEventController@end')->name('vote-event.end');
+Route::post('vote-event/sort/{vid}', 'VoteEventController@sort')->name('vote-event.sort');
 Route::resource('vote-event', 'VoteEventController');
-Route::post('vote-selection/vote/{id}', [
-    'as'   => 'vote-selection.vote',
-    'uses' => 'VoteSelectionController@vote',
-]);
+Route::post('vote-selection/vote/{id}', 'VoteSelectionController@vote')->name('vote-selection.vote');
 Route::resource('vote-selection', 'VoteSelectionController', ['except' => ['index', 'show']]);
 Route::resource('organizer', 'OrganizerController');
 
 //寄送測試信
-Route::post('send-test-mail', [
-    'as'   => 'send-test-mail',
-    'uses' => 'SettingController@sendTestMail',
-]);
+Route::post('send-test-mail', 'SettingController@sendTestMail')->name('send-test-mail');
 
 //Queue狀態
-Route::get('queue-status', [
-    'as'   => 'queue-status',
-    'uses' => 'QueueStatusController@index',
-]);
+Route::get('queue-status', 'QueueStatusController@index')->name('queue-status');
 
 //網站設定
-Route::resource('setting', 'SettingController', ['except' => ['create', 'store', 'destroy']]);
+Route::resource('setting', 'SettingController', [
+    'except' => [
+        'create',
+        'store',
+        'destroy',
+    ],
+]);
 
 //統計頁面
 Route::group(['prefix' => 'stats'], function () {
@@ -83,10 +69,7 @@ Route::group(['prefix' => 'stats'], function () {
 });
 
 //Markdown API
-Route::any('markdown', [
-    'as'   => 'markdown.preview',
-    'uses' => 'MarkdownApiController@markdownPreview',
-]);
+Route::any('markdown', 'MarkdownApiController@markdownPreview')->name('markdown.preview');
 
 //上傳
 Route::group(['prefix' => 'upload'], function () {
