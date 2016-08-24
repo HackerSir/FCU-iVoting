@@ -5,9 +5,9 @@
     <file url="file://$PROJECT_DIR$/.gitignore" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/Console/Commands/DeleteUnConfirmUser.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/Console/Kernel.php" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/HackerSir/Helper/ImgurHelper.php" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/HackerSir/Helper/JsonHelper.php" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/HackerSir/Helper/LogHelper.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/Hackersir/Helper/ImgurHelper.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/Hackersir/Helper/JsonHelper.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/Hackersir/Helper/LogHelper.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/Http/Controllers/HomeController.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/Http/Controllers/VoteEventController.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/Http/Kernel.php" charset="UTF-8" />
@@ -37,7 +37,6 @@
     <file url="file://$PROJECT_DIR$/resources/views/member/register.blade.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/resources/views/vote/event/list.blade.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/resources/views/vote/event/show-eas.blade.php" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/storage/logs-status/mod-status-2015-08-27.log" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tests/ExampleTest.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tests/HideVoteEventTest.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tests/ImgurHelperTest.php" charset="UTF-8" />
