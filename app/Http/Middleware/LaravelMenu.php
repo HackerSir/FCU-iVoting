@@ -36,6 +36,7 @@ class LaravelMenu
                     $adminMenu->add('主辦單位清單', ['route' => 'organizer.index'])->active('organizer/*');
                     $adminMenu->add('網站設定', ['route' => 'setting.index'])->active('setting/*');
                     $adminMenu->add('Queue狀態', ['route' => 'queue-status'])->active('queue-status/*');
+                    $adminMenu->add('統計', ['route' => 'stats.index'])->active('stats/*');
                     $adminMenu->add(
                         '記錄檢視器 <i class="glyphicon glyphicon-new-window"></i>',
                         ['route' => 'log-viewer::dashboard']
