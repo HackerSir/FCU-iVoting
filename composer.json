@@ -36,7 +36,7 @@
         ],
         "psr-4": {
             "App\\": "app/",
-            "Hackersir\\": "app/Hackersir"
+            "Hackersir\\": "app/Hackersir/"
         }
     },
     "autoload-dev": {
