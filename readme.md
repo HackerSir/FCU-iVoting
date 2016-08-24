@@ -1,6 +1,6 @@
 # FCU-iVoting
 [![Build Status](https://travis-ci.org/HackerSir/FCU-iVoting.svg?branch=master)](https://travis-ci.org/HackerSir/FCU-iVoting)
-[![codecov](https://codecov.io/gh/HackerSir/FCU-iVoting/branch/master/graph/badge.svg)](https://codecov.io/gh/HackerSir/FCU-iVoting)
+[![Codecov](https://codecov.io/gh/HackerSir/FCU-iVoting/branch/master/graph/badge.svg)](https://codecov.io/gh/HackerSir/FCU-iVoting)
 [![Style CI](https://styleci.io/repos/65181574/shield)](https://styleci.io/repos/65181574/)
 
 逢甲票選網站
