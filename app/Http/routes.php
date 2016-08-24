@@ -17,28 +17,28 @@ Route::get('/', [
     'uses' => 'HomeController@index',
 ]);
 
-Route::controller('member', 'MemberController', [
-    'getIndex'             => 'member.list',
-    'getLogin'             => 'member.login',
-    'postLogin'            => 'member.login',
-    'getRegister'          => 'member.register',
-    'postRegister'         => 'member.register',
-    'getConfirm'           => 'member.confirm',
-    'getResend'            => 'member.resend',
-    'postResend'           => 'member.resend',
-    'getForgotPassword'    => 'member.forgot-password',
-    'postForgotPassword'   => 'member.forgot-password',
-    'getResetPassword'     => 'member.reset-password',
-    'postResetPassword'    => 'member.reset-password',
-    'getChangePassword'    => 'member.change-password',
-    'postChangePassword'   => 'member.change-password',
-    'getProfile'           => 'member.profile',
-    'getEditProfile'       => 'member.edit-profile',
-    'postEditProfile'      => 'member.edit-profile',
-    'getEditOtherProfile'  => 'member.edit-other-profile',
-    'postEditOtherProfile' => 'member.edit-other-profile',
-    'getLogout'            => 'member.logout',
-]);
+Route::group(['prefix' => 'member'], function () {
+    Route::get('/', 'MemberController@getIndex')->name('member.list');
+    Route::get('login', 'MemberController@getLogin')->name('member.login');
+    Route::post('login', 'MemberController@postLogin')->name('member.login');
+    Route::get('register', 'MemberController@getRegister')->name('member.register');
+    Route::post('register', 'MemberController@postRegister')->name('member.register');
+    Route::get('confirm/{token?}', 'MemberController@getConfirm')->name('member.confirm');
+    Route::get('resend', 'MemberController@getResend')->name('member.resend');
+    Route::post('resend', 'MemberController@postResend')->name('member.resend');
+    Route::get('forgot-password', 'MemberController@getForgotPassword')->name('member.forgot-password');
+    Route::post('forgot-password', 'MemberController@postForgotPassword')->name('member.forgot-password');
+    Route::get('reset-password/{token?}', 'MemberController@getResetPassword')->name('member.reset-password');
+    Route::post('reset-password', 'MemberController@postResetPassword')->name('member.reset-password');
+    Route::get('change-password', 'MemberController@getChangePassword')->name('member.change-password');
+    Route::post('change-password', 'MemberController@postChangePassword')->name('member.change-password');
+    Route::get('profile/{uid?}', 'MemberController@getProfile')->name('member.profile');
+    Route::get('edit-profile', 'MemberController@getEditProfile')->name('member.edit-profile');
+    Route::post('edit-profile', 'MemberController@postEditProfile')->name('member.edit-profile');
+    Route::get('edit-other-profile/{uid}', 'MemberController@getEditOtherProfile')->name('member.edit-other-profile');
+    Route::post('edit-other-profile/{uid?}', 'MemberController@postEditOtherProfile')->name('member.edit-other-profile');
+    Route::get('logout', 'MemberController@getLogout')->name('member.logout');
+});
 
 //投票系統
 Route::post('vote-event/start/{vid}', [
@@ -77,10 +77,10 @@ Route::get('queue-status', [
 Route::resource('setting', 'SettingController', ['except' => ['create', 'store', 'destroy']]);
 
 //統計頁面
-Route::controller('stats', 'StatsController', [
-    'getIndex'      => 'stats.index',
-    'getForceRenew' => 'stats.force-renew',
-]);
+Route::group(['prefix' => 'stats'], function () {
+    Route::get('/', 'StatsController@getIndex')->name('stats.index');
+    Route::get('force-renew', 'StatsController@getForceRenew')->name('stats.force-renew');
+});
 
 //Markdown API
 Route::any('markdown', [
@@ -89,10 +89,10 @@ Route::any('markdown', [
 ]);
 
 //上傳
-Route::controller('upload', 'UploadController', [
-    'postImage'   => 'upload.image',
-    'deleteImage' => 'upload.delete-image',
-]);
+Route::group(['prefix' => 'upload'], function () {
+    Route::post('image', 'UploadController@postImage')->name('upload.image');
+    Route::post('delete-image', 'UploadController@deleteImage')->name('upload.delete-image');
+});
 
 $policiesTabs = ['privacy', 'terms', 'FAQ'];
 Route::get(
