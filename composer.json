@@ -20,7 +20,8 @@
         "backup-manager/laravel": "^1.0",
         "graham-campbell/throttle": "^5.2",
         "zizaco/entrust": "dev-laravel-5",
-        "devfactory/minify": "1.0.*"
+        "devfactory/minify": "1.0.*",
+        "recca0120/laravel-tracy": "^1.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

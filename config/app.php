@@ -150,6 +150,7 @@ return [
         GrahamCampbell\Throttle\ThrottleServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Devfactory\Minify\MinifyServiceProvider::class,
+        Recca0120\LaravelTracy\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
