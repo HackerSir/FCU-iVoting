@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use Hackersir\Helper\LogHelper;
 use Hackersir\Organizer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Validator;
+use Validator;
 
 class OrganizerController extends Controller
 {
@@ -21,7 +19,7 @@ class OrganizerController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -33,7 +31,7 @@ class OrganizerController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -44,7 +42,7 @@ class OrganizerController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  Request $request
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -54,7 +52,7 @@ class OrganizerController extends Controller
             'logo_url' => 'url|max:255',
         ]);
         if ($validator->fails()) {
-            return Redirect::route('organizer.create')
+            return redirect()->route('organizer.create')
                 ->withErrors($validator)
                 ->withInput();
         } else {
@@ -66,11 +64,11 @@ class OrganizerController extends Controller
 
             //紀錄
             LogHelper::info(
-                '[OrganizerCreated] ' . Auth::user()->email . ' 建立了主辦單位(Id: ' . $organizer->id . ')',
+                '[OrganizerCreated] ' . auth()->user()->email . ' 建立了主辦單位(Id: ' . $organizer->id . ')',
                 $organizer
             );
 
-            return Redirect::route('organizer.show', $organizer->id)
+            return redirect()->route('organizer.show', $organizer->id)
                 ->with('global', '主辦單位已建立');
         }
     }
@@ -79,13 +77,13 @@ class OrganizerController extends Controller
      * Display the specified resource.
      *
      * @param  int $id
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $organizer = Organizer::find($id);
         if (!$organizer) {
-            return Redirect::route('organizer.index')
+            return redirect()->route('organizer.index')
                 ->with('global', '主辦單位不存在');
         }
 
@@ -96,13 +94,13 @@ class OrganizerController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int $id
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $organizer = Organizer::find($id);
         if (!$organizer) {
-            return Redirect::route('organizer.index')
+            return redirect()->route('organizer.index')
                 ->with('global', '主辦單位不存在');
         }
 
@@ -114,13 +112,13 @@ class OrganizerController extends Controller
      *
      * @param  Request $request
      * @param  int $id
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $organizer = Organizer::find($id);
         if (!$organizer) {
-            return Redirect::route('organizer.index')
+            return redirect()->route('organizer.index')
                 ->with('global', '主辦單位不存在');
         }
         $validator = Validator::make($request->all(), [
@@ -129,7 +127,7 @@ class OrganizerController extends Controller
             'logo_url' => 'url|max:255',
         ]);
         if ($validator->fails()) {
-            return Redirect::route('organizer.edit', $id)
+            return redirect()->route('organizer.edit', $id)
                 ->withErrors($validator)
                 ->withInput();
         } else {
@@ -152,7 +150,7 @@ class OrganizerController extends Controller
                 $afterEdit
             );
 
-            return Redirect::route('organizer.show', $id)
+            return redirect()->route('organizer.show', $id)
                 ->with('global', '主辦單位已更新');
         }
     }
@@ -161,13 +159,13 @@ class OrganizerController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int $id
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $organizer = Organizer::find($id);
         if (!$organizer) {
-            return Redirect::route('organizer.index')
+            return redirect()->route('organizer.index')
                 ->with('global', '主辦單位不存在');
         }
 
@@ -178,11 +176,11 @@ class OrganizerController extends Controller
 
         //紀錄
         LogHelper::info(
-            '[OrganizerDeleted] ' . Auth::user()->email . ' 刪除了主辦單位(Id: ' . $organizer->id . ')',
+            '[OrganizerDeleted] ' . auth()->user()->email . ' 刪除了主辦單位(Id: ' . $organizer->id . ')',
             $beforeDelete
         );
 
-        return Redirect::route('organizer.index')
+        return redirect()->route('organizer.index')
             ->with('global', '主辦單位已移除');
     }
 }

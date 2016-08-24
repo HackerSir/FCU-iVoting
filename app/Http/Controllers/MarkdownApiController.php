@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Hackersir\Helper\MarkdownHelper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
 
 class MarkdownApiController extends Controller
 {
@@ -26,9 +25,9 @@ class MarkdownApiController extends Controller
         $data = $request->getContent();
         //檢查是否有內容
         if (empty($data)) {
-            return Response::make(' ');
+            return response()->make(' ');
         }
 
-        return Response::make(MarkdownHelper::translate($data));
+        return response()->make(MarkdownHelper::translate($data));
     }
 }

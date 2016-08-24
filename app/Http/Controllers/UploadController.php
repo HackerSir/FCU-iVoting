@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use Hackersir\Helper\JsonHelper;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\URL;
 
 class UploadController extends Controller
 {
@@ -61,7 +60,7 @@ class UploadController extends Controller
             'initialPreviewConfig' => [
                 [
                     'caption' => substr($image, strrpos($image, '/') + 1),
-                    'url'     => URL::route('upload.delete-image'), // server delete action
+                    'url'     => route('upload.delete-image'), // server delete action
                     'key'     => $image,
                 ],
             ],

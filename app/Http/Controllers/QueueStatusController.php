@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use DOMDocument;
 use Exception;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\DB;
+use Log;
 
 class QueueStatusController extends Controller
 {
@@ -37,12 +38,15 @@ class QueueStatusController extends Controller
 
         if ($bodyStr != '') {
             $count = 0;
-            $bodyStr = preg_replace_callback('/name="([^"]*)"/',
+            $bodyStr = preg_replace_callback(
+                '/name="([^"]*)"/',
                 function ($matches) use (&$count) {
                     $count++;
 
                     return 'name="' . $matches[1] . $count . '"';
-                }, $bodyStr);
+                },
+                $bodyStr
+            );
 
             try {
                 $DOM = new DOMDocument;

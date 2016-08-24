@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Cache;
 use Hackersir\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Redirect;
 
 class StatsController extends Controller
 {
@@ -72,7 +71,7 @@ class StatsController extends Controller
         //清除緩存
         Cache::forget('stats');
         //重新導向
-        return Redirect::route('stats.index')->with('global', '統計資料已更新');
+        return redirect()->route('stats.index')->with('global', '統計資料已更新');
     }
 
     //數值類資料顯示

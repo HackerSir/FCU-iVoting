@@ -6,10 +6,8 @@ use Hackersir\Helper\LogHelper;
 use Hackersir\Setting;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Validator;
+use Mail;
+use Validator;
 
 class SettingController extends Controller
 {
@@ -23,7 +21,7 @@ class SettingController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -36,7 +34,7 @@ class SettingController extends Controller
      * Display the specified resource.
      *
      * @param  int $id
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
@@ -45,7 +43,7 @@ class SettingController extends Controller
             return view('setting.show')->with('setting', $setting);
         }
 
-        return Redirect::route('setting.index')
+        return redirect()->route('setting.index')
             ->with('warning', '設定項目不存在');
     }
 
@@ -53,7 +51,7 @@ class SettingController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int $id
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
@@ -62,7 +60,7 @@ class SettingController extends Controller
             return view('setting.edit')->with('setting', $setting);
         }
 
-        return Redirect::route('setting.index')
+        return redirect()->route('setting.index')
             ->with('warning', '設定項目不存在');
     }
 
@@ -71,13 +69,13 @@ class SettingController extends Controller
      *
      * @param  int $id
      * @param Request $request
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function update($id, Request $request)
     {
         $setting = Setting::find($id);
         if (!$setting) {
-            return Redirect::route('setting.index')
+            return redirect()->route('setting.index')
                 ->with('warning', '設定項目不存在');
         }
 
@@ -85,14 +83,14 @@ class SettingController extends Controller
             'data' => 'max:65535',
         ]);
         if ($validator->fails()) {
-            return Redirect::route('setting.edit', $id)
+            return redirect()->route('setting.edit', $id)
                 ->withErrors($validator)
                 ->withInput();
         } else {
             $setting->data = $request->get('data');
             $setting->save();
 
-            return Redirect::route('setting.show', $setting->id)
+            return redirect()->route('setting.show', $setting->id)
                 ->with('global', '設定項目已更新');
         }
     }
@@ -110,7 +108,7 @@ class SettingController extends Controller
         if ($type == 'normal') {
             try {
                 Mail::raw('這是測試信。', function ($message) use ($email) {
-                    $message->to($email)->subject('[' . Config::get('config.sitename') . '] 測試信');
+                    $message->to($email)->subject('[' . config('config.sitename') . '] 測試信');
                 });
             } catch (Exception $e) {
                 //Log
@@ -123,7 +121,7 @@ class SettingController extends Controller
                 'emails.raw',
                 ['text' => '這是測試信。'],
                 function ($message) use ($email) {
-                    $message->to($email)->subject('[' . Config::get('config.sitename') . '] 測試信');
+                    $message->to($email)->subject('[' . config('config.sitename') . '] 測試信');
                 }
             );
         } else {

@@ -10,9 +10,7 @@ use Hackersir\VoteEvent;
 use Hackersir\VoteSelection;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Validator;
+use Validator;
 
 class VoteEventController extends Controller
 {
@@ -31,11 +29,11 @@ class VoteEventController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        if (Auth::check() && Auth::user()->isStaff()) {
+        if (auth()->check() && auth()->user()->isStaff()) {
             $voteEventList = VoteEvent::orderBy('id', 'desc')->paginate(20);
         } else {
             $voteEventList = VoteEvent::orderBy('id', 'desc')->where(function ($query) {
@@ -50,7 +48,7 @@ class VoteEventController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -67,7 +65,7 @@ class VoteEventController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -80,7 +78,7 @@ class VoteEventController extends Controller
             'award_count'  => 'integer|min:1',
         ]);
         if ($validator->fails()) {
-            return Redirect::route('vote-event.create')
+            return redirect()->route('vote-event.create')
                 ->withErrors($validator)
                 ->withInput();
         } else {
@@ -112,18 +110,18 @@ class VoteEventController extends Controller
                 'vote_condition' => (!empty($condition))
                     ? JsonHelper::encode((object) array_filter((array) $condition))
                     : null,
-                'show_result' => $request->get('show_result'),
-                'award_count' => ($request->get('award_count') > 0) ? $request->get('award_count') : 1,
+                'show_result'    => $request->get('show_result'),
+                'award_count'    => ($request->get('award_count') > 0) ? $request->get('award_count') : 1,
             ]);
 
             //紀錄
             LogHelper::info(
-                '[VoteEventCreated] ' . Auth::user()->email . ' 建立了活動(Id: ' . $voteEvent->id
+                '[VoteEventCreated] ' . auth()->user()->email . ' 建立了活動(Id: ' . $voteEvent->id
                 . ', Subject: ' . $voteEvent->subject . ')',
                 $voteEvent
             );
 
-            return Redirect::route('vote-event.show', $voteEvent->id)
+            return redirect()->route('vote-event.show', $voteEvent->id)
                 ->with('global', '投票活動已建立');
         }
     }
@@ -132,24 +130,24 @@ class VoteEventController extends Controller
      * Display the specified resource.
      *
      * @param  int $id
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $voteEvent = VoteEvent::find($id);
         $autoRedirectSetting = Setting::find('auto-redirect');
         if ($voteEvent) {
-            if ((Auth::check() && Auth::user()->isStaff()) || $voteEvent->isVisible()) {
+            if ((auth()->check() && auth()->user()->isStaff()) || $voteEvent->isVisible()) {
                 return view('vote.event.show-eas')
                     ->with('voteEvent', $voteEvent)
                     ->with('autoRedirectSetting', $autoRedirectSetting);
             } else {
-                return Redirect::route('vote-event.index')
+                return redirect()->route('vote-event.index')
                     ->with('warning', '投票活動尚未開放');
             }
         }
 
-        return Redirect::route('vote-event.index')
+        return redirect()->route('vote-event.index')
             ->with('warning', '投票活動不存在');
     }
 
@@ -157,17 +155,17 @@ class VoteEventController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int $id
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $voteEvent = VoteEvent::find($id);
         if (!$voteEvent) {
-            return Redirect::route('vote-event.index')
+            return redirect()->route('vote-event.index')
                 ->with('warning', '投票活動不存在');
         }
         if ($voteEvent->isEnded()) {
-            return Redirect::route('vote-event.show', $id)
+            return redirect()->route('vote-event.show', $id)
                 ->with('warning', '無法編輯已結束之投票活動');
         }
         $organizerList = Organizer::all();
@@ -184,17 +182,17 @@ class VoteEventController extends Controller
      *
      * @param  int $id
      * @param Request $request
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function update($id, Request $request)
     {
         $voteEvent = VoteEvent::find($id);
         if (!$voteEvent) {
-            return Redirect::route('vote-event.index')
+            return redirect()->route('vote-event.index')
                 ->with('warning', '投票活動不存在');
         }
         if ($voteEvent->isEnded()) {
-            return Redirect::route('vote-event.show', $id)
+            return redirect()->route('vote-event.show', $id)
                 ->with('warning', '無法編輯已結束之投票活動');
         }
         $validator = Validator::make($request->all(), [
@@ -206,7 +204,7 @@ class VoteEventController extends Controller
             'award_count'  => 'integer|min:1',
         ]);
         if ($validator->fails()) {
-            return Redirect::route('vote-event.edit', $id)
+            return redirect()->route('vote-event.edit', $id)
                 ->withErrors($validator)
                 ->withInput();
         } else {
@@ -254,7 +252,7 @@ class VoteEventController extends Controller
 
             //Log
             LogHelper::info(
-                '[VoteEventEdited] ' . Auth::user()->email . ' 編輯了活動(Id: ' . $voteEvent->id
+                '[VoteEventEdited] ' . auth()->user()->email . ' 編輯了活動(Id: ' . $voteEvent->id
                 . ', Subject: ' . $voteEvent->subject . ')',
                 '編輯前',
                 $beforeEdit,
@@ -262,7 +260,7 @@ class VoteEventController extends Controller
                 $afterEdit
             );
 
-            return Redirect::route('vote-event.show', $id)
+            return redirect()->route('vote-event.show', $id)
                 ->with('global', '投票活動已更新');
         }
     }
@@ -271,23 +269,23 @@ class VoteEventController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int $id
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $voteEvent = VoteEvent::find($id);
         if (!$voteEvent) {
-            return Redirect::route('vote-event.index')
+            return redirect()->route('vote-event.index')
                 ->with('warning', '投票活動不存在');
         }
         if ($voteEvent->isStarted()) {
-            return Redirect::route('vote-event.show', $id)
+            return redirect()->route('vote-event.show', $id)
                 ->with('warning', '無法刪除已開始之投票活動');
         }
         //移除投票活動
         $voteEvent->delete();
 
-        return Redirect::route('vote-event.index')
+        return redirect()->route('vote-event.index')
             ->with('global', '投票活動已刪除');
     }
 
@@ -296,25 +294,25 @@ class VoteEventController extends Controller
     {
         $voteEvent = VoteEvent::find($id);
         if (!$voteEvent) {
-            return Redirect::route('vote-event.index')
+            return redirect()->route('vote-event.index')
                 ->with('warning', '投票活動不存在');
         }
         if ($voteEvent->isEnded()) {
-            return Redirect::route('vote-event.show', $id)
+            return redirect()->route('vote-event.show', $id)
                 ->with('warning', '該投票活動早已結束');
         }
         if ($voteEvent->isStarted()) {
-            return Redirect::route('vote-event.show', $id)
+            return redirect()->route('vote-event.show', $id)
                 ->with('warning', '該投票活動早已開始');
         }
         if ($voteEvent->voteSelections()->count() < 2) {
-            return Redirect::route('vote-event.show', $id)
+            return redirect()->route('vote-event.show', $id)
                 ->with('warning', '選項過少，無法開始');
         }
         $voteEvent->open_time = Carbon::now()->toDateTimeString();
         $voteEvent->save();
 
-        return Redirect::route('vote-event.show', $id)
+        return redirect()->route('vote-event.show', $id)
             ->with('global', '投票活動已開始');
     }
 
@@ -323,21 +321,21 @@ class VoteEventController extends Controller
     {
         $voteEvent = VoteEvent::find($id);
         if (!$voteEvent) {
-            return Redirect::route('vote-event.index')
+            return redirect()->route('vote-event.index')
                 ->with('warning', '投票活動不存在');
         }
         if (!$voteEvent->isStarted()) {
-            return Redirect::route('vote-event.show', $id)
+            return redirect()->route('vote-event.show', $id)
                 ->with('warning', '該投票活動尚未開始');
         }
         if ($voteEvent->isEnded()) {
-            return Redirect::route('vote-event.show', $id)
+            return redirect()->route('vote-event.show', $id)
                 ->with('warning', '該投票活動早已結束');
         }
         $voteEvent->close_time = Carbon::now()->toDateTimeString();
         $voteEvent->save();
 
-        return Redirect::route('vote-event.show', $id)
+        return redirect()->route('vote-event.show', $id)
             ->with('global', '投票活動已結束');
     }
 
@@ -373,7 +371,7 @@ class VoteEventController extends Controller
         if ($originalIdList !== $newIdList) {
             //Log
             LogHelper::info(
-                '[VoteSelectionOrderEdited] ' . Auth::user()->email . ' 編輯了選項排序(Id: ' . $voteEvent->id
+                '[VoteSelectionOrderEdited] ' . auth()->user()->email . ' 編輯了選項排序(Id: ' . $voteEvent->id
                 . ', Subject: ' . $voteEvent->subject . ')',
                 '編輯前',
                 $originalIdList,

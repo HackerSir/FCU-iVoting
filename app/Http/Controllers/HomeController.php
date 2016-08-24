@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Hackersir\Setting;
-use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
 {
@@ -29,14 +28,14 @@ class HomeController extends Controller
 
     /**
      * Show the application dashboard to the user.
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
         //檢查是否設定自動跳轉網址
         $autoRedirect = Setting::get('auto-redirect');
         if (filter_var($autoRedirect, FILTER_VALIDATE_URL)) {
-            return Redirect::to($autoRedirect);
+            return redirect()->to($autoRedirect);
         }
 
         return $this->home();
