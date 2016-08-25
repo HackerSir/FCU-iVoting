@@ -21,6 +21,7 @@ class VoteEventPresenter
         } else {
             $label = '<span class="label label-default label-adjust">未開始</span>';
         }
+
         return $label;
     }
 }
