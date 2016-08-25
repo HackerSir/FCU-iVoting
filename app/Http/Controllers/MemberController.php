@@ -521,9 +521,8 @@ class MemberController extends Controller
             ->with('warning', '連結無效，無法重新設定密碼，請再次確認');
     }
 
-    public function postResetPassword(Request $request)
+    public function postResetPassword(Request $request, $token = null)
     {
-        $token = $request->get('token');
         if (DB::table('password_resets')->where('token', '=', $token)->count()) {
             $email = DB::table('password_resets')->where('token', '=', $token)->first()->email;
             $user = User::where('email', '=', $email)->first();

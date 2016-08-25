@@ -12,7 +12,7 @@
                     <div class="panel-heading">重新設定密碼</div>
                     {{-- Panel body --}}
                     <div class="panel-body">
-                        {!! Form::open(['route' => 'member.reset-password']) !!}
+                        {!! Form::open(['route' => ['member.reset-password', $token]]) !!}
                             <div class="form-group">
                                 <label class="control-label" for="email">信箱</label>
                                 {!! Form::email('email', $user->email, ['id' => 'email', 'placeholder' => '信箱', 'class' => 'form-control', 'readonly']) !!}
@@ -35,7 +35,6 @@
                                 {!! Form::password('password_again', ['id' => 'password_again', 'placeholder' => '請再輸入一次新密碼', 'class' => 'form-control', 'required']) !!}
                                 @if($errors->has('password_again'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>@endif
                             </div>
-                            {!! Form::hidden('token',$token) !!}
                             {!! Form::submit('重新設定密碼', ['class' => 'btn btn-primary']) !!}
                         {!! Form::close() !!}
                     </div>

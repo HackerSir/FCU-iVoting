@@ -26,7 +26,7 @@ Route::group(['prefix' => 'member'], function () {
     Route::get('forgot-password', 'MemberController@getForgotPassword')->name('member.forgot-password');
     Route::post('forgot-password', 'MemberController@postForgotPassword')->name('member.forgot-password');
     Route::get('reset-password/{token?}', 'MemberController@getResetPassword')->name('member.reset-password');
-    Route::post('reset-password', 'MemberController@postResetPassword')->name('member.reset-password');
+    Route::post('reset-password/{token?}', 'MemberController@postResetPassword')->name('member.reset-password');
     Route::get('change-password', 'MemberController@getChangePassword')->name('member.change-password');
     Route::post('change-password', 'MemberController@postChangePassword')->name('member.change-password');
     Route::get('profile/{uid?}', 'MemberController@getProfile')->name('member.profile');
