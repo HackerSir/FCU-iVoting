@@ -10,19 +10,35 @@ use Illuminate\Support\Facades\Auth;
 /**
  * 票選活動
  *
- * @property-read int id
- * @property \Carbon\Carbon|null open_time
- * @property \Carbon\Carbon|null close_time
- * @property string subject
- * @property string info
- * @property max_selected
- * @property organizer_id
- * @property show
- * @property vote_condition
- * @property show_result
- * @property int award_count
- *
- * FIXME: PHPDOC
+ * @property integer $id
+ * @property string $open_time
+ * @property string $close_time
+ * @property string $subject
+ * @property string $info
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property integer $max_selected
+ * @property integer $organizer_id
+ * @property boolean $show
+ * @property string $vote_condition
+ * @property string $show_result
+ * @property integer $award_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Hackersir\VoteSelection[] $voteSelections
+ * @property-read \Hackersir\Organizer $organizer
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteEvent whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteEvent whereOpenTime($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteEvent whereCloseTime($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteEvent whereSubject($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteEvent whereInfo($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteEvent whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteEvent whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteEvent whereMaxSelected($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteEvent whereOrganizerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteEvent whereShow($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteEvent whereVoteCondition($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteEvent whereShowResult($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteEvent whereAwardCount($value)
+ * @mixin \Eloquent
  */
 class VoteEvent extends Model
 {
@@ -39,6 +55,11 @@ class VoteEvent extends Model
         'vote_condition',
         'show_result',
         'award_count',
+    ];
+
+    protected $casts = [
+        'open_time',
+        'close_time',
     ];
 
     //有效的活動條件，以及說明文字（{value}會自動替換為條件的值）

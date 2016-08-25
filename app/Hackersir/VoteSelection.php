@@ -6,6 +6,32 @@ use DB;
 use Hackersir\Helper\JsonHelper;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Hackersir\VoteSelection
+ *
+ * @property integer $id
+ * @property string $title
+ * @property integer $vote_event_id
+ * @property string $data
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property integer $order
+ * @property float $weight
+ * @property-read \Hackersir\VoteEvent $voteEvent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Hackersir\VoteBallot[] $voteBallots
+ * @property-read mixed $rank
+ * @property-read mixed $score
+ * @property-read mixed $score_rank
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteSelection whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteSelection whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteSelection whereVoteEventId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteSelection whereData($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteSelection whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteSelection whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteSelection whereOrder($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteSelection whereWeight($value)
+ * @mixin \Eloquent
+ */
 class VoteSelection extends Model
 {
     protected $table = 'vote_selections';

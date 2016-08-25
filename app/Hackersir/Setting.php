@@ -5,6 +5,23 @@ namespace Hackersir;
 use Hackersir\Helper\MarkdownHelper;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Hackersir\Setting
+ *
+ * @property string $id
+ * @property string $type
+ * @property string $desc
+ * @property string $data
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\Setting whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\Setting whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\Setting whereDesc($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\Setting whereData($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\Setting whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Hackersir\Setting whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Setting extends Model
 {
     protected $table = 'settings';
