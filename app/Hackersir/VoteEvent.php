@@ -23,8 +23,6 @@ use Illuminate\Support\Facades\Auth;
  * @property int award_count
  *
  * FIXME: PHPDOC
- *
- * @package Hackersir
  */
 class VoteEvent extends Model
 {
