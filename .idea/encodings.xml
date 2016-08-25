@@ -27,8 +27,8 @@
     <file url="file://$PROJECT_DIR$/public/css/sticky-footer.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/css/stylesheet.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/css/vote-event-show-eas.css" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/faq.md" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/js/imgur-helper.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/resources/assets/faq.md" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/resources/views/app.blade.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/resources/views/emails/raw.blade.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/resources/views/home.blade.php" charset="UTF-8" />
@@ -37,9 +37,9 @@
     <file url="file://$PROJECT_DIR$/resources/views/member/register.blade.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/resources/views/vote/event/list.blade.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/resources/views/vote/event/show-eas.blade.php" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/tests/ExampleTest.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tests/HideVoteEventTest.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tests/ImgurHelperTest.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tests/StaticPageTest.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tests/TestCase.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tests/VoteEventConditionTest.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/vendor/composer/autoload_classmap.php" charset="UTF-8" />

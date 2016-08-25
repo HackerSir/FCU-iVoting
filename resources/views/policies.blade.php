@@ -27,11 +27,11 @@
         <div class="panel panel-default">
             <div class="panel-body custom">
                 @if(Request::is('policies/privacy'))
-                    {!! Hackersir\Helper\MarkdownHelper::translate(File::get('privacy.md'), ['autoLineBreak' => false]) !!}
+                    {!! Hackersir\Helper\MarkdownHelper::translate(File::get(resource_path('assets/privacy.md')), ['autoLineBreak' => false]) !!}
                 @elseif(Request::is('policies/terms'))
-                    {!! Hackersir\Helper\MarkdownHelper::translate(File::get('terms.md'), ['autoLineBreak' => false]) !!}
+                    {!! Hackersir\Helper\MarkdownHelper::translate(File::get(resource_path('assets/terms.md')), ['autoLineBreak' => false]) !!}
                 @elseif(Request::is('policies/FAQ'))
-                    {!! Hackersir\Helper\MarkdownHelper::translate(File::get('faq.md'), ['autoLineBreak' => false]) !!}
+                    {!! Hackersir\Helper\MarkdownHelper::translate(File::get(resource_path('assets/faq.md')), ['autoLineBreak' => false]) !!}
                 @endif
             </div>
         </div>
