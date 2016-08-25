@@ -43,16 +43,25 @@ class VoteEvent extends Model
         'award_count',
     ];
 
+    /**
+     * @return mixed
+     */
     public function voteSelections()
     {
         return $this->hasMany(VoteSelection::class)->orderBy('order')->orderBy('id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function organizer()
     {
         return $this->belongsTo(Organizer::class);
     }
 
+    /**
+     * @return string
+     */
     public function getHumanTimeString()
     {
         $string = '';
@@ -71,6 +80,10 @@ class VoteEvent extends Model
         return $string;
     }
 
+    /**
+     * @param $time
+     * @return string
+     */
     public function getTimeSpanTag($time)
     {
         //style="display: inline-block; 是防止字換行
@@ -78,12 +91,19 @@ class VoteEvent extends Model
         . '"  style="display: inline-block;">' . $time . '</strong>';
     }
 
+    /**
+     * @return bool
+     */
     public function isVisible()
     {
         return $this->isStarted() || $this->show;
     }
 
-    //取得特定條件的值，不存在則回傳空值，而非噴錯。免去在View取值的檢查。
+    /**
+     * 取得特定條件的值，不存在則回傳空值，而非噴錯。免去在View取值的檢查。
+     * @param $key
+     * @return mixed
+     */
     public function getConditionValue($key)
     {
         //取得條件的json
@@ -93,9 +113,14 @@ class VoteEvent extends Model
             return $condition->$key;
         }
         //找不到則回傳空值
+        return '';
     }
 
-    //檢查是否符合投票資格
+    /**
+     * 檢查 $user 是否符合投票資格
+     * @param $user
+     * @return bool
+     */
     public function canVote($user)
     {
         //未登入
@@ -120,6 +145,11 @@ class VoteEvent extends Model
         return true;
     }
 
+    /**
+     * @param $user
+     * @param $key
+     * @return bool
+     */
     public function checkCondition($user, $key)
     {
         //未登入
@@ -156,6 +186,11 @@ class VoteEvent extends Model
         return true;
     }
 
+    /**
+     * @param $user
+     * @param bool $withResult
+     * @return array
+     */
     public function getConditionList($user, $withResult = true)
     {
         $result = [];
@@ -179,6 +214,9 @@ class VoteEvent extends Model
         return $result;
     }
 
+    /**
+     * @return bool
+     */
     public function isResultVisible()
     {
         $showResult = $this->show_result;
@@ -196,7 +234,10 @@ class VoteEvent extends Model
         return false;
     }
 
-    //是否先幫使用者隱藏結果，給View使用
+    /**
+     * 是否先幫使用者隱藏結果，給View使用
+     * @return bool
+     */
     public function isHideResult()
     {
         //可以顯示結果 and 活動進行中 and 總是顯示 and (未登入 or 登入但未完成投票)
@@ -217,6 +258,9 @@ class VoteEvent extends Model
         return true;
     }
 
+    /**
+     * @return string
+     */
     public function getResultVisibleHintText()
     {
         $showResult = $this->show_result;
@@ -228,5 +272,6 @@ class VoteEvent extends Model
             return '票選結果將在活動結束後顯示';
         }
         //錯誤情況，直接不顯示
+        return '';
     }
 }
