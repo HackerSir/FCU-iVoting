@@ -23,8 +23,6 @@ use Illuminate\Support\Facades\Auth;
  * @property int award_count
  *
  * FIXME: PHPDOC
- *
- * @package Hackersir
  */
 class VoteEvent extends Model
 {
@@ -43,6 +41,11 @@ class VoteEvent extends Model
         'award_count',
     ];
 
+    //有效的活動條件，以及說明文字（{value}會自動替換為條件的值）
+    protected static $validConditionList = [
+        'prefix' => '學號開頭必須是：{value}',
+    ];
+
     /**
      * @return mixed
      */
@@ -58,6 +61,66 @@ class VoteEvent extends Model
     {
         return $this->belongsTo(Organizer::class);
     }
+
+    public function isStarted()
+    {
+        if (empty($this->open_time)) {
+            return false;
+        }
+        $open_time = new Carbon($this->open_time);
+        if (Carbon::now()->gte($open_time)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isEnded()
+    {
+        if (empty($this->close_time)) {
+            return false;
+        }
+        if (!$this->isStarted()) {
+            return false;
+        }
+        $close_time = new Carbon($this->close_time);
+        if (Carbon::now()->gte($close_time)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isInProgress()
+    {
+        return $this->isStarted() && !$this->isEnded();
+    }
+
+    public function getMaxSelected()
+    {
+        if ($this->max_selected < 1) {
+            $max_selected = 1;
+        } elseif ($this->max_selected > $this->voteSelections->count()) {
+            $max_selected = $this->voteSelections->count();
+        } else {
+            $max_selected = $this->max_selected;
+        }
+
+        return $max_selected;
+    }
+
+    //特定用戶在此活動選擇之選項數量
+    public function getSelectedCount(User $user = null)
+    {
+        if ($user == null) {
+            return 0;
+        }
+        $voteSelectionIdList = $this->voteSelections->lists('id')->toArray();
+        $count = $user->voteBallots()->whereIn('vote_selection_id', $voteSelectionIdList)->count();
+
+        return $count;
+    }
+
 
     /**
      * @return string
@@ -146,6 +209,7 @@ class VoteEvent extends Model
     }
 
     /**
+     * 檢查特定條件是否符合
      * @param $user
      * @param $key
      * @return bool
@@ -187,6 +251,7 @@ class VoteEvent extends Model
     }
 
     /**
+     * 取得條件清單，可選擇是否帶有檢查結果（預設為含有結果）
      * @param $user
      * @param bool $withResult
      * @return array
