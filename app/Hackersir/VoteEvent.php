@@ -121,7 +121,6 @@ class VoteEvent extends Model
         return $count;
     }
 
-
     /**
      * @return string
      */
