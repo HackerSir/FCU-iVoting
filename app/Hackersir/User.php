@@ -12,7 +12,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 /**
  * Hackersir\User
  *
- * @property integer $id
+ * @property int $id
  * @property string $nid
  * @property string $email
  * @property string $nickname

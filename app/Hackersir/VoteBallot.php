@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Hackersir\VoteBallot
  *
- * @property integer $id
- * @property integer $user_id
- * @property integer $vote_selection_id
+ * @property int $id
+ * @property int $user_id
+ * @property int $vote_selection_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \Hackersir\User $user

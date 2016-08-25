@@ -10,19 +10,19 @@ use Illuminate\Support\Facades\Auth;
 /**
  * 票選活動
  *
- * @property integer $id
+ * @property int $id
  * @property string $open_time
  * @property string $close_time
  * @property string $subject
  * @property string $info
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property integer $max_selected
- * @property integer $organizer_id
- * @property boolean $show
+ * @property int $max_selected
+ * @property int $organizer_id
+ * @property bool $show
  * @property string $vote_condition
  * @property string $show_result
- * @property integer $award_count
+ * @property int $award_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Hackersir\VoteSelection[] $voteSelections
  * @property-read \Hackersir\Organizer $organizer
  * @method static \Illuminate\Database\Query\Builder|\Hackersir\VoteEvent whereId($value)

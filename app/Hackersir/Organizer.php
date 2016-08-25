@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Hackersir\Organizer
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
  * @property string $url
  * @property string $logo_url
