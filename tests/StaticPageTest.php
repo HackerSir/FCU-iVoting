@@ -1,14 +1,13 @@
 <?php
 
-
-class ExampleTest extends TestCase
+class StaticPageTest extends TestCase
 {
     /**
-     * A basic functional test example.
+     * 測試首頁，應該會看到網站名稱
      *
      * @return void
      */
-    public function testBasicExample()
+    public function testHomePage()
     {
         $this->visit('/')
             ->see(Config::get('config.sitename'));
