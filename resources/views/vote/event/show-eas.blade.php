@@ -1,5 +1,7 @@
 @extends('app')
 
+@inject('voteEventPresenter', 'Hackersir\Presenters\VoteEventPresenter')
+
 @section('title')
     {{ $voteEvent->subject }} - 投票活動
 @endsection
@@ -79,13 +81,7 @@
             {{-- h1 style comment: 加一些行高，標籤換行時才不會黏在標題下方 --}}
             <h1 style="line-height: 1.3;">
                 {{ $voteEvent->subject }}
-                @if($voteEvent->isEnded())
-                    <span class="label label-warning label-adjust">已結束</span>
-                @elseif($voteEvent->isInProgress())
-                    <span class="label label-success label-adjust">進行中</span>
-                @else
-                    <span class="label label-default label-adjust">未開始</span>
-                @endif
+                {!! $voteEventPresenter->getStatusLabel($voteEvent) !!}
             </h1>
 
             @if($voteEvent->info)
