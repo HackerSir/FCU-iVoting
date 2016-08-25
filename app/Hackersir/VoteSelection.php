@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Hackersir\VoteSelection
  *
- * @property integer $id
+ * @property int $id
  * @property string $title
- * @property integer $vote_event_id
+ * @property int $vote_event_id
  * @property string $data
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property integer $order
+ * @property int $order
  * @property float $weight
  * @property-read \Hackersir\VoteEvent $voteEvent
  * @property-read \Illuminate\Database\Eloquent\Collection|\Hackersir\VoteBallot[] $voteBallots
