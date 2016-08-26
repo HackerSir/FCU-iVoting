@@ -154,7 +154,7 @@ class VoteEventController extends Controller
             $organizerArray[$organizer->id] = $organizer->name;
         }
 
-        return view('vote.event.edit', compact('voteEvent', 'organizerArray'));
+        return view('vote.event.edit', compact(['voteEvent', 'organizerArray']));
     }
 
     /**
