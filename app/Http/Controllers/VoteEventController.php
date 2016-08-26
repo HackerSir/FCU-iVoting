@@ -10,7 +10,6 @@ use Hackersir\VoteEvent;
 use Hackersir\VoteSelection;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Validator;
 
 class VoteEventController extends Controller
 {
@@ -135,7 +134,6 @@ class VoteEventController extends Controller
             return redirect()->route('voteEvent.index')
                 ->with('warning', '投票活動尚未開放');
         }
-
     }
 
     /**

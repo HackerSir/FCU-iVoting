@@ -10,7 +10,6 @@ use Hackersir\VoteSelection;
 use Illuminate\Http\Request;
 use Input;
 use stdClass;
-use Validator;
 
 class VoteSelectionController extends Controller
 {

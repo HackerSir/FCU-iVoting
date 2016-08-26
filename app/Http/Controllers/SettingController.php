@@ -7,7 +7,6 @@ use Hackersir\Setting;
 use Exception;
 use Illuminate\Http\Request;
 use Mail;
-use Validator;
 
 class SettingController extends Controller
 {
