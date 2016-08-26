@@ -309,7 +309,6 @@ class MemberController extends Controller
 
         return redirect()->route('home')
             ->with('global', '註冊完成，請至信箱收取驗證信件並啟用帳號。');
-
     }
 
     protected function tryPassGoogleReCAPTCHA(Request $request)
@@ -520,7 +519,6 @@ class MemberController extends Controller
 
         return redirect()->route('home')
             ->with('global', '密碼重新設定完成，請使用新密碼重新登入。');
-
     }
 
     //修改密碼
@@ -608,7 +606,6 @@ class MemberController extends Controller
         $roleList = Role::all();
 
         return view('member.edit-other-profile', compact(['showUser', 'roleList']));
-
     }
 
     public function postEditOtherProfile(Request $request, $uid = null)
@@ -642,7 +639,6 @@ class MemberController extends Controller
         }
         //儲存資料
         if (!$showUser->save()) {
-
             return redirect()->route('member.edit-other-profile', $uid)
                 ->with('warning', '資料無法修改。');
         }
