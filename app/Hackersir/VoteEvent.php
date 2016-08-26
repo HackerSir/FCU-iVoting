@@ -5,7 +5,6 @@ namespace Hackersir;
 use Hackersir\Helper\JsonHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * 票選活動
@@ -136,7 +135,7 @@ class VoteEvent extends Model
         if ($user == null) {
             return 0;
         }
-        $voteSelectionIdList = $this->voteSelections->lists('id')->toArray();
+        $voteSelectionIdList = $this->voteSelections->pluck('id')->toArray();
         $count = $user->voteBallots()->whereIn('vote_selection_id', $voteSelectionIdList)->count();
 
         return $count;
@@ -195,6 +194,7 @@ class VoteEvent extends Model
         if (!empty($condition->$key)) {
             return $condition->$key;
         }
+
         //找不到則回傳空值
         return '';
     }
@@ -310,11 +310,12 @@ class VoteEvent extends Model
             return $this->isStarted();
         } elseif ($showResult == 'after-vote') {
             //完成投票者可看見結果（活動結束後對所有人顯示）
-            return $this->isEnded() || $this->getMaxSelected() <= $this->getSelectedCount(Auth::user());
+            return $this->isEnded() || $this->getMaxSelected() <= $this->getSelectedCount(auth()->user());
         } elseif ($showResult == 'after-event') {
             //活動結束後顯示
             return $this->isEnded();
         }
+
         //錯誤情況，直接不顯示
         return false;
     }
@@ -332,11 +333,11 @@ class VoteEvent extends Model
             return false;
         }
         //未登入者
-        if (!Auth::check()) {
+        if (!auth()->check()) {
             return true;
         }
         //已完成投票
-        if ($this->getMaxSelected() <= $this->getSelectedCount(Auth::user())) {
+        if ($this->getMaxSelected() <= $this->getSelectedCount(auth()->user())) {
             return false;
         }
 
@@ -356,6 +357,7 @@ class VoteEvent extends Model
         } elseif ($showResult == 'after-event') {
             return '票選結果將在活動結束後顯示';
         }
+
         //錯誤情況，直接不顯示
         return '';
     }
