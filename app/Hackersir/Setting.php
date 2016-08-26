@@ -38,7 +38,7 @@ class Setting extends Model
     {
         $setting = self::find($id);
         if (!$setting) {
-            return;
+            return '';
         }
 
         return $setting->getData();
@@ -48,7 +48,7 @@ class Setting extends Model
     {
         $setting = self::find($id);
         if (!$setting) {
-            return;
+            return '';
         }
 
         return $setting->data;
@@ -57,8 +57,9 @@ class Setting extends Model
     public static function set($id, $data)
     {
         $setting = self::find($id);
-        $setting->data = $data;
-        $setting->save();
+        $setting->update([
+            'data' => $data,
+        ]);
     }
 
     //取得型態

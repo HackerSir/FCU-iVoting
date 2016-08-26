@@ -27,72 +27,48 @@ class SettingController extends Controller
     {
         $settingList = Setting::all();
 
-        return view('setting.list')->with('settingList', $settingList);
+        return view('setting.list', compact('settingList'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param Setting $setting
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Setting $setting)
     {
-        $setting = Setting::find($id);
-        if ($setting) {
-            return view('setting.show')->with('setting', $setting);
-        }
-
-        return redirect()->route('setting.index')
-            ->with('warning', '設定項目不存在');
+        return view('setting.show', compact('setting'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param Setting $setting
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function edit($id)
+    public function edit(Setting $setting)
     {
-        $setting = Setting::find($id);
-        if ($setting) {
-            return view('setting.edit')->with('setting', $setting);
-        }
-
-        return redirect()->route('setting.index')
-            ->with('warning', '設定項目不存在');
+        return view('setting.edit', compact('setting'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
      * @param Request $request
+     * @param Setting $setting
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(Request $request, Setting $setting)
     {
-        $setting = Setting::find($id);
-        if (!$setting) {
-            return redirect()->route('setting.index')
-                ->with('warning', '設定項目不存在');
-        }
-
-        $validator = Validator::make($request->all(), [
+        $this->validate($request, [
             'data' => 'max:65535',
         ]);
-        if ($validator->fails()) {
-            return redirect()->route('setting.edit', $id)
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            $setting->data = $request->get('data');
-            $setting->save();
+        $setting->update($request->only(['data']));
 
-            return redirect()->route('setting.show', $setting->id)
-                ->with('global', '設定項目已更新');
-        }
+        return redirect()->route('setting.show', $setting)
+            ->with('global', '設定項目已更新');
     }
 
     public function sendTestMail(Request $request)
