@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Hackersir\Helper\LogHelper;
 use Hackersir\Organizer;
 use Illuminate\Http\Request;
-use Validator;
 
 class OrganizerController extends Controller
 {
