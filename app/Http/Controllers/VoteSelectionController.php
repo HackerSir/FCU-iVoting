@@ -201,6 +201,11 @@ class VoteSelectionController extends Controller
 
     public function vote(VoteSelection $voteSelection)
     {
+        if (!$voteSelection->voteEvent) {
+            return redirect()->route('voteEvent.show', $voteSelection->voteEvent)
+                ->with('warning', '投票活動不存在');
+        }
+
         if (!$voteSelection->voteEvent->isInProgress()) {
             return redirect()->route('voteEvent.show', $voteSelection->voteEvent)
                 ->with('warning', '非投票期間');
@@ -246,7 +251,7 @@ class VoteSelectionController extends Controller
             }
         }
 
-        return redirect()->route('voteEvent.show', $voteSelection->voteEvent->id)
+        return redirect()->route('voteEvent.show', $voteSelection->voteEvent)
             ->with('global', '投票完成');
     }
 }
