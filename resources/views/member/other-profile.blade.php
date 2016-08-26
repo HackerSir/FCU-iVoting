@@ -34,7 +34,7 @@
                                         <td>用戶組：</td>
                                         <td>
                                             @foreach($showUser->roles as $role)
-                                                {{ $role->display_name }}<br />
+                                                {{ $role->display_name }}<br/>
                                             @endforeach
                                         </td>
                                     </tr>
@@ -65,7 +65,10 @@
                                             <td>{{ $showUser->lastlogin_ip }}</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2">{!! HTML::linkRoute('member.edit-other-profile', '編輯資料', $showUser->id, ['class' => 'btn btn-primary']) !!}</td>
+                                            <td colspan="2">
+                                                {!! HTML::linkRoute('member.edit-other-profile', '編輯資料', $showUser->id, ['class' => 'btn btn-primary']) !!}
+                                                <a href="{{ URL::previous() }}" class="btn btn-default">返回</a>
+                                            </td>
                                         </tr>
                                     @endif
                                 </table>
