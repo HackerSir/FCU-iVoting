@@ -3,7 +3,7 @@
 [![Codecov](https://codecov.io/gh/HackerSir/FCU-iVoting/branch/master/graph/badge.svg)](https://codecov.io/gh/HackerSir/FCU-iVoting)
 [![Style CI](https://styleci.io/repos/65181574/shield)](https://styleci.io/repos/65181574/)
 
-逢甲票選網站
+逢甲票選系統
 
 ## 網址
 [https://ivoting.hackersir.org/](https://ivoting.hackersir.org/)
