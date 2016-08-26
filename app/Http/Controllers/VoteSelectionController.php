@@ -106,103 +106,82 @@ class VoteSelectionController extends Controller
             $voteSelection
         );
 
-        return redirect()->route('voteEvent.show', $voteSelection->voteEvent->id)
+        return redirect()->route('voteEvent.show', $voteSelection->voteEvent)
             ->with('global', '投票選項已建立');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param VoteSelection $voteSelection
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(VoteSelection $voteSelection)
     {
-        $voteSelection = VoteSelection::find($id);
-        if (!$voteSelection) {
-            return redirect()->route('voteEvent.index')
-                ->with('warning', '投票選項不存在');
-        }
         if ($voteSelection->voteEvent->isStarted()) {
-            return redirect()->route('voteEvent.show', $voteSelection->voteEvent->id)
+            return redirect()->route('voteEvent.show', $voteSelection->voteEvent)
                 ->with('warning', '只能在投票活動開始前編輯選項');
         }
 
-        return view('vote.selection.edit')->with('voteSelection', $voteSelection);
+        return view('vote.selection.edit', compact('voteSelection'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
      * @param Request $request
+     * @param VoteSelection $voteSelection
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(Request $request, VoteSelection $voteSelection)
     {
-        $voteSelection = VoteSelection::find($id);
-        if (!$voteSelection) {
-            return redirect()->route('voteEvent.index')
-                ->with('warning', '投票選項不存在');
-        }
         if ($voteSelection->voteEvent->isStarted()) {
-            return redirect()->route('voteEvent.show', $voteSelection->voteEvent->id)
+            return redirect()->route('voteEvent.show', $voteSelection->voteEvent)
                 ->with('warning', '只能在投票活動開始前編輯選項');
         }
-        $validator = Validator::make($request->all(), [
+        $this->validate($request, [
             'title'  => 'required|max:65535',
             'weight' => 'numeric',
             'image'  => 'max:65535',
         ]);
-        if ($validator->fails()) {
-            return redirect()->route('voteSelection.edit', $id)
-                ->withErrors($validator)
-                ->withInput();
-        } else {
-            //複製一份，在Log時比較差異
-            $beforeEdit = $voteSelection->replicate();
+        //複製一份，在Log時比較差異
+        $beforeEdit = $voteSelection->replicate();
+        //封裝JSON
+        $obj = new stdClass();
+        //$obj->image = explode(PHP_EOL, $request->get('image'));
+        $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), null, PREG_SPLIT_NO_EMPTY);
+        $json = JsonHelper::encode($obj);
 
-            $voteSelection->title = $request->get('title');
-            $voteSelection->weight = $request->has('weight') ? $request->get('weight') : 1;
-            //封裝JSON
-            $obj = new stdClass();
-            //$obj->image = explode(PHP_EOL, $request->get('image'));
-            $obj->image = preg_split('/(\n|\r|\n\r)/', $request->get('image'), null, PREG_SPLIT_NO_EMPTY);
-            $json = JsonHelper::encode($obj);
+        $voteSelection->update([
+            'title'  => $request->get('title'),
+            'weight' => $request->has('weight') ? $request->get('weight') : 1,
+            'data'   => $json,
+        ]);
 
-            $voteSelection->data = $json;
-            $voteSelection->save();
+        $afterEdit = $voteSelection->replicate();
 
-            $afterEdit = $voteSelection->replicate();
+        //Log
+        LogHelper::info(
+            '[VoteSelectionEdited] ' . auth()->user()->email . ' 編輯了選項(Id: ' . $voteSelection->id
+            . ', Title: ' . $voteSelection->title . ')',
+            '編輯前',
+            $beforeEdit->attributesToArray(),
+            '編輯後',
+            $afterEdit->attributesToArray()
+        );
 
-            //Log
-            LogHelper::info(
-                '[VoteSelectionEdited] ' . auth()->user()->email . ' 編輯了選項(Id: ' . $voteSelection->id
-                . ', Title: ' . $voteSelection->title . ')',
-                '編輯前',
-                $beforeEdit->attributesToArray(),
-                '編輯後',
-                $afterEdit->attributesToArray()
-            );
-
-            return redirect()->route('voteEvent.show', $voteSelection->voteEvent->id)
-                ->with('global', '投票選項已更新');
-        }
+        return redirect()->route('voteEvent.show', $voteSelection->voteEvent)
+            ->with('global', '投票選項已更新');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param VoteSelection $voteSelection
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(VoteSelection $voteSelection)
     {
-        $voteSelection = VoteSelection::find($id);
-        if (!$voteSelection) {
-            return redirect()->route('voteEvent.index')
-                ->with('warning', '投票選項不存在');
-        }
         if ($voteSelection->voteEvent->isStarted()) {
             return redirect()->route('voteEvent.show', $voteSelection->voteEvent->id)
                 ->with('warning', '只能在投票活動開始前編輯選項');
@@ -217,35 +196,30 @@ class VoteSelectionController extends Controller
         //移除投票選項
         $voteSelection->delete();
 
-        return redirect()->route('voteEvent.show', $voteEvent->id)
+        return redirect()->route('voteEvent.show', $voteEvent)
             ->with('global', '投票選項已刪除');
     }
 
-    public function vote($id)
+    public function vote(VoteSelection $voteSelection)
     {
-        $voteSelection = VoteSelection::find($id);
-        if (!$voteSelection) {
-            return redirect()->route('voteEvent.index')
-                ->with('warning', '投票選項不存在');
-        }
         if (!$voteSelection->voteEvent->isInProgress()) {
-            return redirect()->route('voteEvent.show', $voteSelection->voteEvent->id)
+            return redirect()->route('voteEvent.show', $voteSelection->voteEvent)
                 ->with('warning', '非投票期間');
         }
         //檢查投票資格
         if (!$voteSelection->voteEvent->canVote(auth()->user())) {
-            return redirect()->route('voteEvent.show', $voteSelection->voteEvent->id)
+            return redirect()->route('voteEvent.show', $voteSelection->voteEvent)
                 ->with('warning', '不符合投票資格');
         }
         //檢查用戶狀態
         if ($voteSelection->hasVoted(auth()->user())) {
-            return redirect()->route('voteEvent.show', $voteSelection->voteEvent->id)
+            return redirect()->route('voteEvent.show', $voteSelection->voteEvent)
                 ->with('warning', '已投過此項目');
         }
         if ($voteSelection->voteEvent->getMaxSelected()
             <= $voteSelection->voteEvent->getSelectedCount(auth()->user())
         ) {
-            return redirect()->route('voteEvent.show', $voteSelection->voteEvent->id)
+            return redirect()->route('voteEvent.show', $voteSelection->voteEvent)
                 ->with('warning', '無法再投更多項目');
         }
         //新增投票資料
@@ -255,7 +229,7 @@ class VoteSelectionController extends Controller
         ]);
         //發現投太多票時，移除最後一票
         if ($voteSelection->voteEvent->getMaxSelected() < $voteSelection->voteEvent->getSelectedCount(auth()->user())) {
-            $voteSelectionIdList = $voteSelection->voteEvent->voteSelections->lists('id')->toArray();
+            $voteSelectionIdList = $voteSelection->voteEvent->voteSelections->pluck('id')->toArray();
             while ($voteSelection->voteEvent->getMaxSelected()
                 < $voteSelection->voteEvent->getSelectedCount(auth()->user())) {
                 $voteBallot = VoteBallot::where('user_id', '=', auth()->user()->id)

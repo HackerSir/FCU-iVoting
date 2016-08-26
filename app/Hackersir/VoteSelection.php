@@ -86,6 +86,7 @@ class VoteSelection extends Model
         }
         //本身得票數
         $selfCount = $this->getCount();
+
         //判斷
         return $selfCount == $maxCount;
     }
@@ -94,12 +95,12 @@ class VoteSelection extends Model
     public function getRankAttribute()
     {
         $voteSelectionsIdList = self::where('vote_event_id', '=', $this->vote_event_id)
-            ->lists('id')->toArray();
+            ->pluck('id')->toArray();
         $voteBallotList = VoteBallot::select('vote_selection_id', DB::raw('count(*) as total'))
             ->whereIn('vote_selection_id', $voteSelectionsIdList)
             ->groupBy('vote_selection_id')
             ->orderBy(DB::raw('count(vote_selection_id)'), 'desc')
-            ->lists('total')
+            ->pluck('total')
             ->toArray();
         $search = array_search($this->getCount(), $voteBallotList);
         $rank = ($search !== false) ? $search + 1 : count($voteBallotList) + 1;
@@ -117,12 +118,12 @@ class VoteSelection extends Model
     public function getScoreRankAttribute()
     {
         $voteSelectionsIdList = self::where('vote_event_id', '=', $this->vote_event_id)
-            ->lists('id')->toArray();
+            ->pluck('id')->toArray();
         $voteBallotList = VoteBallot::select('vote_selection_id', DB::raw('vote_selection_id, count(*) as total'))
             ->whereIn('vote_selection_id', $voteSelectionsIdList)
             ->groupBy('vote_selection_id')
             ->orderBy(DB::raw('count(vote_selection_id)'), 'desc')
-            ->lists('total', 'vote_selection_id')
+            ->pluck('total', 'vote_selection_id')
             ->toArray();
         $voteSelectionsWeight = self::where('vote_event_id', '=', $this->vote_event_id)
             ->lists('weight', 'id')->toArray();
