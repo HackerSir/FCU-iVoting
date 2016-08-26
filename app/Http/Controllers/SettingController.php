@@ -90,6 +90,7 @@ class SettingController extends Controller
                 //Log
                 LogHelper::info('[MailSendFailed] 無法發送測試信' . $email);
                 Log::error($e);
+
                 return 'error';
             }
         } elseif ($type == 'queue') {
