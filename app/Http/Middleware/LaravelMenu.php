@@ -19,18 +19,16 @@ class LaravelMenu
         //左側
         Menu::make('left', function ($menu) {
             /* @var \Lavary\Menu\Builder $menu */
-            $menu->add('首頁', ['route' => 'home']);
+            $menu->add('票選活動', ['route' => 'voteEvent.index'])->active('voteEvent/*');
         });
         //右側
         Menu::make('right', function ($menu) {
-            /* @var \Lavary\Menu\Builder $menu */
-            $menu->add('票選活動', ['route' => 'voteEvent.index'])->active('voteEvent/*');
             //會員
             if (auth()->check()) {
                 //管理員
                 if (auth()->check() && auth()->user()->isAdmin()) {
                     /** @var \Lavary\Menu\Builder $adminMenu */
-                    $adminMenu = $menu->add('管理選單', 'javascript:void(0)');
+                    $adminMenu = $menu->add('管理員', 'javascript:void(0)');
 
                     $adminMenu->add('成員清單', ['route' => 'member.list'])->active('member/*');
                     $adminMenu->add('主辦單位清單', ['route' => 'organizer.index'])->active('organizer/*');
