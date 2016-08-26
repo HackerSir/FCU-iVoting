@@ -6,6 +6,7 @@ use Hackersir\Helper\LogHelper;
 use Hackersir\Setting;
 use Exception;
 use Illuminate\Http\Request;
+use Log;
 use Mail;
 
 class SettingController extends Controller
@@ -88,7 +89,7 @@ class SettingController extends Controller
             } catch (Exception $e) {
                 //Log
                 LogHelper::info('[MailSendFailed] 無法發送測試信' . $email);
-
+                Log::error($e);
                 return 'error';
             }
         } elseif ($type == 'queue') {
