@@ -39,9 +39,9 @@ Route::group(['prefix' => 'member'], function () {
 });
 
 //投票系統
-Route::post('voteEvent/start/{vid}', 'VoteEventController@start')->name('voteEvent.start');
-Route::post('voteEvent/end/{vid}', 'VoteEventController@end')->name('voteEvent.end');
-Route::post('voteEvent/sort/{vid}', 'VoteEventController@sort')->name('voteEvent.sort');
+Route::post('voteEvent/start/{voteEvent}', 'VoteEventController@start')->name('voteEvent.start');
+Route::post('voteEvent/end/{voteEvent}', 'VoteEventController@end')->name('voteEvent.end');
+Route::post('voteEvent/sort/{voteEvent}', 'VoteEventController@sort')->name('voteEvent.sort');
 Route::resource('voteEvent', 'VoteEventController');
 Route::post('voteSelection/vote/{voteSelection}', 'VoteSelectionController@vote')->name('voteSelection.vote');
 Route::resource('voteSelection', 'VoteSelectionController', ['except' => ['index', 'show']]);
