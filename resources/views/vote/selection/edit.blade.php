@@ -13,14 +13,14 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="well bs-component">
-                    {!! Form::open(['route' => ['vote-selection.update', $voteSelection->id], 'class' => 'form-horizontal', 'method' => 'PUT']) !!}
+                    {!! Form::open(['route' => ['voteSelection.update', $voteSelection->id], 'class' => 'form-horizontal', 'method' => 'PUT']) !!}
                     <fieldset>
                         <legend>編輯投票選項</legend>
                         <div class="form-group">
                             <label class="col-md-2 control-label" for="creator">投票活動</label>
 
                             <div class="col-md-10 form-control-static">
-                                {!! HTML::linkRoute('vote-event.show', $voteSelection->voteEvent->subject, $voteSelection->voteEvent->id, null) !!}
+                                {!! HTML::linkRoute('voteEvent.show', $voteSelection->voteEvent->subject, $voteSelection->voteEvent->id, null) !!}
                             </div>
                         </div>
                         <div class="form-group has-feedback{{ ($errors->has('title'))?' has-error':'' }}">
@@ -65,7 +65,7 @@
                         <div class="form-group">
                             <div class="col-md-10 col-md-offset-1 text-center">
                                 {!! Form::submit('修改資料', ['class' => 'btn btn-primary']) !!}
-                                {!! HTML::linkRoute('vote-event.show', '返回', $voteSelection->voteEvent->id, ['class' => 'btn btn-default']) !!}
+                                {!! HTML::linkRoute('voteEvent.show', '返回', $voteSelection->voteEvent->id, ['class' => 'btn btn-default']) !!}
                             </div>
                         </div>
                     </fieldset>

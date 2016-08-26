@@ -28,10 +28,10 @@
                 </div>
                 <div class="panel-body">
                     @if(!$voteEvent->isEnded())
-                        <a href="{{ URL::route('vote-event.edit', ['voteEvent' => $voteEvent]) }}" class="btn btn-info"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>編輯投票活動</a>
+                        <a href="{{ URL::route('voteEvent.edit', $voteEvent) }}" class="btn btn-info"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>編輯投票活動</a>
                     @endif
                     @if(!$voteEvent->isStarted())
-                        {!! Form::open(['route' => ['vote-event.destroy', $voteEvent->id], 'style' => 'display: inline', 'method' => 'DELETE',
+                        {!! Form::open(['route' => ['voteEvent.destroy', $voteEvent->id], 'style' => 'display: inline', 'method' => 'DELETE',
                         'onSubmit' => "return confirm('確定要刪除投票活動嗎？');"]) !!}
                         {!! Form::submit('刪除', ['class' => 'btn btn-danger']) !!}
                         {!! Form::close() !!}
@@ -56,14 +56,14 @@
                         {{-- Do nothing. To maintain logic --}}
                     @elseif($voteEvent->isInProgress())
                         @if(Auth::check() && Auth::user()->isStaff())
-                            {!! Form::open(['route' => ['vote-event.end', $voteEvent->id], 'style' => 'display: inline', 'method' => 'POST',
+                            {!! Form::open(['route' => ['voteEvent.end', $voteEvent->id], 'style' => 'display: inline', 'method' => 'POST',
                             'onSubmit' => "return confirm('確定要立即結束此投票活動嗎？');"]) !!}
                             {!! Form::submit('立即結束', ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
                         @endif
                     @else
                         @if(Auth::check() && Auth::user()->isStaff())
-                            {!! Form::open(['route' => ['vote-event.start', $voteEvent->id], 'style' => 'display: inline', 'method' => 'POST',
+                            {!! Form::open(['route' => ['voteEvent.start', $voteEvent->id], 'style' => 'display: inline', 'method' => 'POST',
                             'onSubmit' => "return confirm('確定要立即開始此投票活動嗎？');"]) !!}
                             {!! Form::submit('立即開始', ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
@@ -122,7 +122,7 @@
                 </div>
             @endif
 
-            <a href="{{ URL::route('vote-event.index') }}" class="btn btn-primary pull-right" role="button"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回列表</a>
+            <a href="{{ URL::route('voteEvent.index') }}" class="btn btn-primary pull-right" role="button"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回列表</a>
 
             <div class="clearfix"></div>
         </div>
@@ -163,7 +163,7 @@
                 @if(Auth::check() && Auth::user()->isStaff() && !$voteEvent->isStarted())
                     <div class="panel" style="background-color: #f2dede;">
                         <div class="panel-body">
-                            {!! HTML::linkRoute('vote-selection.create', '新增票選選項', ['vid' => $voteEvent->id], ['class' => 'btn btn-success pull-right']) !!}
+                            {!! HTML::linkRoute('voteSelection.create', '新增票選選項', ['vid' => $voteEvent->id], ['class' => 'btn btn-success pull-right']) !!}
                             <button class="btn btn-default" id="sortButton" type="button"><i class="fa fa-arrows"></i>調整順序</button>
                             <span class="fa" id="sortStatus"></span><span id="sortStatusMessage"></span>
                         </div>
@@ -236,7 +236,7 @@
                                                     </div>
                                                 @elseif($voteEvent->getMaxSelected() > $voteEvent->getSelectedCount(Auth::user()))
                                                     @if(!$voteSelectionItem->hasVoted(Auth::user()))
-                                                        {!! Form::open(['route' => ['vote-selection.vote', $voteSelectionItem->id], 'style' => 'display: inline', 'method' => 'POST',
+                                                        {!! Form::open(['route' => ['voteSelection.vote', $voteSelectionItem->id], 'style' => 'display: inline', 'method' => 'POST',
                                                         'onSubmit' => "return confirm('確定要投票給此項目嗎？');"]) !!}
                                                         {!! Form::submit('按此投票', ['class' => 'btn btn-success btn-lg']) !!}
                                                         {!! Form::close() !!}
@@ -254,8 +254,8 @@
                                         @endif
 
                                         @if(Auth::check() && Auth::user()->isStaff() && !$voteEvent->isStarted())
-                                            {!! link_to_route('vote-selection.edit', '編輯', $voteSelectionItem->id, ['class' => 'btn btn-default']) !!}
-                                            {!! Form::open(['route' => ['vote-selection.destroy', $voteSelectionItem->id], 'style' => 'display: inline', 'method' => 'DELETE',
+                                            {!! link_to_route('voteSelection.edit', '編輯', $voteSelectionItem->id, ['class' => 'btn btn-default']) !!}
+                                            {!! Form::open(['route' => ['voteSelection.destroy', $voteSelectionItem->id], 'style' => 'display: inline', 'method' => 'DELETE',
                                             'onSubmit' => "return confirm('確定要刪除此投票選項嗎？');"]) !!}
                                             {!! Form::submit('刪除', ['class' => 'btn btn-danger']) !!}
                                             {!! Form::close() !!}
@@ -491,7 +491,7 @@
                     });
                     {{-- 處理順序 --}}
 
-                    var URLs = "{{ URL::route('vote-event.sort', $voteEvent->id) }}";
+                    var URLs = "{{ URL::route('voteEvent.sort', $voteEvent->id) }}";
 
                     $.ajax({
                         url: URLs,

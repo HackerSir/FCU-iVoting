@@ -61,7 +61,7 @@ class HideVoteEventTest extends TestCase
         $this->createUser();
 
         $this->actingAs($this->staffUser)
-            ->visit('/vote-event/create')
+            ->visit('/voteEvent/create')
             ->see('新增投票活動')
             ->type($info['subject'], 'subject');
 
@@ -136,7 +136,7 @@ class HideVoteEventTest extends TestCase
         }
 
         $this->actingAs($this->defaultUser)
-            ->visit('/vote-event')
+            ->visit('/voteEvent')
             ->dontSee($voteEvents['a']['subject'])
             ->see($voteEvents['b']['subject'])
             ->see($voteEvents['c']['subject'])
@@ -145,20 +145,20 @@ class HideVoteEventTest extends TestCase
             ->see($voteEvents['f']['subject']);
 
         $this->assertEquals(302,
-            $this->call('GET', '/vote-event/' . $this->getVoteEventId($voteEvents['a']))->status());
+            $this->call('GET', '/voteEvent/' . $this->getVoteEventId($voteEvents['a']))->status());
         $this->assertEquals(200,
-            $this->call('GET', '/vote-event/' . $this->getVoteEventId($voteEvents['b']))->status());
+            $this->call('GET', '/voteEvent/' . $this->getVoteEventId($voteEvents['b']))->status());
         $this->assertEquals(200,
-            $this->call('GET', '/vote-event/' . $this->getVoteEventId($voteEvents['c']))->status());
+            $this->call('GET', '/voteEvent/' . $this->getVoteEventId($voteEvents['c']))->status());
         $this->assertEquals(200,
-            $this->call('GET', '/vote-event/' . $this->getVoteEventId($voteEvents['d']))->status());
+            $this->call('GET', '/voteEvent/' . $this->getVoteEventId($voteEvents['d']))->status());
         $this->assertEquals(302,
-            $this->call('GET', '/vote-event/' . $this->getVoteEventId($voteEvents['e']))->status());
+            $this->call('GET', '/voteEvent/' . $this->getVoteEventId($voteEvents['e']))->status());
         $this->assertEquals(200,
-            $this->call('GET', '/vote-event/' . $this->getVoteEventId($voteEvents['f']))->status());
+            $this->call('GET', '/voteEvent/' . $this->getVoteEventId($voteEvents['f']))->status());
 
         $this->actingAs($this->staffUser)
-            ->visit('/vote-event')
+            ->visit('/voteEvent')
             ->see($voteEvents['a']['subject'])
             ->see($voteEvents['b']['subject'])
             ->see($voteEvents['c']['subject'])
@@ -167,17 +167,17 @@ class HideVoteEventTest extends TestCase
             ->see($voteEvents['f']['subject']);
 
         $this->assertEquals(200,
-            $this->call('GET', '/vote-event/' . $this->getVoteEventId($voteEvents['a']))->status());
+            $this->call('GET', '/voteEvent/' . $this->getVoteEventId($voteEvents['a']))->status());
         $this->assertEquals(200,
-            $this->call('GET', '/vote-event/' . $this->getVoteEventId($voteEvents['b']))->status());
+            $this->call('GET', '/voteEvent/' . $this->getVoteEventId($voteEvents['b']))->status());
         $this->assertEquals(200,
-            $this->call('GET', '/vote-event/' . $this->getVoteEventId($voteEvents['c']))->status());
+            $this->call('GET', '/voteEvent/' . $this->getVoteEventId($voteEvents['c']))->status());
         $this->assertEquals(200,
-            $this->call('GET', '/vote-event/' . $this->getVoteEventId($voteEvents['d']))->status());
+            $this->call('GET', '/voteEvent/' . $this->getVoteEventId($voteEvents['d']))->status());
         $this->assertEquals(200,
-            $this->call('GET', '/vote-event/' . $this->getVoteEventId($voteEvents['e']))->status());
+            $this->call('GET', '/voteEvent/' . $this->getVoteEventId($voteEvents['e']))->status());
         $this->assertEquals(200,
-            $this->call('GET', '/vote-event/' . $this->getVoteEventId($voteEvents['f']))->status());
+            $this->call('GET', '/voteEvent/' . $this->getVoteEventId($voteEvents['f']))->status());
     }
 
     protected function getVoteEventId($info)
@@ -250,7 +250,7 @@ class HideVoteEventTest extends TestCase
     protected function reverseVisible($info)
     {
         $this->actingAs($this->staffUser)
-            ->visit('/vote-event/' . $info['id'] . '/edit')
+            ->visit('/voteEvent/' . $info['id'] . '/edit')
             ->see('編輯投票活動');
 
         $form = $this->crawler->filter('form')->form();

@@ -45,7 +45,7 @@ class VoteEventConditionTest extends TestCase
         $subject = str_random(20);
         $voteSelectionId = $this->createVoteEvent($subject);
 
-        $postURL = '/vote-selection/vote/' . $voteSelectionId;
+        $postURL = '/voteSelection/vote/' . $voteSelectionId;
 
         //關閉 CSRF Protection Middleware
         $this->withoutMiddleware();
@@ -73,7 +73,7 @@ class VoteEventConditionTest extends TestCase
     protected function createVoteEvent($subject)
     {
         $this->actingAs($this->staffUser)
-            ->visit('/vote-event/create')
+            ->visit('/voteEvent/create')
             ->see('新增投票活動')
             ->type($subject, 'subject')
             ->type(Carbon::now()->addDay(), 'open_time')
@@ -83,19 +83,19 @@ class VoteEventConditionTest extends TestCase
         $voteEventId = $this->getVoteEventId($subject);
 
         $this->actingAs($this->staffUser)
-            ->visit('/vote-selection/create?vid=' . $voteEventId)
+            ->visit('/voteSelection/create?vid=' . $voteEventId)
             ->see('新增投票選項')
             ->type('測試選項1', 'title')
             ->press('新增投票選項');
 
         $this->actingAs($this->staffUser)
-            ->visit('/vote-selection/create?vid=' . $voteEventId)
+            ->visit('/voteSelection/create?vid=' . $voteEventId)
             ->see('新增投票選項')
             ->type('測試選項2', 'title')
             ->press('新增投票選項');
 
         $this->actingAs($this->staffUser)
-            ->visit('/vote-event/' . $voteEventId)
+            ->visit('/voteEvent/' . $voteEventId)
             ->see($subject)
             ->press('立即開始');
 

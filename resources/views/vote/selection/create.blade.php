@@ -13,14 +13,14 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="well bs-component">
-                    {!! Form::open(['route' => 'vote-selection.store', 'class' => 'form-horizontal']) !!}
+                    {!! Form::open(['route' => 'voteSelection.store', 'class' => 'form-horizontal']) !!}
                     <fieldset>
                         <legend>新增投票選項</legend>
                         <div class="form-group">
                             <label class="col-md-2 control-label" for="creator">投票活動</label>
 
                             <div class="col-md-10 form-control-static">
-                                {!! HTML::linkRoute('vote-event.show', $voteEvent->subject, $voteEvent->id, null) !!}
+                                {!! HTML::linkRoute('voteEvent.show', $voteEvent->subject, $voteEvent->id, null) !!}
                             </div>
                         </div>
                         <div class="form-group has-feedback{{ ($errors->has('title'))?' has-error':'' }}">
@@ -66,7 +66,7 @@
                             <div class="col-md-4 col-md-offset-4">
                                 {!! Form::hidden('vid', $voteEvent->id) !!}
                                 {!! Form::submit('新增投票選項', ['class' => 'btn btn-primary']) !!}
-                                {!! HTML::linkRoute('vote-event.show', '返回', $voteEvent->id, ['class' => 'btn btn-default']) !!}
+                                {!! HTML::linkRoute('voteEvent.show', '返回', $voteEvent->id, ['class' => 'btn btn-default']) !!}
                             </div>
                         </div>
                     </fieldset>

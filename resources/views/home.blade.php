@@ -8,7 +8,7 @@
 
                 <p>一個由學生社團做的票選系統，快來參加各種票選活動吧！！！</p>
 
-                <p><a href="{{ URL::route('vote-event.index') }}" class="btn btn-primary btn-lg">查看票選活動 »</a></p>
+                <p><a href="{{ URL::route('voteEvent.index') }}" class="btn btn-primary btn-lg">查看票選活動 »</a></p>
             </div>
             <div class="col-sm-4 hidden-xs">
                 <img src="{{ asset('pic/logo.png') }}" style="float: right; height: 400px" />
@@ -39,7 +39,7 @@
                 @endif
             </div>
             <div class="col-sm-4">
-                <a href="{{ URL::route('vote-event.index') }}" style="color: black;">
+                <a href="{{ URL::route('voteEvent.index') }}" style="color: black;">
                     <div class="text-center">
                         <span class="glyphicon glyphicon-list-alt text-info" style="font-size: 150px;"></span>
                     </div>

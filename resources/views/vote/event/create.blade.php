@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="well bs-component">
-                    {!! Form::open(['route' => 'vote-event.store', 'class' => 'form-horizontal']) !!}
+                    {!! Form::open(['route' => 'voteEvent.store', 'class' => 'form-horizontal']) !!}
                     <fieldset>
                         <legend>新增投票活動</legend>
                     </fieldset>
@@ -135,7 +135,7 @@
                     <div class="form-group">
                         <div class="col-md-9 col-md-offset-2">
                             {!! Form::submit('新增投票活動', ['class' => 'btn btn-primary']) !!}
-                            {!! HTML::linkRoute('vote-event.index', '返回', [], ['class' => 'btn btn-default']) !!}
+                            {!! HTML::linkRoute('voteEvent.index', '返回', [], ['class' => 'btn btn-default']) !!}
                         </div>
                     </div>
                     {!! Form::close() !!}

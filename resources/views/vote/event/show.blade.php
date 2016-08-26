@@ -30,7 +30,7 @@
                                                 進行中
                                                 @if(Auth::check() && Auth::user()->isStaff())
                                                     <br />
-                                                    {!! Form::open(['route' => ['vote-event.end', $voteEvent->id], 'style' => 'display: inline', 'method' => 'POST',
+                                                    {!! Form::open(['route' => ['voteEvent.end', $voteEvent->id], 'style' => 'display: inline', 'method' => 'POST',
                                                     'onSubmit' => "return confirm('確定要立即結束此投票活動嗎？');"]) !!}
                                                     {!! Form::submit('立即結束', ['class' => 'btn btn-danger']) !!}
                                                     {!! Form::close() !!}
@@ -39,7 +39,7 @@
                                                 未開始
                                                 @if(Auth::check() && Auth::user()->isStaff())
                                                     <br />
-                                                    {!! Form::open(['route' => ['vote-event.start', $voteEvent->id], 'style' => 'display: inline', 'method' => 'POST',
+                                                    {!! Form::open(['route' => ['voteEvent.start', $voteEvent->id], 'style' => 'display: inline', 'method' => 'POST',
                                                     'onSubmit' => "return confirm('確定要立即開始此投票活動嗎？');"]) !!}
                                                     {!! Form::submit('立即開始', ['class' => 'btn btn-danger']) !!}
                                                     {!! Form::close() !!}
@@ -72,11 +72,11 @@
                                 <div>
                                     @if(Auth::check() && Auth::user()->isStaff())
                                         @if(!$voteEvent->isEnded())
-                                            {!! HTML::linkRoute('vote-event.edit', '編輯投票活動', $voteEvent->id, ['class' => 'btn btn-primary']) !!}
+                                            {!! HTML::linkRoute('voteEvent.edit', '編輯投票活動', $voteEvent->id, ['class' => 'btn btn-primary']) !!}
                                         @endif
-                                        {!! HTML::linkRoute('vote-event.index', '返回投票活動列表', [], ['class' => 'btn btn-default']) !!}
+                                        {!! HTML::linkRoute('voteEvent.index', '返回投票活動列表', [], ['class' => 'btn btn-default']) !!}
                                         @if(!$voteEvent->isStarted())
-                                            {!! Form::open(['route' => ['vote-event.destroy', $voteEvent->id], 'style' => 'display: inline', 'method' => 'DELETE',
+                                            {!! Form::open(['route' => ['voteEvent.destroy', $voteEvent->id], 'style' => 'display: inline', 'method' => 'DELETE',
                                             'onSubmit' => "return confirm('確定要刪除投票活動嗎？');"]) !!}
                                             {!! Form::submit('刪除', ['class' => 'btn btn-danger']) !!}
                                             {!! Form::close() !!}
@@ -97,7 +97,7 @@
                                             @endif
                                         @endif
                                     @else
-                                        {!! HTML::linkRoute('vote-event.index', '返回投票活動列表', [], ['class' => 'btn btn-default']) !!}
+                                        {!! HTML::linkRoute('voteEvent.index', '返回投票活動列表', [], ['class' => 'btn btn-default']) !!}
                                     @endif
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                         <div class="row">
                             <div class="text-center col-md-12 col-md-offset-0">
                                 @if(Auth::check() && Auth::user()->isStaff() && !$voteEvent->isStarted())
-                                    {!! HTML::linkRoute('vote-selection.create', '新增投票選項', ['vid' => $voteEvent->id], ['class' => 'btn btn-primary pull-right']) !!}
+                                    {!! HTML::linkRoute('voteSelection.create', '新增投票選項', ['vid' => $voteEvent->id], ['class' => 'btn btn-primary pull-right']) !!}
                                 @endif
                                 <table class="table table-hover">
                                     @if(count($voteEvent->voteSelections))
@@ -143,12 +143,12 @@
                                                         @if(Auth::check() && $voteSelectionItem->hasVoted(Auth::user()))
                                                             <span title="我的選擇">✔</span>
                                                         @endif
-                                                        {!! HTML::linkRoute('vote-selection.show', $voteSelectionItem->getTitle(),$voteSelectionItem->id, null) !!}
+                                                        {!! HTML::linkRoute('voteSelection.show', $voteSelectionItem->getTitle(),$voteSelectionItem->id, null) !!}
                                                     </td>
                                                     @if(Auth::check() && Auth::user()->isStaff() && !$voteEvent->isStarted())
                                                         <td class="text-right">
-                                                            {!! link_to_route('vote-selection.edit', '編輯', $voteSelectionItem->id, ['class' => 'btn btn-default']) !!}
-                                                            {!! Form::open(['route' => ['vote-selection.destroy', $voteSelectionItem->id], 'style' => 'display: inline', 'method' => 'DELETE',
+                                                            {!! link_to_route('voteSelection.edit', '編輯', $voteSelectionItem->id, ['class' => 'btn btn-default']) !!}
+                                                            {!! Form::open(['route' => ['voteSelection.destroy', $voteSelectionItem->id], 'style' => 'display: inline', 'method' => 'DELETE',
                                                             'onSubmit' => "return confirm('確定要刪除此投票選項嗎？');"]) !!}
                                                             {!! Form::submit('刪除', ['class' => 'btn btn-danger']) !!}
                                                             {!! Form::close() !!}

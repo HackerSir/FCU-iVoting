@@ -69,7 +69,7 @@ class VoteEventController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request->all(), [
+        $this->validate($request, [
             'subject'      => 'required|max:100',
             'open_time'    => 'date',
             'close_time'   => 'date',
@@ -116,7 +116,7 @@ class VoteEventController extends Controller
             $voteEvent
         );
 
-        return redirect()->route('vote-event.show', $voteEvent->id)
+        return redirect()->route('voteEvent.show', $voteEvent->id)
             ->with('global', '投票活動已建立');
     }
 
@@ -130,9 +130,9 @@ class VoteEventController extends Controller
     {
         $autoRedirectSetting = Setting::find('auto-redirect');
         if ((auth()->check() && auth()->user()->isStaff()) || $voteEvent->isVisible()) {
-            return view('vote.event.show-eas', ['voteEvent', 'autoRedirectSetting']);
+            return view('vote.event.show-eas', compact(['voteEvent', 'autoRedirectSetting']));
         } else {
-            return redirect()->route('vote-event.index')
+            return redirect()->route('voteEvent.index')
                 ->with('warning', '投票活動尚未開放');
         }
 
@@ -147,7 +147,7 @@ class VoteEventController extends Controller
     public function edit(VoteEvent $voteEvent)
     {
         if ($voteEvent->isEnded()) {
-            return redirect()->route('vote-event.show', $voteEvent)
+            return redirect()->route('voteEvent.show', $voteEvent)
                 ->with('warning', '無法編輯已結束之投票活動');
         }
         $organizerList = Organizer::all();
@@ -169,10 +169,10 @@ class VoteEventController extends Controller
     public function update(Request $request, VoteEvent $voteEvent)
     {
         if ($voteEvent->isEnded()) {
-            return redirect()->route('vote-event.show', $voteEvent)
+            return redirect()->route('voteEvent.show', $voteEvent)
                 ->with('warning', '無法編輯已結束之投票活動');
         }
-        $this->validate($request->all(), [
+        $this->validate($request, [
             'subject'      => 'required|max:100',
             'open_time'    => 'date',
             'close_time'   => 'date',
@@ -232,7 +232,7 @@ class VoteEventController extends Controller
             $afterEdit
         );
 
-        return redirect()->route('vote-event.show', $voteEvent)
+        return redirect()->route('voteEvent.show', $voteEvent)
             ->with('global', '投票活動已更新');
     }
 
@@ -245,13 +245,13 @@ class VoteEventController extends Controller
     public function destroy(VoteEvent $voteEvent)
     {
         if ($voteEvent->isStarted()) {
-            return redirect()->route('vote-event.show', $voteEvent)
+            return redirect()->route('voteEvent.show', $voteEvent)
                 ->with('warning', '無法刪除已開始之投票活動');
         }
         //移除投票活動
         $voteEvent->delete();
 
-        return redirect()->route('vote-event.index')
+        return redirect()->route('voteEvent.index')
             ->with('global', '投票活動已刪除');
     }
 
@@ -259,22 +259,22 @@ class VoteEventController extends Controller
     public function start(Request $request, VoteEvent $voteEvent)
     {
         if ($voteEvent->isEnded()) {
-            return redirect()->route('vote-event.show', $voteEvent)
+            return redirect()->route('voteEvent.show', $voteEvent)
                 ->with('warning', '該投票活動早已結束');
         }
         if ($voteEvent->isStarted()) {
-            return redirect()->route('vote-event.show', $voteEvent)
+            return redirect()->route('voteEvent.show', $voteEvent)
                 ->with('warning', '該投票活動早已開始');
         }
         if ($voteEvent->voteSelections()->count() < 2) {
-            return redirect()->route('vote-event.show', $voteEvent)
+            return redirect()->route('voteEvent.show', $voteEvent)
                 ->with('warning', '選項過少，無法開始');
         }
         $voteEvent->update([
             'open_time' => Carbon::now()->toDateTimeString(),
         ]);
 
-        return redirect()->route('vote-event.show', $voteEvent)
+        return redirect()->route('voteEvent.show', $voteEvent)
             ->with('global', '投票活動已開始');
     }
 
@@ -282,18 +282,18 @@ class VoteEventController extends Controller
     public function end(Request $request, VoteEvent $voteEvent)
     {
         if (!$voteEvent->isStarted()) {
-            return redirect()->route('vote-event.show', $voteEvent)
+            return redirect()->route('voteEvent.show', $voteEvent)
                 ->with('warning', '該投票活動尚未開始');
         }
         if ($voteEvent->isEnded()) {
-            return redirect()->route('vote-event.show', $voteEvent)
+            return redirect()->route('voteEvent.show', $voteEvent)
                 ->with('warning', '該投票活動早已結束');
         }
         $voteEvent->update([
             'close_time' => Carbon::now()->toDateTimeString(),
         ]);
 
-        return redirect()->route('vote-event.show', $voteEvent)
+        return redirect()->route('voteEvent.show', $voteEvent)
             ->with('global', '投票活動已結束');
     }
 

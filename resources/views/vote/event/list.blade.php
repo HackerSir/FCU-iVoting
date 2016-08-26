@@ -29,7 +29,7 @@
                     {{-- Panel body --}}
                     <div class="panel-body">
                         @if(Auth::check() && Auth::user()->isStaff())
-                            {!! HTML::linkRoute('vote-event.create', '新增投票活動', [], ['class' => 'btn btn-primary pull-right']) !!}
+                            {!! HTML::linkRoute('voteEvent.create', '新增投票活動', [], ['class' => 'btn btn-primary pull-right']) !!}
                             <div class="clearfix"></div>
                         @endif
                         <table class="table table-hover noMoreTable" style="margin-top: 5px">
@@ -58,7 +58,7 @@
                                             <span class="label label-default">未開始</span>
                                         @endif
                                     </td>
-                                    <td>{!! HTML::linkRoute('vote-event.show', $voteEventItem->subject, $voteEventItem->id, null) !!}</td>
+                                    <td>{!! HTML::linkRoute('voteEvent.show', $voteEventItem->subject, $voteEventItem->id, null) !!}</td>
                                     <td class="hidePhone">
                                         <div class="pull-right">
                                             @if (Auth::check() && Auth::user()->isStaff())
@@ -66,7 +66,7 @@
                                                     <span class="glyphicon glyphicon-eye-close" aria-hidden="true" title="活動開始前是不顯示的"></span>
                                                 @endif
                                                 @if(!$voteEventItem->isEnded())
-                                                    <a href="{{ URL::route('vote-event.edit', $voteEventItem->id) }}" title="編輯投票活動"><span class="glyphicon glyphicon-cog" aria-hidden="true" ></span></a>
+                                                    <a href="{{ URL::route('voteEvent.edit', $voteEventItem->id) }}" title="編輯投票活動"><span class="glyphicon glyphicon-cog" aria-hidden="true" ></span></a>
                                                 @endif
                                             @endif
                                         </div>

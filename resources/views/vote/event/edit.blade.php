@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="well bs-component">
-                    {!! Form::open(['route' => ['vote-event.update', $voteEvent->id], 'class' => 'form-horizontal', 'method' => 'PUT']) !!}
+                    {!! Form::open(['route' => ['voteEvent.update', $voteEvent->id], 'class' => 'form-horizontal', 'method' => 'PUT']) !!}
                     <fieldset>
                         <legend>編輯投票活動</legend>
                     </fieldset>
@@ -157,7 +157,7 @@
                         <div class="col-md-10 col-md-offset-1 text-center">
                             <hr/>
                             {!! Form::submit('修改資料', ['class' => 'btn btn-primary']) !!}
-                            {!! HTML::linkRoute('vote-event.show', '返回', $voteEvent->id, ['class' => 'btn btn-default']) !!}
+                            {!! HTML::linkRoute('voteEvent.show', '返回', $voteEvent->id, ['class' => 'btn btn-default']) !!}
                         </div>
                     </div>
                     {!! Form::close() !!}

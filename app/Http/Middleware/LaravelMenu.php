@@ -24,7 +24,7 @@ class LaravelMenu
         //右側
         Menu::make('right', function ($menu) {
             /* @var \Lavary\Menu\Builder $menu */
-            $menu->add('票選活動', ['route' => 'vote-event.index'])->active('vote-event/*');
+            $menu->add('票選活動', ['route' => 'voteEvent.index'])->active('voteEvent/*');
             //會員
             if (auth()->check()) {
                 //管理員

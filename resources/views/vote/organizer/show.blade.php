@@ -73,10 +73,10 @@
                                                 未開始
                                             @endif
                                         </td>
-                                        <td>{!! HTML::linkRoute('vote-event.show', $voteEventItem->subject, $voteEventItem->id, null) !!}</td>
+                                        <td>{!! HTML::linkRoute('voteEvent.show', $voteEventItem->subject, $voteEventItem->id, null) !!}</td>
                                         <td class="hidePhone">
                                             @if(Auth::check() && Auth::user()->isStaff() && !$voteEventItem->isEnded())
-                                                <a href="{{ URL::route('vote-event.edit', $voteEventItem->id) }}" class="pull-right" title="編輯投票活動"><span class="glyphicon glyphicon-cog" aria-hidden="true" /></a>
+                                                <a href="{{ URL::route('voteEvent.edit', $voteEventItem->id) }}" class="pull-right" title="編輯投票活動"><span class="glyphicon glyphicon-cog" aria-hidden="true" /></a>
                                             @endif
                                         </td>
                                         <td><span title="{{ (new Carbon($voteEventItem->open_time))->diffForHumans() }}">{{ $voteEventItem->open_time }}</span></td>
