@@ -8,11 +8,11 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{{ URL::route('home') }}">{{ Config::get('config.sitename') }}</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 @include(config('laravel-menu.views.bootstrap-items'), ['items' => Menu::get('left')->roots()])
             </ul>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 @include(config('laravel-menu.views.bootstrap-items'), ['items' => Menu::get('right')->roots()])
             </ul>
