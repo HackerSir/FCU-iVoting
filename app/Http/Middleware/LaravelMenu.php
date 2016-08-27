@@ -23,11 +23,14 @@ class LaravelMenu
         });
         //右側
         Menu::make('right', function ($menu) {
+            /* @var \Lavary\Menu\Builder $menu */
             //會員
             if (auth()->check()) {
+                /* @var \Hackersir\User $user */
+                $user = auth()->user();
                 //管理員
-                if (auth()->check() && auth()->user()->isAdmin()) {
-                    /** @var \Lavary\Menu\Builder $adminMenu */
+                if ($user->isAdmin()) {
+                    /* @var \Lavary\Menu\Builder $adminMenu */
                     $adminMenu = $menu->add('管理員', 'javascript:void(0)');
 
                     $adminMenu->add('成員清單', ['route' => 'member.list'])->active('member/*');
@@ -40,8 +43,8 @@ class LaravelMenu
                         ['route' => 'log-viewer::dashboard']
                     )->link->attr('target', '_blank');
                 }
-                /** @var \Lavary\Menu\Builder $userMenu */
-                $userMenu = $menu->add(auth()->user()->getNickname(), 'javascript:void(0)');
+                /* @var \Lavary\Menu\Builder $userMenu */
+                $userMenu = $menu->add($user->getNickname(), 'javascript:void(0)');
                 $userMenu->add('個人資料', ['route' => 'member.profile'])->active('profile/*');
                 $userMenu->add('修改密碼', ['route' => 'member.change-password']);
                 $userMenu->add('登出', ['route' => 'member.logout']);
