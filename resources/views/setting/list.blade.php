@@ -16,16 +16,8 @@
             /*
             Label the data
             */
-            .noMoreTable td:nth-of-type(1):before {
-                content: "ID";
-            }
-
-            .noMoreTable td:nth-of-type(2):before {
-                content: "描述";
-            }
-
-            .noMoreTable td:nth-of-type(3):before {
-                content: "設定資料";
+            .noMoreTable td {
+                padding-left: inherit !important;
             }
         }
     </style>
@@ -33,49 +25,42 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-md-offset-0">
-                <div class="panel panel-default">
-                    <div class="panel-heading">網站設定</div>
-                    {{-- Panel body --}}
-                    <div class="panel-body">
-                        <table class="table table-hover noMoreTable" style="margin-top: 5px">
-                            <thead>
-                            <tr>
-                                <th class="col-md-2">ID</th>
-                                <th class="col-md-2">類型</th>
-                                <th class="col-md-4">描述</th>
-                                <th class="col-md-4">設定資料</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($settingList as $settingItem)
-                                <tr class="classData">
-                                    <td>{!! HTML::linkRoute('setting.show', $settingItem->id, $settingItem->id, null) !!}</td>
-                                    <td>{{ $settingItem->getTypeDesc() }}</td>
-                                    <td>{{ $settingItem->desc }}</td>
-                                    <td>{!! $settingItem->getData() !!}</td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">網站設定</div>
+            {{-- Panel body --}}
+            <div class="panel-body">
+                <table class="table table-hover noMoreTable" style="margin-top: 5px">
+                    <thead>
+                    <tr>
+                        <th class="text-center col-md-5">設定項目</th>
+                        <th class="text-center col-md-7">資料</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($settingList as $settingItem)
+                        <tr class="classData">
+                            <td class="col-md-5">
+                                {!! HTML::linkRoute('setting.show', $settingItem->id, $settingItem->id, null) !!}
+                                <span class="text-muted">（{{ $settingItem->getTypeDesc() }}）</span><br/>
+                                <small><i class="fa fa-angle-double-right"></i> {{ $settingItem->desc }}</small>
+                            </td>
+                            <td>{!! $settingItem->getData() !!}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
-
-            <div class="col-md-12 col-md-offset-0">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Mail測試</div>
-                    <div class="panel-body">
-                        {!! Form::open(['class' => 'form-inline', 'id' => 'sendTestMail']) !!}
-                        <div class="form-group">
-                            {!! Form::email('email', null, ['id' => 'testMailTo', 'placeholder' => 'Email', 'class' => 'form-control', 'required']) !!}
-                        </div>
-                        {!! Form::button('寄送測試信(使用Queue)', ['class' => 'btn btn-success', 'id' => 'btnSend_queue']) !!}
-                        {!! Form::button('寄送測試信', ['class' => 'btn btn-success', 'id' => 'btnSend']) !!}
-                        {!! Form::close() !!}
-                    </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Mail測試</div>
+            <div class="panel-body">
+                {!! Form::open(['class' => 'form-inline', 'id' => 'sendTestMail']) !!}
+                <div class="form-group">
+                    {!! Form::email('email', null, ['id' => 'testMailTo', 'placeholder' => 'Email', 'class' => 'form-control', 'required']) !!}
                 </div>
+                {!! Form::button('寄送測試信(使用Queue)', ['class' => 'btn btn-success', 'id' => 'btnSend_queue']) !!}
+                {!! Form::button('寄送測試信', ['class' => 'btn btn-success', 'id' => 'btnSend']) !!}
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
