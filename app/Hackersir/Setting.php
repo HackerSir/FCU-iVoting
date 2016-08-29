@@ -85,17 +85,17 @@ class Setting extends Model
     public function getData()
     {
         //依照型態進行不同處理
-        if ($this->getType() == 'text') {
-            return htmlspecialchars($this->data);
-        }
-        if ($this->getType() == 'multiline') {
-            return nl2br(htmlspecialchars($this->data));
-        }
-        if ($this->getType() == 'markdown') {
-            return MarkdownHelper::translate($this->data);
-        }
-        if ($this->getType() == 'url') {
-            return $this->data;
+        switch ($this->getType()) {
+            case 'text':
+                return htmlspecialchars($this->data);
+            case 'multiline':
+                return nl2br(htmlspecialchars($this->data));
+            case 'markdown':
+                return MarkdownHelper::translate($this->data);
+            case 'url':
+                return link_to($this->data, null, ['target' => '_blank']);
+            default:
+                return $this->data;
         }
     }
 }
