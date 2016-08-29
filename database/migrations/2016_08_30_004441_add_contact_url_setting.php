@@ -14,8 +14,8 @@ class AddContactUrlSetting extends Migration
     public function up()
     {
         Setting::create([
-            'id'   => 'contact-url',
-            'desc' => '聯繫用網址',
+            'id'   => 'report-url',
+            'desc' => '回報網址',
             'type' => 'url',
         ]);
     }
@@ -27,6 +27,6 @@ class AddContactUrlSetting extends Migration
      */
     public function down()
     {
-        Setting::find('contact-url')->delete();
+        Setting::find('report-url')->delete();
     }
 }
