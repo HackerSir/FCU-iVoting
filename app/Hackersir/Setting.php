@@ -93,7 +93,7 @@ class Setting extends Model
             case 'markdown':
                 return MarkdownHelper::translate($this->data);
             case 'url':
-                return link_to($this->data, null, ['target' => '_blank']);
+                return $this->data ? link_to($this->data, null, ['target' => '_blank']) : '';
             default:
                 return $this->data;
         }
