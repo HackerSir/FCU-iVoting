@@ -32,6 +32,7 @@ class Setting extends Model
         'text'      => '單行文字',
         'multiline' => '多行文字',
         'markdown'  => 'Markdown多行文字',
+        'url'       => '網址',
     ];
 
     public static function get($id)
@@ -92,6 +93,9 @@ class Setting extends Model
         }
         if ($this->getType() == 'markdown') {
             return MarkdownHelper::translate($this->data);
+        }
+        if ($this->getType() == 'url') {
+            return $this->data;
         }
     }
 }

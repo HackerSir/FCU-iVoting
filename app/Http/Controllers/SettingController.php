@@ -62,9 +62,13 @@ class SettingController extends Controller
      */
     public function update(Request $request, Setting $setting)
     {
-        $this->validate($request, [
-            'data' => 'max:65535',
-        ]);
+        //驗證規則
+        $rules = ['data' => 'max:65535'];
+        if ($setting->type == 'url') {
+            $rules = ['data' => 'url|max:65535'];
+        }
+        //驗證
+        $this->validate($request, $rules);
         $setting->update($request->only(['data']));
 
         return redirect()->route('setting.show', $setting)

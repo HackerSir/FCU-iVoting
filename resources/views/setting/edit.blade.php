@@ -76,6 +76,12 @@
                                 @if($errors->has('data'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                                 <span class="label label-danger">{{ $errors->first('data') }}</span>@endif
                             </div>
+                        @elseif($setting->getType()=='url')
+                            <div class="col-md-9">
+                                {!! Form::url('data',  $setting->data, ['id' => 'data', 'placeholder' => '請輸入設定資料', 'class' => 'form-control']) !!}
+                                @if($errors->has('data'))<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                                <span class="label label-danger">{{ $errors->first('data') }}</span>@endif
+                            </div>
                         @endif
 
                     </div>
