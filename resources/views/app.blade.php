@@ -75,8 +75,8 @@
                     <li><a href="{{ URL::route('policies', 'terms') }}">服務條款</a></li>
                     <li><a href="{{ URL::route('policies', 'FAQ') }}">常見問題</a></li>
                     <li><a href="mailto:{{ urlencode('"逢甲票選系統"') }}<ifcu.ivoting@gmail.com>" target="_blank"><span class="glyphicon glyphicon-envelope" aria-hidden="true" style="margin-right: 5px;"></span>聯絡我們</a></li>
-                    @if(env('Report_URL'))
-                        <li><a href="{{ env('Report_URL') }}" target="_blank"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-right: 5px;"></span>回報問題</a></li>
+                    @if(!empty(Hackersir\Setting::get('report-url')))
+                        <li><a href="{{ Hackersir\Setting::getRaw('report-url') }}" target="_blank"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-right: 5px;"></span>回報問題</a></li>
                     @endif
                     <li>
                         <a href="https://github.com/HackerSir/FCU-iVoting" target="_blank">
