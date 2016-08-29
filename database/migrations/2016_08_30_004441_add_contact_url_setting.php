@@ -1,7 +1,6 @@
 <?php
 
 use Hackersir\Setting;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class AddContactUrlSetting extends Migration
