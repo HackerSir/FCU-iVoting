@@ -142,38 +142,6 @@ class VoteEvent extends Model
     }
 
     /**
-     * @return string
-     */
-    public function getHumanTimeString()
-    {
-        $string = '';
-        if ($this->open_time && $this->close_time) {
-            $string = $this->getTimeSpanTag($this->open_time) . ' ~ ' . $this->getTimeSpanTag($this->close_time);
-        } else {
-            if ($this->open_time) {
-                $string = $this->getTimeSpanTag($this->open_time) . ' 起';
-            } elseif ($this->close_time) {
-                $string = '到 ' . $this->getTimeSpanTag($this->close_time) . ' 為止';
-            } else {
-                $string = '尚未決定';
-            }
-        }
-
-        return $string;
-    }
-
-    /**
-     * @param $time
-     * @return string
-     */
-    public function getTimeSpanTag($time)
-    {
-        //style="display: inline-block; 是防止字換行
-        return '<strong title="' . (new Carbon($time))->diffForHumans()
-        . '"  style="display: inline-block;">' . $time . '</strong>';
-    }
-
-    /**
      * @return bool
      */
     public function isVisible()

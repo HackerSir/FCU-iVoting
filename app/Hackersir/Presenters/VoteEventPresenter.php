@@ -24,4 +24,35 @@ class VoteEventPresenter
 
         return $label;
     }
+
+    /**
+     * @return string
+     */
+    public function getHumanTimeString(VoteEvent $voteEvent)
+    {
+        $string = '';
+        if ($voteEvent->open_time && $voteEvent->close_time) {
+            $string = $this->getTimeSpanTag($voteEvent->open_time) . ' ~ ' . $this->getTimeSpanTag($voteEvent->close_time);
+        } else {
+            if ($voteEvent->open_time) {
+                $string = $voteEvent->getTimeSpanTag($voteEvent->open_time) . ' 起';
+            } elseif ($voteEvent->close_time) {
+                $string = '到 ' . $voteEvent->getTimeSpanTag($voteEvent->close_time) . ' 為止';
+            } else {
+                $string = '尚未決定';
+            }
+        }
+
+        return $string;
+    }
+
+    /**
+     * @param $time
+     * @return string
+     */
+    public function getTimeSpanTag($time)
+    {
+        //style="display: inline-block; 是防止字換行
+        return '<span style="display: inline-block;">' . $time . '</span>';
+    }
 }

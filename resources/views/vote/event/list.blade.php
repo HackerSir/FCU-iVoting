@@ -50,9 +50,7 @@
                         @endif
                     </h2>
                     <p style="margin: 0; font-size: 150%;">
-                        {{ $voteEvent->open_time }}
-                        ~
-                        {{ $voteEvent->close_time }}
+                        {!! $voteEventPresenter->getHumanTimeString($voteEvent) !!}
                     </p>
                 </li>
             @endforeach

@@ -93,7 +93,7 @@
             <ul style="font-size: 21px; padding-left: 25px;">
                 <li>選出&nbsp;<strong class="text-info">{{ $voteEvent->award_count }}</strong>&nbsp;名</li>
 
-                <li>活動期間：{!! $voteEvent->getHumanTimeString() !!}</li>
+                <li>活動期間：<strong>{!! $voteEventPresenter->getHumanTimeString($voteEvent) !!}</strong></li>
 
                 <li>{{ $voteEvent->getResultVisibleHintText() }}</li>
             </ul>
