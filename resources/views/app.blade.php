@@ -17,7 +17,7 @@
         {{-- Bootstrap United Theme--}}
         {!! HTML::style('//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/united/bootstrap.min.css') !!}
         {{-- 提供超多好看的Icon --}}
-        {!! HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') !!}
+        {!! HTML::style('//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css') !!}
 
         {!! Minify::stylesheet([
             '/css/stylesheet.css',            // 全域自訂 CSS
