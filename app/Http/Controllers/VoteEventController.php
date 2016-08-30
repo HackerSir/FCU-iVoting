@@ -129,7 +129,7 @@ class VoteEventController extends Controller
     {
         $autoRedirectSetting = Setting::find('auto-redirect');
         if ((auth()->check() && auth()->user()->isStaff()) || $voteEvent->isVisible()) {
-            return view('vote.event.show-eas', compact(['voteEvent', 'autoRedirectSetting']));
+            return view('vote.event.show', compact(['voteEvent', 'autoRedirectSetting']));
         } else {
             return redirect()->route('voteEvent.index')
                 ->with('warning', '投票活動尚未開放');
