@@ -35,9 +35,9 @@ class VoteEventPresenter
             $string = $this->getTimeSpanTag($voteEvent->open_time) . ' ~ ' . $this->getTimeSpanTag($voteEvent->close_time);
         } else {
             if ($voteEvent->open_time) {
-                $string = $voteEvent->getTimeSpanTag($voteEvent->open_time) . ' 起';
+                $string = $this->getTimeSpanTag($voteEvent->open_time) . ' 起';
             } elseif ($voteEvent->close_time) {
-                $string = '到 ' . $voteEvent->getTimeSpanTag($voteEvent->close_time) . ' 為止';
+                $string = '到 ' . $this->getTimeSpanTag($voteEvent->close_time) . ' 為止';
             } else {
                 $string = '尚未決定';
             }
