@@ -75,6 +75,8 @@ class Handler extends ExceptionHandler
             205 => 'Reset Content',
             206 => 'Partial Content',
             207 => 'Multi-Status',
+            208 => 'Already Reported',
+            226 => 'IM Used',
             300 => 'Multiple Choices',
             301 => 'Moved Permanently',
             302 => 'Found',
@@ -83,6 +85,7 @@ class Handler extends ExceptionHandler
             305 => 'Use Proxy',
             306 => 'Switch Proxy',
             307 => 'Temporary Redirect',
+            308 => 'Permanent Redirect',
             400 => 'Bad Request',
             401 => 'Unauthorized',
             402 => 'Payment Required',
@@ -107,8 +110,12 @@ class Handler extends ExceptionHandler
             424 => 'Failed Dependency',
             425 => 'Unordered Collection',
             426 => 'Upgrade Required',
+            428 => 'Precondition Required',
+            429 => 'Too Many Requests',
+            431 => 'Request Header Fields Too Large',
             449 => 'Retry With',
             450 => 'Blocked by Windows Parental Controls',
+            451 => ' Unavailable For Legal Reasons',
             500 => 'Internal Server Error',
             501 => 'Not Implemented',
             502 => 'Bad Gateway',
@@ -119,6 +126,7 @@ class Handler extends ExceptionHandler
             507 => 'Insufficient Storage',
             509 => 'Bandwidth Limit Exceeded',
             510 => 'Not Extended',
+            511 => 'Network Authentication Required',
         ];
         //使用獨立錯誤頁面
         $exclude_code = [
