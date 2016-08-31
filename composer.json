@@ -22,7 +22,8 @@
         "zizaco/entrust": "dev-laravel-5",
         "devfactory/minify": "1.0.*",
         "recca0120/laravel-tracy": "^1.6",
-        "lavary/laravel-menu": "dev-master"
+        "lavary/laravel-menu": "dev-master",
+        "predis/predis": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
